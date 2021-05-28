@@ -11,8 +11,6 @@ export const LoginScreen = () => {
       <View
         style={{
           alignSelf: 'center',
-          borderWidth: 5,
-          borderColor: 'red',
           margin: 10,
         }}>
         <Logo />

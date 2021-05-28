@@ -8,7 +8,11 @@ import logo from '../assets/images/util/hogarLogo.png';
 export const Logo = () => {
   return (
     <Avatar
-      containerStyle={{backgroundColor: '#FFFFFF', padding: 20}}
+      containerStyle={{
+        backgroundColor: '#FFFFFF',
+        padding: 15,
+        borderRadius: 100,
+      }}
       imageProps={styles.imagenLogo}
       source={logo}
       size={200}

@@ -1,6 +1,10 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 
+interface button {
+  title: string;
+}
+
 export const Button = () => {
   return (
     <TouchableOpacity style={styles.button} onPress={() => console.log('hola')}>
