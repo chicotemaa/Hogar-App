@@ -8,6 +8,7 @@ const Stack = createStackNavigator();
 
 import {HomeScreen} from './src/screens/HomeScreen';
 import {LoginScreen} from './src/screens/LoginScreen';
+import {WelcomeScreen} from './src/screens/WelcomeScreen';
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
       <Stack.Navigator>
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Inicio" component={HomeScreen} />
+        <Stack.Screen name="Bienvenido" component={WelcomeScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
