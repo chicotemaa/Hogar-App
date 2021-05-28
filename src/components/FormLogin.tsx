@@ -13,7 +13,10 @@ export const FormLogin = () => {
     <View style={{elevation: 9, margin: 10}}>
       <Input label={'Email'} placeholder="Email" />
       <Input label={'Contraseña'} placeholder="Contraseña" />
-      <Button />
+      <Button
+        title="Iniciar Sesíon"
+        onPress={() => console.log('iniciar sesión')}
+      />
     </View>
   );
 };
