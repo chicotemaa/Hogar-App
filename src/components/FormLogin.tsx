@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
-import {View} from 'react-native';
-import {Button, Input} from 'react-native-elements';
-import {InputStandard} from 'react-native-input-outline';
+import {StyleSheet, View, Text} from 'react-native';
+import {Input} from 'react-native-elements';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import {Button} from './Button';
 
 export const FormLogin = () => {
   const [state, setState] = useState({
@@ -9,15 +10,12 @@ export const FormLogin = () => {
     password: '',
   });
   return (
-    <View>
-      <InputStandard />
-      <Input
-        label={'Email'}
-        placeholder="email@correo.com"
-        containerStyle={{backgroundColor: 'white'}}
-      />
+    <View style={{elevation: 9, margin: 10}}>
+      <Input label={'Email'} placeholder="Email" />
       <Input label={'Contraseña'} placeholder="Contraseña" />
-      <Button title="Iniciar Sesión" onPress={() => console.log('hola')} />
+      <Button />
     </View>
   );
 };
+
+const styles = StyleSheet.create({});

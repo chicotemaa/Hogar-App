@@ -31,8 +31,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
   },
   form: {
-    borderWidth: 5,
-    borderColor: 'red',
-    padding: 1,
+    padding: 10,
   },
 });
