@@ -1,11 +1,20 @@
 import React from 'react';
 import {Text, View} from 'react-native';
 
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+
+const Stack = createStackNavigator();
+
+import {HomeScreen} from './src/screens/HomeScreen';
+
 const App = () => {
   return (
-    <View>
-      <Text style={{fontSize: 30}}>Hola mundo</Text>
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Inicio" component={HomeScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 
