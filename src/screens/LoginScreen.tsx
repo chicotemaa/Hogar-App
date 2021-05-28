@@ -5,7 +5,7 @@ import {StyleSheet, View, ScrollView} from 'react-native';
 import {FormLogin} from '../components/FormLogin';
 import {Logo} from '../components/Logo';
 
-export const LoginScreen = () => {
+export const LoginScreen = ({navigation}) => {
   return (
     <ScrollView centerContent={true} contentContainerStyle={styles.body}>
       <View
@@ -16,7 +16,7 @@ export const LoginScreen = () => {
         <Logo />
       </View>
       <View style={styles.form}>
-        <FormLogin />
+        <FormLogin navigation={navigation} />
       </View>
     </ScrollView>
   );

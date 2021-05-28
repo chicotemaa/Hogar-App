@@ -4,15 +4,17 @@ import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 interface Props {
   title: string;
   color: string;
+  width?: number;
+  height?: number;
   onPress: () => void;
 }
 
-export const Button = ({title, color, onPress}: Props) => {
+export const Button = ({title, color, onPress, height, width}: Props) => {
   return (
     <TouchableOpacity
-      style={[styles.button, {backgroundColor: color}]}
+      style={[styles.button, {backgroundColor: color, height, width}]}
       onPress={onPress}>
-      <Text style={styles.text}>{title}</Text>
+      <Text style={[styles.text, {}]}>{title}</Text>
     </TouchableOpacity>
   );
 };

@@ -1,13 +1,17 @@
 import React, {useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {View} from 'react-native';
 import {Input} from 'react-native-elements';
 import {Button} from './Button';
 
-export const FormLogin = () => {
+export const FormLogin = ({navigation}) => {
   const [state, setState] = useState({
     email: '',
     password: '',
   });
+
+  const checkAuth = state => {
+    navigation.navigate('welcome', {state});
+  };
   return (
     <View style={{elevation: 9, margin: 10}}>
       <Input
@@ -28,10 +32,8 @@ export const FormLogin = () => {
       <Button
         title="Iniciar Sesión"
         color="#EC5342"
-        onPress={() => console.log(state)}
+        onPress={() => checkAuth(state)}
       />
     </View>
   );
 };
-
-const styles = StyleSheet.create({});
