@@ -1,21 +1,21 @@
-import {
-  NavigationContainer,
-  DefaultTheme,
-  DarkTheme,
-} from '@react-navigation/native';
+import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-const Stack = createStackNavigator();
 
 /* Screens */
 import {HomeScreen} from '../screens/HomeScreen';
 import {LoginScreen} from '../screens/LoginScreen';
 import {WelcomeScreen} from '../screens/WelcomeScreen';
 
-import React from 'react';
-import {useColorScheme} from 'react-native';
+/* Params in pages */
+export type RootStackParams = {
+  HomeScreen: undefined;
+  LoginScreen: undefined;
+  WelcomeScreen: {email: string; password: string};
+};
+
+const Stack = createStackNavigator<RootStackParams>();
 
 export const StackNavigator = () => {
-  const scheme = useColorScheme();
   return (
     <Stack.Navigator
       screenOptions={{
@@ -24,21 +24,17 @@ export const StackNavigator = () => {
           elevation: 0,
           shadowColor: 'transparent',
         },
-        // headerShown: false,
+        headerShown: false,
       }}>
+      <Stack.Screen name="LoginScreen" component={LoginScreen} />
       <Stack.Screen
-        name="loginScreen"
-        options={{title: ''}}
-        component={LoginScreen}
-      />
-      <Stack.Screen
-        name="homeScreen"
-        options={{title: ''}}
+        name="HomeScreen"
+        options={{title: '', headerBackTitle: ''}}
         component={HomeScreen}
       />
       <Stack.Screen
         name="WelcomeScreen"
-        options={{title: ''}}
+        options={{title: '', headerBackTitle: ''}}
         component={WelcomeScreen}
       />
     </Stack.Navigator>

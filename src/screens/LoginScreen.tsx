@@ -1,6 +1,5 @@
 import {StackScreenProps} from '@react-navigation/stack';
 import * as React from 'react';
-import {useEffect} from 'react';
 
 import {StyleSheet, View, ScrollView} from 'react-native';
 
@@ -10,12 +9,6 @@ import {Logo} from '../components/Logo';
 interface Props extends StackScreenProps<any, any> {}
 
 export const LoginScreen = ({navigation}: Props) => {
-  useEffect(() => {
-    navigation.setOptions({
-      headerShown: false,
-    });
-  }, []);
-
   return (
     <ScrollView centerContent={true} contentContainerStyle={styles.body}>
       <View

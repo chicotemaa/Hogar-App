@@ -5,6 +5,7 @@ import {Input} from 'react-native-elements';
 import {Button} from './Button';
 
 interface Props extends StackScreenProps<any, any> {}
+
 interface User {
   email: string;
   password: string;
@@ -16,8 +17,9 @@ export const FormLogin = ({navigation}: Props) => {
     password: '',
   });
 
-  const checkAuth = state => {
-    navigation.navigate('WelcomeScreen', {state});
+  const checkAuth = (state: User) => {
+    const {email, password} = state;
+    navigation.navigate('WelcomeScreen', {email, password});
   };
 
   return (

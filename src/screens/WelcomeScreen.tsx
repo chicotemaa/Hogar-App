@@ -1,14 +1,16 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Title} from '../components/Title';
 import {Button} from '../components/Button';
 import {styles} from '../theme/appTheme';
 import {StackScreenProps} from '@react-navigation/stack';
+import {RootStackParams} from '../navigator/StackNavigator';
 
-interface Props extends StackScreenProps<any, any> {}
+interface Props extends StackScreenProps<RootStackParams, 'WelcomeScreen'> {}
 
 export const WelcomeScreen = ({navigation, route}: Props) => {
-  const {email} = route.params.state;
+  const {email} = route.params;
+
   return (
     <View style={styles.container}>
       <View style={stylesWelcome.menuContainer}>
@@ -36,7 +38,7 @@ export const WelcomeScreen = ({navigation, route}: Props) => {
           color="#253D5B"
           height={70}
           width={270}
-          onPress={() => console.log('VerSolicitudes')}
+          onPress={() => console.log(email)}
         />
         <View style={stylesWelcome.aclaraciónContainer}>
           <Title

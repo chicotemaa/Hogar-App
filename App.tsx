@@ -8,12 +8,14 @@ import {
   DarkTheme,
 } from '@react-navigation/native';
 import {StackNavigator} from './src/navigator/StackNavigator';
+import {Menu} from './src/navigator/MenuLateral';
 
 const App = () => {
   const scheme = useColorScheme();
   return (
     <NavigationContainer theme={scheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <StackNavigator />
+      {/* <StackNavigator /> */}
+      <Menu />
     </NavigationContainer>
   );
 };
