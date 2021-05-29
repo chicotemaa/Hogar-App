@@ -2,15 +2,19 @@ import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Title} from '../components/Title';
 import {Button} from '../components/Button';
+import {styles} from '../theme/appTheme';
+import {StackScreenProps} from '@react-navigation/stack';
 
-export const WelcomeScreen = ({navigation, route}) => {
+interface Props extends StackScreenProps<any, any> {}
+
+export const WelcomeScreen = ({navigation, route}: Props) => {
   const {email} = route.params.state;
   return (
     <View style={styles.container}>
-      <View style={styles.menuContainer}>
-        <View style={styles.menu} />
+      <View style={stylesWelcome.menuContainer}>
+        <View style={stylesWelcome.menu} />
       </View>
-      <View style={styles.header}>
+      <View style={stylesWelcome.header}>
         <Title color="#343030" text={`Bienvenido ${email}`} size={63} />
         <Title color="#ED2914" text={`Santander Rio`} size={23} />
         <Title color="#EA4D3B" text={`Sucursal Resistencia`} size={23} />
@@ -23,7 +27,7 @@ export const WelcomeScreen = ({navigation, route}) => {
           width={270}
           onPress={() => console.log('solicitar')}
         />
-        <View style={styles.aclaraciónContainer}>
+        <View style={stylesWelcome.aclaraciónContainer}>
           <Title color="#343030" text={`Crear una nueva solicitud`} size={14} />
         </View>
 
@@ -34,7 +38,7 @@ export const WelcomeScreen = ({navigation, route}) => {
           width={270}
           onPress={() => console.log('VerSolicitudes')}
         />
-        <View style={styles.aclaraciónContainer}>
+        <View style={stylesWelcome.aclaraciónContainer}>
           <Title
             color="#343030"
             text={`Ver un historial de solicitudes previas`}
@@ -46,11 +50,7 @@ export const WelcomeScreen = ({navigation, route}) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#E7E1E1',
-  },
+const stylesWelcome = StyleSheet.create({
   menuContainer: {
     margin: 5,
   },

@@ -1,17 +1,25 @@
+import {StackScreenProps} from '@react-navigation/stack';
 import React, {useState} from 'react';
 import {View} from 'react-native';
 import {Input} from 'react-native-elements';
 import {Button} from './Button';
 
-export const FormLogin = ({navigation}) => {
-  const [state, setState] = useState({
+interface Props extends StackScreenProps<any, any> {}
+interface User {
+  email: string;
+  password: string;
+}
+
+export const FormLogin = ({navigation}: Props) => {
+  const [state, setState] = useState<User>({
     email: '',
     password: '',
   });
 
   const checkAuth = state => {
-    navigation.navigate('welcome', {state});
+    navigation.navigate('WelcomeScreen', {state});
   };
+
   return (
     <View style={{elevation: 9, margin: 10}}>
       <Input
