@@ -1,12 +1,23 @@
-import {StackScreenProps} from '@react-navigation/stack';
-import React from 'react';
-import {Text, View} from 'react-native';
-import {Button} from 'react-native-elements/dist/buttons/Button';
-import {TouchableHighlight} from 'react-native-gesture-handler';
+import React, {useEffect} from 'react';
 
-interface Props extends StackScreenProps<any, any> {}
+import {DrawerScreenProps} from '@react-navigation/drawer';
+import {Text, View, Button} from 'react-native';
 
-export const HomeScreen = () => {
+interface Props extends DrawerScreenProps<any, any> {}
+
+export const HomeScreen = ({navigation}: Props) => {
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <Button
+          title="Menu"
+          onPress={() => {
+            navigation.toggleDrawer();
+          }}
+        />
+      ),
+    });
+  }, []);
   return (
     <View>
       <Text>Hola mundo</Text>

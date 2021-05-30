@@ -10,9 +10,13 @@ const Drawer = createDrawerNavigator();
 
 export const Menu = () => {
   return (
-    <Drawer.Navigator>
+    <Drawer.Navigator screenOptions={{drawerPosition: 'right'}}>
       <Drawer.Screen name="home" component={HomeScreen} />
-      <Drawer.Screen name="Stack" component={StackNavigator} />
+      <Drawer.Screen
+        name="Stack"
+        component={StackNavigator}
+        options={{headerShown: false}}
+      />
     </Drawer.Navigator>
   );
 };
