@@ -14,7 +14,7 @@ export const functionToGetToken = async (
   username?: string,
   password?: string,
 ) => {
-  const response = axios({
+  return axios({
     url: baseToken,
     method: 'POST',
     headers: {
@@ -31,21 +31,21 @@ export const functionToGetToken = async (
       client_id: clientId,
       client_secret: clientSecret,
       grant_type: 'password',
-      username: 'Martias',
-      password: '12345',
+      username,
+      password,
     },
-  });
-
-  return response;
+  })
+  
 };
 
 export const getProfile = async (token?: string) => {
   const query = {
-    url: '/users/23',
+    url: '/formulario_resultados',
+
   };
   const response = await axios({
     method: 'GET',
-    url: baseApi + query.url,
+    url: baseApi + query.url ,
     headers: {
       Authorization: 'Bearer ' + token,
       'Content-Type': 'application/json',

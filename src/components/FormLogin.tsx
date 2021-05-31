@@ -3,12 +3,13 @@ import React, {useState} from 'react';
 import {View} from 'react-native';
 import {Input} from 'react-native-elements';
 import {Button} from './Button';
+import { functionToGetToken } from '../api/api';
 
 interface Props extends StackScreenProps<any, any> {}
 
 interface User {
   email: string;
-  password: string;
+  password: string;  
 }
 
 export const FormLogin = ({navigation}: Props) => {
@@ -19,7 +20,12 @@ export const FormLogin = ({navigation}: Props) => {
 
   const checkAuth = (state: User) => {
     const {email, password} = state;
-    navigation.navigate('WelcomeScreen', {email, password});
+    functionToGetToken(email,password)
+    .then((response) => {
+      console.log('correcto')
+      navigation.navigate('WelcomeScreen', {email, password, response})})
+    .catch((error) => {console.log('datos incorrectos')})
+    
   };
 
   return (

@@ -10,16 +10,9 @@ import {functionToGetToken, getProfile} from '../api/api';
 interface Props extends StackScreenProps<RootStackParams, 'WelcomeScreen'> {}
 
 export const WelcomeScreen = ({navigation, route}: Props) => {
-  const {email} = route.params;
-
-  const getToken = async () => {
-    const response = await functionToGetToken();
-    //console.log('hola');
-    //console.log(response);
-    const {access_token} = response.data;
-    const resp = await getProfile(access_token);
-    console.log(resp);
-  };
+  const {email, password, response} = route.params;
+  const {access_token} = response.data;
+  
 
   return (
     <View style={styles.container}>
@@ -48,7 +41,7 @@ export const WelcomeScreen = ({navigation, route}: Props) => {
           color="#253D5B"
           height={70}
           width={270}
-          onPress={() => getToken()}
+          onPress={() => console.log(access_token)}
         />
         <View style={stylesWelcome.aclaraciónContainer}>
           <Title

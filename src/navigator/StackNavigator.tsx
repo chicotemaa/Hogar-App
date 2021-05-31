@@ -10,7 +10,7 @@ import {WelcomeScreen} from '../screens/WelcomeScreen';
 export type RootStackParams = {
   HomeScreen: undefined;
   LoginScreen: undefined;
-  WelcomeScreen: {email: string; password: string};
+  WelcomeScreen: {email: string; password: string, response: any};
 };
 
 const Stack = createStackNavigator<RootStackParams>();
