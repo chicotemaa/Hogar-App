@@ -1,15 +1,25 @@
 import React, {useEffect} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {AppRegistry, StyleSheet, View} from 'react-native';
 import {Title} from '../components/Title';
 import {Button} from '../components/Button';
 import {styles} from '../theme/appTheme';
 import {StackScreenProps} from '@react-navigation/stack';
 import {RootStackParams} from '../navigator/StackNavigator';
+import {functionToGetToken, getProfile} from '../api/api';
 
 interface Props extends StackScreenProps<RootStackParams, 'WelcomeScreen'> {}
 
 export const WelcomeScreen = ({navigation, route}: Props) => {
   const {email} = route.params;
+
+  const getToken = async () => {
+    const response = await functionToGetToken();
+    //console.log('hola');
+    //console.log(response);
+    const {access_token} = response.data;
+    const resp = await getProfile(access_token);
+    console.log(resp);
+  };
 
   return (
     <View style={styles.container}>
@@ -38,7 +48,7 @@ export const WelcomeScreen = ({navigation, route}: Props) => {
           color="#253D5B"
           height={70}
           width={270}
-          onPress={() => console.log(email)}
+          onPress={() => getToken()}
         />
         <View style={stylesWelcome.aclaraciónContainer}>
           <Title

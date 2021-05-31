@@ -1,64 +1,55 @@
 import axios from 'axios';
 
-const clientId = '';
-const clientSecret = '';
+const clientId = '1_4ta05vfoy58ggoggwo08kck000kocckwgcckk8wgkck440cgcw';
+const clientSecret = '176y7wqisfvkcwk8oswowksks0cocsoc00ko4k4oosc0ocwck4';
 
-const base = 'https://sistemas.hogarmantenimiento.com';
-// var base = 'https://127.0.0.1:8000'
-// var base = 'https://192.168.0.223:8000'
+// const base = 'https://sistemas.hogarmantenimiento.com';
+//const base = 'http://127.0.0.1:8000';
+const base = 'http://10.0.2.2:8000';
+
 const baseApi = base + '/api';
 const baseToken = base + '/oauth/v2/token';
-const dataToAccessApi = {
-  method: 'POST',
-  url: baseToken,
-  headers: {
-    'Content-Type': 'application/x-www-form-urlencoded',
-  },
-  transformRequest: function (obj) {
-    const str = [];
-    for (let p in obj) {
-      str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]));
-    }
-    return str.join('&');
-  },
-  data: {},
+
+export const functionToGetToken = async (
+  username?: string,
+  password?: string,
+) => {
+  const response = axios({
+    url: baseToken,
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    transformRequest: function (obj) {
+      var str = [];
+      for (var p in obj) {
+        str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]));
+      }
+      return str.join('&');
+    },
+    data: {
+      client_id: clientId,
+      client_secret: clientSecret,
+      grant_type: 'password',
+      username: 'Martias',
+      password: '12345',
+    },
+  });
+
+  return response;
 };
 
-// const functionToHttpRequets = (
-//   method,
-//   query,
-//   headers,
-//   data,
-//   onSuccessRequest,
-//   onErrorRequest,
-// ) => {
-//   $axios({
-//     method: method,
-//     url: this.getUrl(query),
-//     headers: headers,
-//     data: data,
-//   }).then(onSuccessRequest, response => {
-//     response.response.status === 401
-//       ? this.functionToRefreshToken(
-//           method,
-//           query,
-//           headers,
-//           data,
-//           onSuccessRequest,
-//           onErrorRequest,
-//         )
-//       : onErrorRequest(response);
-//   });
-// };
-
-export const functionToGetToken = (username?: string, password?: string) => {
-  const data = {
-    client_id: clientId,
-    client_secret: clientSecret,
-    grant_type: 'password',
-    username: username,
-    password: password,
+export const getProfile = async (token?: string) => {
+  const query = {
+    url: '/users/23',
   };
-
-  dataToAccessApi.data = data;
+  const response = await axios({
+    method: 'GET',
+    url: baseApi + query.url,
+    headers: {
+      Authorization: 'Bearer ' + token,
+      'Content-Type': 'application/json',
+    },
+  });
+  return response;
 };
