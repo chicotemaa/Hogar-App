@@ -1,9 +1,11 @@
 import {StackScreenProps} from '@react-navigation/stack';
 import React, {useState} from 'react';
-import {View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {Input} from 'react-native-elements';
 import {Button} from './Button';
 import { functionToGetToken } from '../api/api';
+import { TextInput } from 'react-native-paper';
+
 
 interface Props extends StackScreenProps<any, any> {}
 
@@ -18,33 +20,47 @@ export const FormLogin = ({navigation}: Props) => {
     password: '',
   });
 
+  const [hidePass, setHidePass] = useState(true);
+
   const checkAuth = (state: User) => {
     const {email, password} = state;
     functionToGetToken(email,password)
     .then((response) => {
       console.log('correcto')
       navigation.navigate('WelcomeScreen', {email, password, response})})
-    .catch((error) => {console.log('datos incorrectos')})
+    .catch((error) => {
+      console.log('datos incorrectos')
+      
+  })
     
   };
 
   return (
-    <View style={{elevation: 9, margin: 10}}>
-      <Input
-        label={'Email'}
-        placeholder="Email"
-        autoCompleteType="email"
-        keyboardType="email-address"
-        onChangeText={value => setState({...state, email: value})}
-      />
-      <Input
-        textContentType="password"
-        secureTextEntry={true}
-        label={'Contraseña'}
-        placeholder="Contraseña"
-        onChangeText={value => setState({...state, password: value})}
-      />
-
+    <View>
+      <View style={{marginBottom: 15}}>
+        <TextInput
+          mode={'outlined'}
+          outlineColor="#8B8B8B"
+          value={state.email}
+          onChangeText={value => setState({...state, email: value})}
+          label="Email"
+          style={styles.input}
+          theme={{roundness: 10}}
+        />
+        <TextInput
+          mode={'outlined'}
+          outlineColor="#8B8B8B"
+          value={state.password}
+          onChangeText={value => setState({...state, password: value})}
+          theme={{roundness: 10}}
+          style={styles.input}
+          label="Contraseña"
+          secureTextEntry={hidePass ? true : false}
+          right={
+            <TextInput.Icon onPress={() => setHidePass(!hidePass)} name="eye" />
+          }
+        />
+      </View>
       <Button
         title="Iniciar Sesión"
         color="#EC5342"
@@ -53,3 +69,12 @@ export const FormLogin = ({navigation}: Props) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({  
+  input: {    
+    alignSelf: 'center',
+    width:360,
+    marginBottom:10,     
+  },  
+});
+

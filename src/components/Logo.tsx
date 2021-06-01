@@ -12,6 +12,8 @@ export const Logo = () => {
         backgroundColor: '#FFFFFF',
         padding: 15,
         borderRadius: 100,
+        borderWidth:1,
+        borderColor: '#8B8B8B',
       }}
       imageProps={styles.imagenLogo}
       source={logo}

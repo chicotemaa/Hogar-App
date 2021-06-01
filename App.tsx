@@ -4,19 +4,32 @@ import {useColorScheme} from 'react-native';
 
 import {
   NavigationContainer,
-  DefaultTheme,
   DarkTheme,
 } from '@react-navigation/native';
 import {StackNavigator} from './src/navigator/StackNavigator';
 import {Menu} from './src/navigator/MenuLateral';
 
+import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
+const theme = {
+  ...DefaultTheme,
+  roundness: 2,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: '#EC5342',
+    accent: '#f1c40f',
+  },
+};
+
+
 const App = () => {
   const scheme = useColorScheme();
   return (
-    <NavigationContainer theme={scheme === 'dark' ? DarkTheme : DefaultTheme}>
-      {/* <StackNavigator /> */}
-      <Menu />
-    </NavigationContainer>
+    <PaperProvider theme={theme}>
+      <NavigationContainer>
+        {/* <StackNavigator /> */}
+        <Menu />
+      </NavigationContainer>
+    </PaperProvider>
   );
 };
 
