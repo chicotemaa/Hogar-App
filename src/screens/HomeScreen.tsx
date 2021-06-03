@@ -20,7 +20,7 @@ export const HomeScreen = ({navigation}: Props) => {
   }, []);
   return (
     <View>
-      <Text>Hola mundo</Text>
+      <Text>Pantalla inicio</Text>
     </View>
   );
 };

@@ -3,22 +3,28 @@ import {AppRegistry, StyleSheet, View} from 'react-native';
 import {Title} from '../components/Title';
 import {Button} from '../components/Button';
 import {styles} from '../theme/appTheme';
-import {StackScreenProps} from '@react-navigation/stack';
+import {StackScreenProps, createStackNavigator} from '@react-navigation/stack';
 import {RootStackParams} from '../navigator/StackNavigator';
 import {functionToGetToken, getProfile} from '../api/api';
+import {getSolicitudesAPI} from '../api/apiClientes';
 
 interface Props extends StackScreenProps<RootStackParams, 'WelcomeScreen'> {}
 
 export const WelcomeScreen = ({navigation, route}: Props) => {
   const {email, password, response} = route.params;
   const {access_token} = response.data;
-  
+
+  const handleSolicitud = async () => {
+    const solicitudes = await getSolicitudesAPI(access_token);
+    console.log(solicitudes);
+  };
 
   return (
     <View style={styles.container}>
       <View style={stylesWelcome.menuContainer}>
         <View style={stylesWelcome.menu} />
       </View>
+
       <View style={stylesWelcome.header}>
         <Title color="#343030" text={`Bienvenido ${email}`} size={63} />
         <Title color="#ED2914" text={`Santander Rio`} size={23} />
@@ -30,7 +36,7 @@ export const WelcomeScreen = ({navigation, route}: Props) => {
           color="#178C54"
           height={70}
           width={270}
-          onPress={() => console.log('solicitar')}
+          onPress={handleSolicitud}
         />
         <View style={stylesWelcome.aclaraciónContainer}>
           <Title color="#343030" text={`Crear una nueva solicitud`} size={14} />
@@ -41,7 +47,9 @@ export const WelcomeScreen = ({navigation, route}: Props) => {
           color="#253D5B"
           height={70}
           width={270}
-          onPress={() => console.log(access_token)}
+          onPress={() =>
+            navigation.navigate('HistorialSolicitudesScreen', {access_token})
+          }
         />
         <View style={stylesWelcome.aclaraciónContainer}>
           <Title

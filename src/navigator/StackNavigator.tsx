@@ -5,12 +5,21 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {HomeScreen} from '../screens/HomeScreen';
 import {LoginScreen} from '../screens/LoginScreen';
 import {WelcomeScreen} from '../screens/WelcomeScreen';
+//Para cliente
+import {CrearSolicitudScreen} from '../screens/CrearSolicitudScreen';
+import {DetalleSolicitudScreen} from '../screens/DetalleSolicitudScreen';
+
+import {HistorialSolicitudesScreen} from '../screens/HistorialSolicitudesScreen';
+import {Drawer} from 'react-native-paper';
 
 /* Params in pages */
 export type RootStackParams = {
   HomeScreen: undefined;
   LoginScreen: undefined;
-  WelcomeScreen: {email: string; password: string, response: any};
+  WelcomeScreen: {email: string; password: string; response: any};
+  CrearSolicitudScreen: undefined;
+  DetalleSolicitudScreen: undefined;
+  HistorialSolicitudesScreen: {access_token: string};
 };
 
 const Stack = createStackNavigator<RootStackParams>();
@@ -36,6 +45,19 @@ export const StackNavigator = () => {
         name="WelcomeScreen"
         options={{title: '', headerBackTitle: ''}}
         component={WelcomeScreen}
+      />
+      <Stack.Screen
+        name="CrearSolicitudScreen"
+        component={CrearSolicitudScreen}
+      />
+      <Stack.Screen
+        name="DetalleSolicitudScreen"
+        component={DetalleSolicitudScreen}
+      />
+      <Stack.Screen
+        name="HistorialSolicitudesScreen"
+        component={HistorialSolicitudesScreen}
+        options={{headerShown: true}}
       />
     </Stack.Navigator>
   );

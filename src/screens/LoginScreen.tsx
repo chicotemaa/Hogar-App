@@ -5,16 +5,18 @@ import {StyleSheet, View, ScrollView} from 'react-native';
 
 import {FormLogin} from '../components/FormLogin';
 import {Logo} from '../components/Logo';
+import { DrawerScreenProps, DrawerContent } from '@react-navigation/drawer';
+import { HomeScreen } from './HomeScreen';
 
 interface Props extends StackScreenProps<any, any> {}
 
 export const LoginScreen = ({navigation}: Props) => {
+  navigation.setOptions({})
   return (
     <ScrollView centerContent={true} contentContainerStyle={styles.body}>
       <View
         style={{
           alignSelf: 'center',
-          margin: 10,
         }}>
         <Logo />
       </View>

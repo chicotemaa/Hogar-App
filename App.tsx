@@ -2,10 +2,7 @@ import 'react-native-gesture-handler';
 import React from 'react';
 import {useColorScheme} from 'react-native';
 
-import {
-  NavigationContainer,
-  DarkTheme,
-} from '@react-navigation/native';
+import {NavigationContainer, DarkTheme} from '@react-navigation/native';
 import {StackNavigator} from './src/navigator/StackNavigator';
 import {Menu} from './src/navigator/MenuLateral';
 
@@ -19,7 +16,6 @@ const theme = {
     accent: '#f1c40f',
   },
 };
-
 
 const App = () => {
   const scheme = useColorScheme();

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {createDrawerNavigator} from '@react-navigation/drawer';
+import {createDrawerNavigator, DrawerContent} from '@react-navigation/drawer';
 import {SettingsScreen} from '../screens/SettingsScreen';
 import {StackNavigator} from './StackNavigator';
 import {HomeScreen} from '../screens/HomeScreen';
@@ -11,11 +11,12 @@ const Drawer = createDrawerNavigator();
 export const Menu = () => {
   return (
     <Drawer.Navigator screenOptions={{drawerPosition: 'right'}}>
-      <Drawer.Screen name="home" component={HomeScreen} />
+      <Drawer.Screen name="home" options={{title:'Inicio'}} component={HomeScreen} />
       <Drawer.Screen
+        
         name="Stack"
         component={StackNavigator}
-        options={{headerShown: false}}
+        options={{headerShown: false,title:'Iniciar Sesión'}}
       />
     </Drawer.Navigator>
   );
