@@ -42,22 +42,6 @@ export const HistorialSolicitudesScreen = ({navigation, route}: Props) => {
         );
       });
     }
-
-    {
-      /* <ItemHistorial
-            date={element.date}
-            location={element.location}
-            number={element.number}
-            title={element.title}
-            estado={element.estado}
-          /> */
-    }
-
-    return (
-      <View>
-        <Text>hola</Text>
-      </View>
-    );
   };
 
   return (
@@ -85,6 +69,8 @@ const stylesHistorial = StyleSheet.create({
     fontWeight: '900',
     alignSelf: 'center',
     textAlign: 'center',
+    textShadowColor: '#000000',
+    textShadowRadius: 1,
   },
   message: {
     fontSize: 30,

@@ -7,8 +7,8 @@ export const Detalle = () => {
       <TouchableOpacity onPress={() => {}}>
         <Text
           style={{
-            color: 'red',
-            fontSize: 19,
+            color: '#EC5342',
+            fontSize: 21,
             fontWeight: 'bold',
             alignSelf: 'flex-end',
           }}>

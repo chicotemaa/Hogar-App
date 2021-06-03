@@ -13,7 +13,7 @@ export const Estado = ({estado}: Props) => {
         <View style={{flexDirection: 'row', marginVertical: 4}}>
           <IconoEstado color={color} />
           <Text
-            style={{marginLeft: 2, color: color, fontSize: 18, paddingLeft: 2}}>
+            style={{marginLeft: 2, color: color, fontSize: 20, paddingLeft: 1}}>
             {estado}
           </Text>
         </View>

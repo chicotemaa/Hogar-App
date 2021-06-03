@@ -19,6 +19,7 @@ export const ItemHistorial = ({
   date,
   estado,
 }: Props) => {
+  formatDate(date);
   return (
     <View style={styles.container}>
       <View
@@ -32,7 +33,7 @@ export const ItemHistorial = ({
           <Text style={styles.number}>#{number}</Text>
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.info}>{location}</Text>
-          <Text style={styles.info}>{date}</Text>
+          <Text style={styles.info}>{formatDate(date)}</Text>
         </View>
         <View style={{justifyContent: 'space-between', marginRight: 7}}>
           <Estado estado={estado} />
@@ -42,6 +43,10 @@ export const ItemHistorial = ({
     </View>
   );
 };
+
+function formatDate(date: string) {
+  return date.split('T', 1);
+}
 
 const styles = StyleSheet.create({
   container: {

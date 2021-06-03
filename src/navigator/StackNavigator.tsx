@@ -57,7 +57,7 @@ export const StackNavigator = () => {
       <Stack.Screen
         name="HistorialSolicitudesScreen"
         component={HistorialSolicitudesScreen}
-        options={{headerShown: true}}
+        options={{headerShown: true, title: ''}}
       />
     </Stack.Navigator>
   );
