@@ -57,7 +57,6 @@ const getSolicitudesRequest = async (token: string) => {
 export const getSolicitudesAPI = async (token: string) => {
   return getSolicitudesRequest(token)
     .then(array => {
-      //TODO: cambiar orden de las solicitudes
       const elements = array.map(
         ({id, cliente, createdAt, necesitasAyuda}: Solicitud) => {
           return {
@@ -70,7 +69,7 @@ export const getSolicitudesAPI = async (token: string) => {
         },
       );
 
-      return elements;
+      return elements.reverse();
     })
     .catch(error => {
       console.log(error);
