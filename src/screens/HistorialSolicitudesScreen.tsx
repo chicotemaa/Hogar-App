@@ -7,13 +7,20 @@ import {getSolicitudesAPI} from '../api/apiClientes';
 import {RootStackParams} from '../navigator/StackNavigator';
 import {StackScreenProps} from '@react-navigation/stack';
 import {windowWidth, windowHeight} from '../../App';
+import {getData} from '../api/api';
 
 interface Props
   extends StackScreenProps<RootStackParams, 'HistorialSolicitudesScreen'> {}
 
-export const HistorialSolicitudesScreen = ({navigation, route}: Props) => {
-  //TODO:  Obtener de la API los elementos y renderizar con un map todos los items
-  const {access_token} = route.params;
+interface Solicitud {
+  title: string;
+  number: string;
+  estado: 'Pendiente' | 'En Revisión';
+  date: string;
+  location: string;
+}
+
+export const HistorialSolicitudesScreen = ({navigation}: Props) => {
   const empty = (
     <View>
       <Text style={stylesHistorial.message}>No hay solicitudes</Text>
@@ -26,33 +33,36 @@ export const HistorialSolicitudesScreen = ({navigation, route}: Props) => {
   }, []);
 
   const mostrarSolicitudes = async () => {
-    getSolicitudesAPI(access_token)
-      .then(array => {
-        setItems(getItems(array));
-      })
-      .catch(() => {
-        setItems(empty);
-      });
-
-    function getItems(array) {
-      if (array.length === 0) {
-        console.log('aca entra');
-        return empty;
-      } else {
-        return array.map((element: Solicitud) => {
-          return (
-            <ItemHistorial
-              key={element.number.toString()}
-              date={element.date}
-              location={element.location}
-              number={element.number}
-              title={element.title}
-              estado={element.estado}
-            />
-          );
+    getData('access_token').then((token: string) => {
+      getSolicitudesAPI(token)
+        .then(array => {
+          setItems(getItems(array));
+        })
+        .catch(() => {
+          setItems(empty);
         });
+
+      function getItems(array) {
+        if (array.length === 0) {
+          console.log('aca entra');
+          return empty;
+        } else {
+          return array.map((element: Solicitud) => {
+            return (
+              <ItemHistorial
+                key={element.number.toString()}
+                date={element.date}
+                location={element.location}
+                number={element.number}
+                title={element.title}
+                estado={element.estado}
+                navigation={navigation}
+              />
+            );
+          });
+        }
       }
-    }
+    });
   };
 
   return (
@@ -91,11 +101,3 @@ const stylesHistorial = StyleSheet.create({
     fontWeight: '500',
   },
 });
-
-interface Solicitud {
-  title: string;
-  number: string;
-  estado: 'Pendiente' | 'En Revisión';
-  date: string;
-  location: string;
-}

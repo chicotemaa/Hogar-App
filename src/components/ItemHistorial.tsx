@@ -1,10 +1,13 @@
+import {StackScreenProps} from '@react-navigation/stack';
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Text} from 'react-native-elements';
-import {Detalle} from './Historial/Detalle';
+import {RootStackParams} from '../navigator/StackNavigator';
+import {DetalleButton} from './Historial/DetalleButton';
 import {Estado} from './Historial/Estado';
 
-interface Props {
+interface Props
+  extends StackScreenProps<RootStackParams, 'HistorialSolicitudesScreen'> {
   number: string;
   title: string;
   location: string;
@@ -18,6 +21,7 @@ export const ItemHistorial = ({
   location,
   date,
   estado,
+  navigation,
 }: Props) => {
   formatDate(date);
   return (
@@ -37,7 +41,7 @@ export const ItemHistorial = ({
         </View>
         <View style={{justifyContent: 'space-between', marginRight: 7}}>
           <Estado estado={estado} />
-          <Detalle />
+          <DetalleButton codigo={number} navigation={navigation} />
         </View>
       </View>
     </View>

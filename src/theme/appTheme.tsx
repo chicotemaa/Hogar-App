@@ -1,10 +1,12 @@
 import {StyleSheet} from 'react-native';
+import {windowWidth} from '../../App';
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#E7E1E1',
     paddingHorizontal: 15,
+    width: '100%',
   },
   menuContainer: {
     flex: 1,
@@ -30,5 +32,13 @@ export const styles = StyleSheet.create({
     flexDirection: 'column-reverse',
     marginTop: 10,
     flex: 1,
+  },
+  title: {
+    fontSize: 0.1 * windowWidth,
+    fontWeight: '900',
+    alignSelf: 'center',
+    textAlign: 'center',
+    textShadowColor: '#000000',
+    textShadowRadius: 0,
   },
 });

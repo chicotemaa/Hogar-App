@@ -1,4 +1,5 @@
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const clientId = '1_4ta05vfoy58ggoggwo08kck000kocckwgcckk8wgkck440cgcw';
 const clientSecret = '176y7wqisfvkcwk8oswowksks0cocsoc00ko4k4oosc0ocwck4';
@@ -50,7 +51,7 @@ export const functionToGetToken = async (
   });
 };
 
-export const getProfile = async (token?: string) => {
+export const getUserInfo = async (token?: string) => {
   const query = {
     url: '/user/info',
   };
@@ -62,4 +63,24 @@ export const getProfile = async (token?: string) => {
     },
   });
   console.log(response);
+};
+
+//To save local
+export const storeData = async (name: string, value: string) => {
+  try {
+    await AsyncStorage.setItem(name, value);
+  } catch (e) {
+    // saving error
+  }
+};
+
+export const getData = async (name: string) => {
+  try {
+    const value = await AsyncStorage.getItem(name);
+    if (value) {
+      return value;
+    }
+  } catch (e) {
+    return e;
+  }
 };

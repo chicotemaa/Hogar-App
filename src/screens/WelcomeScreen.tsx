@@ -5,18 +5,17 @@ import {Button} from '../components/Button';
 import {styles} from '../theme/appTheme';
 import {StackScreenProps, createStackNavigator} from '@react-navigation/stack';
 import {RootStackParams} from '../navigator/StackNavigator';
-import {functionToGetToken, getProfile} from '../api/api';
+import {functionToGetToken, getUserInfo} from '../api/api';
 import {getSolicitudesAPI} from '../api/apiClientes';
 
 interface Props extends StackScreenProps<RootStackParams, 'WelcomeScreen'> {}
 
 export const WelcomeScreen = ({navigation, route}: Props) => {
-  const {email, password, response} = route.params;
-  const {access_token} = response.data;
+  const {email, token} = route.params;
 
   const handleSolicitud = async () => {
-    const solicitudes = await getSolicitudesAPI(access_token);
-    console.log(solicitudes);
+    //const solicitudes = await getSolicitudesAPI(token);
+    console.log(token);
   };
 
   return (
@@ -47,9 +46,7 @@ export const WelcomeScreen = ({navigation, route}: Props) => {
           color="#253D5B"
           height={70}
           width={270}
-          onPress={() =>
-            navigation.navigate('HistorialSolicitudesScreen', {access_token})
-          }
+          onPress={() => navigation.navigate('HistorialSolicitudesScreen')}
         />
         <View style={stylesWelcome.aclaraciónContainer}>
           <Title

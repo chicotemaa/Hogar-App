@@ -10,15 +10,16 @@ import {CrearSolicitudScreen} from '../screens/CrearSolicitudScreen';
 
 import {HistorialSolicitudesScreen} from '../screens/HistorialSolicitudesScreen';
 import {Drawer} from 'react-native-paper';
+import {DetallesSolicitudScreen} from '../screens/DetallesSolicitudScreen';
 
 /* Params in pages */
 export type RootStackParams = {
   HomeScreen: undefined;
   LoginScreen: undefined;
-  WelcomeScreen: {email: string; password: string; response: any};
+  WelcomeScreen: {email: string; token: string};
   CrearSolicitudScreen: undefined;
-  DetalleSolicitudScreen: undefined;
-  HistorialSolicitudesScreen: {access_token: string};
+  DetalleSolicitudScreen: {codigo: string; navigation: any};
+  HistorialSolicitudesScreen: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParams>();
@@ -26,6 +27,7 @@ const Stack = createStackNavigator<RootStackParams>();
 export const StackNavigator = () => {
   return (
     <Stack.Navigator
+      initialRouteName={'DetalleSolicitudScreen'}
       screenOptions={{
         headerStyle: {
           backgroundColor: '#E7E1E1',
@@ -53,6 +55,11 @@ export const StackNavigator = () => {
         name="HistorialSolicitudesScreen"
         component={HistorialSolicitudesScreen}
         options={{headerShown: true, title: ''}}
+      />
+      <Stack.Screen
+        name="DetalleSolicitudScreen"
+        component={DetallesSolicitudScreen}
+        options={{headerShown: true, title: 'Atras'}}
       />
     </Stack.Navigator>
   );

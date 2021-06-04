@@ -1,8 +1,9 @@
 import {StackScreenProps} from '@react-navigation/stack';
 import React, {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {functionToGetToken} from '../api/api';
+import {functionToGetToken, getData, storeData} from '../api/api';
 import {TextInput, Button, Snackbar} from 'react-native-paper';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface Props extends StackScreenProps<any, any> {}
 
@@ -32,13 +33,19 @@ export const FormLogin = ({navigation}: Props) => {
 
     functionToGetToken(email, password)
       .then(response => {
-        console.log('correcto');
         setIsLoading(false);
         setCorrectLogin(true);
-        navigation.navigate('WelcomeScreen', {email, password, response});
+        const {access_token, expires_in, refresh_token} = response.data;
+        storeData('access_token', access_token);
+        storeData('timeExpire', expires_in); // hacer string
+        storeData('refresh_token', refresh_token);
+
+        getData('access_token').then(token => {
+          console.log(token);
+          navigation.navigate('WelcomeScreen', {email, token});
+        });
       })
       .catch(error => {
-        //setCorrectLogin(false)
         onToggleSnackBar();
         setIsLoading(false);
         setCorrectLogin(false);

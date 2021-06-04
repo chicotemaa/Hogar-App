@@ -1,32 +1,6 @@
 import {api, baseApi} from './api';
-
-export const getSolicitudes = (token?: string) => {
-  //consulta -> descripcion
-  //necesitasAyuda -> titulo
-  return [
-    {
-      title: 'Cañeria rota',
-      date: '2 Junio 2021',
-      location: 'Calle 123',
-      estado: 'En Revisión',
-      number: '5',
-    },
-    {
-      title: 'Cañeria rota',
-      date: '2 Junio 2021',
-      location: 'Calle 123',
-      estado: 'Pendiente',
-      number: '5',
-    },
-    {
-      title: 'Cañeria ',
-      date: '2 Junio 2021',
-      location: 'Calle 123',
-      estado: 'Pendiente',
-      number: '5',
-    },
-  ];
-};
+//consulta -> descripcion
+//necesitasAyuda -> titulo
 
 interface Solicitud {
   id: number;
@@ -74,4 +48,17 @@ export const getSolicitudesAPI = async (token: string) => {
     .catch(error => {
       console.log(error);
     });
+};
+
+export const getSolicitudById = async (id: string, token: string) => {
+  const query = {
+    url: '/solicituds/' + id,
+  };
+  const response = await api.get(baseApi + query.url, {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  });
+
+  return response.data;
 };
