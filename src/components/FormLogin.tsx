@@ -1,7 +1,6 @@
 import {StackScreenProps} from '@react-navigation/stack';
 import React, {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {Input} from 'react-native-elements';
 import {functionToGetToken} from '../api/api';
 import {TextInput, Button, Snackbar} from 'react-native-paper';
 
@@ -90,7 +89,7 @@ export const FormLogin = ({navigation}: Props) => {
         style={styles.button}
         onPress={() => checkAuth(state)}
         theme={{colors: {background: 'transparent'}}}>
-        {isLoading ? '' : 'Iniciar Sesión'}
+        {isLoading ? 'Iniciando Sesión' : 'Iniciar Sesión'}
       </Button>
     </View>
   );

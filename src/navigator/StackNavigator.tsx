@@ -7,7 +7,6 @@ import {LoginScreen} from '../screens/LoginScreen';
 import {WelcomeScreen} from '../screens/WelcomeScreen';
 //Para cliente
 import {CrearSolicitudScreen} from '../screens/CrearSolicitudScreen';
-import {DetalleSolicitudScreen} from '../screens/DetalleSolicitudScreen';
 
 import {HistorialSolicitudesScreen} from '../screens/HistorialSolicitudesScreen';
 import {Drawer} from 'react-native-paper';
@@ -49,10 +48,6 @@ export const StackNavigator = () => {
       <Stack.Screen
         name="CrearSolicitudScreen"
         component={CrearSolicitudScreen}
-      />
-      <Stack.Screen
-        name="DetalleSolicitudScreen"
-        component={DetalleSolicitudScreen}
       />
       <Stack.Screen
         name="HistorialSolicitudesScreen"
