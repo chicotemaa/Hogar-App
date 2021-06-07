@@ -1,7 +1,6 @@
 import {StackScreenProps} from '@react-navigation/stack';
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {Modal, Portal, Text, Button, Provider} from 'react-native-paper';
 import {getSolicitudById} from '../api/apiClientes';
 import {RootStackParams} from '../navigator/StackNavigator';
 import {getData, getImage, getServicioAPI} from '../api/api';
@@ -23,8 +22,6 @@ interface InfoSolicitud {
 }
 
 export const DetallesSolicitudScreen = ({navigation, route}: Props) => {
-  const [visible, setVisible] = useState(false);
-
   const infoSolicitud: InfoSolicitud = {
     consulta: '',
     createdAt: '',
@@ -62,43 +59,25 @@ export const DetallesSolicitudScreen = ({navigation, route}: Props) => {
     });
   }, []);
 
-  const showModal = () => setVisible(true);
-  const hideModal = () => setVisible(false);
-
   return (
-    <Provider>
-      <View style={{backgroundColor: '#E7E1E1', flex: 1}}>
-        <Header
-          id={id}
-          title={solicitud.necesitasAyuda}
-          fecha={solicitud.createdAt}
-        />
-
-        <View style={[styles.container, {flex: 5.3}]}>
-          <Portal>
-            <Modal
-              visible={visible}
-              onDismiss={hideModal}
-              contentContainerStyle={stylesDetalle.containerModal}>
-              <Text>{id}</Text>
-            </Modal>
-          </Portal>
-
-          <View>
-            <Solicitud
-              token={solicitud.token}
-              consulta={solicitud.consulta}
-              servicio={solicitud.servicio}
-              estado={solicitud.estado}
-              imagen={solicitud.imagen}
-            />
-            <Button style={{flex: 1}} onPress={showModal}>
-              Show
-            </Button>
-          </View>
+    <View style={{backgroundColor: '#E7E1E1', flex: 1}}>
+      <Header
+        id={id}
+        title={solicitud.necesitasAyuda}
+        fecha={solicitud.createdAt}
+      />
+      <View style={[styles.container, {flex: 5.3}]}>
+        <View>
+          <Solicitud
+            token={solicitud.token}
+            consulta={solicitud.consulta}
+            servicio={solicitud.servicio}
+            estado={solicitud.estado}
+            imagen={solicitud.imagen}
+          />
         </View>
       </View>
-    </Provider>
+    </View>
   );
 };
 
