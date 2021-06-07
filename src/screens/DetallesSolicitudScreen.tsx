@@ -8,6 +8,7 @@ import {getData} from '../api/api';
 import {Solicitud} from '../components/Solicitud';
 import {styles} from '../theme/appTheme';
 import {ScrollView} from 'react-native-gesture-handler';
+import {HeaderNuevo} from '../components/HeaderNuevo';
 
 interface Props
   extends StackScreenProps<RootStackParams, 'DetalleSolicitudScreen'> {}
@@ -27,25 +28,25 @@ export const DetallesSolicitudScreen = ({navigation, route}: Props) => {
 
   return (
     <Provider>
-      <View style={styles.container}>
-        <Portal>
-          <Modal
-            visible={visible}
-            onDismiss={hideModal}
-            contentContainerStyle={stylesDetalle.containerModal}>
-            <Text>{codigo}</Text>
-          </Modal>
-        </Portal>
+      <View style={{backgroundColor: 'black', flex: 1}}>
+        <HeaderNuevo />
+        <View style={[styles.container, {flex: 5.3}]}>
+          <Portal>
+            <Modal
+              visible={visible}
+              onDismiss={hideModal}
+              contentContainerStyle={stylesDetalle.containerModal}>
+              <Text>{codigo}</Text>
+            </Modal>
+          </Portal>
 
-        <View style={{paddingVertical: 3}}>
-          <Header id="144" />
+          <View style={{backgroundColor: 'black'}}>
+            <Solicitud />
+          </View>
+          <Button style={{marginTop: 30, flex: 1}} onPress={showModal}>
+            Show
+          </Button>
         </View>
-        <DetallesHeader fecha="1-06-2021" title="Foco quemado" />
-
-        <Solicitud />
-        <Button style={{marginTop: 30, flex: 1}} onPress={showModal}>
-          Show
-        </Button>
       </View>
     </Provider>
   );

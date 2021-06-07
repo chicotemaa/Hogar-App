@@ -30,7 +30,7 @@ export const StackNavigator = () => {
       initialRouteName={'DetalleSolicitudScreen'}
       screenOptions={{
         headerStyle: {
-          backgroundColor: '#E7E1E1',
+          backgroundColor: '#EC5342',
           elevation: 0,
           shadowColor: 'transparent',
         },
