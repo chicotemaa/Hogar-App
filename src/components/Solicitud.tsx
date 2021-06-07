@@ -28,21 +28,15 @@ export const Solicitud = ({
 
           <View style={styleSolicitud.containerElement}>
             <Text style={styleSolicitud.titleElement}>Fotos</Text>
-            <Image
+            <Divider
               style={{
-                width: 300,
-                height: 300,
-                resizeMode: 'center',
-                alignSelf: 'center',
-              }}
-              source={{
-                uri: `data:image/png;base64,${imagen}`,
-                headers: {
-                  Pragma: 'no-cache',
-                  Authorization: `Bearer ${token}`,
-                },
+                marginTop: 5,
+                marginBottom: 10,
+                backgroundColor: '#EC5342',
+                height: 2,
               }}
             />
+            {imagen === null ? noImagen() : mostrarImagen(imagen, token)}
           </View>
         </View>
       </View>
@@ -55,6 +49,40 @@ interface PropsElement {
   body: string;
 }
 
+function noImagen() {
+  return (
+    <Text
+      style={[
+        styleSolicitud.bodyElement,
+        {
+          color: 'red',
+          fontSize: 20,
+        },
+      ]}>
+      No existen imagenes cargadas.
+    </Text>
+  );
+}
+
+function mostrarImagen(imagen: string, token: string) {
+  return (
+    <Image
+      style={{
+        width: 300,
+        height: 300,
+        resizeMode: 'center',
+        alignSelf: 'center',
+      }}
+      source={{
+        uri: `data:image/png;base64,${imagen}`,
+        headers: {
+          Pragma: 'no-cache',
+          Authorization: `Bearer ${token}`,
+        },
+      }}
+    />
+  );
+}
 const Elemento = ({title, body}: PropsElement) => {
   return (
     <View style={styleSolicitud.containerElement}>
@@ -96,6 +124,6 @@ const styleSolicitud = StyleSheet.create({
   },
   bodyElement: {
     paddingVertical: 10,
-    fontSize: 17,
+    fontSize: 18.5,
   },
 });

@@ -104,7 +104,7 @@ export const getImage = async (imagen: string) => {
       return Buffer.from(image.data, 'binary').toString('base64');
     })
     .catch(error => {
-      console.log('no hay imagen');
+      return null;
     });
 };
 
@@ -120,7 +120,6 @@ export const getServicioAPI = async (id: string) => {
       },
     })
     .then(servicio => {
-      console.log(servicio);
       return servicio.data.titulo;
     })
     .catch(error => {

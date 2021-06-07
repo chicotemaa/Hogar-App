@@ -18,15 +18,23 @@ export const Header = ({id, title, fecha}: Props) => {
         elevation: 5,
       }}>
       <View style={{marginHorizontal: 15}}>
-        <View>
+        <View style={{flexDirection: 'row'}}>
           <Text
             style={{
               color: 'white',
               fontSize: 43,
               fontWeight: 'bold',
-              textShadowRadius: 30,
             }}>
-            Solicitud # {id}
+            Solicitud
+          </Text>
+          <Text
+            style={{
+              color: '#473E3E',
+              fontSize: 43,
+              fontWeight: 'bold',
+              paddingLeft: 10,
+            }}>
+            #{id}
           </Text>
         </View>
         <View
@@ -41,6 +49,7 @@ export const Header = ({id, title, fecha}: Props) => {
           <View
             style={{
               backgroundColor: '#E3E2E0',
+              elevation: 30,
               height: 45,
               marginBottom: 15,
               borderRadius: 8,
@@ -51,6 +60,7 @@ export const Header = ({id, title, fecha}: Props) => {
           <View
             style={{
               backgroundColor: '#E3E2E0',
+              elevation: 30,
               height: 45,
               marginBottom: 15,
               borderRadius: 8,

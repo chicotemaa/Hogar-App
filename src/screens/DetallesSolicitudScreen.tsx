@@ -39,11 +39,8 @@ export const DetallesSolicitudScreen = ({navigation, route}: Props) => {
   useEffect(() => {
     getData('access_token').then(token => {
       getSolicitudById(id, token).then(solicitud => {
-        console.log(solicitud);
         getImage(solicitud.imagen).then(imagen => {
           getServicio(solicitud.servicio).then(servicio => {
-            console.log('servicioo');
-            console.log(servicio);
             setSolicitud({
               token,
               consulta: solicitud.consulta,

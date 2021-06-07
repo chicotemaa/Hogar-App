@@ -12,17 +12,17 @@ export const Estado = ({estado}: Props) => {
       ? 'orange'
       : 'green';
   return (
-    <View>
-      <Text style={{fontWeight: 'bold', padding: 0}}></Text>
-      <View>
-        <View style={{flexDirection: 'row', marginVertical: 4}}>
-          <IconoEstado color={color} />
-          <Text
-            style={{marginLeft: 2, color: color, fontSize: 23, paddingLeft: 1}}>
-            {estado}
-          </Text>
-        </View>
-      </View>
+    <View style={{flexDirection: 'row', marginTop: 3}}>
+      <IconoEstado color={color} />
+      <Text
+        style={{
+          marginLeft: 2,
+          color: color,
+          fontSize: 23,
+          paddingLeft: 1,
+        }}>
+        {estado}
+      </Text>
     </View>
   );
 };
