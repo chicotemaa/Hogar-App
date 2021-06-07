@@ -3,23 +3,20 @@ import {StyleSheet, Text, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {Divider} from 'react-native-paper';
 
-export const Solicitud = () => {
+interface Solicitud {
+  estado?: string;
+  servicio: string;
+  consulta: string;
+}
+
+export const Solicitud = ({estado, servicio, consulta}: Solicitud) => {
   return (
     <ScrollView>
       <View>
         <View style={styleSolicitud.body}>
           <Elemento title={'Estado'} body={'Pendiente'} />
-          <Elemento title={'Tipo de Servicio'} body={'Electricidad'} />
-          <Elemento
-            title={'Descripción'}
-            body={`Lorem ipsum dolor sit amet,consectetur adipiscing elit.
-             Suspendisse porttitor laoreet elementum. Ut sed pulvinar 
-              lacus, vitae sagittis erat. Vivamus a sem elit. Suspendisse posuere. 
-               vitae sagittis erat. Vivamus a sem elit. Suspendisse posuere.
-                vitae sagittis erat. Vivamus a sem elit. Suspendisse posuere.
-                 vitae sagittis erat. Vivamus a sem elit. Suspendisse posuere.
-                  vitae sagittis erat. Vivamus a sem elit. Suspendisse posuere.`}
-          />
+          <Elemento title={'Tipo de Servicio'} body={servicio} />
+          <Elemento title={'Descripción'} body={consulta} />
 
           <View style={styleSolicitud.containerElement}>
             <Text style={styleSolicitud.titleElement}>Fotos</Text>

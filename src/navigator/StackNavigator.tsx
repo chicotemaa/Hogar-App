@@ -27,7 +27,6 @@ const Stack = createStackNavigator<RootStackParams>();
 export const StackNavigator = () => {
   return (
     <Stack.Navigator
-      initialRouteName={'DetalleSolicitudScreen'}
       screenOptions={{
         headerStyle: {
           backgroundColor: '#EC5342',

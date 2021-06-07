@@ -1,5 +1,5 @@
 import {StackScreenProps} from '@react-navigation/stack';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Modal, Portal, Text, Button, Provider} from 'react-native-paper';
 import {getSolicitudById} from '../api/apiClientes';
@@ -7,88 +7,85 @@ import {RootStackParams} from '../navigator/StackNavigator';
 import {getData} from '../api/api';
 import {Solicitud} from '../components/Solicitud';
 import {styles} from '../theme/appTheme';
-import {ScrollView} from 'react-native-gesture-handler';
-import {HeaderNuevo} from '../components/HeaderNuevo';
+import {Header} from '../components/Header';
 
 interface Props
   extends StackScreenProps<RootStackParams, 'DetalleSolicitudScreen'> {}
 
-export const DetallesSolicitudScreen = ({navigation, route}: Props) => {
-  const [visible, setVisible] = React.useState(false);
-  const codigo = '144';
-  getData('access_token').then(token => {
-    getSolicitudById(codigo, token).then(solicitud => {
-      console.log(solicitud);
-    });
-  });
+interface InfoSolicitud {
+  consulta: string; //description
+  createdAt: string;
+  estado: string;
+  servicio: string;
+  necesitasAyuda: string; //incidencia-title
+}
 
-  console.log('se renderiza');
+export const DetallesSolicitudScreen = ({navigation, route}: Props) => {
+  const [visible, setVisible] = useState(false);
+
+  const infoSolicitud: InfoSolicitud = {
+    consulta: '',
+    createdAt: '',
+    servicio: '',
+    estado: '',
+    necesitasAyuda: '',
+  };
+
+  const [solicitud, setSolicitud] = useState(infoSolicitud);
+
+  const id = route.params.codigo;
+
+  useEffect(() => {
+    getData('access_token').then(token => {
+      getSolicitudById(id, token).then(solicitud => {
+        console.log(solicitud);
+
+        setSolicitud({
+          consulta: solicitud.consulta,
+          createdAt: formatDate(solicitud.createdAt),
+          estado: 'Pendiente',
+          necesitasAyuda: solicitud.necesitasAyuda,
+          servicio: solicitud.servicio,
+        });
+      });
+    });
+  }, []);
+
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
 
   return (
     <Provider>
-      <View style={{backgroundColor: 'black', flex: 1}}>
-        <HeaderNuevo />
+      <View style={{backgroundColor: '#E7E1E1', flex: 1}}>
+        <Header
+          id={id}
+          title={solicitud.necesitasAyuda}
+          fecha={solicitud.createdAt}
+        />
+
         <View style={[styles.container, {flex: 5.3}]}>
           <Portal>
             <Modal
               visible={visible}
               onDismiss={hideModal}
               contentContainerStyle={stylesDetalle.containerModal}>
-              <Text>{codigo}</Text>
+              <Text>{id}</Text>
             </Modal>
           </Portal>
 
-          <View style={{backgroundColor: 'black'}}>
-            <Solicitud />
+          <View>
+            <Solicitud
+              consulta={solicitud.consulta}
+              servicio={solicitud.servicio}
+              estado={solicitud.estado}
+            />
+            <Button style={{flex: 1}} onPress={showModal}>
+              Show
+            </Button>
           </View>
-          <Button style={{marginTop: 30, flex: 1}} onPress={showModal}>
-            Show
-          </Button>
         </View>
       </View>
     </Provider>
-  );
-};
-
-const Header = ({id}) => {
-  return (
-    <View
-      style={{
-        flexDirection: 'row',
-        borderBottomWidth: 1.8,
-        borderBottomColor: '#343030',
-        marginBottom: 5,
-      }}>
-      <Text style={[styles.title, stylesDetalle.headerStyle]}>Solicitud</Text>
-      <Text
-        style={[styles.title, stylesDetalle.headerStyle, stylesDetalle.number]}>
-        {' #' + id}
-      </Text>
-    </View>
-  );
-};
-
-const DetallesHeader = ({title, fecha}) => {
-  const style = {
-    fontSize: 25,
-    marginVertical: 20,
-  };
-  return (
-    <View
-      style={{
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        borderBottomWidth: 0.5,
-        alignSelf: 'stretch',
-        marginBottom: 15,
-
-        padding: 3,
-      }}>
-      <Text style={style}>{title}</Text>
-      <Text style={style}>{fecha}</Text>
-    </View>
   );
 };
 
@@ -108,3 +105,15 @@ const stylesDetalle = StyleSheet.create({
     color: '#EC5342',
   },
 });
+
+function formatDate(fecha: string) {
+  const date = new Date(fecha);
+  const options = {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  };
+
+  return date.toLocaleString('es-ES', options);
+}

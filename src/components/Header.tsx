@@ -1,7 +1,13 @@
 import React from 'react';
 import {Text, View} from 'react-native';
 
-export const HeaderNuevo = () => {
+interface Props {
+  id: string;
+  title: string;
+  fecha: string;
+}
+
+export const Header = ({id, title, fecha}: Props) => {
   return (
     <View
       style={{
@@ -19,7 +25,7 @@ export const HeaderNuevo = () => {
               fontWeight: 'bold',
               textShadowRadius: 30,
             }}>
-            Solicitud #144
+            Solicitud # {id}
           </Text>
         </View>
         <View
@@ -39,9 +45,7 @@ export const HeaderNuevo = () => {
               borderRadius: 8,
               justifyContent: 'center',
             }}>
-            <Text style={{alignSelf: 'center', fontSize: 30}}>
-              Vidrios Rotos
-            </Text>
+            <Text style={{alignSelf: 'center', fontSize: 30}}>{title}</Text>
           </View>
           <View
             style={{
@@ -50,9 +54,7 @@ export const HeaderNuevo = () => {
               marginBottom: 15,
               borderRadius: 8,
             }}>
-            <Text style={{alignSelf: 'center', fontSize: 30}}>
-              06-06-2021 14:56
-            </Text>
+            <Text style={{alignSelf: 'center', fontSize: 30}}>{fecha}</Text>
           </View>
         </View>
       </View>
