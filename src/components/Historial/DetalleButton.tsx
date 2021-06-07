@@ -1,7 +1,5 @@
-import {StackScreenProps} from '@react-navigation/stack';
 import React from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
-import {RootStackParams} from '../../navigator/StackNavigator';
 
 interface Props {
   navigation: any;

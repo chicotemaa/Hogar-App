@@ -4,7 +4,7 @@ import {StyleSheet, View} from 'react-native';
 import {Modal, Portal, Text, Button, Provider} from 'react-native-paper';
 import {getSolicitudById} from '../api/apiClientes';
 import {RootStackParams} from '../navigator/StackNavigator';
-import {getData} from '../api/api';
+import {getData, getImage, getServicioAPI} from '../api/api';
 import {Solicitud} from '../components/Solicitud';
 import {styles} from '../theme/appTheme';
 import {Header} from '../components/Header';
@@ -18,6 +18,8 @@ interface InfoSolicitud {
   estado: string;
   servicio: string;
   necesitasAyuda: string; //incidencia-title
+  imagen: string;
+  token: string;
 }
 
 export const DetallesSolicitudScreen = ({navigation, route}: Props) => {
@@ -29,6 +31,8 @@ export const DetallesSolicitudScreen = ({navigation, route}: Props) => {
     servicio: '',
     estado: '',
     necesitasAyuda: '',
+    imagen: '',
+    token: '',
   };
 
   const [solicitud, setSolicitud] = useState(infoSolicitud);
@@ -39,13 +43,20 @@ export const DetallesSolicitudScreen = ({navigation, route}: Props) => {
     getData('access_token').then(token => {
       getSolicitudById(id, token).then(solicitud => {
         console.log(solicitud);
-
-        setSolicitud({
-          consulta: solicitud.consulta,
-          createdAt: formatDate(solicitud.createdAt),
-          estado: 'Pendiente',
-          necesitasAyuda: solicitud.necesitasAyuda,
-          servicio: solicitud.servicio,
+        getImage(solicitud.imagen).then(imagen => {
+          getServicio(solicitud.servicio).then(servicio => {
+            console.log('servicioo');
+            console.log(servicio);
+            setSolicitud({
+              token,
+              consulta: solicitud.consulta,
+              createdAt: formatDate(solicitud.createdAt),
+              estado: solicitud.estados[solicitud.estado],
+              necesitasAyuda: solicitud.necesitasAyuda,
+              servicio,
+              imagen,
+            });
+          });
         });
       });
     });
@@ -75,9 +86,11 @@ export const DetallesSolicitudScreen = ({navigation, route}: Props) => {
 
           <View>
             <Solicitud
+              token={solicitud.token}
               consulta={solicitud.consulta}
               servicio={solicitud.servicio}
               estado={solicitud.estado}
+              imagen={solicitud.imagen}
             />
             <Button style={{flex: 1}} onPress={showModal}>
               Show
@@ -116,4 +129,8 @@ function formatDate(fecha: string) {
   };
 
   return date.toLocaleString('es-ES', options);
+}
+
+async function getServicio(id: string) {
+  return getServicioAPI(id);
 }

@@ -15,6 +15,7 @@ export const Header = ({id, title, fecha}: Props) => {
         flex: 2,
         borderBottomEndRadius: 26,
         borderBottomLeftRadius: 26,
+        elevation: 5,
       }}>
       <View style={{marginHorizontal: 15}}>
         <View>

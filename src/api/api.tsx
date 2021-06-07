@@ -1,6 +1,6 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+global.Buffer = global.Buffer || require('buffer').Buffer;
 const clientId = '1_4ta05vfoy58ggoggwo08kck000kocckwgcckk8wgkck440cgcw';
 const clientSecret = '176y7wqisfvkcwk8oswowksks0cocsoc00ko4k4oosc0ocwck4';
 
@@ -83,4 +83,49 @@ export const getData = async (name: string) => {
   } catch (e) {
     return e;
   }
+};
+
+export const getImage = async (imagen: string) => {
+  const query = {
+    url: `/uploads/imagenes/solicitud/${imagen}`,
+  };
+
+  const token = getData('access_token').then(token => {
+    return token;
+  });
+  return api
+    .get(query.url, {
+      responseType: 'arraybuffer',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then(image => {
+      return Buffer.from(image.data, 'binary').toString('base64');
+    })
+    .catch(error => {
+      console.log('no hay imagen');
+    });
+};
+
+export const getServicioAPI = async (id: string) => {
+  const token = await getData('access_token').then(token => {
+    return token;
+  });
+
+  return api
+    .get(base + id, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then(servicio => {
+      console.log(servicio);
+      return servicio.data.titulo;
+    })
+    .catch(error => {
+      console.log(error);
+      console.log('no existe servicio');
+      return '';
+    });
 };

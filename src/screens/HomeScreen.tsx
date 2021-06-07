@@ -1,7 +1,8 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {DrawerScreenProps} from '@react-navigation/drawer';
-import {Text, View, Button} from 'react-native';
+import {Text, View, Button, Image} from 'react-native';
+import {getImage, getData} from '../api/api';
 
 interface Props extends DrawerScreenProps<any, any> {}
 
@@ -18,9 +19,10 @@ export const HomeScreen = ({navigation}: Props) => {
       ),
     });
   }, []);
+
   return (
     <View>
-      <Text>Pantalla inicio</Text>
+      <Text>Pantalla </Text>
     </View>
   );
 };

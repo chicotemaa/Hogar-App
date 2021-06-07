@@ -7,7 +7,7 @@ import {getSolicitudesAPI} from '../api/apiClientes';
 import {RootStackParams} from '../navigator/StackNavigator';
 import {StackScreenProps} from '@react-navigation/stack';
 import {windowWidth, windowHeight} from '../../App';
-import {getData} from '../api/api';
+import {getData, getServicioAPI} from '../api/api';
 
 interface Props
   extends StackScreenProps<RootStackParams, 'HistorialSolicitudesScreen'> {}
@@ -15,7 +15,7 @@ interface Props
 interface Solicitud {
   title: string;
   number: string;
-  estado: 'Pendiente' | 'En Revisión';
+  estado: 'Pendiente' | 'Generada OT' | 'Derivada';
   date: string;
   location: string;
 }
@@ -55,7 +55,7 @@ export const HistorialSolicitudesScreen = ({navigation}: Props) => {
                 location={element.location}
                 number={element.number}
                 title={element.title}
-                estado={element.estado}
+                estado={getEstado(element.estado)}
                 navigation={navigation}
               />
             );
@@ -101,3 +101,14 @@ const stylesHistorial = StyleSheet.create({
     fontWeight: '500',
   },
 });
+
+function getEstado(estado: number): 'Pendiente' | 'Generada OT' | 'Derivada' {
+  switch (estado) {
+    case 0:
+      return 'Pendiente';
+    case 1:
+      return 'Generada OT';
+    default:
+      return 'Derivada';
+  }
+}

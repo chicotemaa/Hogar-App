@@ -8,6 +8,7 @@ interface Solicitud {
   consulta: string;
   cliente: Cliente;
   createdAt: string;
+  estado: number;
 }
 
 interface Cliente {
@@ -32,13 +33,13 @@ export const getSolicitudesAPI = async (token: string) => {
   return getSolicitudesRequest(token)
     .then(array => {
       const elements = array.map(
-        ({id, cliente, createdAt, necesitasAyuda}: Solicitud) => {
+        ({id, cliente, createdAt, necesitasAyuda, estado}: Solicitud) => {
           return {
             number: id,
             location: cliente.street,
             date: createdAt,
             title: necesitasAyuda,
-            estado: 'Pendiente',
+            estado,
           };
         },
       );

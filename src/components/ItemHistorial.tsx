@@ -12,7 +12,7 @@ interface Props
   title: string;
   location: string;
   date: string;
-  estado: 'Pendiente' | 'En Revisión';
+  estado: 'Pendiente' | 'Generada OT' | 'Derivada';
 }
 
 export const ItemHistorial = ({

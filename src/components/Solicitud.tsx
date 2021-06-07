@@ -1,25 +1,48 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, Image} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {Divider} from 'react-native-paper';
 
 interface Solicitud {
-  estado?: string;
+  estado: string;
   servicio: string;
   consulta: string;
+  imagen: string;
+  token: string;
 }
 
-export const Solicitud = ({estado, servicio, consulta}: Solicitud) => {
+export const Solicitud = ({
+  token,
+  estado,
+  servicio,
+  consulta,
+  imagen,
+}: Solicitud) => {
   return (
     <ScrollView>
       <View>
         <View style={styleSolicitud.body}>
-          <Elemento title={'Estado'} body={'Pendiente'} />
+          <Elemento title={'Estado'} body={estado} />
           <Elemento title={'Tipo de Servicio'} body={servicio} />
           <Elemento title={'Descripción'} body={consulta} />
 
           <View style={styleSolicitud.containerElement}>
             <Text style={styleSolicitud.titleElement}>Fotos</Text>
+            <Image
+              style={{
+                width: 300,
+                height: 300,
+                resizeMode: 'center',
+                alignSelf: 'center',
+              }}
+              source={{
+                uri: `data:image/png;base64,${imagen}`,
+                headers: {
+                  Pragma: 'no-cache',
+                  Authorization: `Bearer ${token}`,
+                },
+              }}
+            />
           </View>
         </View>
       </View>
@@ -58,7 +81,7 @@ const styleSolicitud = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'transparent',
     marginVertical: 8,
-    elevation: 3,
+    elevation: 5,
     borderRadius: 6,
   },
   titleElement: {
