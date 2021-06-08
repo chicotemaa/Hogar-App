@@ -4,7 +4,7 @@ import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 interface Props {
   title: string;
   color: string;
-  width?: number;
+  width?: number | string;
   height?: number;
   onPress: () => void;
 }

@@ -15,7 +15,7 @@ export const Header = ({pageName, id, title, fecha, userName}: Props) => {
   const esDetalleSolicitud = id != null;
   const isSolicitudDetalle = pageName === 'Solicitud';
   const isWelcomePage = pageName === 'Bienvenido';
-  const heightHeader = isSolicitudDetalle ? 3.2 : 1;
+  const heightHeader = isSolicitudDetalle ? 3 : 1;
   const paddingHeader = isWelcomePage ? 10 : 0;
   const flexDHeader = isWelcomePage ? 'column' : 'row';
 
@@ -28,7 +28,7 @@ export const Header = ({pageName, id, title, fecha, userName}: Props) => {
         '#EC5342',
         '#F05443',
         '#D64B3C',
-        '#70271F',
+        '#BF4336',
       ]}
       style={{flex: heightHeader}}>
       <View
@@ -112,7 +112,7 @@ const DetalleSolicitudHeader = ({title, fecha}) => {
         style={{
           backgroundColor: '#C2C2C2',
           height: 3,
-          marginBottom: 10,
+          marginBottom: 20,
           borderRadius: 10,
         }}
       />

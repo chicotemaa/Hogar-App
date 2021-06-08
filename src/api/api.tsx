@@ -128,3 +128,24 @@ export const getServicioAPI = async (id: string) => {
       return '';
     });
 };
+
+export const getAllServiciosAPI = async () => {
+  const token = await getData('access_token').then(token => {
+    return token;
+  });
+
+  return api
+    .get(baseApi + '/servicios/', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then(response => {
+      return response.data['hydra:member'];
+    })
+    .catch(error => {
+      console.log(error);
+      console.log('no existen servicios');
+      return '';
+    });
+};

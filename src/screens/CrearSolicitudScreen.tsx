@@ -1,120 +1,70 @@
-import React from 'react';
-import {StyleSheet,Text, View} from 'react-native';
-import { Button } from '../components/Button';
-import { styles } from '../theme/appTheme';
+import React, {useEffect, useState} from 'react';
+import {StyleSheet, Text, View} from 'react-native';
+import {Button} from '../components/Button';
+import {Header} from '../components/Header';
+import {styles as styleGlobal} from '../theme/appTheme';
+import {getAllServiciosAPI} from '../api/api';
+import {RootStackParams} from '../navigator/StackNavigator';
+import {StackScreenProps} from '@react-navigation/stack';
 
+interface Props extends StackScreenProps<RootStackParams, any> {}
 
-export const CrearSolicitudScreen = () => {
+interface Servicio {
+  ['id']: string;
+  descripcion: string;
+  titulo: string;
+}
+
+export const CrearSolicitudScreen = ({navigation}: Props) => {
+  const [servicios, setServicios] = useState([]);
+  //TODO: Cambiar empty array por elemento texto que indique cargando
+  useEffect(() => {
+    getAllServiciosAPI().then(arrayServicios => {
+      setServicios(arrayServicios);
+    });
+  }, []);
+
+  const handlePress = (tipoServicio: String) => {
+    console.log('es de tipo:', tipoServicio);
+    navigation.navigate('FormSolicitudScreen', {tipoServicio});
+  };
+
   return (
-    <View style={styles.container}>
-      <View style={stylesWelcome.menuContainer}>
-        <View style={stylesWelcome.menu} />
-      </View>
-
+    <>
+      <Header pageName={'Crear Solicitud'} />
       <View
-        style={{
-          justifyContent: 'center',
-          alignSelf: 'center',
-        }}>
-        <Text
-          style={{
-            fontSize: 40,
-            fontWeight: '600',
-            paddingVertical: 20,
-            textAlign: 'center',
-            justifyContent: 'center',
-            textAlignVertical: 'center',
-          }}>
-          Crear{'\n'}Solicitud
-        </Text>
-      </View>
-      <View
-        style={{
-          justifyContent: 'center',
-          marginHorizontal: 55,
-        }}>
-        <Text
-          style={{
-            fontSize: 19,
-            fontWeight: '400',
-            textAlign: 'center',
-            justifyContent: 'center',
-            marginVertical: 5,
-          }}>
-          Que prioridad tiene su solicitud?
-        </Text>
-      </View>
-      <View
-        style={{
-          alignSelf: 'center',
-          justifyContent: 'center',
-          marginVertical: 10,
-          flex: 2,
-          alignContent: 'center',
-        }}>
-        <Button
-          title="Alta"
-          color="#AE1E1E"
-          height={50}
-          width={250}
-          onPress={() => {}}
-        />
-        <View
-          style={{
-            justifyContent: 'center',
-            paddingVertical: 3,
-            paddingHorizontal: 10,
-          }}>
-          <Text
-            style={{
-              textAlign: 'center',
-              color: 'grey',
-              fontSize: 15,
-              fontWeight: '100',
-            }}>
-            Solo se puede hacer {'\n'}una solicitud de prioridad alta
-          </Text>
+        style={[
+          styleGlobal.container,
+          {flex: 4, justifyContent: 'space-evenly', alignItems: 'center'},
+        ]}>
+        <View>
+          <View>
+            <Text style={styleSolicitud.header}>
+              De que tipo es su Solicitud?
+            </Text>
+          </View>
+          {servicios.map((servicio: Servicio) => {
+            const servicioKey: string = servicio['@id'];
+            return (
+              <Button
+                width={300}
+                key={servicioKey}
+                title={servicio.titulo}
+                color={'#C44433'}
+                onPress={() => {
+                  console.log(handlePress(servicioKey));
+                }}
+              />
+            );
+          })}
         </View>
-        <Button
-          title="Media"
-          color="#BD5534"
-          height={50}
-          width={250}
-          onPress={() => {}}
-        />
-        <Button
-          title="Baja"
-          color="#AD8E1E"
-          height={50}
-          width={250}
-          onPress={() => {}}
-        />
       </View>
-    </View>
+    </>
   );
 };
 
-const stylesWelcome = StyleSheet.create({
-  menuContainer: {
-    borderWidth:4,
-    marginTop:3,
-  },
-  menu: {
-    height: 30,
-    backgroundColor: '#473E3E',
-    alignSelf: 'flex-end',
-    marginHorizontal: 10,
-    marginTop:6,
-    borderColor: 'blue',
-    borderWidth: 2,
-  },
+const styleSolicitud = StyleSheet.create({
   header: {
-    flex: 2,
-    margin: 5,
-    padding: 3,
-    alignItems: 'center',
-  },
-  aclaraciónContainer: {
-    margin: 10,
+    fontSize: 30,
   },
 });

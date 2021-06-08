@@ -1,12 +1,10 @@
-import React, {useEffect} from 'react';
-import {AppRegistry, StyleSheet, View} from 'react-native';
+import React from 'react';
+import {StyleSheet, View} from 'react-native';
 import {Title} from '../components/Title';
 import {Button} from '../components/Button';
 import {styles} from '../theme/appTheme';
-import {StackScreenProps, createStackNavigator} from '@react-navigation/stack';
+import {StackScreenProps} from '@react-navigation/stack';
 import {RootStackParams} from '../navigator/StackNavigator';
-import {functionToGetToken, getUserInfo} from '../api/api';
-import {getSolicitudesAPI} from '../api/apiClientes';
 import {Header} from '../components/Header';
 
 interface Props extends StackScreenProps<RootStackParams, 'WelcomeScreen'> {}
@@ -17,7 +15,7 @@ export const WelcomeScreen = ({navigation, route}: Props) => {
   const handleSolicitud = async () => {
     //const solicitudes = await getSolicitudesAPI(token);
     console.log(token);
-    navigation.navigate('CrearSolicitudScreen');
+    navigation.navigate('CrearSolicitudScreen', {navigation});
   };
 
   return (
@@ -29,7 +27,7 @@ export const WelcomeScreen = ({navigation, route}: Props) => {
           {
             flex: 3,
             borderTopWidth: 10,
-            borderTopColor: '#70271F',
+            borderTopColor: 'transparent',
             alignItems: 'center',
             justifyContent: 'center',
           },
