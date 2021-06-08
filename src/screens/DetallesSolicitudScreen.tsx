@@ -59,6 +59,7 @@ export const DetallesSolicitudScreen = ({navigation, route}: Props) => {
   return (
     <View style={{backgroundColor: '#E7E1E1', flex: 1}}>
       <Header
+        pageName={'Solicitud'}
         id={id}
         title={solicitud.necesitasAyuda}
         fecha={solicitud.createdAt}

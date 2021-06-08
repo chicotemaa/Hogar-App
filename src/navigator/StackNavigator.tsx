@@ -30,12 +30,15 @@ export const StackNavigator = () => {
       screenOptions={{
         headerStyle: {
           backgroundColor: '#EC5342',
-          elevation: 0,
           shadowColor: 'transparent',
         },
-        headerShown: false,
+        headerShown: true,
       }}>
-      <Stack.Screen name="LoginScreen" component={LoginScreen} />
+      <Stack.Screen
+        name="LoginScreen"
+        component={LoginScreen}
+        options={{headerShown: false, title: 'Iniciar Sesión'}}
+      />
       <Stack.Screen
         name="HomeScreen"
         options={{title: '', headerBackTitle: ''}}

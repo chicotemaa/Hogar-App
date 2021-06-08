@@ -7,7 +7,8 @@ import {getSolicitudesAPI} from '../api/apiClientes';
 import {RootStackParams} from '../navigator/StackNavigator';
 import {StackScreenProps} from '@react-navigation/stack';
 import {windowWidth, windowHeight} from '../../App';
-import {getData, getServicioAPI} from '../api/api';
+import {getData} from '../api/api';
+import {Header} from '../components/Header';
 
 interface Props
   extends StackScreenProps<RootStackParams, 'HistorialSolicitudesScreen'> {}
@@ -44,7 +45,6 @@ export const HistorialSolicitudesScreen = ({navigation}: Props) => {
 
       function getItems(array) {
         if (array.length === 0) {
-          console.log('aca entra');
           return empty;
         } else {
           return array.map((element: Solicitud) => {
@@ -66,24 +66,23 @@ export const HistorialSolicitudesScreen = ({navigation}: Props) => {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={{flex: 1, marginVertical: 6, paddingVertical: 1}}>
-        <Text style={stylesHistorial.title}> Historial{'\n'} Solicitudes</Text>
+    <>
+      <Header pageName={'Solicitudes'} />
+      <View style={[styles.container, {flex: 9}]}>
+        <View style={stylesHistorial.containerItems}>
+          <ScrollView>{Items}</ScrollView>
+        </View>
       </View>
-      <View style={stylesHistorial.containerItems}>
-        <ScrollView>{Items}</ScrollView>
-      </View>
-    </View>
+    </>
   );
 };
 
 const stylesHistorial = StyleSheet.create({
   containerItems: {
-    flex: 3,
-    height: 0.2 * windowHeight,
+    flex: 3.9,
     flexDirection: 'column-reverse',
     marginHorizontal: 15,
-    marginBottom: 40,
+    marginBottom: 10,
     padding: 4,
   },
   title: {

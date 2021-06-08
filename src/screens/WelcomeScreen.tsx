@@ -7,6 +7,7 @@ import {StackScreenProps, createStackNavigator} from '@react-navigation/stack';
 import {RootStackParams} from '../navigator/StackNavigator';
 import {functionToGetToken, getUserInfo} from '../api/api';
 import {getSolicitudesAPI} from '../api/apiClientes';
+import {Header} from '../components/Header';
 
 interface Props extends StackScreenProps<RootStackParams, 'WelcomeScreen'> {}
 
@@ -16,47 +17,56 @@ export const WelcomeScreen = ({navigation, route}: Props) => {
   const handleSolicitud = async () => {
     //const solicitudes = await getSolicitudesAPI(token);
     console.log(token);
+    navigation.navigate('CrearSolicitudScreen');
   };
 
   return (
-    <View style={styles.container}>
-      <View style={stylesWelcome.menuContainer}>
-        <View style={stylesWelcome.menu} />
-      </View>
-
-      <View style={stylesWelcome.header}>
-        <Title color="#343030" text={`Bienvenido ${email}`} size={63} />
-        <Title color="#ED2914" text={`Santander Rio`} size={23} />
-        <Title color="#EA4D3B" text={`Sucursal Resistencia`} size={23} />
-      </View>
-      <View style={{marginTop: 5, marginBottom: 15, flex: 2}}>
-        <Button
-          title={'Solicitar'}
-          color="#178C54"
-          height={70}
-          width={270}
-          onPress={handleSolicitud}
-        />
-        <View style={stylesWelcome.aclaraciónContainer}>
-          <Title color="#343030" text={`Crear una nueva solicitud`} size={14} />
-        </View>
-
-        <Button
-          title={'Ver mis solicitudes'}
-          color="#253D5B"
-          height={70}
-          width={270}
-          onPress={() => navigation.navigate('HistorialSolicitudesScreen')}
-        />
-        <View style={stylesWelcome.aclaraciónContainer}>
-          <Title
-            color="#343030"
-            text={`Ver un historial de solicitudes previas`}
-            size={14}
+    <>
+      <Header pageName="Bienvenido" userName={email} />
+      <View
+        style={[
+          styles.container,
+          {
+            flex: 3,
+            borderTopWidth: 10,
+            borderTopColor: '#70271F',
+            alignItems: 'center',
+            justifyContent: 'center',
+          },
+        ]}>
+        <View style={{marginBottom: 15}}>
+          <Button
+            title={'Solicitar'}
+            color="#178C54"
+            height={70}
+            width={270}
+            onPress={handleSolicitud}
           />
+          <View style={stylesWelcome.aclaraciónContainer}>
+            <Title
+              color="#343030"
+              text={`Crear una nueva solicitud`}
+              size={14}
+            />
+          </View>
+
+          <Button
+            title={'Ver mis solicitudes'}
+            color="#253D5B"
+            height={70}
+            width={270}
+            onPress={() => navigation.navigate('HistorialSolicitudesScreen')}
+          />
+          <View style={stylesWelcome.aclaraciónContainer}>
+            <Title
+              color="#343030"
+              text={`Ver un historial de solicitudes previas`}
+              size={14}
+            />
+          </View>
         </View>
       </View>
-    </View>
+    </>
   );
 };
 
