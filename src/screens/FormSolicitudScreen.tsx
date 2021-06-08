@@ -1,6 +1,7 @@
 import {StackScreenProps} from '@react-navigation/stack';
-import React from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
+import {BottomSheet, ListItem} from 'react-native-elements';
 import {ScrollView} from 'react-native-gesture-handler';
 import {Colors, IconButton, TextInput} from 'react-native-paper';
 import {Header} from '../components/Header';
@@ -20,6 +21,7 @@ export const FormSolicitudScreen = ({navigation, route}: Props) => {
           <Text>{tipoServicio}</Text>
           <View style={{justifyContent: 'space-between'}}>
             {labelInput({text: 'Tipo Solicitud'})}
+
             <TextInput style={{fontSize: 20}} disabled value={'Electricidad'} />
             {labelInput({text: 'Sucursal'})}
             <TextInput
@@ -31,13 +33,12 @@ export const FormSolicitudScreen = ({navigation, route}: Props) => {
             <TextInput style={{fontSize: 20}} label="" />
             {labelInput({text: 'Descripción'})}
             <TextInput
+              multiline={true}
+              numberOfLines={6}
               style={{
+                padding: 5,
                 fontSize: 20,
-                height: 200,
-                alignContent: 'flex-start',
-                justifyContent: 'flex-start',
               }}
-              label=""
             />
             <IconButton
               icon="camera"
@@ -61,3 +62,6 @@ const labelInput = ({text}) => {
     </View>
   );
 };
+
+//numberOfLines={Platform.OS === 'ios' ? null : numberOfLines}
+//minHeight={(Platform.OS === 'ios' && numberOfLines) ? (20 * numberOfLines) : null}
