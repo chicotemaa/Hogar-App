@@ -20,7 +20,7 @@ export type RootStackParams = {
   CrearSolicitudScreen: {navigation: any};
   DetalleSolicitudScreen: {codigo: string; navigation: any};
   HistorialSolicitudesScreen: undefined;
-  FormSolicitudScreen: {tipoServicio: string};
+  FormSolicitudScreen: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParams>();
@@ -51,11 +51,6 @@ export const StackNavigator = () => {
         component={WelcomeScreen}
       />
       <Stack.Screen
-        name="CrearSolicitudScreen"
-        component={CrearSolicitudScreen}
-        options={{headerShown: true, title: 'Atras'}}
-      />
-      <Stack.Screen
         name="HistorialSolicitudesScreen"
         component={HistorialSolicitudesScreen}
         options={{headerShown: true, title: ''}}
@@ -63,11 +58,12 @@ export const StackNavigator = () => {
       <Stack.Screen
         name="DetalleSolicitudScreen"
         component={DetallesSolicitudScreen}
-        options={{headerShown: true, title: 'Atras'}}
+        options={{headerShown: true, title: ''}}
       />
       <Stack.Screen
         name="FormSolicitudScreen"
         component={FormSolicitudScreen}
+        options={{headerShown: true, title: ''}}
       />
     </Stack.Navigator>
   );

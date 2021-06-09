@@ -15,7 +15,7 @@ export const WelcomeScreen = ({navigation, route}: Props) => {
   const handleSolicitud = async () => {
     //const solicitudes = await getSolicitudesAPI(token);
     console.log(token);
-    navigation.navigate('CrearSolicitudScreen', {navigation});
+    navigation.navigate('FormSolicitudScreen');
   };
 
   return (
