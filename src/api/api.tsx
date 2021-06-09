@@ -56,13 +56,12 @@ export const getUserInfo = async (token?: string) => {
     url: '/user/info',
   };
 
-  console.log(token);
   const response = await api.get(baseApi + query.url, {
     headers: {
       Authorization: 'Bearer ' + token,
     },
   });
-  console.log(response);
+  return response;
 };
 
 //To save local
