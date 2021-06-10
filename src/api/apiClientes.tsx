@@ -32,6 +32,7 @@ const getSolicitudesRequest = async (token: string) => {
 export const getSolicitudesAPI = async (token: string) => {
   return getSolicitudesRequest(token)
     .then(array => {
+      console.log(array);
       const elements = array.map(
         ({id, cliente, createdAt, necesitasAyuda, estado}: Solicitud) => {
           return {
@@ -61,12 +62,11 @@ export const getSolicitudById = async (id: string, token: string) => {
     },
   });
 
-  return response.data;
+  console.log(response);
+  //return response.data;
 };
 
 interface SolicitudPost {
-  cliente: string;
-  servicio: string;
   consulta: string;
   imageFile: {};
   imageSize: 0;
@@ -79,28 +79,34 @@ export const sendSolicitud = async solicitud => {
     url: '/solicituds',
   };
 
+  //TODO: get Cliente
+  //TODO: get Servicio
+
+  console.log(solicitud);
   const data = {
-    id: '0',
-    cliente: '12',
-    servicio: '3',
+    cliente: '/api/clientes/14',
+    servicio: '/api/servicios/3',
     estado: 0,
-    consulta: 'AS AS DAS',
-    imageFile: {},
+    consulta: 'fetch tkm',
     imageSize: 0,
     updatedImageAt: '2021-06-09T18:21:48.222Z',
     imagen: 'string',
     createdAt: '2021-06-09T18:21:48.222Z',
     numeroSucursal: null,
-    necesitasAyuda: 'das as',
+    necesitasAyuda: 'necesito ayuda ya urgente',
   };
 
   const token = await getData('access_token');
-  const response = await api.post(baseApi + query.url, {
-    Headers: {
-      'Content-Type': 'application/ld+json',
-      Authorization: 'Bearer ' + token,
-    },
-    Data: data,
-  });
-  console.log(response);
+  console.log(token);
+  //ESTE CODIGO ES UNA MASA fetch love
+  // const response = await fetch(baseApi + query.url, {
+  //   method: 'POST',
+  //   headers: {
+  //     'Content-Type': 'application/ld+json',
+  //     Authorization: 'Bearer ' + token,
+  //   },
+  //   body: JSON.stringify(data),
+  // });
+
+  // console.log(await response.json());
 };

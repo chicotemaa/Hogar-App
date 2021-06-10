@@ -17,7 +17,7 @@ interface InfoSolicitud {
   estado: string;
   servicio: string;
   necesitasAyuda: string; //incidencia-title
-  imagen: string;
+  imagen: string | null;
   token: string;
 }
 
@@ -38,7 +38,9 @@ export const DetallesSolicitudScreen = ({navigation, route}: Props) => {
 
   useEffect(() => {
     getData('access_token').then(token => {
+      console.log(token);
       getSolicitudById(id, token).then(solicitud => {
+        console.log(solicitud);
         getImage(solicitud.imagen).then(imagen => {
           getServicio(solicitud.servicio).then(servicio => {
             setSolicitud({
@@ -55,7 +57,7 @@ export const DetallesSolicitudScreen = ({navigation, route}: Props) => {
       });
     });
   }, []);
-
+  console.log(id);
   return (
     <View style={{backgroundColor: '#E7E1E1', flex: 1}}>
       <Header
