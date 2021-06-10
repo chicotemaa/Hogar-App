@@ -15,7 +15,7 @@ export const LoginScreen = ({navigation}: Props) => {
       <View
         style={{
           alignSelf: 'center',
-          marginBottom: '19%',
+          marginBottom: '17%',
         }}>
         <Logo />
       </View>

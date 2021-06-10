@@ -116,7 +116,7 @@ export const FormSolicitudScreen = ({navigation, route}: Props) => {
               })}
             </List.Accordion>
 
-            {labelInput({text: 'Causa del problema?'})}
+            {labelInput({text: 'Causa del problema'})}
             <TextInput
               style={{
                 fontSize: 20,

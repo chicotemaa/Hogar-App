@@ -11,6 +11,7 @@ import {CrearSolicitudScreen} from '../screens/CrearSolicitudScreen';
 import {HistorialSolicitudesScreen} from '../screens/HistorialSolicitudesScreen';
 import {DetallesSolicitudScreen} from '../screens/DetallesSolicitudScreen';
 import {FormSolicitudScreen} from '../screens/FormSolicitudScreen';
+import {SuccessScreen} from '../screens/SuccessScreen';
 
 /* Params in pages */
 export type RootStackParams = {
@@ -21,6 +22,7 @@ export type RootStackParams = {
   DetalleSolicitudScreen: {codigo: string; navigation: any};
   HistorialSolicitudesScreen: undefined;
   FormSolicitudScreen: undefined;
+  SuccessScreen: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParams>();
@@ -64,6 +66,11 @@ export const StackNavigator = () => {
         name="FormSolicitudScreen"
         component={FormSolicitudScreen}
         options={{headerShown: true, title: ''}}
+      />
+      <Stack.Screen
+        name="SuccessScreen"
+        component={SuccessScreen}
+        options={{headerShown: false}}
       />
     </Stack.Navigator>
   );
