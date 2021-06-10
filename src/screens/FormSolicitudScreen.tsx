@@ -25,13 +25,16 @@ export const FormSolicitudScreen = ({navigation, route}: Props) => {
 
   const [solicitud, setSolicitud] = useState({
     tipoServicio: '',
+    nombreServicio: '',
     causa: '',
     descripcion: '',
     foto: '1234',
   });
 
   function enviarSolicitud() {
-    sendSolicitud(solicitud);
+    //sendSolicitud(solicitud);
+    navigation.navigate('SuccessScreen');
+    console.log('hola');
   }
 
   async function setearValores() {}
@@ -43,6 +46,7 @@ export const FormSolicitudScreen = ({navigation, route}: Props) => {
     ['Jardinería']: 'watering-can-outline',
     ['Aires Acondicionados']: 'air-conditioner',
     Pintura: 'format-paint',
+    Otro: 'hammer-wrench',
   };
   //TODO: Cambiar empty array x elemento texto que indique cargando
   useEffect(() => {
@@ -63,9 +67,9 @@ export const FormSolicitudScreen = ({navigation, route}: Props) => {
             {labelInput({text: 'Tipo Solicitud'})}
             <List.Accordion
               title={
-                solicitud.tipoServicio == ''
+                solicitud.nombreServicio == ''
                   ? 'Seleccione tipo de servicio'
-                  : solicitud.tipoServicio
+                  : solicitud.nombreServicio
               }
               left={props => (
                 <List.Icon
@@ -73,7 +77,7 @@ export const FormSolicitudScreen = ({navigation, route}: Props) => {
                   icon={
                     solicitud.tipoServicio == ''
                       ? 'hammer-wrench'
-                      : iconosServicio[solicitud.tipoServicio]
+                      : iconosServicio[solicitud.nombreServicio]
                   }
                 />
               )}
@@ -103,7 +107,8 @@ export const FormSolicitudScreen = ({navigation, route}: Props) => {
                       setExpanded(!expanded);
                       setSolicitud({
                         ...solicitud,
-                        tipoServicio: servicio.titulo,
+                        tipoServicio: servicio['@id'],
+                        nombreServicio: servicio.titulo,
                       });
                     }}
                   />

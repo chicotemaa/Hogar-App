@@ -85,7 +85,10 @@ export const FormLogin = ({navigation}: Props) => {
           label="Contraseña"
           secureTextEntry={hidePass ? true : false}
           right={
-            <TextInput.Icon onPress={() => setHidePass(!hidePass)} name="eye" />
+            <TextInput.Icon
+              onPress={() => setHidePass(!hidePass)}
+              name={hidePass ? 'eye' : 'eye-off'}
+            />
           }
         />
       </View>

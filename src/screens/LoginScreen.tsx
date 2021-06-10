@@ -15,6 +15,7 @@ export const LoginScreen = ({navigation}: Props) => {
       <View
         style={{
           alignSelf: 'center',
+          marginBottom: '19%',
         }}>
         <Logo />
       </View>
@@ -29,7 +30,7 @@ const styles = StyleSheet.create({
   body: {
     backgroundColor: '#E7E1E1',
     flexGrow: 1,
-    justifyContent: 'space-evenly',
+    justifyContent: 'center',
   },
   form: {
     padding: 10,

@@ -81,7 +81,7 @@ const stylesHistorial = StyleSheet.create({
   containerItems: {
     flex: 3.9,
     flexDirection: 'column-reverse',
-    marginHorizontal: 15,
+    marginHorizontal: 5,
     marginBottom: 10,
     padding: 4,
   },
