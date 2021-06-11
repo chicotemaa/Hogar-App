@@ -62,6 +62,13 @@ export const WelcomeScreen = ({navigation, route}: Props) => {
               size={14}
             />
           </View>
+          <Button
+            title={'Ver ordenes de trabajo'}
+            color="#2F9C63"
+            height={70}
+            width={270}
+            onPress={() => navigation.navigate('ListadoFormulariosScreen')}
+          />
         </View>
       </View>
     </>

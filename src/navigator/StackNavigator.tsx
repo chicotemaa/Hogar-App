@@ -6,12 +6,11 @@ import {HomeScreen} from '../screens/HomeScreen';
 import {LoginScreen} from '../screens/LoginScreen';
 import {WelcomeScreen} from '../screens/WelcomeScreen';
 //Para cliente
-import {CrearSolicitudScreen} from '../screens/CrearSolicitudScreen';
-
 import {HistorialSolicitudesScreen} from '../screens/HistorialSolicitudesScreen';
 import {DetallesSolicitudScreen} from '../screens/DetallesSolicitudScreen';
 import {FormSolicitudScreen} from '../screens/FormSolicitudScreen';
 import {SuccessScreen} from '../screens/SuccessScreen';
+import {ListadoOTScreen} from '../screens/ListadoOTScreen';
 
 /* Params in pages */
 export type RootStackParams = {
@@ -23,6 +22,7 @@ export type RootStackParams = {
   HistorialSolicitudesScreen: undefined;
   FormSolicitudScreen: undefined;
   SuccessScreen: undefined;
+  ListadoOTScreen: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParams>();
@@ -30,6 +30,7 @@ const Stack = createStackNavigator<RootStackParams>();
 export const StackNavigator = () => {
   return (
     <Stack.Navigator
+      initialRouteName="ListadoOTScreen"
       screenOptions={{
         headerStyle: {
           backgroundColor: '#EC5342',
@@ -71,6 +72,11 @@ export const StackNavigator = () => {
         name="SuccessScreen"
         component={SuccessScreen}
         options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="ListadoOTScreen"
+        component={ListadoOTScreen}
+        options={{headerShown: true}}
       />
     </Stack.Navigator>
   );
