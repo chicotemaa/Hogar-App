@@ -84,7 +84,7 @@ function formatDate(date: string) {
 const styles = StyleSheet.create({
   container: {
     borderWidth: 1,
-    borderColor: 'grey',
+    borderColor: '#CCCCCC',
     padding: 5,
     backgroundColor: 'white',
     borderRadius: 4,

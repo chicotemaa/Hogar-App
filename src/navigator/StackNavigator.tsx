@@ -32,6 +32,7 @@ const Stack = createStackNavigator<RootStackParams>();
 export const StackNavigator = () => {
   return (
     <Stack.Navigator
+      initialRouteName="DetalleOTScreen"
       screenOptions={{
         headerStyle: {
           backgroundColor: '#EC5342',
