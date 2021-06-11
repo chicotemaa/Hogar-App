@@ -1,7 +1,15 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
-export const ItemOT = () => {
+interface Props {
+  id: string;
+  titulo: string;
+  location: string;
+  date: string;
+  goToScreen: Function;
+}
+
+export const ItemOT = ({id, titulo, location, date, goToScreen}: Props) => {
   return (
     <View style={styles.container}>
       <View
@@ -12,17 +20,17 @@ export const ItemOT = () => {
           marginVertical: 5,
         }}>
         <View>
-          <Text style={styles.number}>#2</Text>
-          <Text style={styles.title}>titulo</Text>
-          <Text style={styles.info}>Sarmiento 123</Text>
-          <Text style={styles.info}>15 agosto 2021</Text>
+          <Text style={styles.number}>{id}</Text>
+          <Text style={styles.title}>{titulo}</Text>
+          <Text style={styles.info}>{location}</Text>
+          <Text style={styles.info}>{date}</Text>
         </View>
         <View
           style={{
             justifyContent: 'space-between',
           }}>
-          <Text>Estado</Text>
-          <Text>Ver detalle</Text>
+          <Estado estado={'No me recibió'} />
+          <DetalleBtn goToScreen={goToScreen} />
         </View>
       </View>
     </View>
@@ -60,3 +68,43 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
 });
+
+interface PropEstado {
+  estado: string;
+}
+
+const Estado = ({estado}: PropEstado) => {
+  const colores = {
+    Pendiente: 'red',
+    'Estoy en camino': 'yellow',
+    'Me recibió': 'blue',
+    'No me atendió': 'brown',
+    Finalizado: 'green',
+    'No me recibió': 'purple',
+  };
+  return <Text style={{fontSize: 21, color: colores[estado]}}>{estado}</Text>;
+};
+
+interface PropBtn {
+  goToScreen: Function;
+}
+const DetalleBtn = ({goToScreen}: PropBtn) => {
+  return (
+    <View>
+      <TouchableOpacity
+        onPress={() => {
+          goToScreen();
+        }}>
+        <Text
+          style={{
+            color: '#EC5342',
+            fontSize: 21,
+            fontWeight: 'bold',
+            alignSelf: 'flex-end',
+          }}>
+          Ver detalle
+        </Text>
+      </TouchableOpacity>
+    </View>
+  );
+};

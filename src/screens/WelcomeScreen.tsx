@@ -67,7 +67,7 @@ export const WelcomeScreen = ({navigation, route}: Props) => {
             color="#2F9C63"
             height={70}
             width={270}
-            onPress={() => navigation.navigate('ListadoFormulariosScreen')}
+            onPress={() => navigation.navigate('ListadoOTScreen')}
           />
         </View>
       </View>

@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {Colors, IconButton, List, TextInput} from 'react-native-paper';
-import {getAllServiciosAPI} from '../api/api';
+import {getAllServiciosAPI, getData} from '../api/api';
 import {sendSolicitud} from '../api/apiClientes';
 import {Button} from '../components/Button';
 import {Header} from '../components/Header';
@@ -37,8 +37,6 @@ export const FormSolicitudScreen = ({navigation, route}: Props) => {
     console.log('hola');
   }
 
-  async function setearValores() {}
-
   const iconosServicio = {
     Electricidad: 'flash',
     ['Plomería']: 'pipe',
@@ -54,6 +52,7 @@ export const FormSolicitudScreen = ({navigation, route}: Props) => {
       setServicios(arrayServicios);
     });
   }, []);
+  console.log(getData('access_token'));
 
   const handlePress = () => setExpanded(!expanded);
   return (
