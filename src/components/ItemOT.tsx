@@ -35,15 +35,30 @@ export const ItemOT = ({
           <Text style={styles.title}>{titulo}</Text>
           <View style={styles.divisor} />
           <View>
-            <View style={{flexDirection: 'row'}}>
-              <Text style={styles.tecnico}>Técnico:</Text>
-              <Text
-                style={[
-                  styles.tecnico,
-                  {paddingHorizontal: 5, textAlign: 'auto'},
-                ]}>
-                Martin Sastre
-              </Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}>
+              <View style={{flexDirection: 'row'}}>
+                <Text style={styles.tecnico}>Técnico:</Text>
+                <Text
+                  style={[
+                    styles.tecnico,
+                    {paddingHorizontal: 5, textAlign: 'auto'},
+                  ]}>
+                  Martin Sastre
+                </Text>
+              </View>
+              <View>
+                {/* TODO: Si se llega a solicitar información del técnico
+                <TouchableOpacity>
+                  <Text style={[styles.tecnico, {color: '#3B58A5'}]}>
+                    Ver info
+                  </Text>
+                </TouchableOpacity> */}
+              </View>
             </View>
             <View style={styles.divisor} />
             <View>
@@ -68,6 +83,8 @@ function formatDate(date: string) {
 
 const styles = StyleSheet.create({
   container: {
+    borderWidth: 1,
+    borderColor: 'grey',
     padding: 5,
     backgroundColor: 'white',
     borderRadius: 4,
@@ -102,8 +119,8 @@ const styles = StyleSheet.create({
   info: {
     marginVertical: 3,
     color: 'grey',
-    fontWeight: '600',
-    fontSize: 17,
+    fontWeight: 'bold',
+    fontSize: 16,
   },
 });
 
@@ -121,7 +138,13 @@ const Estado = ({estado}: PropEstado) => {
     'No me recibió': 'purple',
   };
   return (
-    <Text style={{fontSize: 21, color: colores[estado], textAlign: 'right'}}>
+    <Text
+      style={{
+        fontSize: 21,
+        fontWeight: 'bold',
+        color: colores[estado],
+        textAlign: 'right',
+      }}>
       {estado}
     </Text>
   );
@@ -134,7 +157,7 @@ interface PropBtn {
 const DetalleBtn = ({estado, goToScreen}: PropBtn) => {
   const colorBtn = estado == 'Finalizado' ? 'green' : '#5E5E5E';
   return (
-    <View>
+    <View style={{marginVertical: 5}}>
       <TouchableOpacity
         disabled={estado != 'Finalizado'}
         onPress={() => {
@@ -142,8 +165,9 @@ const DetalleBtn = ({estado, goToScreen}: PropBtn) => {
         }}>
         <Text
           style={{
+            borderColor: colorBtn,
             color: colorBtn,
-            fontSize: 21,
+            fontSize: 20,
             fontWeight: 'bold',
             alignSelf: 'center',
           }}>
