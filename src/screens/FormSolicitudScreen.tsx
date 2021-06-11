@@ -52,7 +52,6 @@ export const FormSolicitudScreen = ({navigation, route}: Props) => {
       setServicios(arrayServicios);
     });
   }, []);
-  console.log(getData('access_token'));
 
   const handlePress = () => setExpanded(!expanded);
   return (

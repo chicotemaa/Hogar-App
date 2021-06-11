@@ -6,10 +6,18 @@ interface Props {
   titulo: string;
   location: string;
   date: string;
+  estado: string;
   goToScreen: Function;
 }
 
-export const ItemOT = ({id, titulo, location, date, goToScreen}: Props) => {
+export const ItemOT = ({
+  id,
+  titulo,
+  location,
+  date,
+  estado,
+  goToScreen,
+}: Props) => {
   return (
     <View style={styles.container}>
       <View
@@ -19,19 +27,36 @@ export const ItemOT = ({id, titulo, location, date, goToScreen}: Props) => {
           marginHorizontal: 10,
           marginVertical: 5,
         }}>
-        <View>
-          <Text style={styles.number}>{id}</Text>
+        <View style={{flex: 1}}>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <Text style={styles.number}>#{id}</Text>
+            <Estado estado={estado} />
+          </View>
           <Text style={styles.title}>{titulo}</Text>
-          <Text style={styles.info}>{location}</Text>
-          <Text style={styles.info}>{date}</Text>
+          <View style={styles.divisor} />
+          <View>
+            <View style={{flexDirection: 'row'}}>
+              <Text style={styles.tecnico}>Técnico:</Text>
+              <Text
+                style={[
+                  styles.tecnico,
+                  {paddingHorizontal: 5, textAlign: 'auto'},
+                ]}>
+                Martin Sastre
+              </Text>
+            </View>
+            <View style={styles.divisor} />
+            <View>
+              <Text style={styles.info}>{location}</Text>
+              <Text style={styles.info}>{date}</Text>
+            </View>
+          </View>
         </View>
-        <View
-          style={{
-            justifyContent: 'space-between',
-          }}>
-          <Estado estado={'No me recibió'} />
-          <DetalleBtn goToScreen={goToScreen} />
-        </View>
+      </View>
+      <View
+        style={{padding: 10, alignSelf: 'center', margin: 2, width: '100%'}}>
+        <View style={[styles.divisor]} />
+        <DetalleBtn estado={estado} goToScreen={goToScreen} />
       </View>
     </View>
   );
@@ -52,20 +77,33 @@ const styles = StyleSheet.create({
   },
   number: {
     fontSize: 23,
-    color: 'grey',
-    marginBottom: 3,
+    color: '#3D3D3D',
+    marginBottom: 15,
   },
   title: {
     marginTop: 3,
-    marginBottom: 5,
+    marginBottom: 10,
     fontWeight: 'bold',
     fontSize: 19,
   },
+  tecnico: {
+    marginTop: 3,
+    marginBottom: 10,
+    fontWeight: 'bold',
+    color: '#474747',
+    fontSize: 18,
+  },
+  divisor: {
+    height: 1,
+    width: '100%',
+    backgroundColor: '#CCCCCC',
+    marginBottom: 5,
+  },
   info: {
-    marginTop: 1,
+    marginVertical: 3,
     color: 'grey',
     fontWeight: '600',
-    fontSize: 15,
+    fontSize: 17,
   },
 });
 
@@ -76,33 +114,42 @@ interface PropEstado {
 const Estado = ({estado}: PropEstado) => {
   const colores = {
     Pendiente: 'red',
-    'Estoy en camino': 'yellow',
+    'Estoy en camino': '#AF8308',
     'Me recibió': 'blue',
     'No me atendió': 'brown',
     Finalizado: 'green',
     'No me recibió': 'purple',
   };
-  return <Text style={{fontSize: 21, color: colores[estado]}}>{estado}</Text>;
+  return (
+    <Text style={{fontSize: 21, color: colores[estado], textAlign: 'right'}}>
+      {estado}
+    </Text>
+  );
 };
 
 interface PropBtn {
+  estado: string;
   goToScreen: Function;
 }
-const DetalleBtn = ({goToScreen}: PropBtn) => {
+const DetalleBtn = ({estado, goToScreen}: PropBtn) => {
+  const colorBtn = estado == 'Finalizado' ? 'green' : '#5E5E5E';
   return (
     <View>
       <TouchableOpacity
+        disabled={estado != 'Finalizado'}
         onPress={() => {
           goToScreen();
         }}>
         <Text
           style={{
-            color: '#EC5342',
+            color: colorBtn,
             fontSize: 21,
             fontWeight: 'bold',
-            alignSelf: 'flex-end',
+            alignSelf: 'center',
           }}>
-          Ver detalle
+          {estado === 'Finalizado'
+            ? 'Ver detalle'
+            : 'Detalle aún no disponible'}
         </Text>
       </TouchableOpacity>
     </View>
