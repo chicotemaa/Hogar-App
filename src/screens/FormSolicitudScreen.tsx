@@ -4,6 +4,7 @@ import {StyleSheet, Text, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {Colors, IconButton, List, TextInput} from 'react-native-paper';
 import {getAllServiciosAPI} from '../api/api';
+import {sendSolicitud} from '../api/apiClientes';
 import {Button} from '../components/Button';
 import {Header} from '../components/Header';
 import {RootStackParams} from '../navigator/StackNavigator';
@@ -31,9 +32,9 @@ export const FormSolicitudScreen = ({navigation, route}: Props) => {
   });
 
   function enviarSolicitud() {
-    //sendSolicitud(solicitud);
-    navigation.navigate('SuccessScreen');
-    console.log('hola');
+    sendSolicitud(solicitud);
+    //console.log(solicitud);
+    //navigation.navigate('SuccessScreen');
   }
 
   const iconosServicio = {
@@ -48,6 +49,7 @@ export const FormSolicitudScreen = ({navigation, route}: Props) => {
   //TODO: Cambiar empty array x elemento texto que indique cargando
   useEffect(() => {
     getAllServiciosAPI().then(arrayServicios => {
+      //console.log(arrayServicios);
       setServicios(arrayServicios);
     });
   }, []);
@@ -122,6 +124,7 @@ export const FormSolicitudScreen = ({navigation, route}: Props) => {
                 elevation: 1,
               }}
               onChangeText={text => {
+                console.log(solicitud.causa);
                 setSolicitud({
                   ...solicitud,
                   causa: text,

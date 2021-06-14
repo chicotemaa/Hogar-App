@@ -1,4 +1,4 @@
-import {api, baseApi, getData} from './api';
+import {api, baseApi, getData, getUserInfo} from './api';
 //consulta -> descripcion
 //necesitasAyuda -> titulo
 
@@ -67,46 +67,64 @@ export const getSolicitudById = async (id: string, token: string) => {
 };
 
 interface SolicitudPost {
-  consulta: string;
-  imageFile: {};
-  imageSize: 0;
-  updatedImageAt: string;
-  imagen: string;
+  tipoServicio: string;
+  nombreServicio: string;
+  causa: string;
+  descripcion: string;
+  foto: string;
 }
 
-export const sendSolicitud = async solicitud => {
+export const sendSolicitud = async ({
+  tipoServicio,
+  causa,
+  descripcion,
+  nombreServicio,
+  foto,
+}: SolicitudPost) => {
   const query = {
     url: '/solicituds',
   };
 
-  //TODO: get Cliente
-  //TODO: get Servicio
+  /* {
+  "cliente": "string",
+  "servicio": "string",
+  "consulta": "string",
+  "imageFile": {},
+  "imageSize": 0,
+  "updatedImageAt": "2021-06-14T19:30:00.722Z",
+  "imagen": "string",
+  "pisoSector": "string",
+  "sucursal": "string",
+  "SucursalDeCliente": {}
+} */
 
-  console.log(solicitud);
+  const token = await getData('access_token');
+  const cliente = (await getUserInfo(token)).data.cliente['@id'];
+
   const data = {
-    cliente: '/api/clientes/14',
-    servicio: '/api/servicios/3',
+    cliente: cliente,
+    servicio: tipoServicio,
     estado: 0,
-    consulta: 'fetch tkm',
+    necesitasAyuda: causa,
     imageSize: 0,
     updatedImageAt: '2021-06-09T18:21:48.222Z',
     imagen: 'string',
     createdAt: '2021-06-09T18:21:48.222Z',
     numeroSucursal: null,
-    necesitasAyuda: 'necesito ayuda ya urgente',
+    pisoSector: '1',
+    consulta: descripcion,
   };
 
-  const token = await getData('access_token');
   console.log(token);
   //ESTE CODIGO ES UNA MASA fetch love
-  // const response = await fetch(baseApi + query.url, {
-  //   method: 'POST',
-  //   headers: {
-  //     'Content-Type': 'application/ld+json',
-  //     Authorization: 'Bearer ' + token,
-  //   },
-  //   body: JSON.stringify(data),
-  // });
+  const response = await fetch(baseApi + query.url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/ld+json',
+      Authorization: 'Bearer ' + token,
+    },
+    body: JSON.stringify(data),
+  });
 
-  // console.log(await response.json());
+  console.log(await response);
 };
