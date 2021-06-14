@@ -1,5 +1,6 @@
 import React from 'react';
 import {Text, View} from 'react-native';
+import {Firma} from './Firma';
 import {Modulo} from './Modulo';
 
 export const Formulario = () => {
@@ -7,6 +8,7 @@ export const Formulario = () => {
     <View style={{paddingHorizontal: 20}}>
       <TituloFormulario />
       <Modulo />
+      <Firma />
     </View>
   );
 };
