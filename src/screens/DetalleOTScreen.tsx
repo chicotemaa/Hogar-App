@@ -2,6 +2,7 @@ import React from 'react';
 import {FlexStyle, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {Header} from '../components/Header';
 import {Estado} from '../components/OT/Detalle/Estado';
+import {Formulario} from '../components/OT/Detalle/Formulario';
 
 export const DetalleOTScreen = () => {
   return (
@@ -23,6 +24,7 @@ export const DetalleOTScreen = () => {
           </View>
 
           <Text style={styles.tituloText}>Descripción de trabajo</Text>
+          <Formulario />
         </ScrollView>
       </View>
     </>
