@@ -85,21 +85,15 @@ export const sendSolicitud = async ({
     url: '/solicituds',
   };
 
-  /* {
-  "cliente": "string",
-  "servicio": "string",
-  "consulta": "string",
-  "imageFile": {},
-  "imageSize": 0,
-  "updatedImageAt": "2021-06-14T19:30:00.722Z",
-  "imagen": "string",
-  "pisoSector": "string",
-  "sucursal": "string",
-  "SucursalDeCliente": {}
-} */
-
   const token = await getData('access_token');
-  const cliente = (await getUserInfo(token)).data.cliente['@id'];
+  const userInfo = await getUserInfo(token);
+
+  const cliente = userInfo.data.cliente['@id'];
+  const {Facility, SucursalDeCliente} = userInfo.data;
+
+  console.log(cliente);
+  console.log(Facility);
+  console.log(SucursalDeCliente);
 
   const data = {
     cliente: cliente,
@@ -113,6 +107,8 @@ export const sendSolicitud = async ({
     numeroSucursal: null,
     pisoSector: '1',
     consulta: descripcion,
+    Facility,
+    SucursalDeCliente,
   };
 
   console.log(token);
