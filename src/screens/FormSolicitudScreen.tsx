@@ -35,11 +35,12 @@ export const FormSolicitudScreen = ({navigation, route}: Props) => {
 
   const validateInputs = () => {
     solicitud.causa == '' ? emptyInput('causa') : solicitud.causa;
-    // solicitud.descripcion == ''
-    //   ? emptyInput('descripcion')
-    //   : solicitud.descripcion;
+    solicitud.descripcion == ''
+      ? emptyInput('descripcion')
+      : solicitud.descripcion;
+    //TODO: comprobar el input corregido
     if (valido) {
-      //enviarSolicitud();
+      enviarSolicitud();
     }
   };
 
