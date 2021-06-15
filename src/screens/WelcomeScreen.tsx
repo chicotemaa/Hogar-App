@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Title} from '../components/Title';
 import {Button} from '../components/Button';
@@ -6,21 +6,27 @@ import {styles} from '../theme/appTheme';
 import {StackScreenProps} from '@react-navigation/stack';
 import {RootStackParams} from '../navigator/StackNavigator';
 import {Header} from '../components/Header';
+import {getToken, getUserInfo} from '../api/api';
 
 interface Props extends StackScreenProps<RootStackParams, 'WelcomeScreen'> {}
 
 export const WelcomeScreen = ({navigation, route}: Props) => {
-  const {email, token} = route.params;
+  const [userName, setUserName] = useState('');
+  useEffect(() => {
+    getToken().then(token => {
+      getUserInfo(token).then(response => {
+        setUserName(capitalizeFirstLetter(response.data.username));
+      });
+    });
+  }, []);
 
   const handleSolicitud = async () => {
-    //const solicitudes = await getSolicitudesAPI(token);
-    console.log(token);
     navigation.navigate('FormSolicitudScreen');
   };
 
   return (
     <>
-      <Header pageName="Bienvenido" userName={email} />
+      <Header pageName="Bienvenido" userName={userName} />
       <View
         style={[
           styles.container,
@@ -74,6 +80,10 @@ export const WelcomeScreen = ({navigation, route}: Props) => {
     </>
   );
 };
+
+function capitalizeFirstLetter(string: string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
 
 const stylesWelcome = StyleSheet.create({
   menuContainer: {

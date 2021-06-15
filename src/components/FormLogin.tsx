@@ -3,16 +3,17 @@ import React, {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {functionToGetToken, getData, storeData} from '../api/api';
 import {TextInput, Button, Snackbar} from 'react-native-paper';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
-interface Props extends StackScreenProps<any, any> {}
+interface Props {
+  pageToGo: Function;
+}
 
 interface User {
   email: string;
   password: string;
 }
 
-export const FormLogin = ({navigation}: Props) => {
+export const FormLogin = ({pageToGo}: Props) => {
   const [state, setState] = useState<User>({
     email: '',
     password: '',
@@ -42,7 +43,7 @@ export const FormLogin = ({navigation}: Props) => {
 
         getData('access_token').then(token => {
           console.log(token);
-          navigation.navigate('WelcomeScreen', {email, token});
+          pageToGo();
         });
       })
       .catch(error => {

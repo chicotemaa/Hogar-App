@@ -20,7 +20,11 @@ export const LoginScreen = ({navigation}: Props) => {
         <Logo />
       </View>
       <View style={styles.form}>
-        <FormLogin navigation={navigation} />
+        <FormLogin
+          pageToGo={() => {
+            navigation.navigate('WelcomeScreen');
+          }}
+        />
       </View>
     </ScrollView>
   );

@@ -49,7 +49,7 @@ export const Header = ({pageName, id, title, fecha, userName}: Props) => {
             <Text
               style={{
                 color: 'white',
-                fontSize: 0.09 * windowWidth,
+                fontSize: 0.1 * windowWidth,
                 fontWeight: 'bold',
                 textShadowRadius: 10,
               }}>

@@ -51,6 +51,12 @@ export const functionToGetToken = async (
   });
 };
 
+export const getToken = async () => {
+  return getData('access_token').then(token => {
+    return token;
+  });
+};
+
 export const getUserInfo = async (token?: string) => {
   const query = {
     url: '/user/info',
