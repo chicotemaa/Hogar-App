@@ -1,6 +1,7 @@
 import React from 'react';
 import {Text, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import {windowWidth} from '../../App';
 import {styles} from '../theme/appTheme';
 
 interface Props {
@@ -48,7 +49,7 @@ export const Header = ({pageName, id, title, fecha, userName}: Props) => {
             <Text
               style={{
                 color: 'white',
-                fontSize: 43,
+                fontSize: 0.09 * windowWidth,
                 fontWeight: 'bold',
                 textShadowRadius: 10,
               }}>
@@ -59,7 +60,7 @@ export const Header = ({pageName, id, title, fecha, userName}: Props) => {
               <Text
                 style={{
                   color: '#473E3E',
-                  fontSize: 43,
+                  fontSize: 0.09 * windowWidth,
                   fontWeight: 'bold',
                   paddingLeft: 10,
                   textShadowRadius: 1,
@@ -86,7 +87,7 @@ const WelcomeHeader = (username: string) => {
       <Text
         style={{
           color: '#313030',
-          fontSize: 43,
+          fontSize: 0.08 * windowWidth,
           fontWeight: 'bold',
           textShadowRadius: 1,
         }}>
@@ -95,7 +96,7 @@ const WelcomeHeader = (username: string) => {
       <Text
         style={{
           color: '#FFFFFF',
-          fontSize: 33,
+          fontSize: 0.07 * windowWidth,
           fontWeight: '800',
           textShadowRadius: 1,
         }}>
