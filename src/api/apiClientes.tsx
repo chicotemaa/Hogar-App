@@ -1,4 +1,4 @@
-import {api, baseApi, getData, getUserInfo} from './api';
+import {api, base, baseApi, getData, getUserInfo} from './api';
 //consulta -> descripcion
 //necesitasAyuda -> titulo
 
@@ -123,4 +123,22 @@ export const sendSolicitud = async ({
   });
 
   console.log(await response);
+};
+
+export const getSucursalesAPI = async () => {
+  const token = await getData('access_token');
+  const user = await getUserInfo(token);
+  const sucursalCliente = user.data.SucursalDeCliente;
+  return api
+    .get(base + sucursalCliente, {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    })
+    .then(response => {
+      return response.data.Cliente.city + ' ' + response.data.direccion;
+    })
+    .catch(err => {
+      return err;
+    });
 };

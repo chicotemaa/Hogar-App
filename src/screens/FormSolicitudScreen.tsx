@@ -4,7 +4,7 @@ import {StyleSheet, Text, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {Colors, IconButton, List, TextInput} from 'react-native-paper';
 import {getAllServiciosAPI} from '../api/api';
-import {sendSolicitud} from '../api/apiClientes';
+import {getSucursalesAPI, sendSolicitud} from '../api/apiClientes';
 import {Button} from '../components/Button';
 import {Header} from '../components/Header';
 import {RootStackParams} from '../navigator/StackNavigator';
@@ -22,6 +22,7 @@ interface Servicio {
 export const FormSolicitudScreen = ({navigation, route}: Props) => {
   const [expanded, setExpanded] = React.useState(false);
   const [servicios, setServicios] = useState([]);
+  const [sucursal, setSucursal] = useState('');
 
   const [solicitud, setSolicitud] = useState({
     tipoServicio: '',
@@ -33,7 +34,6 @@ export const FormSolicitudScreen = ({navigation, route}: Props) => {
 
   function enviarSolicitud() {
     sendSolicitud(solicitud);
-    //console.log(solicitud);
     //TODO: controlar que respuesta envió la creacion de la solicitud
     navigation.navigate('SuccessScreen');
   }
@@ -49,6 +49,10 @@ export const FormSolicitudScreen = ({navigation, route}: Props) => {
   };
   //TODO: Cambiar empty array x elemento texto que indique cargando
   useEffect(() => {
+    getSucursalesAPI().then(sucursales => {
+      setSucursal(sucursales);
+    });
+
     getAllServiciosAPI().then(arrayServicios => {
       //console.log(arrayServicios);
       setServicios(arrayServicios);
@@ -63,7 +67,7 @@ export const FormSolicitudScreen = ({navigation, route}: Props) => {
         <ScrollView>
           <View style={{justifyContent: 'space-between'}}>
             {labelInput({text: 'Sucursal'})}
-            <TextInput disabled value={'Parrilla ruta 11'} />
+            <TextInput disabled value={sucursal} />
             {labelInput({text: 'Tipo Solicitud'})}
             <List.Accordion
               title={
