@@ -1,52 +1,51 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text} from 'react-native';
-
 import LottieView from 'lottie-react-native';
-import {Button} from '../components/Button';
+import {StackScreenProps} from '@react-navigation/stack';
+import {styles} from '../theme/appTheme';
 
 const errorAnimation = require('../assets/lottie/error');
 const successAnimation = require('../assets/lottie/success');
 
-export const SuccessScreen = ({navigation}) => {
-  const [success, setSuccess] = useState(true);
-  const [text, setText] = useState('Ir');
+interface Props extends StackScreenProps<any, any> {}
 
-  function handlePress() {
-    setSuccess(!success);
-  }
+export const SuccessScreen = ({navigation, route}: Props) => {
+  const [success, setSuccess] = useState(true);
+  const [animation, setAnimation] = useState(null);
 
   useEffect(() => {
+    setSuccess(route.params.success);
+    goToWelcomeScreen();
+  }, []);
+
+  const goToWelcomeScreen = async () => {
     setTimeout(() => {
       navigation.navigate('WelcomeScreen');
-    }, 3000);
-  }, []);
+    }, 5000);
+  };
 
   return (
     <View style={{flex: 1}}>
-      <View style={{flex: 2}}>
-        <Text>
-          {success ? 'Solicitud Creada Exitosamente' : 'Solicitud no creada'}
+      <View style={{marginTop: 15, flex: 2}}>
+        <Text
+          style={[
+            styles.title,
+            {textAlign: 'center', justifyContent: 'center', width: '70%'},
+          ]}>
+          {success ? `Solicitud${'\n'}Creada` : 'Error al crear solicitud'}
         </Text>
       </View>
       <View style={{flex: 5}}>{lottieAnimation(success)}</View>
       <View style={{flex: 2}}>
-        <Text>{message(success)}</Text>
+        <Text style={styles.subtitulo}>{message(success)}</Text>
       </View>
-      {/* <View style={{flex: 1}}>
-        <Button
-          title={text}
-          width="50%"
-          color={'green'}
-          onPress={handlePress}
-        />
-      </View> */}
     </View>
   );
 };
 
 const message = (success: boolean) => {
   return success
-    ? `Su solicitud fue creada exitosamente`
+    ? `Su solicitud será procesada en la brevedad`
     : `Su solicitud no pudo ser generada`;
 };
 

@@ -41,4 +41,11 @@ export const styles = StyleSheet.create({
     textShadowColor: '#000000',
     textShadowRadius: 0,
   },
+  subtitulo: {
+    fontSize: 0.05 * windowWidth,
+    width: '60%',
+    alignSelf: 'center',
+    textAlign: 'center',
+    color: '#534B4B',
+  },
 });

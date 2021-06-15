@@ -10,7 +10,7 @@ import {getToken, getUserInfo} from '../api/api';
 
 interface Props extends StackScreenProps<RootStackParams, 'WelcomeScreen'> {}
 
-export const WelcomeScreen = ({navigation, route}: Props) => {
+export const WelcomeScreen = ({navigation}: Props) => {
   const [userName, setUserName] = useState('');
   useEffect(() => {
     getToken().then(token => {

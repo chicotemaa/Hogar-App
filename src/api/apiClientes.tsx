@@ -61,9 +61,7 @@ export const getSolicitudById = async (id: string, token: string) => {
       Authorization: 'Bearer ' + token,
     },
   });
-
-  console.log(response);
-  //return response.data;
+  return response.data;
 };
 
 interface SolicitudPost {
@@ -91,10 +89,6 @@ export const sendSolicitud = async ({
   const cliente = userInfo.data.cliente['@id'];
   const {Facility, SucursalDeCliente} = userInfo.data;
 
-  console.log(cliente);
-  console.log(Facility);
-  console.log(SucursalDeCliente);
-
   const data = {
     cliente: cliente,
     servicio: tipoServicio == '' ? '/api/servicios/8' : tipoServicio,
@@ -111,18 +105,22 @@ export const sendSolicitud = async ({
     SucursalDeCliente,
   };
 
-  console.log(token);
   //ESTE CODIGO ES UNA MASA fetch love
-  const response = await fetch(baseApi + query.url, {
+
+  return fetch(baseApi + query.url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/ld+json',
-      Authorization: 'Bearer ' + token,
+      Authorization: 'Bearer' + token,
     },
     body: JSON.stringify(data),
-  });
-
-  console.log(await response);
+  })
+    .then(response => {
+      return response.status == 201;
+    })
+    .catch(err => {
+      console.log(err);
+    });
 };
 
 export const getSucursalesAPI = async () => {

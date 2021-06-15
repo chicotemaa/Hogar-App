@@ -23,6 +23,7 @@ export const FormSolicitudScreen = ({navigation, route}: Props) => {
   const [expanded, setExpanded] = React.useState(false);
   const [servicios, setServicios] = useState([]);
   const [sucursal, setSucursal] = useState('');
+  const [valido, setValido] = useState(true);
 
   const [solicitud, setSolicitud] = useState({
     tipoServicio: '',
@@ -32,10 +33,29 @@ export const FormSolicitudScreen = ({navigation, route}: Props) => {
     foto: '1234',
   });
 
+  const validateInputs = () => {
+    solicitud.causa == '' ? emptyInput('causa') : solicitud.causa;
+    // solicitud.descripcion == ''
+    //   ? emptyInput('descripcion')
+    //   : solicitud.descripcion;
+    if (valido) {
+      //enviarSolicitud();
+    }
+  };
+
+  const emptyInput = (input: string) => {
+    setValido(false);
+    setSolicitud({
+      ...solicitud,
+      [input]: `Debe ingresar la ${input} del problema`,
+    });
+  };
+
   function enviarSolicitud() {
-    sendSolicitud(solicitud);
+    sendSolicitud(solicitud).then(success => {
+      navigation.navigate('SuccessScreen', {success});
+    });
     //TODO: controlar que respuesta envió la creacion de la solicitud
-    navigation.navigate('SuccessScreen');
   }
 
   const iconosServicio = {
@@ -122,10 +142,12 @@ export const FormSolicitudScreen = ({navigation, route}: Props) => {
 
             {labelInput({text: 'Causa del problema'})}
             <TextInput
+              value={solicitud.causa}
+              mode={'outlined'}
+              error={!valido}
               style={{
                 fontSize: 20,
                 backgroundColor: 'white',
-
                 elevation: 1,
               }}
               onChangeText={text => {
@@ -138,7 +160,10 @@ export const FormSolicitudScreen = ({navigation, route}: Props) => {
             />
             {labelInput({text: 'Descripción'})}
             <TextInput
-              multiline={true}
+              value={solicitud.descripcion}
+              mode={'outlined'}
+              error={!valido}
+              multiline
               numberOfLines={5}
               style={{
                 textTransform: 'uppercase',
@@ -169,7 +194,7 @@ export const FormSolicitudScreen = ({navigation, route}: Props) => {
                 title={'Enviar'}
                 width={'100%'}
                 color={'#178C54'}
-                onPress={enviarSolicitud}
+                onPress={validateInputs}
               />
             </View>
           </View>
@@ -191,36 +216,3 @@ const labelInput = ({text}) => {
 
 //numberOfLines={Platform.OS === 'ios' ? null : numberOfLines}
 //minHeight={(Platform.OS === 'ios' && numberOfLines) ? (20 * numberOfLines) : null}
-
-/*
-
-servicios.map((servicio: Servicio) => {
-                const servicioKey: string = servicio['@id'];
-                return (
-                  <List.Item
-                    key={servicioKey}
-                    title={servicio.titulo}
-                    style={{
-                      backgroundColor: 'white',
-                      borderWidth: 0.5,
-                      marginTop: 5,
-                      borderColor: 'grey',
-                    }}
-                    left={props => (
-                      <List.Icon
-                        {...props}
-                        icon={iconosServicio[servicio.titulo]}
-                      />
-                    )}
-                    onPress={() => {
-                      setExpanded(!expanded);
-                      setSolicitud({
-                        ...solicitud,
-                        tipoServicio: servicio.titulo,
-                      });
-                    }}
-                  />
-                );
-              })
-
-*/

@@ -22,7 +22,7 @@ export type RootStackParams = {
   DetalleSolicitudScreen: {codigo: string; navigation: any};
   HistorialSolicitudesScreen: undefined;
   FormSolicitudScreen: undefined;
-  SuccessScreen: undefined;
+  SuccessScreen: {success: boolean};
   ListadoOTScreen: undefined;
   DetalleOTScreen: undefined;
 };
