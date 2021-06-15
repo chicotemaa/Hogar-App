@@ -34,7 +34,8 @@ export const FormSolicitudScreen = ({navigation, route}: Props) => {
   function enviarSolicitud() {
     sendSolicitud(solicitud);
     //console.log(solicitud);
-    //navigation.navigate('SuccessScreen');
+    //TODO: controlar que respuesta envió la creacion de la solicitud
+    navigation.navigate('SuccessScreen');
   }
 
   const iconosServicio = {
@@ -124,7 +125,6 @@ export const FormSolicitudScreen = ({navigation, route}: Props) => {
                 elevation: 1,
               }}
               onChangeText={text => {
-                console.log(solicitud.causa);
                 setSolicitud({
                   ...solicitud,
                   causa: text,

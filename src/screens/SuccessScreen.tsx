@@ -8,19 +8,18 @@ const errorAnimation = require('../assets/lottie/error');
 const successAnimation = require('../assets/lottie/success');
 
 export const SuccessScreen = ({navigation}) => {
-  const [success, setSuccess] = useState(false);
-  const seconds = 4;
+  const [success, setSuccess] = useState(true);
   const [text, setText] = useState('Ir');
 
   function handlePress() {
     setSuccess(!success);
-
-    // setTimeout(() => {
-    //   navigation.navigate('LoginScreen');
-    // }, seconds * 1000);
   }
 
-  useEffect(() => {}, [success]);
+  useEffect(() => {
+    setTimeout(() => {
+      navigation.navigate('WelcomeScreen');
+    }, 3000);
+  }, []);
 
   return (
     <View style={{flex: 1}}>
@@ -33,14 +32,14 @@ export const SuccessScreen = ({navigation}) => {
       <View style={{flex: 2}}>
         <Text>{message(success)}</Text>
       </View>
-      <View style={{flex: 1}}>
+      {/* <View style={{flex: 1}}>
         <Button
           title={text}
           width="50%"
           color={'green'}
           onPress={handlePress}
         />
-      </View>
+      </View> */}
     </View>
   );
 };

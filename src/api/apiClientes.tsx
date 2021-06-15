@@ -97,7 +97,7 @@ export const sendSolicitud = async ({
 
   const data = {
     cliente: cliente,
-    servicio: tipoServicio,
+    servicio: tipoServicio == '' ? '/api/servicios/8' : tipoServicio,
     estado: 0,
     necesitasAyuda: causa,
     imageSize: 0,
