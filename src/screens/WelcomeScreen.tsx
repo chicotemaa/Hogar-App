@@ -40,7 +40,7 @@ export const WelcomeScreen = ({navigation}: Props) => {
         ]}>
         <View style={{marginBottom: 15}}>
           <Button
-            title={'Solicitar'}
+            title={'Solicitar asistencia'}
             color="#178C54"
             height={70}
             width={270}
