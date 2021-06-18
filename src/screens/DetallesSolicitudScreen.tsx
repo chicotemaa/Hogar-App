@@ -35,6 +35,7 @@ export const DetallesSolicitudScreen = ({navigation, route}: Props) => {
   const [solicitud, setSolicitud] = useState(infoSolicitud);
 
   const id = route.params.codigo;
+  const estados = ['Pendiente', 'Generada OT', 'Derivada'];
 
   useEffect(() => {
     getData('access_token').then(token => {
@@ -47,7 +48,7 @@ export const DetallesSolicitudScreen = ({navigation, route}: Props) => {
               token,
               consulta: solicitud.consulta,
               createdAt: formatDate(solicitud.createdAt),
-              estado: solicitud.estados[solicitud.estado],
+              estado: estados[solicitud.estado],
               necesitasAyuda: solicitud.necesitasAyuda,
               servicio,
               imagen,
