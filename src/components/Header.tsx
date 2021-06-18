@@ -13,10 +13,9 @@ interface Props {
 }
 
 export const Header = ({pageName, id, title, fecha, userName}: Props) => {
-  const esDetalleSolicitud = id != null;
-  const isSolicitudDetalle = pageName === 'Solicitud';
   const isWelcomePage = pageName === 'Bienvenido';
-  const heightHeader = isSolicitudDetalle ? 3 : 1;
+  pageName = pageName == 'Solicitud' ? 'Informe de solicitud' : pageName;
+  const heightHeader = 1;
   const paddingHeader = isWelcomePage ? 10 : 0;
   const flexDHeader = isWelcomePage ? 'column' : 'row';
 
@@ -49,34 +48,19 @@ export const Header = ({pageName, id, title, fecha, userName}: Props) => {
             <Text
               style={{
                 color: 'white',
-                fontSize: 0.1 * windowWidth,
+                fontSize: 0.08 * windowWidth,
                 fontWeight: 'bold',
                 textShadowRadius: 10,
               }}>
               {isWelcomePage ? 'Hola!' : pageName}
             </Text>
             {isWelcomePage ? WelcomeHeader(userName) : null}
-            {isSolicitudDetalle ? (
-              <Text
-                style={{
-                  color: '#473E3E',
-                  fontSize: 0.09 * windowWidth,
-                  fontWeight: 'bold',
-                  paddingLeft: 10,
-                  textShadowRadius: 1,
-                }}>
-                #{id}
-              </Text>
-            ) : null}
           </View>
-
-          {esDetalleSolicitud ? DetalleSolicitudHeader({title, fecha}) : null}
         </View>
       </View>
     </LinearGradient>
   );
 };
-/*   */
 
 const WelcomeHeader = (username: string) => {
   return (
@@ -101,80 +85,6 @@ const WelcomeHeader = (username: string) => {
           textShadowRadius: 1,
         }}>
         Santander Rio
-      </Text>
-    </View>
-  );
-};
-
-const DetalleSolicitudHeader = ({title, fecha}) => {
-  return (
-    <View>
-      <View
-        style={{
-          backgroundColor: '#C2C2C2',
-          height: 3,
-          marginBottom: 20,
-          borderRadius: 10,
-        }}
-      />
-      <View style={{justifyContent: 'space-between'}}>
-        <View>
-          <Seccion isDate={false} dato={title} />
-        </View>
-        <View
-          style={{
-            backgroundColor: '#C2C2C2',
-            height: 3,
-            marginTop: 2,
-            marginBottom: 7,
-            borderRadius: 10,
-          }}
-        />
-        <View>
-          <Seccion isDate={true} dato={fecha} />
-        </View>
-      </View>
-    </View>
-  );
-};
-
-const Seccion = ({dato, isDate}) => {
-  return (
-    <View>
-      <Text
-        style={{
-          alignSelf: 'flex-start',
-          fontSize: 29,
-          color: 'white',
-          fontWeight: 'bold',
-          textShadowRadius: 10,
-        }}>
-        {isDate ? 'Fecha' : 'Incidencia'}
-      </Text>
-      <View
-        style={{
-          height: 2,
-          width: '70%',
-          backgroundColor: '#141414',
-          marginBottom: 2,
-        }}
-      />
-      <Informacion dato={dato} />
-    </View>
-  );
-};
-
-const Informacion = ({dato}) => {
-  return (
-    <View>
-      <Text
-        style={{
-          alignSelf: 'flex-start',
-          fontSize: 22,
-          fontWeight: 'bold',
-          color: 'black',
-        }}>
-        {dato}
       </Text>
     </View>
   );

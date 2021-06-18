@@ -67,7 +67,7 @@ export const DetallesSolicitudScreen = ({navigation, route}: Props) => {
         title={solicitud.necesitasAyuda}
         fecha={solicitud.createdAt}
       />
-      <View style={[styles.container, {flex: 5.3}]}>
+      <View style={[styles.container, {flex: 8}]}>
         <View>
           <Solicitud
             token={solicitud.token}
