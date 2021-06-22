@@ -1,14 +1,18 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {Button, StyleSheet, Text, View} from 'react-native';
+import { DrawerScreenProps, DrawerContent } from '@react-navigation/drawer';
 import {Title} from '../components/Title';
-import {Button} from '../components/Button';
+import {Button as ButtonC} from '../components/Button';
 import {styles} from '../theme/appTheme';
 import {StackScreenProps} from '@react-navigation/stack';
 import {RootStackParams} from '../navigator/StackNavigator';
 import {Header} from '../components/Header';
 import {getToken, getUserInfo} from '../api/api';
+import { ToggleHeader } from '../components/ToggleHeader';
 
-interface Props extends StackScreenProps<RootStackParams, 'WelcomeScreen'> {}
+
+//interface Props extends StackScreenProps<RootStackParams, 'WelcomeScreen'> {}
+interface Props extends DrawerScreenProps<any,any>{};
 
 export const WelcomeScreen = ({navigation}: Props) => {
   const [userName, setUserName] = useState('');
@@ -18,6 +22,16 @@ export const WelcomeScreen = ({navigation}: Props) => {
         setUserName(capitalizeFirstLetter(response.data.username));
       });
     });
+    
+    
+
+    navigation.setOptions({
+      headerShown:true,
+      gestureEnabled:true,
+      headerRight: ()=> (<Button title='menu' onPress={()=>{
+        navigation.toggleDrawer()
+      }}/>)
+    })
   }, []);
 
   const handleSolicitud = async () => {
@@ -39,7 +53,7 @@ export const WelcomeScreen = ({navigation}: Props) => {
           },
         ]}>
         <View style={{marginBottom: 15}}>
-          <Button
+          <ButtonC
             title={'Solicitar asistencia'}
             color="#178C54"
             height={70}
@@ -54,7 +68,7 @@ export const WelcomeScreen = ({navigation}: Props) => {
             />
           </View>
 
-          <Button
+          <ButtonC
             title={'Ver mis solicitudes'}
             color="#253D5B"
             height={70}
@@ -68,7 +82,7 @@ export const WelcomeScreen = ({navigation}: Props) => {
               size={14}
             />
           </View>
-          <Button
+          <ButtonC
             title={'Ver ordenes de trabajo'}
             color="#2F9C63"
             height={70}

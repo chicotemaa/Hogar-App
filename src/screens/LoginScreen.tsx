@@ -9,7 +9,9 @@ import {Logo} from '../components/Logo';
 interface Props extends StackScreenProps<any, any> {}
 
 export const LoginScreen = ({navigation}: Props) => {
-  navigation.setOptions({});
+  navigation.setOptions({
+    gestureEnabled:false,
+  });
   return (
     <ScrollView centerContent={true} contentContainerStyle={styles.body}>
       <View

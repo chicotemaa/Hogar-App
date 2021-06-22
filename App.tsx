@@ -7,6 +7,7 @@ import {Menu} from './src/navigator/MenuLateral';
 
 import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
 import {StackNavigator} from './src/navigator/StackNavigator';
+import { MenuLeft } from './src/navigator/MenuLeft';
 const theme = {
   ...DefaultTheme,
   roundness: 2,
@@ -26,7 +27,8 @@ const App = () => {
     <PaperProvider theme={theme}>
       <NavigationContainer>
         {/* <StackNavigator /> */}
-        <Menu />
+        {/* <Menu /> */}
+        <MenuLeft />
       </NavigationContainer>
     </PaperProvider>
   );
