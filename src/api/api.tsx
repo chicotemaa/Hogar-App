@@ -90,6 +90,16 @@ export const getData = async (name: string) => {
   }
 };
 
+export const deleteItem = async (name:string) => {
+  try {
+    await AsyncStorage.removeItem(name);
+    console.log(name,'eliminado')
+    return true;
+  } catch (exception) {
+    return false;
+  }
+}
+
 export const getImage = async (imagen: string) => {
   const query = {
     url: `/uploads/imagenes/solicitud/${imagen}`,
