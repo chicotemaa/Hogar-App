@@ -5,7 +5,6 @@ import {getSolicitudById} from '../api/apiClientes';
 import {RootStackParams} from '../navigator/StackNavigator';
 import {getData, getImage, getServicioAPI} from '../api/api';
 import {Solicitud} from '../components/Solicitud';
-import {styles} from '../theme/appTheme';
 import {Header} from '../components/Header';
 
 interface Props
@@ -17,6 +16,7 @@ interface InfoSolicitud {
   estado: string;
   servicio: string;
   necesitasAyuda: string; //incidencia-title
+  sector: string;
   imagen: string | null;
   token: string;
 }
@@ -28,6 +28,7 @@ export const DetallesSolicitudScreen = ({navigation, route}: Props) => {
     servicio: '',
     estado: '',
     necesitasAyuda: '',
+    sector: '',
     imagen: '',
     token: '',
   };
@@ -35,29 +36,27 @@ export const DetallesSolicitudScreen = ({navigation, route}: Props) => {
   const [solicitud, setSolicitud] = useState(infoSolicitud);
 
   const id = route.params.codigo;
+  const estados = ['Pendiente', 'Generada OT', 'Derivada'];
 
   useEffect(() => {
     getData('access_token').then(token => {
-      console.log(token);
       getSolicitudById(id, token).then(solicitud => {
-        console.log(solicitud);
         getImage(solicitud.imagen).then(imagen => {
-          getServicio(solicitud.servicio).then(servicio => {
-            setSolicitud({
-              token,
-              consulta: solicitud.consulta,
-              createdAt: formatDate(solicitud.createdAt),
-              estado: solicitud.estados[solicitud.estado],
-              necesitasAyuda: solicitud.necesitasAyuda,
-              servicio,
-              imagen,
-            });
+          setSolicitud({
+            token,
+            consulta: solicitud.consulta,
+            createdAt: solicitud.createdAt,
+            estado: estados[solicitud.estado],
+            necesitasAyuda: solicitud.necesitasAyuda,
+            servicio: solicitud.servicio.titulo,
+            sector: solicitud.pisoSector,
+            imagen,
           });
         });
       });
     });
   }, []);
-  console.log(id);
+
   return (
     <View style={{backgroundColor: '#E7E1E1', flex: 1}}>
       <Header
@@ -66,12 +65,16 @@ export const DetallesSolicitudScreen = ({navigation, route}: Props) => {
         title={solicitud.necesitasAyuda}
         fecha={solicitud.createdAt}
       />
-      <View style={[styles.container, {flex: 5.3}]}>
+      <View style={[{flex: 8}]}>
         <View>
           <Solicitud
+            id={id}
+            title={solicitud.necesitasAyuda}
+            fecha={solicitud.createdAt}
             token={solicitud.token}
             consulta={solicitud.consulta}
             servicio={solicitud.servicio}
+            sector={solicitud.sector}
             estado={solicitud.estado}
             imagen={solicitud.imagen}
           />
@@ -97,18 +100,6 @@ const stylesDetalle = StyleSheet.create({
     color: '#EC5342',
   },
 });
-
-function formatDate(fecha: string) {
-  const date = new Date(fecha);
-  const options = {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  };
-
-  return date.toLocaleString('es-ES', options);
-}
 
 async function getServicio(id: string) {
   return getServicioAPI(id);

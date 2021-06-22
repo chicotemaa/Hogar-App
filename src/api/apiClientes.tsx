@@ -111,7 +111,7 @@ export const sendSolicitud = async ({
     method: 'POST',
     headers: {
       'Content-Type': 'application/ld+json',
-      Authorization: 'Bearer' + token,
+      Authorization: 'Bearer ' + token,
     },
     body: JSON.stringify(data),
   })
