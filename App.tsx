@@ -25,8 +25,8 @@ const App = () => {
   return (
     <PaperProvider theme={theme}>
       <NavigationContainer>
-        <StackNavigator />
-        {/* <Menu /> */}
+        {/* <StackNavigator /> */}
+        <Menu />
       </NavigationContainer>
     </PaperProvider>
   );
