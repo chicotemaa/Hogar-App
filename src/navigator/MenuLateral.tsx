@@ -10,10 +10,9 @@ const Drawer = createDrawerNavigator();
 
 export const Menu = () => {
   return (
-    <Drawer.Navigator screenOptions={{drawerPosition: 'right'}}>
+    <Drawer.Navigator >
       <Drawer.Screen name="home" options={{title:'Inicio'}} component={HomeScreen} />
-      <Drawer.Screen
-        
+      <Drawer.Screen        
         name="Stack"
         component={StackNavigator}
         options={{headerShown: false,title:'Iniciar Sesión'}}
