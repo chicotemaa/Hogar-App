@@ -34,7 +34,7 @@ export const Solicitud = ({
       <View>
         <View style={styleSolicitud.body}>
           <View style={{marginBottom: 20}}>
-            <Elemento title={'Incidencia'} body={'Vidrios rotos'} />
+            <Elemento title={'Incidencia'} body={title} />
             <Elemento title={'Código incidencia'} body={id} />
           </View>
           <View style={{marginBottom: 20}}>
@@ -145,6 +145,7 @@ const styleSolicitud = StyleSheet.create({
     flex: 1,
     fontSize: 20,
     fontWeight: '700',
+    color:'#101010'
   },
   header: {
     paddingBottom: 15,
