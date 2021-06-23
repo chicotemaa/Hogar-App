@@ -12,25 +12,18 @@ interface Props {
   fecha?: string;
 }
 
-export const Header = ({pageName, id, title, fecha, userName}: Props) => {
+export const Header = ({pageName, userName}: Props) => {
   const isWelcomePage = pageName === 'Bienvenido';
   pageName = pageName == 'Solicitud' ? 'Informe de solicitud' : pageName;
-  const heightHeader = 1;
   const paddingHeader = isWelcomePage ? 10 : 0;
   const flexDHeader = isWelcomePage ? 'column' : 'row';
+  const heightPage = pageName === 'Bienvenido' ? '35%' : '17%';
 
   //backgroundColor: '#EC5342',
   return (
     <LinearGradient
-      colors={[
-        '#ec5342',
-        '#EC5342',
-        '#EC5342',
-        '#F05443',
-        '#D64B3C',
-        '#BF4336',
-      ]}
-      style={{flex: heightHeader}}>
+      colors={['#F76656', '#F76656']}
+      style={{height: heightPage}}>
       <View
         style={{
           paddingLeft: paddingHeader,
@@ -45,20 +38,29 @@ export const Header = ({pageName, id, title, fecha, userName}: Props) => {
         }}>
         <View style={{marginHorizontal: 15}}>
           <View style={{flexDirection: flexDHeader}}>
-            <Text
-              style={{
-                color: 'white',
-                fontSize: 0.08 * windowWidth,
-                fontWeight: 'bold',
-                textShadowRadius: 10,
-              }}>
-              {isWelcomePage ? 'Hola!' : pageName}
-            </Text>
+            {PageName(pageName)}
             {isWelcomePage ? WelcomeHeader(userName) : null}
           </View>
         </View>
       </View>
     </LinearGradient>
+  );
+};
+
+const PageName = (name: string) => {
+  return (
+    <View>
+      <Text
+        style={{
+          marginTop: 35,
+          color: 'white',
+          fontSize: 0.09 * windowWidth,
+          fontWeight: '400',
+          textShadowRadius: 10,
+        }}>
+        {name}
+      </Text>
+    </View>
   );
 };
 
