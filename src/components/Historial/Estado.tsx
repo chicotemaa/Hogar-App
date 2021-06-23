@@ -12,10 +12,10 @@ export const Estado = ({estado}: Props) => {
       ? 'orange'
       : 'green';
   return (
-    <View style={{flexDirection: 'row', marginTop: 3}}>
+    <View style={{flexDirection: 'row', marginBottom: 3, alignSelf:'flex-end'}}>
       <IconoEstado color={color} />
       <Text
-        style={{
+        style={{          
           marginLeft: 2,
           color: color,
           fontSize: 23,

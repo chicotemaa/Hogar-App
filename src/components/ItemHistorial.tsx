@@ -5,6 +5,7 @@ import {Text} from 'react-native-elements';
 import {RootStackParams} from '../navigator/StackNavigator';
 import {DetalleButton} from './Historial/DetalleButton';
 import {Estado} from './Historial/Estado';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
 interface Props
   extends StackScreenProps<RootStackParams, 'HistorialSolicitudesScreen'> {
@@ -30,17 +31,42 @@ export const ItemHistorial = ({
         style={{
           flexDirection: 'row',
           justifyContent: 'space-between',
-          marginHorizontal: 10,
+          marginHorizontal: 5,
           marginVertical: 5,
         }}>
-        <View>
-          <Text style={styles.number}>#{number}</Text>
+        <View style={{flex: 1}}>
+          <View style={{borderBottomWidth: 1, flex: 1, borderColor: '#D1D1D1'}}>
+            <Text style={styles.number}>#{number}</Text>
+          </View>
           <Text style={styles.title}>{title}</Text>
-          <Text style={styles.info}>{location}</Text>
-          <Text style={styles.info}>{formatDate(date)}</Text>
+
+          <View style={{flexDirection: 'row', marginBottom:10}}>
+            <Icon
+              size={20}
+              name="map-marker-alt"
+              color="red"
+              style={{marginRight: 11}}
+            />
+            <Text style={styles.info}>{location}</Text>
+          </View>
+
+          <View style={{flexDirection: 'row'}}>
+            <Icon
+              size={18}
+              name="calendar-alt"
+              color="skyblue"
+              style={{marginRight: 10}}
+            />
+            <Text style={[styles.info, {textAlignVertical: 'top'}]}>
+              {formatDate(date)}
+            </Text>
+          </View>
         </View>
-        <View style={{justifyContent: 'space-between', marginRight: 7}}>
-          <Estado estado={estado} />
+        <View
+          style={{flex: 1, justifyContent: 'space-between', marginRight: 5}}>
+          <View style={{borderBottomWidth: 1, borderColor: '#D1D1D1'}}>
+            <Estado estado={estado} />
+          </View>
           <DetalleButton codigo={number} navigation={navigation} />
         </View>
       </View>
@@ -64,18 +90,21 @@ const styles = StyleSheet.create({
   number: {
     fontSize: 23,
     color: 'grey',
-    marginBottom: 3,
+    marginBottom: 3,    
   },
   title: {
-    marginTop: 3,
-    marginBottom: 5,
-    fontWeight: 'bold',
-    fontSize: 19,
+    width:'200%',
+    marginVertical:15,    
+    fontWeight: '700',
+    fontSize: 17,
+    color:'#111111'
   },
   info: {
+    alignContent:'center',
     marginTop: 1,
     color: 'grey',
     fontWeight: '600',
     fontSize: 15,
+    textAlignVertical:'top'
   },
 });
