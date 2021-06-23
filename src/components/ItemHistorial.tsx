@@ -31,11 +31,11 @@ export const ItemHistorial = ({
         style={{
           flexDirection: 'row',
           justifyContent: 'space-between',
-          marginHorizontal: 5,
+          marginHorizontal: 10,
           marginVertical: 5,
         }}>
         <View style={{flex: 1}}>
-          <View style={{borderBottomWidth: 1, flex: 1, borderColor: '#D1D1D1'}}>
+          <View style={{paddingVertical:10,borderBottomWidth: 1, flex: 1, borderColor: '#D1D1D1'}}>
             <Text style={styles.number}>#{number}</Text>
           </View>
           <Text style={styles.title}>{title}</Text>
@@ -64,7 +64,7 @@ export const ItemHistorial = ({
         </View>
         <View
           style={{flex: 1, justifyContent: 'space-between', marginRight: 5}}>
-          <View style={{borderBottomWidth: 1, borderColor: '#D1D1D1'}}>
+          <View style={{paddingVertical:10,borderBottomWidth: 1, borderColor: '#D1D1D1'}}>
             <Estado estado={estado} />
           </View>
           <DetalleButton codigo={number} navigation={navigation} />
@@ -90,21 +90,21 @@ const styles = StyleSheet.create({
   number: {
     fontSize: 23,
     color: 'grey',
-    marginBottom: 3,    
+    marginBottom: 3,
   },
   title: {
-    width:'200%',
-    marginVertical:15,    
+    width: '200%',
+    marginVertical: 15,
     fontWeight: '700',
     fontSize: 17,
-    color:'#111111'
+    color: '#383838',
   },
   info: {
-    alignContent:'center',
+    alignContent: 'center',
     marginTop: 1,
     color: 'grey',
     fontWeight: '600',
     fontSize: 15,
-    textAlignVertical:'top'
+    textAlignVertical: 'top',
   },
 });
