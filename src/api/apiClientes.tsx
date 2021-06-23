@@ -89,6 +89,8 @@ export const sendSolicitud = async ({
   const cliente = userInfo.data.cliente['@id'];
   const {Facility, SucursalDeCliente} = userInfo.data;
 
+  console.log(userInfo.data);
+
   const data = {
     cliente: cliente,
     servicio: tipoServicio == '' ? '/api/servicios/8' : tipoServicio,
@@ -134,7 +136,24 @@ export const getSucursalesAPI = async () => {
       },
     })
     .then(response => {
-      return response.data.Cliente.city + ' ' + response.data.direccion;
+      return response.data.direccion;
+    })
+    .catch(err => {
+      return err;
+    });
+};
+
+export const getSucursalCliente = async (sucursal: string) => {
+  const token = await getData('access_token');
+
+  return api
+    .get(base + sucursal, {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    })
+    .then(response => {
+      return response.data;
     })
     .catch(err => {
       return err;

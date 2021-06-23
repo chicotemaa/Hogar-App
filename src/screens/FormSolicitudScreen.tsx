@@ -71,6 +71,7 @@ export const FormSolicitudScreen = ({navigation, route}: Props) => {
   //TODO: Cambiar empty array x elemento texto que indique cargando
   useEffect(() => {
     getSucursalesAPI().then(sucursales => {
+      console.log(sucursal);
       setSucursal(sucursales);
     });
 
@@ -83,8 +84,8 @@ export const FormSolicitudScreen = ({navigation, route}: Props) => {
   const handlePress = () => setExpanded(!expanded);
   return (
     <>
-      <Header pageName="Generar Solicitud" />
-      <View style={[styles.container, {paddingTop:10,flex: 8}]}>
+      <Header pageName="Crear Solicitud" />
+      <View style={[styles.container, {paddingTop: 10, flex: 8}]}>
         <ScrollView>
           <View style={{justifyContent: 'space-between'}}>
             {labelInput({text: 'Sucursal'})}
@@ -96,7 +97,6 @@ export const FormSolicitudScreen = ({navigation, route}: Props) => {
                   ? 'Seleccione tipo de servicio'
                   : solicitud.nombreServicio
               }
-              
               left={props => (
                 <List.Icon
                   {...props}
@@ -107,7 +107,7 @@ export const FormSolicitudScreen = ({navigation, route}: Props) => {
                   }
                 />
               )}
-              style={{backgroundColor: 'white', borderRadius:5}}
+              style={{backgroundColor: 'white', borderRadius: 5}}
               theme={{roundness: 20}}
               expanded={expanded}
               onPress={handlePress}>
@@ -150,7 +150,7 @@ export const FormSolicitudScreen = ({navigation, route}: Props) => {
               theme={{roundness: 5}}
               style={{
                 fontSize: 20,
-                backgroundColor: 'white',               
+                backgroundColor: 'white',
               }}
               onChangeText={text => {
                 setSolicitud({

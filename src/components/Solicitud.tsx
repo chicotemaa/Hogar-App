@@ -42,7 +42,7 @@ export const Solicitud = ({
             <Elemento title={'Hora'} body={formatHour(fecha)} />
           </View>
           <View style={{marginBottom: 20}}>
-            <Elemento title={'Sucursal'} body={estado} />
+            <Elemento title={'Sucursal'} body={sucursal} />
             <Elemento title={'Sector'} body={sector} />
           </View>
           <View style={{marginBottom: 20}}>
@@ -145,7 +145,7 @@ const styleSolicitud = StyleSheet.create({
     flex: 1,
     fontSize: 20,
     fontWeight: '700',
-    color:'#101010'
+    color: '#101010',
   },
   header: {
     paddingBottom: 15,

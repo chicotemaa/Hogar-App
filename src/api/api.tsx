@@ -5,7 +5,8 @@ const clientId = '1_4ta05vfoy58ggoggwo08kck000kocckwgcckk8wgkck440cgcw';
 const clientSecret = '176y7wqisfvkcwk8oswowksks0cocsoc00ko4k4oosc0ocwck4';
 
 //const base = 'https://sistemas.hogarmantenimiento.com';
-export const base = 'http://10.0.2.2:8000';
+//export const base = 'http://10.0.2.2:8000';
+export const base = 'http://hogardev.tk';
 
 export const baseApi = base + '/api';
 const baseToken = base + '/oauth/v2/token';
@@ -90,15 +91,15 @@ export const getData = async (name: string) => {
   }
 };
 
-export const deleteItem = async (name:string) => {
+export const deleteItem = async (name: string) => {
   try {
     await AsyncStorage.removeItem(name);
-    console.log(name,'eliminado')
+    console.log(name, 'eliminado');
     return true;
   } catch (exception) {
     return false;
   }
-}
+};
 
 export const getImage = async (imagen: string) => {
   const query = {

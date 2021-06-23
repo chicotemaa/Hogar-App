@@ -1,7 +1,11 @@
 import {StackScreenProps} from '@react-navigation/stack';
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {getSolicitudById} from '../api/apiClientes';
+import {
+  getSolicitudById,
+  getSucursalCliente,
+  getSucursalesAP,
+} from '../api/apiClientes';
 import {RootStackParams} from '../navigator/StackNavigator';
 import {getData, getImage, getServicioAPI} from '../api/api';
 import {Solicitud} from '../components/Solicitud';
@@ -17,6 +21,7 @@ interface InfoSolicitud {
   servicio: string;
   necesitasAyuda: string; //incidencia-title
   sector: string;
+  sucursalClienteDir: string;
   imagen: string | null;
   token: string;
 }
@@ -29,6 +34,7 @@ export const DetallesSolicitudScreen = ({navigation, route}: Props) => {
     estado: '',
     necesitasAyuda: '',
     sector: '',
+    sucursalClienteDir: '',
     imagen: '',
     token: '',
   };
@@ -41,16 +47,20 @@ export const DetallesSolicitudScreen = ({navigation, route}: Props) => {
   useEffect(() => {
     getData('access_token').then(token => {
       getSolicitudById(id, token).then(solicitud => {
-        getImage(solicitud.imagen).then(imagen => {
-          setSolicitud({
-            token,
-            consulta: solicitud.consulta,
-            createdAt: solicitud.createdAt,
-            estado: estados[solicitud.estado],
-            necesitasAyuda: solicitud.necesitasAyuda,
-            servicio: solicitud.servicio.titulo,
-            sector: solicitud.pisoSector,
-            imagen,
+        console.log(solicitud);
+        getSucursalCliente(solicitud.SucursalDeCliente).then(sucursal => {
+          getImage(solicitud.imagen).then(imagen => {
+            setSolicitud({
+              token,
+              consulta: solicitud.consulta,
+              createdAt: solicitud.createdAt,
+              estado: estados[solicitud.estado],
+              necesitasAyuda: solicitud.necesitasAyuda,
+              servicio: solicitud.servicio.titulo,
+              sucursalClienteDir: sucursal.direccion,
+              sector: solicitud.pisoSector,
+              imagen,
+            });
           });
         });
       });
@@ -74,6 +84,7 @@ export const DetallesSolicitudScreen = ({navigation, route}: Props) => {
             token={solicitud.token}
             consulta={solicitud.consulta}
             servicio={solicitud.servicio}
+            sucursal={solicitud.sucursalClienteDir}
             sector={solicitud.sector}
             estado={solicitud.estado}
             imagen={solicitud.imagen}
