@@ -28,7 +28,12 @@ export const ItemOT = ({
           marginVertical: 5,
         }}>
         <View style={{flex: 1}}>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              marginBottom: 15,
+            }}>
             <Text style={styles.number}>#{id}</Text>
             <Estado estado={estado} />
           </View>
@@ -95,7 +100,6 @@ const styles = StyleSheet.create({
   number: {
     fontSize: 23,
     color: '#3D3D3D',
-    marginBottom: 15,
   },
   title: {
     marginTop: 3,
@@ -144,6 +148,7 @@ const Estado = ({estado}: PropEstado) => {
         fontWeight: 'bold',
         color: colores[estado],
         textAlign: 'right',
+        alignSelf: 'center',
       }}>
       {estado}
     </Text>

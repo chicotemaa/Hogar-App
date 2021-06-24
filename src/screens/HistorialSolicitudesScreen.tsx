@@ -82,8 +82,8 @@ const stylesHistorial = StyleSheet.create({
     flex: 3.9,
     flexDirection: 'column-reverse',
     marginHorizontal: 1,
-    marginBottom: 10,    
-  },  
+    marginBottom: 10,
+  },
   message: {
     fontSize: 30,
     marginVertical: 200,
