@@ -1,21 +1,19 @@
 import React from 'react';
 
-import {
-  createDrawerNavigator, 
-} from '@react-navigation/drawer';
+import {createDrawerNavigator} from '@react-navigation/drawer';
 import {StackNavigator} from './StackNavigator';
 import {HomeScreen} from '../screens/HomeScreen';
-import { ItemsSideBar } from '../components/ItemsSideBar';
-
-
-
+import {ItemsSideBar} from '../components/ItemsSideBar';
+import {windowWidth} from '../../App';
+import {LoginScreen} from '../screens/LoginScreen';
 
 const Drawer = createDrawerNavigator();
 
 export const MenuLeft = () => {
   return (
-    <Drawer.Navigator      
-      drawerPosition='right'
+    <Drawer.Navigator
+      drawerType={'slide'}
+      drawerPosition="right"
       screenOptions={{headerShown: true}}
       drawerContent={props => <ItemsSideBar {...props} />}>
       <Drawer.Screen name="home" component={HomeScreen} />
@@ -23,10 +21,9 @@ export const MenuLeft = () => {
         name="Stack"
         component={StackNavigator}
         options={{
-          headerShown: false,          
+          headerShown: false,
         }}
       />
     </Drawer.Navigator>
   );
 };
-

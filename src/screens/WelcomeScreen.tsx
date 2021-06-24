@@ -1,18 +1,15 @@
 import React, {useEffect, useState} from 'react';
-import {Button, StyleSheet, Text, View} from 'react-native';
-import { DrawerScreenProps, DrawerContent } from '@react-navigation/drawer';
+import {StyleSheet, View} from 'react-native';
+import {DrawerScreenProps} from '@react-navigation/drawer';
 import {Title} from '../components/Title';
-import {Button as ButtonC} from '../components/Button';
+import {Button} from '../components/Button';
 import {styles} from '../theme/appTheme';
-import {StackScreenProps} from '@react-navigation/stack';
-import {RootStackParams} from '../navigator/StackNavigator';
+
 import {Header} from '../components/Header';
 import {getToken, getUserInfo} from '../api/api';
-import { ToggleHeader } from '../components/ToggleHeader';
-
 
 //interface Props extends StackScreenProps<RootStackParams, 'WelcomeScreen'> {}
-interface Props extends DrawerScreenProps<any,any>{};
+interface Props extends DrawerScreenProps<any, any> {}
 
 export const WelcomeScreen = ({navigation}: Props) => {
   const [userName, setUserName] = useState('');
@@ -22,16 +19,10 @@ export const WelcomeScreen = ({navigation}: Props) => {
         setUserName(capitalizeFirstLetter(response.data.username));
       });
     });
-    
-    
 
     navigation.setOptions({
-      headerShown:true,
-      gestureEnabled:true,
-      headerRight: ()=> (<Button title='menu' onPress={()=>{
-        navigation.toggleDrawer()
-      }}/>)
-    })
+      gestureEnabled: false,
+    });
   }, []);
 
   const handleSolicitud = async () => {
@@ -45,7 +36,7 @@ export const WelcomeScreen = ({navigation}: Props) => {
         style={[
           styles.container,
           {
-            flex: 3,
+            flex: 2,
             borderTopWidth: 10,
             borderTopColor: 'transparent',
             alignItems: 'center',
@@ -53,9 +44,9 @@ export const WelcomeScreen = ({navigation}: Props) => {
           },
         ]}>
         <View style={{marginBottom: 15}}>
-          <ButtonC
+          <Button
             title={'Solicitar asistencia'}
-            color="#178C54"
+            color="#347194"
             height={70}
             width={270}
             onPress={handleSolicitud}
@@ -68,9 +59,9 @@ export const WelcomeScreen = ({navigation}: Props) => {
             />
           </View>
 
-          <ButtonC
+          <Button
             title={'Ver mis solicitudes'}
-            color="#253D5B"
+            color="#347194"
             height={70}
             width={270}
             onPress={() => navigation.navigate('HistorialSolicitudesScreen')}
@@ -82,9 +73,9 @@ export const WelcomeScreen = ({navigation}: Props) => {
               size={14}
             />
           </View>
-          <ButtonC
+          <Button
             title={'Ver ordenes de trabajo'}
-            color="#2F9C63"
+            color="#347194"
             height={70}
             width={270}
             onPress={() => navigation.navigate('ListadoOTScreen')}

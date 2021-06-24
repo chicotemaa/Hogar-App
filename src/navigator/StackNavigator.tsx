@@ -38,8 +38,13 @@ export const StackNavigator = () => {
           shadowColor: 'transparent',
         },
         headerShown: false,
+        gestureEnabled: true,
       }}>
-      <Stack.Screen name="LoginScreen" component={LoginScreen} />
+      <Stack.Screen
+        name="LoginScreen"
+        component={LoginScreen}
+        options={{gestureEnabled: false}}
+      />
       <Stack.Screen
         name="HomeScreen"
         options={{title: '', headerBackTitle: ''}}
