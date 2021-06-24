@@ -67,7 +67,11 @@ export const StackNavigator = () => {
         name="FormSolicitudScreen"
         component={FormSolicitudScreen}
       />
-      <Stack.Screen name="SuccessScreen" component={SuccessScreen} />
+      <Stack.Screen
+        name="SuccessScreen"
+        component={SuccessScreen}
+        options={{gestureEnabled: false}}
+      />
       <Stack.Screen name="ListadoOTScreen" component={ListadoOTScreen} />
       <Stack.Screen name="DetalleOTScreen" component={DetalleOTScreen} />
     </Stack.Navigator>

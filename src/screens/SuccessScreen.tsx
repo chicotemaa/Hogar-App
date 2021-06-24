@@ -21,7 +21,7 @@ export const SuccessScreen = ({navigation, route}: Props) => {
   const goToWelcomeScreen = async () => {
     setTimeout(() => {
       navigation.navigate('WelcomeScreen');
-    }, 5000);
+    }, 2800);
   };
 
   return (
