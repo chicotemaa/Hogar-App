@@ -1,64 +1,98 @@
+import {useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {Text, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {windowWidth} from '../../App';
-import {styles} from '../theme/appTheme';
+import {Appbar} from 'react-native-paper';
+import {windowWidth, windowHeight} from '../../App';
+import {DrawerNavigationProp} from '@react-navigation/drawer';
 
 interface Props {
   pageName?: string;
   userName?: string;
-  id?: string;
-  title?: string;
-  fecha?: string;
 }
 
-export const Header = ({pageName, id, title, fecha, userName}: Props) => {
+export const Header = ({pageName, userName}: Props) => {
   const isWelcomePage = pageName === 'Bienvenido';
   pageName = pageName == 'Solicitud' ? 'Informe de solicitud' : pageName;
-  const heightHeader = 1;
   const paddingHeader = isWelcomePage ? 10 : 0;
   const flexDHeader = isWelcomePage ? 'column' : 'row';
+  const heightPage = pageName === 'Bienvenido' ? '33%' : '15%';
 
-  //backgroundColor: '#EC5342',
+  const navigation = useNavigation();
+  const drawer: DrawerNavigationProp<any, any> = navigation.getParent();
+
+  const _goBack = () => navigation.goBack();
+
+  const _openMenu = () => {
+    drawer.openDrawer();
+  };
   return (
-    <LinearGradient
-      colors={[
-        '#ec5342',
-        '#EC5342',
-        '#EC5342',
-        '#F05443',
-        '#D64B3C',
-        '#BF4336',
-      ]}
-      style={{flex: heightHeader}}>
-      <View
-        style={{
-          paddingLeft: paddingHeader,
-          paddingTop: paddingHeader,
-          shadowColor: '#000',
-          shadowOffset: {
-            width: 0,
-            height: 20,
-          },
-          shadowOpacity: 0.25,
-          shadowRadius: 3.84,
-        }}>
-        <View style={{marginHorizontal: 15}}>
-          <View style={{flexDirection: flexDHeader}}>
-            <Text
-              style={{
-                color: 'white',
-                fontSize: 0.08 * windowWidth,
-                fontWeight: 'bold',
-                textShadowRadius: 10,
-              }}>
-              {isWelcomePage ? 'Hola!' : pageName}
-            </Text>
-            {isWelcomePage ? WelcomeHeader(userName) : null}
+    <>
+      {!isWelcomePage ? (
+        <Appbar.Header style={{height: windowHeight * 0.13}}>
+          <Appbar.BackAction
+            color="#101010"
+            onPress={_goBack}
+            size={windowHeight * 0.04}
+            style={{marginRight: 0}}
+          />
+
+          <Appbar.Content
+            title={pageName}
+            titleStyle={{fontSize: windowHeight * 0.04}}
+            style={{marginLeft: 0, flex: 1}}
+          />
+
+          <Appbar.Action
+            icon="menu"
+            color="black"
+            size={windowHeight * 0.035}
+            onPress={_openMenu}
+          />
+        </Appbar.Header>
+      ) : (
+        <LinearGradient
+          colors={['#F76656', '#F76656']}
+          style={{height: heightPage}}>
+          <View
+            style={{
+              paddingLeft: paddingHeader,
+              paddingTop: paddingHeader,
+              shadowColor: '#000',
+              shadowOffset: {
+                width: 0,
+                height: 20,
+              },
+              shadowOpacity: 0.25,
+              shadowRadius: 3.84,
+            }}>
+            <View style={{marginHorizontal: 15}}>
+              <View style={{flexDirection: flexDHeader}}>
+                {PageName(pageName)}
+                {isWelcomePage ? WelcomeHeader(userName) : null}
+              </View>
+            </View>
           </View>
-        </View>
-      </View>
-    </LinearGradient>
+        </LinearGradient>
+      )}
+    </>
+  );
+};
+
+const PageName = (name: string) => {
+  return (
+    <View>
+      <Text
+        style={{
+          marginTop: 35,
+          color: 'white',
+          fontSize: 0.09 * windowWidth,
+          fontWeight: '400',
+          textShadowRadius: 10,
+        }}>
+        {name}
+      </Text>
+    </View>
   );
 };
 

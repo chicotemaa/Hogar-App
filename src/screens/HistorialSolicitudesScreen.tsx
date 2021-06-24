@@ -81,18 +81,9 @@ const stylesHistorial = StyleSheet.create({
   containerItems: {
     flex: 3.9,
     flexDirection: 'column-reverse',
-    marginHorizontal: 5,
-    marginBottom: 10,
-    padding: 4,
-  },
-  title: {
-    fontSize: 0.11 * windowWidth,
-    fontWeight: '900',
-    alignSelf: 'center',
-    textAlign: 'center',
-    textShadowColor: '#000000',
-    textShadowRadius: 0,
-  },
+    marginHorizontal: 1,
+    marginBottom: 10,    
+  },  
   message: {
     fontSize: 30,
     marginVertical: 200,

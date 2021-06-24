@@ -1,4 +1,5 @@
 import {api, base, baseApi, getData, getUserInfo} from './api';
+
 //consulta -> descripcion
 //necesitasAyuda -> titulo
 
@@ -9,6 +10,7 @@ interface Solicitud {
   cliente: Cliente;
   createdAt: string;
   estado: number;
+  SucursalDeCliente: string;
 }
 
 interface Cliente {
@@ -24,27 +26,25 @@ const getSolicitudesRequest = async (token: string) => {
       Authorization: 'Bearer ' + token,
     },
   });
-  const arrayResponse = response.data['hydra:member'];
-
-  return arrayResponse;
+  let arrayResponse = response.data['hydra:member'];
+  
+  return arrayResponse
 };
+
+
 
 export const getSolicitudesAPI = async (token: string) => {
   return getSolicitudesRequest(token)
     .then(array => {
-      console.log(array);
-      const elements = array.map(
-        ({id, cliente, createdAt, necesitasAyuda, estado}: Solicitud) => {
-          return {
-            number: id,
-            location: cliente.street,
-            date: createdAt,
-            title: necesitasAyuda,
-            estado,
-          };
-        },
-      );
-
+      const elements = array.map(({id, cliente, createdAt, SucursalDeCliente, necesitasAyuda, estado}: Solicitud) => {        
+        return {
+          number: id,
+          location: SucursalDeCliente,
+          date: createdAt,
+          title: necesitasAyuda,
+          estado,
+        };
+      });
       return elements.reverse();
     })
     .catch(error => {
@@ -75,8 +75,7 @@ interface SolicitudPost {
 export const sendSolicitud = async ({
   tipoServicio,
   causa,
-  descripcion,
-  nombreServicio,
+  descripcion,  
   foto,
 }: SolicitudPost) => {
   const query = {
@@ -88,6 +87,8 @@ export const sendSolicitud = async ({
 
   const cliente = userInfo.data.cliente['@id'];
   const {Facility, SucursalDeCliente} = userInfo.data;
+
+  console.log(userInfo.data);
 
   const data = {
     cliente: cliente,
@@ -134,7 +135,24 @@ export const getSucursalesAPI = async () => {
       },
     })
     .then(response => {
-      return response.data.Cliente.city + ' ' + response.data.direccion;
+      return response.data.direccion;
+    })
+    .catch(err => {
+      return err;
+    });
+};
+
+export const getSucursalCliente = async (sucursal: string) => {
+  const token = await getData('access_token');
+
+  return api
+    .get(base + sucursal, {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    })
+    .then(response => {
+      return response.data;
     })
     .catch(err => {
       return err;
