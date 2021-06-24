@@ -4,6 +4,7 @@ import {Text, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {Appbar} from 'react-native-paper';
 import {windowWidth, windowHeight} from '../../App';
+import {DrawerNavigationProp} from '@react-navigation/drawer';
 
 interface Props {
   pageName?: string;
@@ -18,17 +19,17 @@ export const Header = ({pageName, userName}: Props) => {
   const heightPage = pageName === 'Bienvenido' ? '33%' : '15%';
 
   const navigation = useNavigation();
-  const drawer = navigation.getParent();
+  const drawer: DrawerNavigationProp<any, any> = navigation.getParent();
 
   const _goBack = () => navigation.goBack();
 
-  const _handleMore = () => {
+  const _openMenu = () => {
     drawer.openDrawer();
   };
   return (
     <>
       {!isWelcomePage ? (
-        <Appbar.Header style={{height: windowHeight * 0.15}}>
+        <Appbar.Header style={{height: windowHeight * 0.13}}>
           <Appbar.BackAction
             color="#101010"
             onPress={_goBack}
@@ -46,7 +47,7 @@ export const Header = ({pageName, userName}: Props) => {
             icon="menu"
             color="black"
             size={windowHeight * 0.035}
-            onPress={_handleMore}
+            onPress={_openMenu}
           />
         </Appbar.Header>
       ) : (
