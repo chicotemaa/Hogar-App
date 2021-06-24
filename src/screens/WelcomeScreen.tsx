@@ -1,14 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
+import {DrawerScreenProps} from '@react-navigation/drawer';
 import {Title} from '../components/Title';
 import {Button} from '../components/Button';
 import {styles} from '../theme/appTheme';
-import {StackScreenProps} from '@react-navigation/stack';
-import {RootStackParams} from '../navigator/StackNavigator';
+
 import {Header} from '../components/Header';
 import {getToken, getUserInfo} from '../api/api';
 
-interface Props extends StackScreenProps<RootStackParams, 'WelcomeScreen'> {}
+//interface Props extends StackScreenProps<RootStackParams, 'WelcomeScreen'> {}
+interface Props extends DrawerScreenProps<any, any> {}
 
 export const WelcomeScreen = ({navigation}: Props) => {
   const [userName, setUserName] = useState('');
@@ -17,6 +18,10 @@ export const WelcomeScreen = ({navigation}: Props) => {
       getUserInfo(token).then(response => {
         setUserName(capitalizeFirstLetter(response.data.username));
       });
+    });
+
+    navigation.setOptions({
+      gestureEnabled: false,
     });
   }, []);
 
@@ -31,7 +36,7 @@ export const WelcomeScreen = ({navigation}: Props) => {
         style={[
           styles.container,
           {
-            flex: 3,
+            flex: 2,
             borderTopWidth: 10,
             borderTopColor: 'transparent',
             alignItems: 'center',
@@ -40,8 +45,8 @@ export const WelcomeScreen = ({navigation}: Props) => {
         ]}>
         <View style={{marginBottom: 15}}>
           <Button
-            title={'Solicitar'}
-            color="#178C54"
+            title={'Solicitar asistencia'}
+            color="#347194"
             height={70}
             width={270}
             onPress={handleSolicitud}
@@ -56,7 +61,7 @@ export const WelcomeScreen = ({navigation}: Props) => {
 
           <Button
             title={'Ver mis solicitudes'}
-            color="#253D5B"
+            color="#347194"
             height={70}
             width={270}
             onPress={() => navigation.navigate('HistorialSolicitudesScreen')}
@@ -70,7 +75,7 @@ export const WelcomeScreen = ({navigation}: Props) => {
           </View>
           <Button
             title={'Ver ordenes de trabajo'}
-            color="#2F9C63"
+            color="#347194"
             height={70}
             width={270}
             onPress={() => navigation.navigate('ListadoOTScreen')}

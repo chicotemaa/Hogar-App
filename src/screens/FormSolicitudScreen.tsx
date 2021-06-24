@@ -71,6 +71,7 @@ export const FormSolicitudScreen = ({navigation, route}: Props) => {
   //TODO: Cambiar empty array x elemento texto que indique cargando
   useEffect(() => {
     getSucursalesAPI().then(sucursales => {
+      console.log(sucursal);
       setSucursal(sucursales);
     });
 
@@ -83,8 +84,8 @@ export const FormSolicitudScreen = ({navigation, route}: Props) => {
   const handlePress = () => setExpanded(!expanded);
   return (
     <>
-      <Header pageName="Generar Solicitud" />
-      <View style={[styles.container, {flex: 9}]}>
+      <Header pageName="Crear Solicitud" />
+      <View style={[styles.container, {paddingTop: 10, flex: 8}]}>
         <ScrollView>
           <View style={{justifyContent: 'space-between'}}>
             {labelInput({text: 'Sucursal'})}
@@ -106,7 +107,7 @@ export const FormSolicitudScreen = ({navigation, route}: Props) => {
                   }
                 />
               )}
-              style={{backgroundColor: 'white', elevation: 1}}
+              style={{backgroundColor: 'white', borderRadius: 5}}
               theme={{roundness: 20}}
               expanded={expanded}
               onPress={handlePress}>
@@ -146,10 +147,10 @@ export const FormSolicitudScreen = ({navigation, route}: Props) => {
               value={solicitud.causa}
               mode={'outlined'}
               error={!valido}
+              theme={{roundness: 5}}
               style={{
                 fontSize: 20,
                 backgroundColor: 'white',
-                elevation: 1,
               }}
               onChangeText={text => {
                 setSolicitud({
@@ -165,12 +166,12 @@ export const FormSolicitudScreen = ({navigation, route}: Props) => {
               mode={'outlined'}
               error={!valido}
               multiline
+              theme={{roundness: 5}}
               numberOfLines={5}
               style={{
                 textTransform: 'uppercase',
                 fontSize: 18,
                 backgroundColor: 'white',
-                elevation: 1,
               }}
               onChangeText={text => {
                 setSolicitud({
@@ -210,7 +211,7 @@ const styleForm = StyleSheet.create({});
 const labelInput = ({text}) => {
   return (
     <View style={{marginVertical: 5}}>
-      <Text style={{fontSize: 23}}>{text}</Text>
+      <Text style={{fontSize: 23, color: '#111111'}}>{text}</Text>
     </View>
   );
 };

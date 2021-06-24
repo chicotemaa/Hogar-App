@@ -37,12 +37,13 @@ export const StackNavigator = () => {
           backgroundColor: '#EC5342',
           shadowColor: 'transparent',
         },
-        headerShown: true,
+        headerShown: false,
+        gestureEnabled: true,
       }}>
       <Stack.Screen
         name="LoginScreen"
         component={LoginScreen}
-        options={{headerShown: false, title: 'Iniciar Sesión'}}
+        options={{gestureEnabled: false}}
       />
       <Stack.Screen
         name="HomeScreen"
@@ -57,33 +58,18 @@ export const StackNavigator = () => {
       <Stack.Screen
         name="HistorialSolicitudesScreen"
         component={HistorialSolicitudesScreen}
-        options={{headerShown: true, title: ''}}
       />
       <Stack.Screen
         name="DetalleSolicitudScreen"
         component={DetallesSolicitudScreen}
-        options={{headerShown: true, title: ''}}
       />
       <Stack.Screen
         name="FormSolicitudScreen"
         component={FormSolicitudScreen}
-        options={{headerShown: true, title: ''}}
       />
-      <Stack.Screen
-        name="SuccessScreen"
-        component={SuccessScreen}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="ListadoOTScreen"
-        component={ListadoOTScreen}
-        options={{headerShown: true}}
-      />
-      <Stack.Screen
-        name="DetalleOTScreen"
-        component={DetalleOTScreen}
-        options={{headerShown: true}}
-      />
+      <Stack.Screen name="SuccessScreen" component={SuccessScreen} />
+      <Stack.Screen name="ListadoOTScreen" component={ListadoOTScreen} />
+      <Stack.Screen name="DetalleOTScreen" component={DetalleOTScreen} />
     </Stack.Navigator>
   );
 };

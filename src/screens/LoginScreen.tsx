@@ -1,15 +1,18 @@
-import {StackScreenProps} from '@react-navigation/stack';
+import {DrawerScreenProps} from '@react-navigation/drawer';
+
 import * as React from 'react';
 
 import {StyleSheet, View, ScrollView} from 'react-native';
 
 import {FormLogin} from '../components/FormLogin';
 import {Logo} from '../components/Logo';
+import {useNavigation} from '@react-navigation/native';
 
-interface Props extends StackScreenProps<any, any> {}
+interface Props extends DrawerScreenProps<any, any> {}
 
 export const LoginScreen = ({navigation}: Props) => {
-  navigation.setOptions({});
+  const stackNavigator = useNavigation();
+
   return (
     <ScrollView centerContent={true} contentContainerStyle={styles.body}>
       <View
@@ -22,7 +25,7 @@ export const LoginScreen = ({navigation}: Props) => {
       <View style={styles.form}>
         <FormLogin
           pageToGo={() => {
-            navigation.navigate('WelcomeScreen');
+            stackNavigator.navigate('WelcomeScreen');
           }}
         />
       </View>
