@@ -4,8 +4,6 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 import {StackNavigator} from './StackNavigator';
 import {HomeScreen} from '../screens/HomeScreen';
 import {ItemsSideBar} from '../components/ItemsSideBar';
-import {windowWidth} from '../../App';
-import {LoginScreen} from '../screens/LoginScreen';
 
 const Drawer = createDrawerNavigator();
 

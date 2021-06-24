@@ -1,12 +1,12 @@
 import {StackScreenProps} from '@react-navigation/stack';
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Text} from 'react-native-elements';
 import {RootStackParams} from '../navigator/StackNavigator';
 import {DetalleButton} from './Historial/DetalleButton';
 import {Estado} from './Historial/Estado';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import { getSucursalCliente } from '../api/apiClientes';
+import {getSucursalCliente} from '../api/apiClientes';
 
 interface Props
   extends StackScreenProps<RootStackParams, 'HistorialSolicitudesScreen'> {
@@ -25,18 +25,17 @@ export const ItemHistorial = ({
   estado,
   navigation,
 }: Props) => {
-  
-  const [street, setStreet] = useState(location)
+  const [street, setStreet] = useState(location);
   useEffect(() => {
     formatDate(date);
-    getStreetSucursal(location)
-  }, [])
+    getStreetSucursal(location);
+  }, []);
 
   async function getStreetSucursal(sucursal: string) {
     const street = await getSucursalCliente(sucursal).then(sucursal => {
       return sucursal.direccion;
     });
-    setStreet(street)
+    setStreet(street);
   }
 
   return (
@@ -60,7 +59,7 @@ export const ItemHistorial = ({
           </View>
           <Text style={styles.title}>{title}</Text>
 
-          <View style={{flexDirection: 'row', marginBottom: 10}}>
+          <View style={{flexDirection: 'row', marginBottom: 20}}>
             <Icon
               size={20}
               name="map-marker-alt"
@@ -103,8 +102,6 @@ function formatDate(date: string) {
   return date.split('T', 1);
 }
 
-
-
 const styles = StyleSheet.create({
   container: {
     padding: 5,
@@ -121,7 +118,7 @@ const styles = StyleSheet.create({
   },
   title: {
     width: '200%',
-    marginVertical: 15,
+    marginVertical: 11,
     fontWeight: '700',
     fontSize: 17,
     color: '#383838',
