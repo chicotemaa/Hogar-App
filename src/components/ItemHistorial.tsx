@@ -1,11 +1,12 @@
 import {StackScreenProps} from '@react-navigation/stack';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Text} from 'react-native-elements';
 import {RootStackParams} from '../navigator/StackNavigator';
 import {DetalleButton} from './Historial/DetalleButton';
 import {Estado} from './Historial/Estado';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import { getSucursalCliente } from '../api/apiClientes';
 
 interface Props
   extends StackScreenProps<RootStackParams, 'HistorialSolicitudesScreen'> {
@@ -24,7 +25,20 @@ export const ItemHistorial = ({
   estado,
   navigation,
 }: Props) => {
-  formatDate(date);
+  
+  const [street, setStreet] = useState(location)
+  useEffect(() => {
+    formatDate(date);
+    getStreetSucursal(location)
+  }, [])
+
+  async function getStreetSucursal(sucursal: string) {
+    const street = await getSucursalCliente(sucursal).then(sucursal => {
+      return sucursal.direccion;
+    });
+    setStreet(street)
+  }
+
   return (
     <View style={styles.container}>
       <View
@@ -35,19 +49,25 @@ export const ItemHistorial = ({
           marginVertical: 5,
         }}>
         <View style={{flex: 1}}>
-          <View style={{paddingVertical:10,borderBottomWidth: 1, flex: 1, borderColor: '#D1D1D1'}}>
+          <View
+            style={{
+              paddingVertical: 10,
+              borderBottomWidth: 1,
+              flex: 1,
+              borderColor: '#D1D1D1',
+            }}>
             <Text style={styles.number}>#{number}</Text>
           </View>
           <Text style={styles.title}>{title}</Text>
 
-          <View style={{flexDirection: 'row', marginBottom:10}}>
+          <View style={{flexDirection: 'row', marginBottom: 10}}>
             <Icon
               size={20}
               name="map-marker-alt"
               color="red"
               style={{marginRight: 11}}
             />
-            <Text style={styles.info}>{location}</Text>
+            <Text style={[styles.info, {width: '135%'}]}>{street}</Text>
           </View>
 
           <View style={{flexDirection: 'row'}}>
@@ -64,7 +84,12 @@ export const ItemHistorial = ({
         </View>
         <View
           style={{flex: 1, justifyContent: 'space-between', marginRight: 5}}>
-          <View style={{paddingVertical:10,borderBottomWidth: 1, borderColor: '#D1D1D1'}}>
+          <View
+            style={{
+              paddingVertical: 10,
+              borderBottomWidth: 1,
+              borderColor: '#D1D1D1',
+            }}>
             <Estado estado={estado} />
           </View>
           <DetalleButton codigo={number} navigation={navigation} />
@@ -77,6 +102,8 @@ export const ItemHistorial = ({
 function formatDate(date: string) {
   return date.split('T', 1);
 }
+
+
 
 const styles = StyleSheet.create({
   container: {
