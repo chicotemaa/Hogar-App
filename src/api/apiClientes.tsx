@@ -82,13 +82,12 @@ export const sendSolicitud = async ({
     url: '/solicituds',
   };
 
-  const token = await getData('access_token');
+  const token:string = await getData('access_token');
   const userInfo = await getUserInfo(token);
 
   const cliente = userInfo.data.cliente['@id'];
   const {Facility, SucursalDeCliente} = userInfo.data;
-
-  console.log(userInfo.data);
+  const sucursalHogar = userInfo.data.sucursal  
 
   const data = {
     cliente: cliente,
@@ -100,14 +99,15 @@ export const sendSolicitud = async ({
     imagen: 'string',
     createdAt: '2021-06-09T18:21:48.222Z',
     numeroSucursal: null,
-    pisoSector: '1',
+    pisoSector: '1',    
     consulta: descripcion,
+    sucursal: sucursalHogar,
     Facility,
     SucursalDeCliente,
   };
 
   //ESTE CODIGO ES UNA MASA fetch love
-
+  
   return fetch(baseApi + query.url, {
     method: 'POST',
     headers: {
