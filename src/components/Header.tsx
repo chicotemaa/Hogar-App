@@ -16,7 +16,7 @@ export const Header = ({pageName, userName}: Props) => {
   pageName = pageName == 'Solicitud' ? 'Informe de solicitud' : pageName;
   const paddingHeader = isWelcomePage ? 10 : 0;
   const flexDHeader = isWelcomePage ? 'column' : 'row';
-  const heightPage ='30%';
+  const heightPage = '30%';
 
   const navigation = useNavigation();
   const drawer: DrawerNavigationProp<any, any> = navigation.getParent();
@@ -34,13 +34,11 @@ export const Header = ({pageName, userName}: Props) => {
             color="#101010"
             onPress={_goBack}
             size={windowHeight * 0.035}
-            
           />
-
           <Appbar.Content
-          color='white'
+            color="white"
             title={pageName}
-            titleStyle={{fontSize: windowHeight * 0.037}}            
+            titleStyle={{fontSize: windowHeight * 0.037}}
           />
 
           <Appbar.Action
@@ -52,16 +50,22 @@ export const Header = ({pageName, userName}: Props) => {
         </Appbar.Header>
       ) : (
         <>
-          <Appbar.Header style={{elevation:0}}>
-            <View style={{alignContent:'flex-end', alignItems:'flex-end', marginLeft:'86%'}}>
+          <Appbar.Header style={{elevation: 0}}>
+            <View
+              style={{
+                alignContent: 'flex-end',
+                alignItems: 'flex-end',
+                marginLeft: '86%',
+              }}>
               <Appbar.Action
                 icon="menu"
                 color="black"
                 size={windowHeight * 0.035}
-                onPress={_openMenu}              
+                onPress={_openMenu}
+                style={{justifyContent: 'flex-end'}}
               />
             </View>
-          </Appbar.Header>          
+          </Appbar.Header>
           <LinearGradient
             colors={['#F76656', '#F76656']}
             style={{height: heightPage}}>
