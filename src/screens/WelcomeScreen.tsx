@@ -25,8 +25,8 @@ export const WelcomeScreen = ({navigation}: Props) => {
     });
   }, []);
 
-  const handleSolicitud = async () => {
-    navigation.navigate('FormSolicitudScreen');
+  const handleSolicitud = () => {
+    navigation.navigate('NewSolicitudScreen');
   };
 
   return (
