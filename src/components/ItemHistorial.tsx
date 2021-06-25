@@ -7,9 +7,11 @@ import {DetalleButton} from './Historial/DetalleButton';
 import {Estado} from './Historial/Estado';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {getSucursalCliente} from '../api/apiClientes';
+import {TransitionView} from './TransitionView';
 
 interface Props
   extends StackScreenProps<RootStackParams, 'HistorialSolicitudesScreen'> {
+  index: number;
   number: string;
   title: string;
   location: string;
@@ -18,6 +20,7 @@ interface Props
 }
 
 export const ItemHistorial = ({
+  index,
   number,
   title,
   location,
@@ -39,7 +42,7 @@ export const ItemHistorial = ({
   }
 
   return (
-    <View style={styles.container}>
+    <TransitionView style={styles.container} index={index}>
       <View
         style={{
           flexDirection: 'row',
@@ -94,7 +97,7 @@ export const ItemHistorial = ({
           <DetalleButton codigo={number} navigation={navigation} />
         </View>
       </View>
-    </View>
+    </TransitionView>
   );
 };
 

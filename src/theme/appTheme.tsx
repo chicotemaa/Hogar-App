@@ -1,6 +1,11 @@
 import {StyleSheet} from 'react-native';
 import {windowWidth} from '../../App';
 
+export const theme = {
+  transitionDuration: 1800,
+  delayTransition: 500,
+};
+
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
