@@ -1,8 +1,9 @@
 import {StackScreenProps} from '@react-navigation/stack';
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {Text, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {Colors, IconButton, List, TextInput} from 'react-native-paper';
+import {Button as BtnDialog, Paragraph, Dialog, Portal} from 'react-native-paper';
 import {getAllServiciosAPI} from '../api/api';
 import {getSucursalesAPI, sendSolicitud} from '../api/apiClientes';
 import {Button} from '../components/Button';
@@ -25,6 +26,10 @@ export const FormSolicitudScreen = ({navigation, route}: Props) => {
   const [sucursal, setSucursal] = useState('');
   const [valido, setValido] = useState(true);
 
+   const [visible, setVisible] = React.useState(false);
+   const showDialog = () => setVisible(true);
+   const hideDialog = () => setVisible(false);
+
   const [solicitud, setSolicitud] = useState({
     tipoServicio: '',
     nombreServicio: '',
@@ -33,30 +38,21 @@ export const FormSolicitudScreen = ({navigation, route}: Props) => {
     foto: '1234',
   });
 
-  const validateInputs = () => {
-    solicitud.causa == '' ? emptyInput('causa') : solicitud.causa;
-    solicitud.descripcion == ''
-      ? emptyInput('descripcion')
-      : solicitud.descripcion;
-    //TODO: comprobar el input corregido
-    if (valido) {
-      enviarSolicitud();
-    }
+  const validateInputs = () => {    
+    const { causa,descripcion } = solicitud;
+    if(causa == '' || descripcion == ''){
+      showDialog()          
+      setValido(false)      
+    }else{
+      enviarSolicitud();    
+    }  
   };
-
-  const emptyInput = (input: string) => {
-    setValido(false);
-    setSolicitud({
-      ...solicitud,
-      [input]: `Debe ingresar la ${input} del problema`,
-    });
-  };
+  
 
   function enviarSolicitud() {
     sendSolicitud(solicitud).then(success => {
       navigation.navigate('SuccessScreen', {success});
-    });
-    //TODO: controlar que respuesta envió la creacion de la solicitud
+    });  
   }
 
   const iconosServicio = {
@@ -69,14 +65,12 @@ export const FormSolicitudScreen = ({navigation, route}: Props) => {
     Otro: 'hammer-wrench',
   };
   //TODO: Cambiar empty array x elemento texto que indique cargando
-  useEffect(() => {
-    getSucursalesAPI().then(sucursales => {
-      console.log(sucursal);
+  useEffect(() => {    
+    getSucursalesAPI().then(sucursales => {      
       setSucursal(sucursales);
     });
 
-    getAllServiciosAPI().then(arrayServicios => {
-      //console.log(arrayServicios);
+    getAllServiciosAPI().then(arrayServicios => {      
       setServicios(arrayServicios);
     });
   }, []);
@@ -86,6 +80,7 @@ export const FormSolicitudScreen = ({navigation, route}: Props) => {
     <>
       <Header pageName="Crear Solicitud" />
       <View style={[styles.container, {paddingTop: 10, flex: 8}]}>
+        <Alerta campo={solicitud.causa==''?'causa':'descripción'} hideDialog={hideDialog} visible={visible}/>
         <ScrollView>
           <View style={{justifyContent: 'space-between'}}>
             {labelInput({text: 'Sucursal'})}
@@ -153,6 +148,7 @@ export const FormSolicitudScreen = ({navigation, route}: Props) => {
                 backgroundColor: 'white',
               }}
               onChangeText={text => {
+                setValido(true);
                 setSolicitud({
                   ...solicitud,
                   causa: text,
@@ -174,6 +170,7 @@ export const FormSolicitudScreen = ({navigation, route}: Props) => {
                 backgroundColor: 'white',
               }}
               onChangeText={text => {
+                setValido(true);
                 setSolicitud({
                   ...solicitud,
                   descripcion: text,
@@ -206,7 +203,6 @@ export const FormSolicitudScreen = ({navigation, route}: Props) => {
   );
 };
 
-const styleForm = StyleSheet.create({});
 
 const labelInput = ({text}) => {
   return (
@@ -218,3 +214,24 @@ const labelInput = ({text}) => {
 
 //numberOfLines={Platform.OS === 'ios' ? null : numberOfLines}
 //minHeight={(Platform.OS === 'ios' && numberOfLines) ? (20 * numberOfLines) : null}
+
+interface PropsAlert {
+  campo:string;
+  visible:boolean;
+  hideDialog:()=>void;
+}
+const Alerta = ({campo,visible,hideDialog}:PropsAlert) => {
+  return (<Portal>
+    <Dialog visible={visible} onDismiss={hideDialog}>
+      <Dialog.Title>Solucitud Erronea</Dialog.Title>
+      <Dialog.Content>
+        <Paragraph style={{fontSize: 19}}>
+          La {campo} no puede estar vacia.
+        </Paragraph>
+      </Dialog.Content>
+      <Dialog.Actions>
+        <BtnDialog onPress={hideDialog}>Aceptar</BtnDialog>
+      </Dialog.Actions>
+    </Dialog>
+  </Portal>)
+}
