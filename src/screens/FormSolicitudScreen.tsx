@@ -17,6 +17,7 @@ import {RootStackParams} from '../navigator/StackNavigator';
 import Spinner from 'react-native-loading-spinner-overlay';
 import * as Animatable from 'react-native-animatable';
 import {styles} from '../theme/appTheme';
+import {TransitionView} from '../components/TransitionView';
 
 interface Props
   extends StackScreenProps<RootStackParams, 'FormSolicitudScreen'> {}
@@ -102,7 +103,7 @@ export const FormSolicitudScreen = ({navigation, route}: Props) => {
             visible={visible}
           />
           <ScrollView>
-            <Animatable.View animation="zoomIn" duration={1200} useNativeDriver>
+            <TransitionView>
               <View style={{justifyContent: 'space-between'}}>
                 {labelInput({text: 'Sucursal'})}
                 <TextInput disabled value={sucursal} />
@@ -218,7 +219,7 @@ export const FormSolicitudScreen = ({navigation, route}: Props) => {
                   />
                 </View>
               </View>
-            </Animatable.View>
+            </TransitionView>
           </ScrollView>
         </View>
       )}

@@ -9,6 +9,7 @@ import {StackScreenProps} from '@react-navigation/stack';
 import {getData} from '../api/api';
 import {Header} from '../components/Header';
 import Spinner from 'react-native-loading-spinner-overlay';
+import {TransitionView} from '../components/TransitionView';
 
 interface Props
   extends StackScreenProps<RootStackParams, 'HistorialSolicitudesScreen'> {}
@@ -85,7 +86,9 @@ export const HistorialSolicitudesScreen = ({navigation}: Props) => {
               />
             </View>
           ) : (
-            <ScrollView>{Items}</ScrollView>
+            <ScrollView>
+              <TransitionView animation="slideInUp">{Items}</TransitionView>
+            </ScrollView>
           )}
         </View>
       </View>
