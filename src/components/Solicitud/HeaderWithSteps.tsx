@@ -1,44 +1,52 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import ProgressCircle from 'react-native-progress-circle';
-import {windowHeight} from '../../../App';
+import {windowHeight, windowWidth} from '../../../App';
+import {Header} from '../Header';
 
 interface Props {
   page: string;
-  subtitle: string;
 }
 
-export const HeaderWithSteps = ({page, subtitle}: Props) => {
+export const HeaderWithSteps = ({page}: Props) => {
   return (
-    <View
-      style={{
-        flexDirection: 'row',
-        backgroundColor: 'orange',
-        padding: 10,
-      }}>
-      <View style={{borderWidth: 1}}>
-        <ProgressCircle
-          percent={25}
-          radius={windowHeight * 0.05}
-          borderWidth={8}
-          color="#95E745"
-          shadowColor="#999"
-          bgColor="#fff">
-          <Text style={{fontSize: windowHeight * 0.02, textAlign: 'center'}}>
-            {page + 1} de 4
-          </Text>
-        </ProgressCircle>
-      </View>
-      <View style={{paddingLeft: 10, justifyContent: 'center'}}>
-        <Text
-          style={{
-            alignSelf: 'center',
-            fontSize: windowHeight * 0.035,
-          }}>
-          Nueva Solicitud
+    <View style={styles.headerContainer}>
+      <ProgressCircle
+        percent={25}
+        radius={windowHeight * 0.05}
+        borderWidth={6}
+        color="#95E745"
+        shadowColor="#999"
+        bgColor="#fff">
+        <Text style={{fontSize: windowHeight * 0.02, textAlign: 'center'}}>
+          {page + 1} de 4
         </Text>
-        <Text>{subtitle}</Text>
+      </ProgressCircle>
+      <View style={styles.textHeaderContainer}>
+        <Text style={styles.titleHeader}>Elija Sucursal</Text>
+        <Text style={styles.subtitleHeader}>Elija Sucursal</Text>
       </View>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  headerContainer: {
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    backgroundColor: '#DDDDDD',
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    flexDirection: 'row',
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    elevation: 10,
+  },
+  textHeaderContainer: {marginHorizontal: 20, marginVertical: 10},
+  titleHeader: {fontSize: windowWidth * 0.06, fontWeight: '700'},
+  subtitleHeader: {
+    fontSize: windowWidth * 0.04,
+    fontWeight: '200',
+    color: '#2D2D2D',
+  },
+});

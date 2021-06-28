@@ -2,31 +2,28 @@ import React, {useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {Button} from 'react-native-paper';
 import {Header} from '../components/Header';
-
-import ProgressCircle from 'react-native-progress-circle';
-import {useNavigation} from '@react-navigation/native';
-import {windowHeight} from '../../App';
-import {TransitionView} from '../components/TransitionView';
 import Wizard from '../components/Wizard';
+import {SucursalStep} from '../components/Solicitud/Steps/SucursalStep';
+import {ServicioStep} from '../components/Solicitud/Steps/ServicioStep';
+import {CausaSept} from '../components/Solicitud/Steps/CausaStep';
+import {DescripcionStep} from '../components/Solicitud/Steps/DescripcionStep';
 
 export const NewSolicitudScreen = () => {
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [percent, setPercent] = useState(25);
-
   return (
     <View>
+      <Header pageName="Nueva Solicitud" />
       <Wizard>
         <Wizard.Step>
-          <Text>Seleccione Sucursal</Text>
+          <SucursalStep />
         </Wizard.Step>
         <Wizard.Step>
-          <Text>Seleccione Servicio</Text>
+          <ServicioStep />
         </Wizard.Step>
         <Wizard.Step>
-          <Text>Ingrese causa</Text>
+          <CausaSept />
         </Wizard.Step>
         <Wizard.Step>
-          <Text>Ingrese descripcion</Text>
+          <DescripcionStep />
         </Wizard.Step>
       </Wizard>
     </View>

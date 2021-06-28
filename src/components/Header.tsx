@@ -9,10 +9,12 @@ import {DrawerNavigationProp} from '@react-navigation/drawer';
 interface Props {
   pageName?: string;
   userName?: string;
+  ProgressCircle?: any;
 }
 
-export const Header = ({pageName, userName}: Props) => {
+export const Header = ({pageName, userName, ProgressCircle}: Props) => {
   const isWelcomePage = pageName === 'Bienvenido';
+  const isFormSolicitud = pageName === 'Nueva Solicitud';
   pageName = pageName == 'Solicitud' ? 'Informe de solicitud' : pageName;
   const paddingHeader = isWelcomePage ? 10 : 0;
   const flexDHeader = isWelcomePage ? 'column' : 'row';
@@ -39,6 +41,7 @@ export const Header = ({pageName, userName}: Props) => {
             color="white"
             title={pageName}
             titleStyle={{fontSize: windowHeight * 0.037}}
+            subtitle={isFormSolicitud ? 'Complete los datos necesarios' : null}
           />
 
           <Appbar.Action

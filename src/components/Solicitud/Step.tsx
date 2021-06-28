@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react';
-import {Button, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {HeaderWithSteps} from './HeaderWithSteps';
 
 class Step extends PureComponent {
@@ -7,29 +7,26 @@ class Step extends PureComponent {
 
   render() {
     return (
-      <>
-        <HeaderWithSteps
-          page={this.props.currentIndex}
-          subtitle={this.props.children}
-        />
+      <View>
         <View>
-          <Button
-            title="Next"
-            disabled={this.props.isLast}
-            onPress={() => {
-              console.log(this.props);
-              this.props.nextStep();
-            }}
-          />
-          <Button
-            title="Prev"
-            disabled={this.props.currentIndex === 0}
-            onPress={this.props.prevStep}
-          />
+          <View style={styles.container}>
+            <View>
+              <HeaderWithSteps page={this.props.currentIndex} />
+            </View>
+            <View>{this.props.children}</View>
+          </View>
         </View>
-      </>
+      </View>
     );
   }
 }
 
 export default Step;
+
+const styles = StyleSheet.create({
+  container: {
+    marginVertical: 20,
+    marginHorizontal: 15,
+    elevation: 10,
+  },
+});
