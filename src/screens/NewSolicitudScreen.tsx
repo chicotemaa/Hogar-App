@@ -10,8 +10,7 @@ import {DescripcionStep} from '../components/Solicitud/Steps/DescripcionStep';
 
 export const NewSolicitudScreen = () => {
   return (
-    <View>
-      <Header pageName="Nueva Solicitud" />
+    <View style={{alignItems:'center', flex:1, justifyContent:'center'}}>
       <Wizard>
         <Wizard.Step>
           <SucursalStep />

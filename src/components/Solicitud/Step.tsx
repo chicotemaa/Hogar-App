@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react';
-import {StyleSheet, View} from 'react-native';
-import { windowHeight } from '../../../App';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import { windowHeight, windowWidth } from '../../../App';
 import {HeaderWithSteps} from './HeaderWithSteps';
 
 class Step extends PureComponent {
@@ -8,15 +8,21 @@ class Step extends PureComponent {
 
   render() {
     return (
-      <View>
-        <View>
+      <View style={{borderWidth:1}}>        
           <View style={styles.container}>
             <View>
               <HeaderWithSteps page={this.props.currentIndex} />
             </View>
             <View style={styles.content}>{this.props.children}</View>
-          </View>
-        </View>
+            <View style={{flexDirection:'row', justifyContent:'center'}}>
+              <TouchableOpacity style={styles.buttonStep} onPress={this.props.prevStep}>
+                <Text>Atras</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.buttonStep} onPress={this.props.nextStep}>
+                <Text>Siguiente</Text>
+              </TouchableOpacity>
+            </View>
+          </View>        
       </View>
     );
   }
@@ -27,12 +33,23 @@ export default Step;
 const styles = StyleSheet.create({
   container: {
     marginVertical: 20,
-    marginHorizontal: 15,
-    elevation: 10,
-    height:300
+    marginHorizontal: 1,
+    elevation: 10,    
+    height:windowHeight*0.7
   },
   content:{
-    height:windowHeight,
-    marginBottom:100
+    flex:1,
+    backgroundColor:'#FFFFFF',
+    height:'50%',
+    borderWidth:1,
+  },
+  buttonStep:{
+    backgroundColor:'orange',
+    marginHorizontal:5,
+    borderRadius:5,
+    width: windowWidth*0.4,
+    justifyContent:'center',
+    alignItems:'center',
+    height:windowHeight*0.06
   }
 });
