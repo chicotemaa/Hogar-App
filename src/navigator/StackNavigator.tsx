@@ -12,6 +12,7 @@ import {FormSolicitudScreen} from '../screens/FormSolicitudScreen';
 import {SuccessScreen} from '../screens/SuccessScreen';
 import {ListadoOTScreen} from '../screens/ListadoOTScreen';
 import {DetalleOTScreen} from '../screens/DetalleOTScreen';
+import {NewSolicitudScreen} from '../screens/NewSolicitudScreen';
 
 /* Params in pages */
 export type RootStackParams = {
@@ -25,13 +26,14 @@ export type RootStackParams = {
   SuccessScreen: {success: boolean};
   ListadoOTScreen: undefined;
   DetalleOTScreen: undefined;
+  NewSolicitudScreen: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParams>();
 
 export const StackNavigator = () => {
   return (
-    <Stack.Navigator
+    <Stack.Navigator      
       screenOptions={{
         headerStyle: {
           backgroundColor: '#EC5342',
@@ -74,6 +76,11 @@ export const StackNavigator = () => {
       />
       <Stack.Screen name="ListadoOTScreen" component={ListadoOTScreen} />
       <Stack.Screen name="DetalleOTScreen" component={DetalleOTScreen} />
+      <Stack.Screen
+        name="NewSolicitudScreen"
+        component={NewSolicitudScreen}
+        options={{headerShown: false}}
+      />
     </Stack.Navigator>
   );
 };
