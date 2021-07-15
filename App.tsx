@@ -3,19 +3,16 @@ import React from 'react';
 import {Dimensions} from 'react-native';
 
 import {NavigationContainer} from '@react-navigation/native';
-import {  
-  DefaultTheme,
-  Provider as PaperProvider,
-} from 'react-native-paper';
+import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
 import {MenuLeft} from './src/navigator/MenuLeft';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 const theme = {
   ...DefaultTheme,
   roundness: 2,
   colors: {
     ...DefaultTheme.colors,
-    primary: '#EC5342',
+    primary: '#F76656',
     accent: '#f1c40f',
   },
 };
@@ -28,8 +25,6 @@ const App = () => {
     <SafeAreaProvider>
       <PaperProvider theme={theme}>
         <NavigationContainer>
-          {/* <StackNavigator /> */}
-          {/* <Menu /> */}
           <MenuLeft />
         </NavigationContainer>
       </PaperProvider>

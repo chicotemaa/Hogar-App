@@ -9,14 +9,16 @@ import {DrawerNavigationProp} from '@react-navigation/drawer';
 interface Props {
   pageName?: string;
   userName?: string;
+  ProgressCircle?: any;
 }
 
-export const Header = ({pageName, userName}: Props) => {
+export const Header = ({pageName, userName, ProgressCircle}: Props) => {
   const isWelcomePage = pageName === 'Bienvenido';
+  const isFormSolicitud = pageName === 'Nueva Solicitud';
   pageName = pageName == 'Solicitud' ? 'Informe de solicitud' : pageName;
   const paddingHeader = isWelcomePage ? 10 : 0;
   const flexDHeader = isWelcomePage ? 'column' : 'row';
-  const heightPage = pageName === 'Bienvenido' ? '33%' : '15%';
+  const heightPage = '30%';
 
   const navigation = useNavigation();
   const drawer: DrawerNavigationProp<any, any> = navigation.getParent();
@@ -33,47 +35,64 @@ export const Header = ({pageName, userName}: Props) => {
           <Appbar.BackAction
             color="#101010"
             onPress={_goBack}
-            size={windowHeight * 0.04}
-            style={{marginRight: 0}}
+            size={windowHeight * 0.035}
           />
-
           <Appbar.Content
+            color="white"
             title={pageName}
-            titleStyle={{fontSize: windowHeight * 0.04}}
-            style={{marginLeft: 0, flex: 1}}
+            titleStyle={{fontSize: windowHeight * 0.037}}
+            subtitle={isFormSolicitud ? 'Complete los datos necesarios' : null}
           />
 
           <Appbar.Action
             icon="menu"
             color="black"
-            size={windowHeight * 0.035}
+            size={windowHeight * 0.038}
             onPress={_openMenu}
           />
         </Appbar.Header>
       ) : (
-        <LinearGradient
-          colors={['#F76656', '#F76656']}
-          style={{height: heightPage}}>
-          <View
-            style={{
-              paddingLeft: paddingHeader,
-              paddingTop: paddingHeader,
-              shadowColor: '#000',
-              shadowOffset: {
-                width: 0,
-                height: 20,
-              },
-              shadowOpacity: 0.25,
-              shadowRadius: 3.84,
-            }}>
-            <View style={{marginHorizontal: 15}}>
-              <View style={{flexDirection: flexDHeader}}>
-                {PageName(pageName)}
-                {isWelcomePage ? WelcomeHeader(userName) : null}
+        <>
+          <Appbar.Header style={{elevation: 0}}>
+            <View
+              style={{
+                alignContent: 'flex-end',
+                alignItems: 'flex-end',
+                marginLeft: '86%',
+              }}>
+              <Appbar.Action
+                icon="menu"
+                color="black"
+                size={windowHeight * 0.035}
+                onPress={_openMenu}
+                style={{justifyContent: 'flex-end'}}
+              />
+            </View>
+          </Appbar.Header>
+          <LinearGradient
+            colors={['#F76656', '#F76656']}
+            style={{height: heightPage}}>
+            <View
+              style={{
+                paddingLeft: paddingHeader,
+                paddingTop: paddingHeader,
+                shadowColor: '#000',
+                shadowOffset: {
+                  width: 0,
+                  height: 20,
+                },
+                shadowOpacity: 0.25,
+                shadowRadius: 3.84,
+              }}>
+              <View style={{marginHorizontal: 15}}>
+                <View style={{flexDirection: flexDHeader}}>
+                  {PageName(pageName)}
+                  {isWelcomePage ? WelcomeHeader(userName) : null}
+                </View>
               </View>
             </View>
-          </View>
-        </LinearGradient>
+          </LinearGradient>
+        </>
       )}
     </>
   );
@@ -84,7 +103,6 @@ const PageName = (name: string) => {
     <View>
       <Text
         style={{
-          marginTop: 35,
           color: 'white',
           fontSize: 0.09 * windowWidth,
           fontWeight: '400',

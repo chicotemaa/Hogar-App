@@ -68,6 +68,7 @@ export const getUserInfo = async (token?: string) => {
       Authorization: 'Bearer ' + token,
     },
   });
+  console.log(response.data)
   return response;
 };
 

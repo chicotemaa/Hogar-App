@@ -10,7 +10,7 @@ const Drawer = createDrawerNavigator();
 export const MenuLeft = () => {
   return (
     <Drawer.Navigator
-      drawerType={'slide'}
+      drawerType={'front'}
       drawerPosition="right"
       screenOptions={{headerShown: true}}
       drawerContent={props => <ItemsSideBar {...props} />}>

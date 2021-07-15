@@ -1,14 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {styles} from '../theme/appTheme';
+import {styles, theme} from '../theme/appTheme';
 import {ItemHistorial} from '../components/ItemHistorial';
 import {ScrollView} from 'react-native-gesture-handler';
 import {getSolicitudesAPI} from '../api/apiClientes';
 import {RootStackParams} from '../navigator/StackNavigator';
 import {StackScreenProps} from '@react-navigation/stack';
-import {windowWidth, windowHeight} from '../../App';
 import {getData} from '../api/api';
 import {Header} from '../components/Header';
+import Spinner from 'react-native-loading-spinner-overlay';
+import {TransitionView} from '../components/TransitionView';
 
 interface Props
   extends StackScreenProps<RootStackParams, 'HistorialSolicitudesScreen'> {}
@@ -28,6 +29,7 @@ export const HistorialSolicitudesScreen = ({navigation}: Props) => {
     </View>
   );
   const [Items, setItems] = useState(empty);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     mostrarSolicitudes();
@@ -38,6 +40,9 @@ export const HistorialSolicitudesScreen = ({navigation}: Props) => {
       getSolicitudesAPI(token)
         .then(array => {
           setItems(getItems(array));
+          setTimeout(() => {
+            setLoading(false);
+          }, 900);
         })
         .catch(() => {
           setItems(empty);
@@ -47,9 +52,11 @@ export const HistorialSolicitudesScreen = ({navigation}: Props) => {
         if (array.length === 0) {
           return empty;
         } else {
+          let index: number = 0;
           return array.map((element: Solicitud) => {
             return (
               <ItemHistorial
+                index={index++}
                 key={element.number.toString()}
                 date={element.date}
                 location={element.location}
@@ -70,7 +77,19 @@ export const HistorialSolicitudesScreen = ({navigation}: Props) => {
       <Header pageName={'Solicitudes'} />
       <View style={[styles.container, {flex: 9}]}>
         <View style={stylesHistorial.containerItems}>
-          <ScrollView>{Items}</ScrollView>
+          {loading ? (
+            <View>
+              <Spinner
+                visible={loading}
+                textContent={'Cargando...'}
+                textStyle={{color: '#FFF'}}
+              />
+            </View>
+          ) : (
+            <ScrollView>
+              <TransitionView animation="slideInUp">{Items}</TransitionView>
+            </ScrollView>
+          )}
         </View>
       </View>
     </>
