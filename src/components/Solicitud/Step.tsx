@@ -7,14 +7,17 @@ class Step extends PureComponent {
   state = {};
 
   render() {
+    console.log(this.props)
+    const {isLast} = this.props;
+    console.log('es ultimo', isLast)
     return (
-      <View style={{borderWidth:1}}>        
+      <View>        
           <View style={styles.container}>
             <View>
               <HeaderWithSteps page={this.props.currentIndex} />
             </View>
             <View style={styles.content}>{this.props.children}</View>
-            <View style={{flexDirection:'row', justifyContent:'center'}}>
+            <View style={{flexDirection:'row', justifyContent:'space-between'}}>
               <TouchableOpacity style={styles.buttonStep} onPress={this.props.prevStep}>
                 <Text>Atras</Text>
               </TouchableOpacity>
@@ -32,18 +35,18 @@ export default Step;
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: 20,
-    marginHorizontal: 1,
-    elevation: 10,    
-    height:windowHeight*0.7
+    elevation: 10,
+    height:windowHeight,
+    backgroundColor:'white'
   },
   content:{
-    flex:1,
+    alignContent:'center',
+    justifyContent:'center',
     backgroundColor:'#FFFFFF',
-    height:'50%',
-    borderWidth:1,
+    height:'75%',
   },
   buttonStep:{
+    marginVertical:10,
     backgroundColor:'orange',
     marginHorizontal:5,
     borderRadius:5,

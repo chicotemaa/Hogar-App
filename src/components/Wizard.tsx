@@ -28,7 +28,7 @@ class Wizard extends PureComponent {
 
   render() {
     return (
-      <View>
+      <View style={{flex:1,justifyContent:'center'}}>
         {React.Children.map(this.props.children, (element, index) => {
           if (index === this.state.index) {
             return React.cloneElement(element, {
