@@ -1,24 +1,25 @@
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import {Text, View} from 'react-native';
+import { Text, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {Appbar} from 'react-native-paper';
-import {windowWidth, windowHeight} from '../../App';
-import {DrawerNavigationProp} from '@react-navigation/drawer';
+import { Appbar } from 'react-native-paper';
+import { windowWidth, windowHeight } from '../../App';
+import { DrawerNavigationProp } from '@react-navigation/drawer';
 
 interface Props {
   pageName?: string;
   userName?: string;
   ProgressCircle?: any;
+  roleUser: string
 }
 
-export const Header = ({pageName, userName, ProgressCircle}: Props) => {
+export const Header = ({ pageName, userName, ProgressCircle, roleUser }: Props) => {
   const isWelcomePage = pageName === 'Bienvenido';
   const isFormSolicitud = pageName === 'Nueva Solicitud';
   pageName = pageName == 'Solicitud' ? 'Informe de solicitud' : pageName;
   const paddingHeader = isWelcomePage ? 10 : 0;
   const flexDHeader = isWelcomePage ? 'column' : 'row';
-  const heightPage = '30%';
+  const heightPage = roleUser == 'tecnico' ? '20%' : '30%';
 
   const navigation = useNavigation();
   const drawer: DrawerNavigationProp<any, any> = navigation.getParent();
@@ -31,7 +32,7 @@ export const Header = ({pageName, userName, ProgressCircle}: Props) => {
   return (
     <>
       {!isWelcomePage ? (
-        <Appbar.Header style={{height: windowHeight * 0.13}}>
+        <Appbar.Header style={{ height: windowHeight * 0.13 }}>
           <Appbar.BackAction
             color="#101010"
             onPress={_goBack}
@@ -40,7 +41,7 @@ export const Header = ({pageName, userName, ProgressCircle}: Props) => {
           <Appbar.Content
             color="white"
             title={pageName}
-            titleStyle={{fontSize: windowHeight * 0.037}}
+            titleStyle={{ fontSize: windowHeight * 0.037 }}
             subtitle={isFormSolicitud ? 'Complete los datos necesarios' : null}
           />
 
@@ -53,7 +54,7 @@ export const Header = ({pageName, userName, ProgressCircle}: Props) => {
         </Appbar.Header>
       ) : (
         <>
-          <Appbar.Header style={{elevation: 0}}>
+          <Appbar.Header style={{ elevation: 0 }}>
             <View
               style={{
                 alignContent: 'flex-end',
@@ -65,13 +66,13 @@ export const Header = ({pageName, userName, ProgressCircle}: Props) => {
                 color="black"
                 size={windowHeight * 0.035}
                 onPress={_openMenu}
-                style={{justifyContent: 'flex-end'}}
+                style={{ justifyContent: 'flex-end' }}
               />
             </View>
           </Appbar.Header>
           <LinearGradient
             colors={['#F76656', '#F76656']}
-            style={{height: heightPage}}>
+            style={{ height: heightPage }}>
             <View
               style={{
                 paddingLeft: paddingHeader,
@@ -84,10 +85,10 @@ export const Header = ({pageName, userName, ProgressCircle}: Props) => {
                 shadowOpacity: 0.25,
                 shadowRadius: 3.84,
               }}>
-              <View style={{marginHorizontal: 15}}>
-                <View style={{flexDirection: flexDHeader}}>
+              <View style={{ marginHorizontal: 15 }}>
+                <View style={{ flexDirection: flexDHeader }}>
                   {PageName(pageName)}
-                  {isWelcomePage ? WelcomeHeader(userName) : null}
+                  {isWelcomePage ? WelcomeHeader(userName, roleUser) : null}
                 </View>
               </View>
             </View>
@@ -114,7 +115,7 @@ const PageName = (name: string) => {
   );
 };
 
-const WelcomeHeader = (username: string) => {
+const WelcomeHeader = (username: string, roleUser: string) => {
   return (
     <View
       style={{
@@ -136,7 +137,7 @@ const WelcomeHeader = (username: string) => {
           fontWeight: '800',
           textShadowRadius: 1,
         }}>
-        Santander Rio
+        {roleUser == 'tecnico' ? null : 'Santander Rio'}
       </Text>
     </View>
   );
