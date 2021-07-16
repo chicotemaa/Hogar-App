@@ -20,7 +20,7 @@ export const Header = ({ pageName, userName, ProgressCircle, roleUser }: Props) 
   const isTecnico = roleUser == 'tecnico';
   const paddingHeader = isWelcomePage ? isTecnico ? 0 : 10 : 0;
   const flexDHeader = isWelcomePage ? 'column' : 'row';
-  const heightPage = isTecnico ? '20%' : '30%';
+  const heightPage = isTecnico ? '12%' : '30%';
 
   const navigation = useNavigation();
   const drawer: DrawerNavigationProp<any, any> = navigation.getParent();
@@ -34,13 +34,8 @@ export const Header = ({ pageName, userName, ProgressCircle, roleUser }: Props) 
     <>
       {!isWelcomePage ? (
         <Appbar.Header
-          theme={{
-            colors: {
-              primary: '#6565C7'
-            }
-          }}
           style={{
-            height: windowHeight * 0.13, backgroundColor: '#6565C7'
+            height: windowHeight * 0.13
           }}>
           < Appbar.BackAction
             color="#101010"
@@ -56,26 +51,26 @@ export const Header = ({ pageName, userName, ProgressCircle, roleUser }: Props) 
 
           <Appbar.Action
             icon="menu"
-            color="black"
+            color="white"
             size={windowHeight * 0.038}
             onPress={_openMenu}
           />
         </Appbar.Header>
       ) : (
         <>
-          <Appbar.Header style={{ elevation: 0 }}>
-            <View
-              style={{
-                alignContent: 'flex-end',
-                alignItems: 'flex-end',
-                marginLeft: '86%',
-              }}>
+          <Appbar.Header style={{ elevation: 0, marginTop: 0.04 * windowHeight }}>
+            <Appbar.Content
+              color="white"
+              title={pageName}
+              titleStyle={{ alignContent: 'center', fontSize: windowHeight * 0.05, }}
+              subtitle={isFormSolicitud ? 'Complete los datos necesarios' : null}
+            />
+            <View>
               <Appbar.Action
                 icon="menu"
-                color="black"
-                size={windowHeight * 0.035}
+                color="white"
+                size={windowHeight * 0.045}
                 onPress={_openMenu}
-                style={{ justifyContent: 'flex-end' }}
               />
             </View>
           </Appbar.Header>
@@ -83,7 +78,7 @@ export const Header = ({ pageName, userName, ProgressCircle, roleUser }: Props) 
             // colors={['#6565C7', '#6565C7']}
             //'#F76656', '#F76656',
 
-            style={{ height: heightPage, backgroundColor: '#454DD9' }}>
+            style={{ height: heightPage, backgroundColor: '#32367A' }}>
             <View
               style={{
                 paddingLeft: paddingHeader,
@@ -98,7 +93,7 @@ export const Header = ({ pageName, userName, ProgressCircle, roleUser }: Props) 
               }}>
               <View style={{ marginHorizontal: 15 }}>
                 <View style={{ flexDirection: flexDHeader }}>
-                  {PageName(pageName)}
+                  {/* {PageName(pageName)} */}
                   {isWelcomePage ? WelcomeHeader(userName, isTecnico) : null}
                 </View>
               </View>
@@ -131,7 +126,7 @@ const WelcomeHeader = (username: string, isTecnico) => {
   return (
     <View
       style={{
-        marginTop: isTecnico ? 15 : 5,
+        marginTop: isTecnico ? 19 : 5,
       }}>
       <Text
         style={{
