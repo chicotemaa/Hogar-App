@@ -1,13 +1,16 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 interface Props {
   id: string;
   titulo: string;
   location: string;
   date: string;
-  estado: string;
+  estado: string | number;
   goToScreen: Function;
+  tecnico?: string;
+  rol?: string;
+  cliente?: string;
 }
 
 export const ItemOT = ({
@@ -17,7 +20,12 @@ export const ItemOT = ({
   date,
   estado,
   goToScreen,
+  tecnico,
+  rol,
+  cliente,
 }: Props) => {
+  const isVistaTecnico = rol == 'tecnico'
+
   return (
     <View style={styles.container}>
       <View
@@ -27,7 +35,7 @@ export const ItemOT = ({
           marginHorizontal: 10,
           marginVertical: 5,
         }}>
-        <View style={{flex: 1}}>
+        <View style={{ flex: 1 }}>
           <View
             style={{
               flexDirection: 'row',
@@ -46,21 +54,20 @@ export const ItemOT = ({
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}>
-              <View style={{flexDirection: 'row'}}>
-                <Text style={styles.tecnico}>Técnico:</Text>
+              <View style={{ flexDirection: 'row' }}>
+                <Text style={styles.tecnico}>{!isVistaTecnico ? 'Técnico:' : null}</Text>
                 <Text
                   style={[
                     styles.tecnico,
-                    {paddingHorizontal: 5, textAlign: 'auto'},
+                    { paddingHorizontal: !isVistaTecnico ? 5 : 0, textAlign: 'auto' },
                   ]}>
-                  Martin Sastre
+                  {isVistaTecnico ? cliente : 'Martin Sastre'}
                 </Text>
               </View>
               <View>
-                {/* TODO: Si se llega a solicitar información del técnico
-                <TouchableOpacity>
-                  <Text style={[styles.tecnico, {color: '#3B58A5'}]}>
-                    Ver info
+                {/* <TouchableOpacity>
+                  <Text style={[styles.tecnico, { color: '#3B58A5' }]}>
+                    Ver info de tecnico
                   </Text>
                 </TouchableOpacity> */}
               </View>
@@ -74,9 +81,9 @@ export const ItemOT = ({
         </View>
       </View>
       <View
-        style={{padding: 10, alignSelf: 'center', margin: 2, width: '100%'}}>
+        style={{ padding: 10, alignSelf: 'center', margin: 2, width: '100%' }}>
         <View style={[styles.divisor]} />
-        <DetalleBtn estado={estado} goToScreen={goToScreen} />
+        {isVistaTecnico ? null : (<DetalleBtn estado={estado} goToScreen={goToScreen} />)}
       </View>
     </View>
   );
@@ -129,28 +136,29 @@ const styles = StyleSheet.create({
 });
 
 interface PropEstado {
-  estado: string;
+  estado: number;
 }
 
-const Estado = ({estado}: PropEstado) => {
-  const colores = {
-    Pendiente: 'red',
-    'Estoy en camino': '#AF8308',
-    'Me recibió': 'blue',
-    'No me atendió': 'brown',
-    Finalizado: 'green',
-    'No me recibió': 'purple',
-  };
+const Estado = ({ estado }: PropEstado) => {
+  const Estado = [
+    { name: 'Pendiente', color: 'red' },
+    { name: 'Estoy en camino', color: '#AF8308' },
+    { name: 'Me recibió', color: 'blue' },
+    { name: 'No me atendió', color: 'brown' },
+    { name: 'Finalizado', color: 'green' },
+    { name: 'No me recibió', color: 'purple' },
+  ];
+
   return (
     <Text
       style={{
         fontSize: 21,
         fontWeight: 'bold',
-        color: colores[estado],
+        color: Estado[estado].color,
         textAlign: 'right',
         alignSelf: 'center',
       }}>
-      {estado}
+      {Estado[estado].name}
     </Text>
   );
 };
@@ -159,10 +167,10 @@ interface PropBtn {
   estado: string;
   goToScreen: Function;
 }
-const DetalleBtn = ({estado, goToScreen}: PropBtn) => {
+const DetalleBtn = ({ estado, goToScreen }: PropBtn) => {
   const colorBtn = estado == 'Finalizado' ? 'green' : '#5E5E5E';
   return (
-    <View style={{marginVertical: 5}}>
+    <View style={{ marginVertical: 5 }}>
       <TouchableOpacity
         disabled={estado != 'Finalizado'}
         onPress={() => {
