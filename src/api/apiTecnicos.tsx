@@ -18,3 +18,8 @@ export const geOtByUserAPI = async () => {
             return err;
         });
 };
+
+
+export const getFormOTAPI = async (id: number) => {
+    console.log('la id es', id)
+}
