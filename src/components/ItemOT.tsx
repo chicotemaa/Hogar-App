@@ -1,12 +1,13 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { windowWidth } from '../../App';
 
 interface Props {
-  id: string;
+  id: number;
   titulo: string;
   location: string;
   date: string;
-  estado: string | number;
+  estado: number;
   goToScreen: Function;
   tecnico?: string;
   rol?: string;
@@ -83,7 +84,7 @@ export const ItemOT = ({
       <View
         style={{ padding: 10, alignSelf: 'center', margin: 2, width: '100%' }}>
         <View style={[styles.divisor]} />
-        {isVistaTecnico ? null : (<DetalleBtn estado={estado} goToScreen={goToScreen} />)}
+        {(isVistaTecnico ? <DetalleBtnTecnico estado={estado} goToScreen={goToScreen} /> : <DetalleBtn estado={estado} goToScreen={goToScreen} />)}
       </View>
     </View>
   );
@@ -96,7 +97,7 @@ function formatDate(date: string) {
 const styles = StyleSheet.create({
   container: {
     borderWidth: 1,
-    borderColor: '#CCCCCC',
+    borderColor: '#c5cbe3',
     padding: 5,
     backgroundColor: 'white',
     borderRadius: 4,
@@ -141,9 +142,9 @@ interface PropEstado {
 
 const Estado = ({ estado }: PropEstado) => {
   const Estado = [
-    { name: 'Pendiente', color: 'red' },
-    { name: 'Estoy en camino', color: '#AF8308' },
-    { name: 'Me recibió', color: 'blue' },
+    { name: 'Pendiente', color: '#F13C20' },
+    { name: 'Estoy en camino', color: '#D79922' },
+    { name: 'Me recibió', color: '#4056A1' },
     { name: 'No me atendió', color: 'brown' },
     { name: 'Finalizado', color: 'green' },
     { name: 'No me recibió', color: 'purple' },
@@ -164,15 +165,15 @@ const Estado = ({ estado }: PropEstado) => {
 };
 
 interface PropBtn {
-  estado: string;
+  estado: number;
   goToScreen: Function;
 }
 const DetalleBtn = ({ estado, goToScreen }: PropBtn) => {
-  const colorBtn = estado == 'Finalizado' ? 'green' : '#5E5E5E';
+  const colorBtn = estado == 4 ? 'green' : '#5E5E5E';
   return (
     <View style={{ marginVertical: 5 }}>
       <TouchableOpacity
-        disabled={estado != 'Finalizado'}
+        disabled={estado != 4}
         onPress={() => {
           goToScreen();
         }}>
@@ -184,7 +185,7 @@ const DetalleBtn = ({ estado, goToScreen }: PropBtn) => {
             fontWeight: 'bold',
             alignSelf: 'center',
           }}>
-          {estado === 'Finalizado'
+          {estado === 4
             ? 'Ver detalle'
             : 'Detalle aún no disponible'}
         </Text>
@@ -192,3 +193,46 @@ const DetalleBtn = ({ estado, goToScreen }: PropBtn) => {
     </View>
   );
 };
+
+const DetalleBtnTecnico = ({ estado, goToScreen }: PropBtn) => {
+
+  const states = ['Pendiente',
+    'Estoy en camino',
+    'Me recibió',
+    'No me atendio',
+    'Realizado',
+    'Postergado',
+    'Pendiente de envio']
+
+
+
+  return (
+    <View style={{ marginVertical: 5 }}>
+      <TouchableOpacity
+        onPress={() => {
+          goToScreen();
+        }}
+        style={{
+          borderRadius: 8,
+          alignSelf: 'flex-end',
+          width: 0.35 * windowWidth,
+          backgroundColor: '#32367A',
+          elevation: 10,
+          paddingVertical: 9,
+        }}
+      >
+        <Text
+          style={{
+            color: 'white',
+            fontSize: 20,
+            fontWeight: '100',
+            alignSelf: 'center',
+          }}>
+          {estado == 0 ? 'Tomar orden' : estado < 3 ? 'Continuar' : 'Ver orden'}
+        </Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
+
+
