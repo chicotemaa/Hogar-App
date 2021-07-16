@@ -1,5 +1,5 @@
-import {StyleSheet} from 'react-native';
-import {windowWidth} from '../../App';
+import { StyleSheet } from 'react-native';
+import { windowWidth } from '../../App';
 
 export const theme = {
   transitionDuration: 1800,
