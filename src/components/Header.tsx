@@ -10,16 +10,17 @@ interface Props {
   pageName?: string;
   userName?: string;
   ProgressCircle?: any;
-  roleUser: string
+  roleUser?: string
 }
 
 export const Header = ({ pageName, userName, ProgressCircle, roleUser }: Props) => {
   const isWelcomePage = pageName === 'Bienvenido';
   const isFormSolicitud = pageName === 'Nueva Solicitud';
   pageName = pageName == 'Solicitud' ? 'Informe de solicitud' : pageName;
-  const paddingHeader = isWelcomePage ? 10 : 0;
+  const isTecnico = roleUser == 'tecnico';
+  const paddingHeader = isWelcomePage ? isTecnico ? 0 : 10 : 0;
   const flexDHeader = isWelcomePage ? 'column' : 'row';
-  const heightPage = roleUser == 'tecnico' ? '20%' : '30%';
+  const heightPage = isTecnico ? '20%' : '30%';
 
   const navigation = useNavigation();
   const drawer: DrawerNavigationProp<any, any> = navigation.getParent();
@@ -32,8 +33,16 @@ export const Header = ({ pageName, userName, ProgressCircle, roleUser }: Props) 
   return (
     <>
       {!isWelcomePage ? (
-        <Appbar.Header style={{ height: windowHeight * 0.13 }}>
-          <Appbar.BackAction
+        <Appbar.Header
+          theme={{
+            colors: {
+              primary: '#6565C7'
+            }
+          }}
+          style={{
+            height: windowHeight * 0.13, backgroundColor: '#6565C7'
+          }}>
+          < Appbar.BackAction
             color="#101010"
             onPress={_goBack}
             size={windowHeight * 0.035}
@@ -70,9 +79,11 @@ export const Header = ({ pageName, userName, ProgressCircle, roleUser }: Props) 
               />
             </View>
           </Appbar.Header>
-          <LinearGradient
-            colors={['#F76656', '#F76656']}
-            style={{ height: heightPage }}>
+          <View
+            // colors={['#6565C7', '#6565C7']}
+            //'#F76656', '#F76656',
+
+            style={{ height: heightPage, backgroundColor: '#454DD9' }}>
             <View
               style={{
                 paddingLeft: paddingHeader,
@@ -88,13 +99,14 @@ export const Header = ({ pageName, userName, ProgressCircle, roleUser }: Props) 
               <View style={{ marginHorizontal: 15 }}>
                 <View style={{ flexDirection: flexDHeader }}>
                   {PageName(pageName)}
-                  {isWelcomePage ? WelcomeHeader(userName, roleUser) : null}
+                  {isWelcomePage ? WelcomeHeader(userName, isTecnico) : null}
                 </View>
               </View>
             </View>
-          </LinearGradient>
+          </View>
         </>
-      )}
+      )
+      }
     </>
   );
 };
@@ -115,21 +127,22 @@ const PageName = (name: string) => {
   );
 };
 
-const WelcomeHeader = (username: string, roleUser: string) => {
+const WelcomeHeader = (username: string, isTecnico) => {
   return (
     <View
       style={{
-        marginTop: 5,
+        marginTop: isTecnico ? 15 : 5,
       }}>
       <Text
         style={{
-          color: '#313030',
-          fontSize: 0.08 * windowWidth,
-          fontWeight: 'bold',
+          color: '#E8E6F5',
+          fontSize: isTecnico ? 0.03 * windowHeight : 0.08 * windowWidth,
+          fontWeight: isTecnico ? '100' : 'bold',
           textShadowRadius: 1,
         }}>
-        {username}
+        {isTecnico ? 'Jueves 15 Julio' : username}
       </Text>
+      { }
       <Text
         style={{
           color: '#FFFFFF',
@@ -137,7 +150,7 @@ const WelcomeHeader = (username: string, roleUser: string) => {
           fontWeight: '800',
           textShadowRadius: 1,
         }}>
-        {roleUser == 'tecnico' ? null : 'Santander Rio'}
+        {isTecnico ? null : 'Santander Rio'}
       </Text>
     </View>
   );
