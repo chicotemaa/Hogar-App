@@ -1,7 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { Text, View } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
 import { Appbar } from 'react-native-paper';
 import { windowWidth, windowHeight } from '../../App';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
@@ -10,10 +9,11 @@ interface Props {
   pageName?: string;
   userName?: string;
   ProgressCircle?: any;
-  roleUser?: string
+  roleUser?: string;
+  id?: number;
 }
 
-export const Header = ({ pageName, userName, ProgressCircle, roleUser }: Props) => {
+export const Header = ({ pageName, userName, roleUser, id }: Props) => {
   const isWelcomePage = pageName === 'Bienvenido';
   const isFormSolicitud = pageName === 'Nueva Solicitud';
   pageName = pageName == 'Solicitud' ? 'Informe de solicitud' : pageName;
@@ -35,10 +35,10 @@ export const Header = ({ pageName, userName, ProgressCircle, roleUser }: Props) 
       {!isWelcomePage ? (
         <Appbar.Header
           style={{
-            height: windowHeight * 0.13
+            height: windowHeight * 0.12
           }}>
           < Appbar.BackAction
-            color="#101010"
+            color="white"
             onPress={_goBack}
             size={windowHeight * 0.035}
           />
@@ -46,7 +46,7 @@ export const Header = ({ pageName, userName, ProgressCircle, roleUser }: Props) 
             color="white"
             title={pageName}
             titleStyle={{ fontSize: windowHeight * 0.037 }}
-            subtitle={isFormSolicitud ? 'Complete los datos necesarios' : null}
+            subtitle={isFormSolicitud ? 'Complete los datos necesarios' : ('#' + id)}
           />
 
           <Appbar.Action
@@ -69,7 +69,7 @@ export const Header = ({ pageName, userName, ProgressCircle, roleUser }: Props) 
               <Appbar.Action
                 icon="menu"
                 color="white"
-                size={windowHeight * 0.045}
+                size={windowHeight * 0.05}
                 onPress={_openMenu}
               />
             </View>
