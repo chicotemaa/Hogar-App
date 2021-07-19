@@ -40,7 +40,7 @@ export const TecnicosOTList = () => {
             })
         setTimeout(() => {
             setRefreshing(false)
-        }, 2000)
+        }, 5000)
     }, []);
 
     useEffect(() => {
@@ -74,16 +74,17 @@ export const TecnicosOTList = () => {
                                     location="Sarmiento 123"
                                     date={OT.fecha}
                                     rol="tecnico"
-                                    goToScreen={() => {
-                                        console.log('va a entrar al detalle')
+                                    goToScreen={(estado:string) => {
+                                        if(estado === 'detalle'){
+                                            //TODO: controlar ubicacion
+                                            stackNavigator.navigate('OTScreen',{OT})
+                                        }
                                     }}
                                 />
                             </TransitionView>
                         )
                     })
-
                 }
-
             </ScrollView>
         </View>
     )
