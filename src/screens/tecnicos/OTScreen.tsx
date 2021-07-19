@@ -7,9 +7,9 @@ import { DateInput } from '../../components/Tecnicos/Formulario/Campos/Date'
 import { styles } from '../../theme/appTheme'
 import { Texto } from '../../components/Tecnicos/Formulario/Campos/Texto'
 import { Desplegable } from '../../components/Tecnicos/Formulario/Campos/Desplegable'
-import { Foto } from '../../components/Tecnicos/Formulario/Campos/Foto'
+import { Button } from '../../components/Button'
 
-export const OTScreen = ({ route }) => {
+export const OTScreen = ({ navigation, route }) => {
     const { OT } = route.params
 
     return (
@@ -23,8 +23,13 @@ export const OTScreen = ({ route }) => {
                     <DateInput />
                     <Texto />
                     <Desplegable />
-                    <Foto />
+                    <Button
+                        color='red'
+                        title='use camera'
 
+                        onPress={() => {
+                            navigation.navigate('Camera')
+                        }} />
                 </ScrollView>
             </View>
         </>

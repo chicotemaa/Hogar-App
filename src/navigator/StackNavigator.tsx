@@ -15,6 +15,7 @@ import { DetalleOTScreen } from '../screens/DetalleOTScreen';
 import { NewSolicitudScreen } from '../screens/NewSolicitudScreen';
 import { TecnicosOTList } from '../components/OT/tecnicos/TecnicosOTList';
 import { OTScreen } from '../screens/tecnicos/OTScreen';
+import { Camera } from '../screens/Camera';
 
 /* Params in pages */
 export type RootStackParams = {
@@ -30,7 +31,8 @@ export type RootStackParams = {
   DetalleOTScreen: undefined;
   NewSolicitudScreen: undefined;
   TecnicosOTList: undefined;
-  OTScreen: undefined
+  OTScreen: undefined;
+  Camera: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParams>();
@@ -93,6 +95,10 @@ export const StackNavigator = () => {
       <Stack.Screen
         name="OTScreen"
         component={OTScreen}
+      />
+      <Stack.Screen
+        name="Camera"
+        component={Camera}
       />
     </Stack.Navigator>
   );
