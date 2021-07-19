@@ -1,24 +1,26 @@
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import {Text, View} from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
-import {Appbar} from 'react-native-paper';
-import {windowWidth, windowHeight} from '../../App';
-import {DrawerNavigationProp} from '@react-navigation/drawer';
+import { Text, View } from 'react-native';
+import { Appbar } from 'react-native-paper';
+import { windowWidth, windowHeight } from '../../App';
+import { DrawerNavigationProp } from '@react-navigation/drawer';
 
 interface Props {
   pageName?: string;
   userName?: string;
   ProgressCircle?: any;
+  roleUser?: string;
+  id?: number;
 }
 
-export const Header = ({pageName, userName, ProgressCircle}: Props) => {
+export const Header = ({ pageName, userName, roleUser, id }: Props) => {
   const isWelcomePage = pageName === 'Bienvenido';
   const isFormSolicitud = pageName === 'Nueva Solicitud';
   pageName = pageName == 'Solicitud' ? 'Informe de solicitud' : pageName;
-  const paddingHeader = isWelcomePage ? 10 : 0;
+  const isTecnico = roleUser == 'tecnico';
+  const paddingHeader = isWelcomePage ? isTecnico ? 0 : 10 : 0;
   const flexDHeader = isWelcomePage ? 'column' : 'row';
-  const heightPage = '30%';
+  const heightPage = isTecnico ? '12%' : '30%';
 
   const navigation = useNavigation();
   const drawer: DrawerNavigationProp<any, any> = navigation.getParent();
@@ -31,47 +33,52 @@ export const Header = ({pageName, userName, ProgressCircle}: Props) => {
   return (
     <>
       {!isWelcomePage ? (
-        <Appbar.Header style={{height: windowHeight * 0.13}}>
-          <Appbar.BackAction
-            color="#101010"
+        <Appbar.Header
+          style={{
+            height: windowHeight * 0.12
+          }}>
+          < Appbar.BackAction
+            color="white"
             onPress={_goBack}
             size={windowHeight * 0.035}
           />
           <Appbar.Content
             color="white"
             title={pageName}
-            titleStyle={{fontSize: windowHeight * 0.037}}
-            subtitle={isFormSolicitud ? 'Complete los datos necesarios' : null}
+            titleStyle={{ fontSize: windowHeight * 0.037 }}
+            subtitle={isFormSolicitud ? 'Complete los datos necesarios' : ('#' + id)}
           />
 
           <Appbar.Action
             icon="menu"
-            color="black"
+            color="white"
             size={windowHeight * 0.038}
             onPress={_openMenu}
           />
         </Appbar.Header>
       ) : (
         <>
-          <Appbar.Header style={{elevation: 0}}>
-            <View
-              style={{
-                alignContent: 'flex-end',
-                alignItems: 'flex-end',
-                marginLeft: '86%',
-              }}>
+          <Appbar.Header style={{ elevation: 0, marginTop: 0.04 * windowHeight }}>
+            <Appbar.Content
+              color="white"
+              title={pageName}
+              titleStyle={{ alignContent: 'center', fontSize: windowHeight * 0.05, }}
+              subtitle={isFormSolicitud ? 'Complete los datos necesarios' : null}
+            />
+            <View>
               <Appbar.Action
                 icon="menu"
-                color="black"
-                size={windowHeight * 0.035}
+                color="white"
+                size={windowHeight * 0.05}
                 onPress={_openMenu}
-                style={{justifyContent: 'flex-end'}}
               />
             </View>
           </Appbar.Header>
-          <LinearGradient
-            colors={['#F76656', '#F76656']}
-            style={{height: heightPage}}>
+          <View
+            // colors={['#6565C7', '#6565C7']}
+            //'#F76656', '#F76656',
+
+            style={{ height: heightPage, backgroundColor: '#32367A' }}>
             <View
               style={{
                 paddingLeft: paddingHeader,
@@ -84,16 +91,17 @@ export const Header = ({pageName, userName, ProgressCircle}: Props) => {
                 shadowOpacity: 0.25,
                 shadowRadius: 3.84,
               }}>
-              <View style={{marginHorizontal: 15}}>
-                <View style={{flexDirection: flexDHeader}}>
-                  {PageName(pageName)}
-                  {isWelcomePage ? WelcomeHeader(userName) : null}
+              <View style={{ marginHorizontal: 15 }}>
+                <View style={{ flexDirection: flexDHeader }}>
+                  {/* {PageName(pageName)} */}
+                  {isWelcomePage ? WelcomeHeader(userName, isTecnico) : null}
                 </View>
               </View>
             </View>
-          </LinearGradient>
+          </View>
         </>
-      )}
+      )
+      }
     </>
   );
 };
@@ -114,21 +122,22 @@ const PageName = (name: string) => {
   );
 };
 
-const WelcomeHeader = (username: string) => {
+const WelcomeHeader = (username: string, isTecnico) => {
   return (
     <View
       style={{
-        marginTop: 5,
+        marginTop: isTecnico ? 19 : 5,
       }}>
       <Text
         style={{
-          color: '#313030',
-          fontSize: 0.08 * windowWidth,
-          fontWeight: 'bold',
+          color: '#E8E6F5',
+          fontSize: isTecnico ? 0.03 * windowHeight : 0.08 * windowWidth,
+          fontWeight: isTecnico ? '100' : 'bold',
           textShadowRadius: 1,
         }}>
-        {username}
+        {isTecnico ? 'Jueves 15 Julio' : username}
       </Text>
+      { }
       <Text
         style={{
           color: '#FFFFFF',
@@ -136,7 +145,7 @@ const WelcomeHeader = (username: string) => {
           fontWeight: '800',
           textShadowRadius: 1,
         }}>
-        Santander Rio
+        {isTecnico ? null : 'Santander Rio'}
       </Text>
     </View>
   );

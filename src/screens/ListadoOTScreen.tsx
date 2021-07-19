@@ -1,17 +1,17 @@
 import React from 'react';
-import {View, Text, Button, ScrollView} from 'react-native';
-import {Header} from '../components/Header';
-import {ItemOT} from '../components/ItemOT';
+import { View, Text, Button, ScrollView } from 'react-native';
+import { Header } from '../components/Header';
+import { ItemOT } from '../components/ItemOT';
 
-export const ListadoOTScreen = ({navigation}) => {
+export const ListadoOTScreen = ({ navigation }) => {
   return (
     <>
       <Header pageName="Ordenes de Trabajo" />
-      <View style={{flex: 8}}>
+      <View style={{ flex: 8 }}>
         <ScrollView>
           <ItemOT
-            estado="Estoy en camino"
-            id="12"
+            estado={1}
+            id={3}
             titulo="Vidrio roto"
             location="Sarmiento 123"
             date="13 Agosto 2020"
@@ -20,8 +20,8 @@ export const ListadoOTScreen = ({navigation}) => {
             }}
           />
           <ItemOT
-            estado="Finalizado"
-            id="15"
+            estado={2}
+            id={3}
             titulo="Vidrio roto"
             location="Sarmiento 123"
             date="13 Agosto 2021"
@@ -30,8 +30,8 @@ export const ListadoOTScreen = ({navigation}) => {
             }}
           />
           <ItemOT
-            estado="Pendiente"
-            id="13"
+            estado={3}
+            id={3}
             titulo="Vidrio roto"
             location="Sarmiento 123"
             date="13 Agosto 2021"
