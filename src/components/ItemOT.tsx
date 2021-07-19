@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { windowWidth } from '../../App';
 
@@ -7,7 +7,7 @@ interface Props {
   titulo: string;
   location: string;
   date: string;
-  estado: number;
+  estadoOT: number;
   goToScreen: Function;
   tecnico?: string;
   rol?: string;
@@ -19,13 +19,13 @@ export const ItemOT = ({
   titulo,
   location,
   date,
-  estado,
+  estadoOT,
   goToScreen,
-  tecnico,
   rol,
   cliente,
 }: Props) => {
   const isVistaTecnico = rol == 'tecnico'
+  const [estado, setEstado] = useState(estadoOT)
 
   return (
     <View style={styles.container}>
@@ -84,7 +84,8 @@ export const ItemOT = ({
       <View
         style={{ padding: 10, alignSelf: 'center', margin: 2, width: '100%' }}>
         <View style={[styles.divisor]} />
-        {(isVistaTecnico ? <DetalleBtnTecnico estado={estado} goToScreen={goToScreen} /> : <DetalleBtn estado={estado} goToScreen={goToScreen} />)}
+        {(isVistaTecnico ? <DetalleBtnTecnico estado={estado} changeState={() => setEstado(1)} goToScreen={goToScreen} /> : <DetalleBtn estado={estado} changeState={() => {}} goToScreen={goToScreen} />)}
+
       </View>
     </View>
   );
@@ -167,6 +168,7 @@ const Estado = ({ estado }: PropEstado) => {
 interface PropBtn {
   estado: number;
   goToScreen: Function;
+  changeState: Function
 }
 const DetalleBtn = ({ estado, goToScreen }: PropBtn) => {
   const colorBtn = estado == 4 ? 'green' : '#5E5E5E';
@@ -194,7 +196,7 @@ const DetalleBtn = ({ estado, goToScreen }: PropBtn) => {
   );
 };
 
-const DetalleBtnTecnico = ({ estado, goToScreen }: PropBtn) => {
+const DetalleBtnTecnico = ({ estado, goToScreen, changeState }: PropBtn) => {
 
   const states = ['Pendiente',
     'Estoy en camino',
@@ -210,13 +212,14 @@ const DetalleBtnTecnico = ({ estado, goToScreen }: PropBtn) => {
     <View style={{ marginVertical: 5 }}>
       <TouchableOpacity
         onPress={() => {
+          changeState()
           goToScreen();
         }}
         style={{
           borderRadius: 8,
           alignSelf: 'flex-end',
           width: 0.35 * windowWidth,
-          backgroundColor: '#32367A',
+          backgroundColor: estado == 0 ? '#32367A' : 'red',
           elevation: 10,
           paddingVertical: 9,
         }}

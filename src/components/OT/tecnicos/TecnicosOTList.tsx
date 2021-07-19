@@ -1,9 +1,7 @@
-import { useNavigation } from '@react-navigation/native'
+import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import React, { useEffect, useState } from 'react'
 import { ScrollView, View, RefreshControl } from 'react-native'
-import { geOtByUserAPI, getFormOTAPI } from '../../../api/apiTecnicos'
-import { RootStackParams } from '../../../navigator/StackNavigator'
-import { styles } from '../../../theme/appTheme'
+import { getOtByUserAPI, getFormOTAPI } from '../../../api/apiTecnicos'
 import { ItemOT } from '../../ItemOT'
 import { TransitionView } from '../../TransitionView'
 
@@ -31,15 +29,14 @@ export const TecnicosOTList = () => {
     const [listaOT, setListaOT] = useState<detalleOT[]>([])
     const [loading, setLoading] = useState(true)
     const [refreshing, setRefreshing] = React.useState(false);
-
     const stackNavigator = useNavigation();
-
     const onRefresh = React.useCallback(() => {
         setRefreshing(true);
-        geOtByUserAPI()
-            .then((response) => {
-                setListaOT(response)
+        getOtByUserAPI()
+            .then((response) => {                
                 console.log('aca entro')
+                setListaOT([])
+                setListaOT(response)                
             })
         setTimeout(() => {
             setRefreshing(false)
@@ -47,12 +44,13 @@ export const TecnicosOTList = () => {
     }, []);
 
     useEffect(() => {
-        geOtByUserAPI()
+        getOtByUserAPI()
             .then((response) => {
                 setListaOT(response)
                 setLoading(false)
             })
     }, [])
+
     return (
         <View>
             <ScrollView
@@ -70,14 +68,14 @@ export const TecnicosOTList = () => {
                                 <ItemOT
                                     key={OT.id}
                                     id={OT.id}
-                                    estado={OT.estado}
+                                    estadoOT={OT.estado}
                                     cliente={OT.cliente.razonSocial}
                                     titulo={OT.formulario.descripcion}
                                     location="Sarmiento 123"
                                     date={OT.fecha}
                                     rol="tecnico"
                                     goToScreen={() => {
-                                        stackNavigator.navigate('OTScreen', { OT })
+                                        console.log('va a entrar al detalle')
                                     }}
                                 />
                             </TransitionView>
