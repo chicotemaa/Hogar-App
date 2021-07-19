@@ -20,6 +20,3 @@ export const getOtByUserAPI = async () => {
 };
 
 
-export const getFormOTAPI = async (id: number) => {
-    console.log('la id es', id)
-}
