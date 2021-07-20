@@ -46,7 +46,7 @@ export const Header = ({ pageName, userName, roleUser, id }: Props) => {
             color="white"
             title={pageName}
             titleStyle={{ fontSize: windowHeight * 0.037 }}
-            subtitle={isFormSolicitud ? 'Complete los datos necesarios' : ('#' + id)}
+            subtitle={isFormSolicitud ? 'Complete los datos necesarios' : roleUser === 'tecnico' ? ('#' + id): null}
           />
 
           <Appbar.Action
@@ -91,7 +91,7 @@ export const Header = ({ pageName, userName, roleUser, id }: Props) => {
                 shadowOpacity: 0.25,
                 shadowRadius: 3.84,
               }}>
-              <View style={{ marginHorizontal: 15 }}>
+              <View style={{ marginHorizontal: 5 }}>
                 <View style={{ flexDirection: flexDHeader }}>
                   {/* {PageName(pageName)} */}
                   {isWelcomePage ? WelcomeHeader(userName, isTecnico) : null}
@@ -126,7 +126,7 @@ const WelcomeHeader = (username: string, isTecnico) => {
   return (
     <View
       style={{
-        marginTop: isTecnico ? 19 : 5,
+        marginTop: isTecnico ? 19 : 10,
       }}>
       <Text
         style={{
@@ -143,6 +143,7 @@ const WelcomeHeader = (username: string, isTecnico) => {
           color: '#FFFFFF',
           fontSize: 0.07 * windowWidth,
           fontWeight: '800',
+          marginTop:5,
           textShadowRadius: 1,
         }}>
         {isTecnico ? null : 'Santander Rio'}
