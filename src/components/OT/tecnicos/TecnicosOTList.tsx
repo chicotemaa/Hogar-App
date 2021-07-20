@@ -33,14 +33,13 @@ export const TecnicosOTList = () => {
     const onRefresh = React.useCallback(() => {
         setRefreshing(true);
         getOtByUserAPI()
-            .then((response) => {                
-                console.log('aca entro')
+            .then((response) => {
                 setListaOT([])
                 setListaOT(response)                
             })
         setTimeout(() => {
             setRefreshing(false)
-        }, 5000)
+        }, 2000)
     }, []);
 
     useEffect(() => {
@@ -64,14 +63,14 @@ export const TecnicosOTList = () => {
                     listaOT.map((OT) => {
                         console.log(OT)
                         return (
-                            <TransitionView index={1} isOT>
+                            <TransitionView animation='slideInUp' index={0} isOT>
                                 <ItemOT
                                     key={OT.id}
                                     id={OT.id}
                                     estadoOT={OT.estado}
                                     cliente={OT.cliente.razonSocial}
                                     titulo={OT.formulario.descripcion}
-                                    location="Sarmiento 123"
+                                    location={'Sarmiento 123'}
                                     date={OT.fecha}
                                     rol="tecnico"
                                     goToScreen={(estado:string) => {

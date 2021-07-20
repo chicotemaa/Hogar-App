@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { windowWidth } from '../../App';
+import { windowHeight, windowWidth } from '../../App';
 
 interface Props {
   id: number;
@@ -27,18 +27,18 @@ export const ItemOT = ({
   const isVistaTecnico = rol == 'tecnico'
   const [estado, setEstado] = useState(estadoOT)
 
-  const handleState = (estado:number) => { 
+  const handleState = (estado: number) => {
 
     switch (estado) {
       case 0:
         setEstado(1)
         break;
-      case 1: 
+      case 1:
         setEstado(2)
         break;
     }
     // setEstado(estado)
-  } 
+  }
 
   return (
     <View style={styles.container}>
@@ -59,8 +59,8 @@ export const ItemOT = ({
             <Text style={styles.number}>#{id}</Text>
             <Estado estado={estado} />
           </View>
-          <Text style={styles.title}>{titulo}</Text>
           <View style={styles.divisor} />
+          <Text style={styles.title}>{titulo}</Text>
           <View>
             <View
               style={{
@@ -97,7 +97,7 @@ export const ItemOT = ({
       <View
         style={{ padding: 10, alignSelf: 'center', margin: 2, width: '100%' }}>
         <View style={[styles.divisor]} />
-        {(isVistaTecnico ? <DetalleBtnTecnico estado={estado} changeState={() => handleState(estado)} goToScreen={goToScreen} /> : <DetalleBtn estado={estado} changeState={() => {}} goToScreen={goToScreen} />)}
+        {(isVistaTecnico ? <DetalleBtnTecnico estado={estado} changeState={() => handleState(estado)} goToScreen={goToScreen} /> : <DetalleBtn estado={estado} changeState={() => { }} goToScreen={goToScreen} />)}
 
       </View>
     </View>
@@ -124,10 +124,10 @@ const styles = StyleSheet.create({
     color: '#3D3D3D',
   },
   title: {
-    marginTop: 3,
+    marginTop: 5,
     marginBottom: 10,
-    fontWeight: 'bold',
-    fontSize: 19,
+    fontWeight: '700',
+    fontSize: 0.028 * windowHeight,
     textTransform: 'capitalize'
   },
   tecnico: {
@@ -219,61 +219,61 @@ const DetalleBtnTecnico = ({ estado, goToScreen, changeState }: PropBtn) => {
   ]
   return (
     <View style={{ marginVertical: 5 }}>
-      <View style={{flexDirection: estado == 2 ? 'row' : 'column', justifyContent:'space-between'}}>
-      {estado == 2 ? (<TouchableOpacity
-        onPress={() => {
-          //changeState(3)
-          // goToScreen();
-          console.log('no me atendio')
-        }}
-        style={{
-          borderRadius: 8,
-          alignSelf: 'flex-start',
-          width: 0.35 * windowWidth,
-          backgroundColor:'#FF9933',
-          elevation: 10,
-          paddingVertical: 9,
-        }}
-      >
-        <Text
+      <View style={{ flexDirection: estado == 2 ? 'row' : 'column', justifyContent: 'space-between' }}>
+        {estado == 2 ? (<TouchableOpacity
+          onPress={() => {
+            //changeState(3)
+            // goToScreen();
+            console.log('no me atendio')
+          }}
           style={{
-            color: 'white',
-            fontSize: 20,
-            fontWeight: '100',
-            alignSelf: 'center',
-          }}>
-          {'No me recibio'}
-        </Text>
-      </TouchableOpacity>) : null }
-      <TouchableOpacity
-        onPress={() => {
-          changeState()
+            borderRadius: 8,
+            alignSelf: 'flex-start',
+            width: 0.35 * windowWidth,
+            backgroundColor: '#FF9933',
+            elevation: 10,
+            paddingVertical: 9,
+          }}
+        >
+          <Text
+            style={{
+              color: 'white',
+              fontSize: 20,
+              fontWeight: '100',
+              alignSelf: 'center',
+            }}>
+            {'No me recibio'}
+          </Text>
+        </TouchableOpacity>) : null}
+        <TouchableOpacity
+          onPress={() => {
+            changeState()
 
-          if(estado == 2 ){
-            goToScreen('realizarOT');
-          }else if (estado > 3){
-            goToScreen('detalleOTRealizada')
-          }
-        }}
-        style={{
-          borderRadius: 8,
-          alignSelf: 'flex-end',
-          width: 0.35 * windowWidth,
-          backgroundColor: estado == 0 ? '#32367A' : '#178C54',
-          elevation: 10,
-          paddingVertical: 9,
-        }}
-      >
-        <Text
+            if (estado == 2) {
+              goToScreen('realizarOT');
+            } else if (estado > 3) {
+              goToScreen('detalleOTRealizada')
+            }
+          }}
           style={{
-            color: 'white',
-            fontSize: 20,
-            fontWeight: '100',
-            alignSelf: 'center',
-          }}>
-          {estado < 3 ? textState[estado] : 'Ver detalle'}
-        </Text>
-      </TouchableOpacity>
+            borderRadius: 8,
+            alignSelf: 'flex-end',
+            width: 0.35 * windowWidth,
+            backgroundColor: estado == 0 ? '#32367A' : '#178C54',
+            elevation: 10,
+            paddingVertical: 9,
+          }}
+        >
+          <Text
+            style={{
+              color: 'white',
+              fontSize: 20,
+              fontWeight: '100',
+              alignSelf: 'center',
+            }}>
+            {estado < 3 ? textState[estado] : 'Ver detalle'}
+          </Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
