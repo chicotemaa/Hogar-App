@@ -128,6 +128,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     fontWeight: 'bold',
     fontSize: 19,
+    textTransform: 'capitalize'
   },
   tecnico: {
     marginTop: 3,

@@ -1,47 +1,35 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-import { windowHeight } from '../../../../../App'
+import { windowHeight, windowWidth } from '../../../../../App'
+import { Encabezado } from './Componentes/Encabezado'
+import { BodyOT } from './Componentes/BodyOT'
+import { Formulario, OrdenTrabajo } from './interfaces'
+import { getFormularioAPI } from '../../../../api/api'
 
 interface Props {
     OrdenTrabajo: OrdenTrabajo
 }
 
-interface OrdenTrabajo {
-    SucursalDeCliente: string;
-    cliente: Cliente;
-    comentario:string;
-    estado:number;
-    fecha:string;
-    horaDesde:string;
-    horaHasta:string;
-    id:number;
-    latitud:string;
-    latitudCierre:string;
-    longitud:string;
-    longitudCierre:string;
-}
+export const BasePage = ({ OrdenTrabajo }: Props) => {
+    const [formulario, setFormulario] = useState<Formulario>(null)
+    useEffect(() => {
+        getFormularioAPI(OrdenTrabajo.formulario.id).then((response) => {
+            setFormulario(response)
+        })
+    }, [])
 
-interface Cliente {
-    id:string;
-    nombre:string;
-    apellido:string;
-    razonSocial:string;
-    street:string
-}
-
-export const BasePage = ({OrdenTrabajo}: Props) => {
-    console.log(OrdenTrabajo)
     return (
-        <View style={styles.page}>   
-            <Text>
-                {OrdenTrabajo.id}
-            </Text>
+        <View style={styles.page}>
+            <Encabezado OrdenTrabajo={OrdenTrabajo} />
+            {formulario ? <BodyOT Formulario={formulario} /> : null}
         </View>
     )
 }
 
 const styles = StyleSheet.create({
-    page:{
-        borderWidth:1, flex:1, marginVertical:0.02*windowHeight
+    page: {
+        flex: 1,
+        marginVertical: 0.005 * windowHeight,
+        marginHorizontal: 0.005 * windowWidth,
     }
 })
