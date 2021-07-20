@@ -1,7 +1,7 @@
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import React, { useEffect, useState } from 'react'
 import { ScrollView, View, RefreshControl } from 'react-native'
-import { getOtByUserAPI, getFormOTAPI } from '../../../api/apiTecnicos'
+import { getOtByUserAPI } from '../../../api/apiTecnicos'
 import { ItemOT } from '../../ItemOT'
 import { TransitionView } from '../../TransitionView'
 
@@ -75,9 +75,11 @@ export const TecnicosOTList = () => {
                                     date={OT.fecha}
                                     rol="tecnico"
                                     goToScreen={(estado:string) => {
-                                        if(estado === 'detalle'){
+                                        if(estado === 'realizarOT'){
                                             //TODO: controlar ubicacion
                                             stackNavigator.navigate('OTScreen',{OT})
+                                        }else if(estado = 'detalleOTRealizada'){
+                                            stackNavigator.navigate('DetalleOTScreen')
                                         }
                                     }}
                                 />

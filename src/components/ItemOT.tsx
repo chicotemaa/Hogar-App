@@ -247,9 +247,12 @@ const DetalleBtnTecnico = ({ estado, goToScreen, changeState }: PropBtn) => {
       <TouchableOpacity
         onPress={() => {
           changeState()
+
           if(estado == 2 ){
-            goToScreen('detalle');
-          }          
+            goToScreen('realizarOT');
+          }else if (estado > 3){
+            goToScreen('detalleOTRealizada')
+          }
         }}
         style={{
           borderRadius: 8,
