@@ -10,7 +10,7 @@ export const ListadoOTScreen = ({ navigation }) => {
       <View style={{ flex: 8 }}>
         <ScrollView>
           <ItemOT
-            estado={1}
+            estadoOT={1}
             id={3}
             titulo="Vidrio roto"
             location="Sarmiento 123"
@@ -20,7 +20,7 @@ export const ListadoOTScreen = ({ navigation }) => {
             }}
           />
           <ItemOT
-            estado={2}
+            estadoOT={2}
             id={3}
             titulo="Vidrio roto"
             location="Sarmiento 123"
@@ -30,7 +30,7 @@ export const ListadoOTScreen = ({ navigation }) => {
             }}
           />
           <ItemOT
-            estado={3}
+            estadoOT={4}
             id={3}
             titulo="Vidrio roto"
             location="Sarmiento 123"
