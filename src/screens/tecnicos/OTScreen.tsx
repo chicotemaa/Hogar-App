@@ -1,37 +1,34 @@
 import React, { useEffect, useState } from 'react'
 import { ScrollView, Text, View } from 'react-native'
 import { Header } from '../../components/Header'
-import { Casilla } from '../../components/Tecnicos/Formulario/Campos/Casilla'
-import { Seleccion } from '../../components/Tecnicos/Formulario/Campos/Seleccion'
-import { DateInput } from '../../components/Tecnicos/Formulario/Campos/Date'
 import { styles } from '../../theme/appTheme'
-import { Texto } from '../../components/Tecnicos/Formulario/Campos/Texto'
-import { Desplegable } from '../../components/Tecnicos/Formulario/Campos/Desplegable'
-import { Button } from '../../components/Button'
 import { StackScreenProps } from '@react-navigation/stack'
 import { getFormularioAPI } from '../../api/api'
-import { BaseCampo } from '../../components/Tecnicos/Formulario/Campos/BaseCampo'
+import { BaseCampo } from '../../components/OT/Tecnicos/Formulario/Campos/BaseCampo'
+
+import { BasePage } from '../../components/OT/Tecnicos/Formulario/Pagina/BasePage'
+import { TransitionView } from '../../components/TransitionView'
 
 
 interface Props
-  extends StackScreenProps<any, any> {}
+    extends StackScreenProps<any, any> { }
 
 
 interface PropiedadItem {
-    id:number;
-    requerido:boolean;
+    id: number;
+    requerido: boolean;
     item: Item;
 }
 
 interface Item {
-    descripcion:string;
-    nombre:string;
-    id:number;
-    tipo:string;
+    descripcion: string;
+    nombre: string;
+    id: number;
+    tipo: string;
     opciones: Array<any>;
 }
-  
-export const OTScreen = ({ navigation, route }:Props) => {
+
+export const OTScreen = ({ navigation, route }: Props) => {
     const { OT } = route.params
     const [modulos, setModulos] = useState([])
 
@@ -44,8 +41,9 @@ export const OTScreen = ({ navigation, route }:Props) => {
     return (
         <>
             <Header pageName="Orden de Trabajo" roleUser={'tecnico'} id={OT.id} />
-            <View style={styles.container}>                
-                <ScrollView>
+            <View style={[styles.container, { paddingHorizontal: 0 }]}>
+                <BasePage OrdenTrabajo={OT} />
+                {/* <ScrollView>
                     { modulos != null ? (modulos.map(({modulo}) => {                  
                         const {propiedadItems} = modulo;
                         //TODO: controlar a que pagina y modulo pertenecen y darle key 
@@ -54,13 +52,14 @@ export const OTScreen = ({ navigation, route }:Props) => {
                         })
                     })) : null }            
                     
-                </ScrollView>
+                </ScrollView> */}
             </View>
         </>
     )
 }
 
 
-const buildItem = (item:PropiedadItem) => {    
+const buildItem = (item: PropiedadItem) => {
     return (<BaseCampo item={item} />)
 }
+
