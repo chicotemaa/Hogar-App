@@ -63,9 +63,8 @@ export const TecnicosOTList = () => {
                     listaOT.map((OT) => {
                         console.log(OT)
                         return (
-                            <TransitionView animation='slideInUp' index={0} isOT>
+                            <TransitionView key={OT.id} animation='slideInUp' index={0} isOT>
                                 <ItemOT
-                                    key={OT.id}
                                     id={OT.id}
                                     estadoOT={OT.estado}
                                     cliente={OT.cliente.razonSocial}
