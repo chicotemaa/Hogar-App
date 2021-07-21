@@ -40,10 +40,16 @@ export interface Modulo {
     equipo: string;
     id: number;
     isCollection: boolean;
-    propiedadItem: Item[]
+    modulo: ModuloProps;
     orden: number;
     pagina: number;
     paginaNombre: string;
+}
+
+interface ModuloProps {
+    id: number;
+    propiedadItems: Item[];
+    titulo: string;
 }
 
 interface Item {
