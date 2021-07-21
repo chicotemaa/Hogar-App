@@ -46,7 +46,7 @@ export const Header = ({ pageName, userName, roleUser, id }: Props) => {
             color="white"
             title={pageName}
             titleStyle={{ fontSize: windowHeight * 0.037 }}
-            subtitle={isFormSolicitud ? 'Complete los datos necesarios' : roleUser === 'tecnico' ? ('#' + id): null}
+            subtitle={isFormSolicitud ? 'Complete los datos necesarios' : roleUser === 'tecnico' ? ('#' + id) : null}
           />
 
           <Appbar.Action
@@ -131,9 +131,10 @@ const WelcomeHeader = (username: string, isTecnico) => {
       <Text
         style={{
           color: '#E8E6F5',
-          fontSize: isTecnico ? 0.03 * windowHeight : 0.08 * windowWidth,
+          fontSize: isTecnico ? 0.035 * windowHeight : 0.08 * windowWidth,
           fontWeight: isTecnico ? '100' : 'bold',
           textShadowRadius: 1,
+          paddingLeft: isTecnico ? 16 : 0
         }}>
         {isTecnico ? 'Jueves 15 Julio' : username}
       </Text>
@@ -143,7 +144,7 @@ const WelcomeHeader = (username: string, isTecnico) => {
           color: '#FFFFFF',
           fontSize: 0.07 * windowWidth,
           fontWeight: '800',
-          marginTop:5,
+          marginTop: 5,
           textShadowRadius: 1,
         }}>
         {isTecnico ? null : 'Santander Rio'}
