@@ -46,13 +46,13 @@ export interface Modulo {
     paginaNombre: string;
 }
 
-interface ModuloProps {
+export interface ModuloProps {
     id: number;
     propiedadItems: Item[];
     titulo: string;
 }
 
-interface Item {
+export interface Item {
     ancho: string;
     cantidadMinima: number;
     id: number;

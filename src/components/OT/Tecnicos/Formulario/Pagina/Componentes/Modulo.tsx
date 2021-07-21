@@ -1,22 +1,21 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { windowHeight, windowWidth } from '../../../../../../../App';
+import { ModuloProps } from '../interfaces';
+import { Item } from './Item';
 
 
-import { Modulo as ModuloProps } from '../interfaces';
 
 interface Props {
-    Modulo: ModuloProps;
+    Items: ModuloProps
 }
 
-export const Modulo = ({ Modulo }: Props) => {
+export const Modulo = ({ Items }: Props) => {
+    console.log('items of modulo', Items)
     return (
-        <View style={styles.container}>
-            <Text>{Modulo.paginaNombre}</Text>
-            <Text>{Modulo.paginaNombre}</Text>
-            <Text>{Modulo.paginaNombre}</Text>
-            <Text>{Modulo.paginaNombre}</Text>
-        </View>
+        Items.propiedadItems.map((item) => {
+            return (<Item Item={item} />)
+        })
     )
 }
 
