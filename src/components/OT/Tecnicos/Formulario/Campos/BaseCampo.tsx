@@ -1,25 +1,38 @@
 import React from 'react'
 import { StyleSheet } from 'react-native'
 import { Text, View } from 'react-native'
+import { windowWidth } from '../../../../../../App'
 import { Desplegable } from './Desplegable'
 import { Seleccion } from './Seleccion'
 import { Texto } from './Texto'
 
 export const BaseCampo = ({ item }) => {
     console.log(item)
-    const ancho = '100%'
     return (
-        <View style={{ margin: 10 }}>
-            <Text>{item.item.titulo}</Text>
-            {Campo(item)}
+        <View style={styles.containerItem}>
+            <Text style={styles.titleItem}>{item.item.titulo}</Text>
+            <Text style={{ color: 'red' }}>{item.requerido ? 'Es requerido' : null}</Text>
+            <View style={styles.campo}>
+                {Campo(item)}
+            </View>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
-    container: {
-        height: 100,
+    containerItem: {
+        margin: 10,
+        backgroundColor: 'white',
+        paddingHorizontal: 5,
+        paddingVertical: 10,
+    },
+    titleItem: {
+        marginVertical: 4,
+        fontSize: 0.03 * windowWidth,
+    },
+    campo: {
         borderWidth: 1,
+        marginVertical: 3
     }
 })
 
