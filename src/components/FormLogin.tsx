@@ -41,8 +41,7 @@ export const FormLogin = ({pageToGo}: Props) => {
         storeData('timeExpire', expires_in); // hacer string
         storeData('refresh_token', refresh_token);
 
-        getData('access_token').then(token => {
-          console.log(token);
+        getData('access_token').then(token => {          
           pageToGo();
         });
       })

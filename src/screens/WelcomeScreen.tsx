@@ -1,22 +1,36 @@
-import React, {useEffect, useState} from 'react';
-import {StyleSheet, View} from 'react-native';
-import {DrawerScreenProps} from '@react-navigation/drawer';
-import {Title} from '../components/Title';
-import {Button} from '../components/Button';
-import {styles} from '../theme/appTheme';
+import React, { useEffect, useState } from 'react';
+import { DrawerScreenProps } from '@react-navigation/drawer';
 
-import {Header} from '../components/Header';
-import {getToken, getUserInfo} from '../api/api';
+import { Header } from '../components/Header';
+import { getToken, getUserInfo } from '../api/api';
+import { TecnicosWelcomeScreen } from '../components/Welcome/TecnicosWelcomeScreen';
+import { WelcomeOptions } from '../components/Welcome/WelcomeOptions';
+import { View } from 'react-native';
+import Spinner from 'react-native-loading-spinner-overlay';
 
-//interface Props extends StackScreenProps<RootStackParams, 'WelcomeScreen'> {}
-interface Props extends DrawerScreenProps<any, any> {}
+interface Props extends DrawerScreenProps<any, any> { }
 
-export const WelcomeScreen = ({navigation}: Props) => {
+export const WelcomeScreen = ({ navigation }: Props) => {
+  const [loading, setLoading] = useState(true);
   const [userName, setUserName] = useState('');
+  const [roleUser, setRoleUser] = useState('');
+
   useEffect(() => {
     getToken().then(token => {
       getUserInfo(token).then(response => {
-        setUserName(capitalizeFirstLetter(response.data.username));
+        const { username, roles } = response.data;
+        console.log(response.data)
+        setUserName(capitalizeFirstLetter(username));
+
+        if (roles[1] === 'ROLE_EMPLEADO') {
+          setRoleUser('tecnico')
+        } else {
+          setRoleUser('user')
+        }
+
+        setTimeout(() => {
+          setLoading(false)
+        }, 500)
       });
     });
 
@@ -25,63 +39,30 @@ export const WelcomeScreen = ({navigation}: Props) => {
     });
   }, []);
 
-  const handleSolicitud = () => {
-    navigation.navigate('NewSolicitudScreen');
-  };
-
   return (
     <>
-      <Header pageName="Bienvenido" userName={userName} />
-      <View
-        style={[
-          styles.container,
-          {
-            flex: 2,
-            borderTopWidth: 10,
-            borderTopColor: 'transparent',
-            alignItems: 'center',
-            justifyContent: 'center',
-          },
-        ]}>
-        <View style={{marginBottom: 15}}>
-          <Button
-            title={'Solicitar asistencia'}
-            color="#347194"
-            height={70}
-            width={270}
-            onPress={handleSolicitud}
-          />
-          <View style={stylesWelcome.aclaraciónContainer}>
-            <Title
-              color="#343030"
-              text={`Crear una nueva solicitud`}
-              size={14}
-            />
-          </View>
-
-          <Button
-            title={'Ver mis solicitudes'}
-            color="#347194"
-            height={70}
-            width={270}
-            onPress={() => navigation.navigate('HistorialSolicitudesScreen')}
-          />
-          <View style={stylesWelcome.aclaraciónContainer}>
-            <Title
-              color="#343030"
-              text={`Ver un historial de solicitudes previas`}
-              size={14}
-            />
-          </View>
-          <Button
-            title={'Ver ordenes de trabajo'}
-            color="#347194"
-            height={70}
-            width={270}
-            onPress={() => navigation.navigate('ListadoOTScreen')}
+      {loading ? (
+        <View>
+          <Spinner
+            visible={loading}
+            textContent={'Cargando...'}
+            textStyle={{ color: '#FFF' }}
           />
         </View>
-      </View>
+      ) : (
+        <>
+          <Header pageName="Bienvenido" userName={userName} roleUser={roleUser} />
+          {
+            roleUser === 'tecnico' ? (
+              <TecnicosWelcomeScreen navigation={navigation} />
+            ) : (
+              <>
+                <WelcomeOptions navigation={navigation} />
+              </>
+            )
+          }
+        </>
+      )}
     </>
   );
 };
@@ -90,25 +71,4 @@ function capitalizeFirstLetter(string: string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-const stylesWelcome = StyleSheet.create({
-  menuContainer: {
-    margin: 5,
-  },
-  menu: {
-    height: 30,
-    backgroundColor: '#473E3E',
-    alignSelf: 'flex-end',
-    margin: 10,
-    borderColor: 'blue',
-    borderWidth: 2,
-  },
-  header: {
-    flex: 2,
-    margin: 10,
-    padding: 3,
-    alignItems: 'center',
-  },
-  aclaraciónContainer: {
-    margin: 10,
-  },
-});
+

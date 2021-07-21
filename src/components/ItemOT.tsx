@@ -1,13 +1,17 @@
-import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { windowHeight, windowWidth } from '../../App';
 
 interface Props {
-  id: string;
+  id: number;
   titulo: string;
   location: string;
   date: string;
-  estado: string;
+  estadoOT: number;
   goToScreen: Function;
+  tecnico?: string;
+  rol?: string;
+  cliente?: string;
 }
 
 export const ItemOT = ({
@@ -15,9 +19,27 @@ export const ItemOT = ({
   titulo,
   location,
   date,
-  estado,
+  estadoOT,
   goToScreen,
+  rol,
+  cliente,
 }: Props) => {
+  const isVistaTecnico = rol == 'tecnico'
+  const [estado, setEstado] = useState(estadoOT)
+
+  const handleState = (estado: number) => {
+
+    switch (estado) {
+      case 0:
+        setEstado(1)
+        break;
+      case 1:
+        setEstado(2)
+        break;
+    }
+    // setEstado(estado)
+  }
+
   return (
     <View style={styles.container}>
       <View
@@ -27,7 +49,7 @@ export const ItemOT = ({
           marginHorizontal: 10,
           marginVertical: 5,
         }}>
-        <View style={{flex: 1}}>
+        <View style={{ flex: 1 }}>
           <View
             style={{
               flexDirection: 'row',
@@ -37,8 +59,8 @@ export const ItemOT = ({
             <Text style={styles.number}>#{id}</Text>
             <Estado estado={estado} />
           </View>
-          <Text style={styles.title}>{titulo}</Text>
           <View style={styles.divisor} />
+          <Text style={styles.title}>{titulo}</Text>
           <View>
             <View
               style={{
@@ -46,21 +68,20 @@ export const ItemOT = ({
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}>
-              <View style={{flexDirection: 'row'}}>
-                <Text style={styles.tecnico}>Técnico:</Text>
+              <View style={{ flexDirection: 'row' }}>
+                <Text style={styles.tecnico}>{!isVistaTecnico ? 'Técnico:' : null}</Text>
                 <Text
                   style={[
                     styles.tecnico,
-                    {paddingHorizontal: 5, textAlign: 'auto'},
+                    { paddingHorizontal: !isVistaTecnico ? 5 : 0, textAlign: 'auto' },
                   ]}>
-                  Martin Sastre
+                  {isVistaTecnico ? cliente : 'Martin Sastre'}
                 </Text>
               </View>
               <View>
-                {/* TODO: Si se llega a solicitar información del técnico
-                <TouchableOpacity>
-                  <Text style={[styles.tecnico, {color: '#3B58A5'}]}>
-                    Ver info
+                {/* <TouchableOpacity>
+                  <Text style={[styles.tecnico, { color: '#3B58A5' }]}>
+                    Ver info de tecnico
                   </Text>
                 </TouchableOpacity> */}
               </View>
@@ -74,9 +95,10 @@ export const ItemOT = ({
         </View>
       </View>
       <View
-        style={{padding: 10, alignSelf: 'center', margin: 2, width: '100%'}}>
+        style={{ padding: 10, alignSelf: 'center', margin: 2, width: '100%' }}>
         <View style={[styles.divisor]} />
-        <DetalleBtn estado={estado} goToScreen={goToScreen} />
+        {(isVistaTecnico ? <DetalleBtnTecnico estado={estado} changeState={() => handleState(estado)} goToScreen={goToScreen} /> : <DetalleBtn estado={estado} changeState={() => { }} goToScreen={goToScreen} />)}
+
       </View>
     </View>
   );
@@ -89,7 +111,7 @@ function formatDate(date: string) {
 const styles = StyleSheet.create({
   container: {
     borderWidth: 1,
-    borderColor: '#CCCCCC',
+    borderColor: '#c5cbe3',
     padding: 5,
     backgroundColor: 'white',
     borderRadius: 4,
@@ -102,10 +124,11 @@ const styles = StyleSheet.create({
     color: '#3D3D3D',
   },
   title: {
-    marginTop: 3,
+    marginTop: 5,
     marginBottom: 10,
-    fontWeight: 'bold',
-    fontSize: 19,
+    fontWeight: '700',
+    fontSize: 0.028 * windowHeight,
+    textTransform: 'capitalize'
   },
   tecnico: {
     marginTop: 3,
@@ -129,42 +152,44 @@ const styles = StyleSheet.create({
 });
 
 interface PropEstado {
-  estado: string;
+  estado: number;
 }
 
-const Estado = ({estado}: PropEstado) => {
-  const colores = {
-    Pendiente: 'red',
-    'Estoy en camino': '#AF8308',
-    'Me recibió': 'blue',
-    'No me atendió': 'brown',
-    Finalizado: 'green',
-    'No me recibió': 'purple',
-  };
+const Estado = ({ estado }: PropEstado) => {
+  const Estado = [
+    { name: 'Pendiente', color: '#F13C20' },
+    { name: 'Estoy en camino', color: '#D79922' },
+    { name: 'Me recibió', color: '#4056A1' },
+    { name: 'No me atendió', color: 'brown' },
+    { name: 'Finalizado', color: 'green' },
+    { name: 'No me recibió', color: 'purple' },
+  ];
+
   return (
     <Text
       style={{
         fontSize: 21,
         fontWeight: 'bold',
-        color: colores[estado],
+        color: Estado[estado].color,
         textAlign: 'right',
         alignSelf: 'center',
       }}>
-      {estado}
+      {Estado[estado].name}
     </Text>
   );
 };
 
 interface PropBtn {
-  estado: string;
+  estado: number;
   goToScreen: Function;
+  changeState: Function
 }
-const DetalleBtn = ({estado, goToScreen}: PropBtn) => {
-  const colorBtn = estado == 'Finalizado' ? 'green' : '#5E5E5E';
+const DetalleBtn = ({ estado, goToScreen }: PropBtn) => {
+  const colorBtn = estado == 4 ? 'green' : '#5E5E5E';
   return (
-    <View style={{marginVertical: 5}}>
+    <View style={{ marginVertical: 5 }}>
       <TouchableOpacity
-        disabled={estado != 'Finalizado'}
+        disabled={estado != 4}
         onPress={() => {
           goToScreen();
         }}>
@@ -176,7 +201,7 @@ const DetalleBtn = ({estado, goToScreen}: PropBtn) => {
             fontWeight: 'bold',
             alignSelf: 'center',
           }}>
-          {estado === 'Finalizado'
+          {estado === 4
             ? 'Ver detalle'
             : 'Detalle aún no disponible'}
         </Text>
@@ -184,3 +209,74 @@ const DetalleBtn = ({estado, goToScreen}: PropBtn) => {
     </View>
   );
 };
+
+const DetalleBtnTecnico = ({ estado, goToScreen, changeState }: PropBtn) => {
+
+  const textState = [
+    'Tomar orden',
+    'Ya llegué',
+    'Realizar'
+  ]
+  return (
+    <View style={{ marginVertical: 5 }}>
+      <View style={{ flexDirection: estado == 2 ? 'row' : 'column', justifyContent: 'space-between' }}>
+        {estado == 2 ? (<TouchableOpacity
+          onPress={() => {
+            //changeState(3)
+            // goToScreen();
+            console.log('no me atendio')
+          }}
+          style={{
+            borderRadius: 8,
+            alignSelf: 'flex-start',
+            width: 0.35 * windowWidth,
+            backgroundColor: '#FF9933',
+            elevation: 10,
+            paddingVertical: 9,
+          }}
+        >
+          <Text
+            style={{
+              color: 'white',
+              fontSize: 20,
+              fontWeight: '100',
+              alignSelf: 'center',
+            }}>
+            {'No me recibio'}
+          </Text>
+        </TouchableOpacity>) : null}
+        <TouchableOpacity
+          onPress={() => {
+            changeState()
+
+            if (estado == 2) {
+              goToScreen('realizarOT');
+            } else if (estado > 3) {
+              goToScreen('detalleOTRealizada')
+            }
+          }}
+          style={{
+            borderRadius: 8,
+            alignSelf: 'flex-end',
+            width: 0.35 * windowWidth,
+            backgroundColor: estado == 0 ? '#32367A' : '#178C54',
+            elevation: 10,
+            paddingVertical: 9,
+          }}
+        >
+          <Text
+            style={{
+              color: 'white',
+              fontSize: 20,
+              fontWeight: '100',
+              alignSelf: 'center',
+            }}>
+            {estado < 3 ? textState[estado] : 'Ver detalle'}
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+};
+
+
