@@ -1,4 +1,4 @@
-import { useFocusEffect, useNavigation } from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native'
 import React, { useEffect, useState } from 'react'
 import { ScrollView, View, RefreshControl } from 'react-native'
 import { getOtByUserAPI } from '../../../api/apiTecnicos'
@@ -35,7 +35,7 @@ export const TecnicosOTList = () => {
         getOtByUserAPI()
             .then((response) => {
                 setListaOT([])
-                setListaOT(response)                
+                setListaOT(response)
             })
         setTimeout(() => {
             setRefreshing(false)
@@ -73,11 +73,11 @@ export const TecnicosOTList = () => {
                                     location={'Sarmiento 123'}
                                     date={OT.fecha}
                                     rol="tecnico"
-                                    goToScreen={(estado:string) => {
-                                        if(estado === 'realizarOT'){
+                                    goToScreen={(estado: string) => {
+                                        if (estado === 'realizarOT') {
                                             //TODO: controlar ubicacion
-                                            stackNavigator.navigate('OTScreen',{OT})
-                                        }else if(estado = 'detalleOTRealizada'){
+                                            stackNavigator.navigate('OTScreen', { OT })
+                                        } else if (estado = 'detalleOTRealizada') {
                                             stackNavigator.navigate('DetalleOTScreen')
                                         }
                                     }}

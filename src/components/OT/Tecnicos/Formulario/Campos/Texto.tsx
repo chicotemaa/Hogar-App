@@ -5,9 +5,7 @@ export const Texto = () => {
     return (
         <View>
             <TextInput
-
                 placeholder="useless placeholder"
-                keyboardType="numeric"
             />
         </View>
     )

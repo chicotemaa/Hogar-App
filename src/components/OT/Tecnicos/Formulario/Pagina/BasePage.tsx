@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-import { windowHeight, windowWidth } from '../../../../../App'
+import { windowHeight, windowWidth } from '../../../../../../App'
 import { Encabezado } from './Componentes/Encabezado'
 import { BodyOT } from './Componentes/BodyOT'
 import { Formulario, OrdenTrabajo } from './interfaces'
-import { getFormularioAPI } from '../../../../api/api'
+import { getFormularioAPI } from '../../../../../api/api'
 
 interface Props {
     OrdenTrabajo: OrdenTrabajo
