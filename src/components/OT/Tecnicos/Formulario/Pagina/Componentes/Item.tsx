@@ -11,7 +11,7 @@ export const Item = ({ Item }: Props) => {
 
     return (
         <View>
-            <Text>{Item.item.tipo}</Text>
+            <Text>Tipo de campo: {Item.item.tipo}</Text>
         </View>
     )
 }

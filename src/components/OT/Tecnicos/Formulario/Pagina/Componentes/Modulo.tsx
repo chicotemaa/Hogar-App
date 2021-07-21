@@ -11,11 +11,19 @@ interface Props {
 }
 
 export const Modulo = ({ Items }: Props) => {
-    console.log('items of modulo', Items)
     return (
-        Items.propiedadItems.map((item) => {
-            return (<Item Item={item} />)
-        })
+        <>
+            <View style={{ borderWidth: 1, borderColor: 'green', marginVertical: 5 }}>
+                <Text>{Items.titulo}</Text>
+            </View>
+            <View style={{ borderWidth: 1, paddingVertical: 1, borderColor: 'blue' }}>
+                {
+                    Items.propiedadItems.map((item) => {
+                        return (<Item Item={item} />)
+                    })
+                }
+            </View>
+        </>
     )
 }
 

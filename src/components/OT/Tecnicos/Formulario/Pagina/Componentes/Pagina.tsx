@@ -9,8 +9,8 @@ interface Props {
 
 export const Pagina = ({ Modulos }: Props) => {
     return (
-        <View style={{ borderWidth: 3 }}>
-            <Text>Titulo pagina: {Modulos[0].paginaNombre}</Text>
+        <View style={{ borderWidth: 3, padding: 5 }}>
+            <Text style={{ textTransform: 'uppercase', fontWeight: 'bold', fontSize: 20 }}>Titulo pagina: {Modulos[0].paginaNombre}</Text>
             {Modulos.map((modulo) => {
                 return (
                     <ModulosItem Items={modulo.modulo} />
