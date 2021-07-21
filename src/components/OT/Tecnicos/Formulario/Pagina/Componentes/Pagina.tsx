@@ -8,6 +8,7 @@ interface Props {
 }
 
 export const Pagina = ({ Modulos }: Props) => {
+    //TODO: Agregar scrollview 
     return (
         <View style={{ borderWidth: 3, padding: 5 }}>
             <Text style={{ textTransform: 'uppercase', fontWeight: 'bold', fontSize: 20 }}>Titulo pagina: {Modulos[0].paginaNombre}</Text>

@@ -5,9 +5,7 @@ import { styles } from '../../theme/appTheme'
 import { StackScreenProps } from '@react-navigation/stack'
 import { getFormularioAPI } from '../../api/api'
 import { BaseCampo } from '../../components/OT/Tecnicos/Formulario/Campos/BaseCampo'
-
 import { BasePage } from '../../components/OT/Tecnicos/Formulario/Pagina/BasePage'
-import { TransitionView } from '../../components/TransitionView'
 
 
 interface Props
@@ -43,16 +41,6 @@ export const OTScreen = ({ navigation, route }: Props) => {
             <Header pageName="Orden de Trabajo" roleUser={'tecnico'} id={OT.id} />
             <View style={[styles.container, { paddingHorizontal: 0 }]}>
                 <BasePage OrdenTrabajo={OT} />
-                {/* <ScrollView>
-                    { modulos != null ? (modulos.map(({modulo}) => {                  
-                        const {propiedadItems} = modulo;
-                        //TODO: controlar a que pagina y modulo pertenecen y darle key 
-                        return propiedadItems.map((item:PropiedadItem) => {
-                            return buildItem(item)
-                        })
-                    })) : null }            
-                    
-                </ScrollView> */}
             </View>
         </>
     )

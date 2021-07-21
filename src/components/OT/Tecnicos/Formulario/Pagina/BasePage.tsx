@@ -21,7 +21,9 @@ export const BasePage = ({ OrdenTrabajo }: Props) => {
     return (
         <View style={styles.page}>
             <Encabezado OrdenTrabajo={OrdenTrabajo} />
-            {formulario ? <BodyOT Formulario={formulario} /> : null}
+            <View>
+                {formulario ? <BodyOT Formulario={formulario} /> : null}
+            </View>
         </View>
     )
 }
