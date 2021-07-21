@@ -165,3 +165,21 @@ export const getAllServiciosAPI = async () => {
       return '';
     });
 };
+
+export const getFormularioAPI = async (id:number) => {
+  const token = await getData('access_token').then(token => {
+    return token;
+  });
+
+  const query = '/formularios/' + id ;
+  return api.get(baseApi+query, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }).then(response => {
+    return response.data
+  }).catch(error => {
+    return error
+  })
+
+} 

@@ -27,7 +27,7 @@ export const Camera = () => {
                 type={RNCamera.Constants.Type.back}
                 androidCameraPermissionOptions={{
                     title: 'Permission to use camera',
-                    message: 'We need your permission to use your camera',
+                    message: 'Necesitamos permisos para usar la camara ',
                     buttonPositive: 'Ok',
                     buttonNegative: 'Cancel',
                 }}

@@ -98,7 +98,7 @@ export const HistorialSolicitudesScreen = ({navigation}: Props) => {
 
 const stylesHistorial = StyleSheet.create({
   containerItems: {
-    flex: 3.9,
+    flex: 5,
     flexDirection: 'column-reverse',
     marginHorizontal: 1,
     marginBottom: 10,

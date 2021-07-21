@@ -4,7 +4,6 @@ import {StyleSheet, View} from 'react-native';
 import {
   getSolicitudById,
   getSucursalCliente,
-  getSucursalesAP,
 } from '../api/apiClientes';
 import {RootStackParams} from '../navigator/StackNavigator';
 import {getData, getImage, getServicioAPI} from '../api/api';

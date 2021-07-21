@@ -1,7 +1,7 @@
 import { api, baseApi, getData } from './api';
 
 
-export const geOtByUserAPI = async () => {
+export const getOtByUserAPI = async () => {
     const token = await getData('access_token');
     console.log(token)
     return api
@@ -20,6 +20,3 @@ export const geOtByUserAPI = async () => {
 };
 
 
-export const getFormOTAPI = async (id: number) => {
-    console.log('la id es', id)
-}
