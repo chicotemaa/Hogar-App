@@ -5,26 +5,27 @@ import { Desplegable } from './Desplegable'
 import { Seleccion } from './Seleccion'
 import { Texto } from './Texto'
 
-export const BaseCampo = ({item}) => {
+export const BaseCampo = ({ item }) => {
     console.log(item)
     const ancho = '100%'
     return (
-        <View style={[styles.container, { width:ancho}]}>            
+        <View style={{ margin: 10 }}>
+            <Text>{item.item.titulo}</Text>
             {Campo(item)}
         </View>
     )
 }
 
 const styles = StyleSheet.create({
-    container:{
-        height:100,
-        borderWidth:1,
+    container: {
+        height: 100,
+        borderWidth: 1,
     }
-}) 
+})
 
 const Campo = (item) => {
     let campo = null;
-    switch(item.item.tipo){
+    switch (item.item.tipo) {
         case 'texto':
             campo = (<Texto />)
             break;

@@ -1,6 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { windowHeight, windowWidth } from '../../../../../../../App';
+import { BaseCampo } from '../../Campos/BaseCampo';
 import { ModuloProps } from '../interfaces';
 import { Item } from './Item';
 
@@ -19,7 +20,7 @@ export const Modulo = ({ Items }: Props) => {
             <View style={{ borderWidth: 1, paddingVertical: 1, borderColor: 'blue' }}>
                 {
                     Items.propiedadItems.map((item) => {
-                        return (<Item Item={item} />)
+                        return (<BaseCampo item={item} />)
                     })
                 }
             </View>

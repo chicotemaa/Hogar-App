@@ -10,7 +10,7 @@ export const Item = ({ Item }: Props) => {
     console.log('componente item', Item)
 
     return (
-        <View>
+        <View style={{ backgroundColor: 'white', padding: 5, margin: 5 }}>
             <Text>Tipo de campo: {Item.item.tipo}</Text>
         </View>
     )
