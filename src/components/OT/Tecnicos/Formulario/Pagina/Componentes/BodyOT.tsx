@@ -5,6 +5,7 @@ import { Button } from 'react-native-paper';
 import { Formulario, Modulo } from '../interfaces';
 import { Pagina } from './Pagina';
 import Swiper from 'react-native-swiper';
+import StepIndicator from 'react-native-step-indicator';
 
 interface Props {
   Formulario: Formulario;
@@ -14,7 +15,7 @@ export const BodyOT = ({ Formulario }: Props) => {
   const [currentPage, setCurrentPage] = React.useState<number>(0);
   const [pagesCount, setPagesCount] = React.useState<number>(0)
   const [loading, setLoading] = React.useState(true)
-  const [paginator, setPaginator] = React.useState(null)
+  const [paginator, setPaginator] = React.useState({ pagina: 0, modulos: [] })
 
   React.useEffect(() => {
     const lastItemIndex = Formulario.propiedadModulos.length - 1
@@ -27,7 +28,13 @@ export const BodyOT = ({ Formulario }: Props) => {
 
   return (
     <View>
-      <View style={{ height: '89%', borderWidth: 1 }}>
+      <View style={{ marginVertical: 10 }}>
+        <StepIndicator
+          stepCount={!loading ? pagesCount : 0}
+          currentPosition={currentPage}
+        />
+      </View>
+      <View style={{ height: '80%', borderWidth: 1 }}>
         {!loading ? (showPages(paginator)) : (<Text>'No hay formulario'</Text>)}
       </View>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', margin: 10 }}>
