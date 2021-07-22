@@ -13,35 +13,31 @@ interface Props {
 
 export const Modulo = ({ Items }: Props) => {
     return (
-        <>
+
+        <View>
             <View style={{ borderWidth: 1, borderColor: 'green', marginVertical: 5 }}>
                 <Text>{Items.titulo}</Text>
             </View>
-            <View style={{ borderWidth: 1, paddingVertical: 1, borderColor: 'blue' }}>
+            <View style={styles.container}>
                 {
                     Items.propiedadItems.map((item) => {
                         return (<BaseCampo item={item} />)
                     })
                 }
             </View>
-        </>
+        </View>
+
+
     )
 }
 
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        borderWidth: 1,
-        marginHorizontal: 0.02 * windowWidth,
+        borderBottomWidth: 1,
         marginVertical: 0.03 * windowHeight
     },
-    stepIndicator: {
-        marginVertical: 10,
-    },
     page: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+        paddingHorizontal: 0.005 * windowWidth,
     }
 });

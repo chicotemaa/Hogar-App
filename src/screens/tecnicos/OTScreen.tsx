@@ -38,7 +38,7 @@ export const OTScreen = ({ navigation, route }: Props) => {
 
     return (
         <>
-            <Header pageName="Orden de Trabajo" roleUser={'tecnico'} id={OT.id} />
+            <Header pageName="Orden de Trabajo" roleUser={'tecnico'} />
             <View style={[styles.container, { paddingHorizontal: 0 }]}>
                 <BasePage OrdenTrabajo={OT} />
             </View>

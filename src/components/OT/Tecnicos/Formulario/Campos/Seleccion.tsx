@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Text } from 'react-native';
 import { Checkbox } from 'react-native-paper';
 
 export const Seleccion = () => {
@@ -9,6 +10,7 @@ export const Seleccion = () => {
         <>
             <Checkbox
                 status={checked ? 'checked' : 'unchecked'}
+                children={(<Text>hola</Text>)}
                 onPress={() => {
                     setChecked(!checked);
                 }}

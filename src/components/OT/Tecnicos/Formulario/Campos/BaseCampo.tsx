@@ -7,7 +7,7 @@ import { Seleccion } from './Seleccion'
 import { Texto } from './Texto'
 
 export const BaseCampo = ({ item }) => {
-    console.log(item)
+    console.log('item', item)
     return (
         <View style={styles.containerItem}>
             <Text style={styles.titleItem}>{item.item.titulo}</Text>
@@ -22,6 +22,8 @@ export const BaseCampo = ({ item }) => {
 const styles = StyleSheet.create({
     containerItem: {
         margin: 10,
+        borderLeftWidth: 2,
+        borderLeftColor: 'blue',
         backgroundColor: 'white',
         paddingHorizontal: 5,
         paddingVertical: 10,
@@ -31,8 +33,7 @@ const styles = StyleSheet.create({
         fontSize: 0.03 * windowWidth,
     },
     campo: {
-        borderWidth: 1,
-        marginVertical: 3
+        marginVertical: 5
     }
 })
 
@@ -41,6 +42,7 @@ const Campo = (item) => {
     switch (item.item.tipo) {
         case 'texto':
             campo = (<Texto />)
+            console.log('es texto')
             break;
         case 'foto':
             campo = <Text>Es foto</Text>

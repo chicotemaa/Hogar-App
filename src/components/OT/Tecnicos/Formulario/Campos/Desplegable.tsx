@@ -10,8 +10,8 @@ export const Desplegable = () => {
         <List.Section>
             <List.Accordion
                 title="Desplegable">
-                <List.Item title="First item" />
-                <List.Item title="Second item" />
+                <List.Item title="Primera opcion" />
+                <List.Item title="Segunda opcion" />
             </List.Accordion>
         </List.Section>
     );

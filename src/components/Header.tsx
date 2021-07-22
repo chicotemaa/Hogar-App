@@ -46,7 +46,7 @@ export const Header = ({ pageName, userName, roleUser, id }: Props) => {
             color="white"
             title={pageName}
             titleStyle={{ fontSize: windowHeight * 0.037 }}
-            subtitle={isFormSolicitud ? 'Complete los datos necesarios' : roleUser === 'tecnico' ? ('#' + id) : null}
+            subtitle={isFormSolicitud ? 'Complete los datos necesarios' : null}
           />
 
           <Appbar.Action
