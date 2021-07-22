@@ -5,7 +5,7 @@ export const Texto = () => {
     return (
         <View>
             <TextInput
-                placeholder="useless placeholder"
+                style={{ borderRadius: 5, backgroundColor: 'lightgrey' }}
             />
         </View>
     )
