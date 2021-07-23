@@ -1,5 +1,6 @@
 import React from 'react'
 import { Text, View } from 'react-native'
+import { windowHeight } from '../../../../../../../App'
 import { Modulo } from '../interfaces'
 import { Modulo as ModulosItem } from './Modulo'
 
@@ -9,12 +10,13 @@ interface Props {
 
 export const Pagina = ({ Modulos }: Props) => {
     //TODO: Agregar scrollview 
+    console.log(Modulos)
     return (
-        <View style={{ padding: 5 }}>
-            <Text style={{ textTransform: 'uppercase', fontWeight: 'bold', fontSize: 20 }}>{Modulos[0].paginaNombre}</Text>
+        <View style={{ paddingHorizontal:10, paddingVertical:5 }}>
+            <Text style={{ textTransform: 'uppercase', fontWeight: 'bold', fontSize: 0.022*windowHeight }}>{Modulos[0].paginaNombre}</Text>
             {Modulos.map((modulo) => {
                 return (
-                    <ModulosItem Items={modulo.modulo} />
+                    <ModulosItem Modulo={modulo} Items={modulo.modulo} />
                 )
             })}
         </View>

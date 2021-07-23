@@ -12,17 +12,18 @@ interface Props {
 
 export const BasePage = ({ OrdenTrabajo }: Props) => {
     const [formulario, setFormulario] = useState<Formulario>(null)
+
     useEffect(() => {
         getFormularioAPI(OrdenTrabajo.formulario.id).then((response) => {
             setFormulario(response)
         })
     }, [])
 
-    return (
+    return (        
         <View style={styles.page}>
             <Encabezado OrdenTrabajo={OrdenTrabajo} />
-            <View>
-                {formulario ? <BodyOT Formulario={formulario} /> : null}
+            <View style={{flex:1}}>                                              
+                {formulario ? <BodyOT Formulario={formulario} /> : null}                
             </View>
         </View>
     )

@@ -44,7 +44,8 @@ const styles = StyleSheet.create({
         marginVertical: 0.02 * windowHeight
     },
     title:{
-        fontSize: 0.02 * windowHeight
+        fontSize: 0.025 * windowHeight,
+        fontWeight:'bold'
     },
     equipo:{
         fontSize: 0.02 * windowHeight,

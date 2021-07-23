@@ -18,7 +18,7 @@ export const BaseCampo = ({ item }:Props) => {
     return (
         !item.opcionDepende ? (
         <View style={styles.containerItem}>
-            <Text style={styles.titleItem}>{item.id}{item.item.titulo}</Text>
+            <Text style={styles.titleItem}>{item.item.titulo}</Text>
             <Text style={{ color: '#B00020', fontWeight:'700' }}>{item.requerido ? 'Es requerido' : null}</Text>
             <View style={styles.campo}>
                 {Campo(item)}
@@ -29,7 +29,7 @@ export const BaseCampo = ({ item }:Props) => {
 
 const styles = StyleSheet.create({
     containerItem: {
-        marginVertical: 2,
+        marginVertical: 4,
         borderLeftWidth: 2,
         borderLeftColor: 'blue',
         backgroundColor: 'white',
@@ -38,8 +38,8 @@ const styles = StyleSheet.create({
     },
     titleItem: {
         marginVertical: 4,
-        fontSize: 0.035 * windowWidth,
-        fontWeight:'600'
+        fontSize: 0.037 * windowWidth,
+        fontWeight:'700'
     },
     campo: {
         marginVertical: 5,

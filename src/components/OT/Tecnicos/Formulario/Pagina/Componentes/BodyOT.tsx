@@ -27,13 +27,13 @@ export const BodyOT = ({ Formulario }: Props) => {
   }, [])
 
   return (
-    <View>
+    <View>      
       <View style={{ marginVertical: 10 }}>
         <StepIndicator
           stepCount={!loading ? pagesCount : 0}
           currentPosition={currentPage}
         />
-      </View>
+      </View>      
       <View style={{ height: '80%' }}>
         {!loading ? (showPages(paginator)) : (<Text>'No hay formulario'</Text>)}
       </View>
@@ -81,9 +81,8 @@ const crearPaginador = (Modulos: Modulo[]) => {
 
 const showPages = (Paginas: { pagina: number, modulos: Modulo[] }[]) => {
   return (
-
     <View style={{ flex: 1 }}>
-      <Swiper loop={false}>
+      <Swiper showsPagination={false} loop={false}>
         {
           Paginas.map((modulosDePagina) => {
             return (
