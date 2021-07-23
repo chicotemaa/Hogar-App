@@ -12,11 +12,13 @@ interface Props {
 }
 
 export const Modulo = ({ Items }: Props) => {
+
+    console.log(Items.titulo)
     return (
 
         <View>
-            <View style={{ borderWidth: 1, borderColor: 'green', marginVertical: 5 }}>
-                <Text>{Items.titulo}</Text>
+            <View style={{marginTop: 0.03*windowHeight, borderWidth:1 }}>
+                <Text style={styles.title}>{Items.titulo}</Text>
             </View>
             <View style={styles.container}>
                 {
@@ -36,6 +38,9 @@ const styles = StyleSheet.create({
     container: {
         borderBottomWidth: 1,
         marginVertical: 0.03 * windowHeight
+    },
+    title:{
+        fontSize: 0.03
     },
     page: {
         paddingHorizontal: 0.005 * windowWidth,
