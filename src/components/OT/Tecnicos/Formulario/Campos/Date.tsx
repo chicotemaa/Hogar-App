@@ -3,6 +3,7 @@ import { View, Button, Platform, TouchableOpacity, Text } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { StyleSheet } from 'react-native';
 import { IconButton } from 'react-native-paper';
+import { windowHeight } from '../../../../../../App';
 
 interface DatePickerProps {
     modo:'date' | 'time' | 'completo'
@@ -34,25 +35,57 @@ export const DateInput = ({modo}:DatePickerProps) => {
     };
 
    
+    const FechaCompletaString = () => {        
+            return date ? 
+            (<Text style={{alignSelf:'center',fontSize:0.023*windowHeight}}>{date.toLocaleString()}</Text>)
+            : null
+    }
+
+    const FechaString  = () => {        
+            return date ? 
+            (<Text style={{alignSelf:'center',fontSize:0.023*windowHeight}}>{date.toLocaleDateString()}</Text>)
+            : null
+    }
+
+
+    const HoraString = () => {        
+        return date ? 
+        (<Text style={{alignSelf:'center',fontSize:0.023*windowHeight}}>{date.toLocaleTimeString()}</Text>)
+        : null
+    }
 
     return (
         <View>
-            <View style={{backgroundColor:'#f2f2f2'}}>
+            <View style={{backgroundColor:'#f2f2f2'}}>                   
                 {
                     modo === 'date' ? 
-                    (<IconButton
+                    (
+                    <View style={{flexDirection:'row'}}>                    
+                    <IconButton
                         icon="calendar"
                         color={'#767676'}
                         size={25}
                         onPress={showDatepicker}
-                    />) :
+                    />
+                    <FechaString />
+                    </View>
+                    ) 
+                    :
                     modo === 'time' ? 
-                    (<IconButton
-                        icon="clock"
-                        color={'#767676'}
-                        size={25}
-                        onPress={showTimepicker}
-                    />) :
+                    (
+                    
+                    <View style={{flexDirection:'row'}}>
+                        <IconButton
+                            icon="clock"
+                            color={'#767676'}
+                            size={25}
+                            onPress={showTimepicker}
+                        />
+                        
+                            <HoraString />
+                        </View>
+                    
+                    ) :
                     (
                         <View style={{flexDirection:'row', justifyContent:'space-between'}}>
                             <IconButton
@@ -61,6 +94,7 @@ export const DateInput = ({modo}:DatePickerProps) => {
                                 size={25}
                                 onPress={showDatepicker}
                             />
+                            <FechaCompletaString />
                             <IconButton
                                 icon="clock"
                                 color={'#767676'}
