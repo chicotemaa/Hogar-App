@@ -1,13 +1,25 @@
 import * as React from 'react';
 import { RadioButton } from 'react-native-paper';
+import { Item } from '../Pagina/interfaces';
 
-export const Casilla = () => {
-    const [value, setValue] = React.useState('first');
+interface Props{
+    item: Item
+}
+
+export const Casilla = ({item}:Props) => {
+    const [value, setValue] = React.useState('');
+    let opciones = []
 
     return (
         <RadioButton.Group onValueChange={value => setValue(value)} value={value}>
-            <RadioButton.Item label="First item" value="first" />
-            <RadioButton.Item label="Second item" value="second" />
+            {item.item.opciones.map((opcion) => {
+                const opcionItem = opcion.id.toString()
+                opciones.push(opcionItem)
+                return (
+                    <RadioButton.Item label={opcion.nombre} value={opcionItem} />
+                )
+            }
+            )}
         </RadioButton.Group>
     );
 };

@@ -2,15 +2,20 @@ import React from 'react'
 import { StyleSheet } from 'react-native'
 import { Text, View } from 'react-native'
 import { windowWidth } from '../../../../../../App'
+import { Item } from '../Pagina/interfaces'
+import { Casilla } from './Casilla'
 import { Desplegable } from './Desplegable'
 import { Seleccion } from './Seleccion'
 import { Texto } from './Texto'
 
-export const BaseCampo = ({ item }) => {
-    console.log('item', item)
+interface Props {
+    item : Item
+}
+
+export const BaseCampo = ({ item }:Props) => {
     return (
         <View style={styles.containerItem}>
-            <Text style={styles.titleItem}>{item.item.titulo}</Text>
+            <Text style={styles.titleItem}>{item.id}{item.item.titulo}</Text>
             <Text style={{ color: '#B00020', fontWeight:'700' }}>{item.requerido ? 'Es requerido' : null}</Text>
             <View style={styles.campo}>
                 {Campo(item)}
@@ -38,20 +43,19 @@ const styles = StyleSheet.create({
     }
 })
 
-const Campo = (item) => {
+const Campo = (item: Item) => {
     let campo = null;
     switch (item.item.tipo) {
         case 'texto':
             campo = (<Texto />)
-            console.log('es texto')
             break;
         case 'foto':
             campo = <Text>Es foto</Text>
             break;
         case 'seleccion_multiple':
-            campo = (<Seleccion />)
+            campo = (<Casilla item={item}/>)
             break;
-        case 'desplegable':
+        case 'desplegable':            
             campo = (<Desplegable />)
             break
         default:
