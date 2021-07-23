@@ -7,6 +7,7 @@ import { Casilla } from './Casilla'
 import { Desplegable } from './Desplegable'
 import { Seleccion } from './Seleccion'
 import { Texto } from './Texto'
+import { DateInput } from './Date'
 
 interface Props {
     item : Item
@@ -36,10 +37,12 @@ const styles = StyleSheet.create({
     titleItem: {
         marginVertical: 4,
         fontSize: 0.035 * windowWidth,
-        fontWeight:'bold'
+        fontWeight:'600'
     },
     campo: {
-        marginVertical: 5
+        marginVertical: 5,
+        borderTopColor:'#f2f2f2',
+        borderTopWidth:1,
     }
 })
 
@@ -62,6 +65,19 @@ const Campo = (item: Item) => {
             break
         case 'casilla_de_verificacion':
             campo = (<Seleccion item={item}/>)
+            break
+        case 'titulo':
+            campo = (<Texto />)
+            break
+        case 'date_time':
+            campo = (<DateInput modo={'completo'} />)
+            break
+        case 'date':
+            campo = (<DateInput modo={'date'} />)
+            break
+        case 'time':
+            campo = (<DateInput modo={'time'} />)
+            break
         default:
             null;
     }

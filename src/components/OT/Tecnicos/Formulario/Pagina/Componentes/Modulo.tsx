@@ -3,21 +3,16 @@ import { StyleSheet, Text, View } from 'react-native'
 import { windowHeight, windowWidth } from '../../../../../../../App';
 import { BaseCampo } from '../../Campos/BaseCampo';
 import { ModuloProps } from '../interfaces';
-import { Item } from './Item';
-
-
 
 interface Props {
     Items: ModuloProps
 }
 
 export const Modulo = ({ Items }: Props) => {
-
-    console.log(Items.titulo)
     return (
 
         <View>
-            <View style={{marginTop: 0.03*windowHeight, borderWidth:1 }}>
+            <View style={{marginTop: 0.03*windowHeight }}>
                 <Text style={styles.title}>{Items.titulo}</Text>
             </View>
             <View style={styles.container}>
@@ -28,8 +23,6 @@ export const Modulo = ({ Items }: Props) => {
                 }
             </View>
         </View>
-
-
     )
 }
 
@@ -40,7 +33,7 @@ const styles = StyleSheet.create({
         marginVertical: 0.03 * windowHeight
     },
     title:{
-        fontSize: 0.03
+        fontSize: 0.02 * windowHeight
     },
     page: {
         paddingHorizontal: 0.005 * windowWidth,
