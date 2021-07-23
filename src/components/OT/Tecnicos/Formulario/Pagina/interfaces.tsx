@@ -56,20 +56,22 @@ export interface Item {
     ancho: string;
     cantidadMinima: number;
     id: number;
+    isCollection:boolean;
     item: PropiedadItem
     opcion: any;
     opcionDepende: any;
     orden: number;
     propiedadItems: any;
+    requerido: boolean;
 }
 
 interface PropiedadItem {
     id: number;
     descripcion: string;
     nombre: string;
-    tipo: 'foto' | 'seleccion_multiple' | 'desplegable' | 'texto' | string;
+    tipo: 'foto' | 'seleccion_multiple' | 'desplegable' | 'texto' | 'casilla_de_verificacion' | 'titulo' | 'date_time' | 'time' ;
     titulo: string;
-    opcion: [] | OpcionesItem[]
+    opciones: [] | OpcionesItem[]
 }
 
 interface OpcionesItem {
