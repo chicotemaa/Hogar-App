@@ -2,18 +2,29 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { windowHeight, windowWidth } from '../../../../../../../App';
 import { BaseCampo } from '../../Campos/BaseCampo';
-import { ModuloProps } from '../interfaces';
+import { Modulo as IModulo, ModuloProps } from '../interfaces';
 
 interface Props {
     Items: ModuloProps
+    Modulo: IModulo
 }
 
-export const Modulo = ({ Items }: Props) => {
+export const Modulo = ({ Items, Modulo }: Props) => {
     return (
 
         <View>
-            <View style={{marginTop: 0.03*windowHeight }}>
-                <Text style={styles.title}>{Items.titulo}</Text>
+            <View>
+                <View style={{marginTop: 0.03*windowHeight }}>
+                    <Text style={styles.title}>{Items.titulo}</Text>
+                </View>
+                {
+                    Modulo.equipo ? 
+                    (<View style={{flexDirection:'row'}}>
+                        <Text style={[styles.equipo, {fontWeight:'bold'}]}>Equipo asignado: </Text>
+                        <Text style={styles.equipo}>{Modulo.equipo.codigo} | {Modulo.equipo.descripcion}</Text>
+                    </View>
+                    ) : null
+                }
             </View>
             <View style={styles.container}>
                 {
@@ -30,10 +41,15 @@ export const Modulo = ({ Items }: Props) => {
 const styles = StyleSheet.create({
     container: {
         borderBottomWidth: 1,
-        marginVertical: 0.03 * windowHeight
+        marginVertical: 0.02 * windowHeight
     },
     title:{
         fontSize: 0.02 * windowHeight
+    },
+    equipo:{
+        fontSize: 0.02 * windowHeight,
+        marginTop:0.01 * windowHeight,
+        color:'#d4732d'
     },
     page: {
         paddingHorizontal: 0.005 * windowWidth,

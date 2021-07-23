@@ -37,13 +37,19 @@ export interface Formulario {
 }
 
 export interface Modulo {
-    equipo: string;
+    equipo: IEquipo;
     id: number;
     isCollection: boolean;
     modulo: ModuloProps;
     orden: number;
     pagina: number;
     paginaNombre: string;
+}
+
+interface IEquipo {
+    id:string;
+    codigo:string;
+    descripcion:string;
 }
 
 export interface ModuloProps {
@@ -69,7 +75,7 @@ interface PropiedadItem {
     id: number;
     descripcion: string;
     nombre: string;
-    tipo: 'foto' | 'seleccion_multiple' | 'desplegable' | 'texto' | 'casilla_de_verificacion' | 'titulo' | 'date_time' | 'time' ;
+    tipo: 'foto' | 'seleccion_multiple' | 'desplegable' | 'texto' | 'casilla_de_verificacion' | 'titulo' | 'date_time' | 'time' | 'date' ;
     titulo: string;
     opciones: [] | OpcionesItem[]
 }
