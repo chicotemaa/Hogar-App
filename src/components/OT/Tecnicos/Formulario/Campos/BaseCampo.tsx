@@ -45,6 +45,8 @@ const styles = StyleSheet.create({
 
 const Campo = (item: Item) => {
     let campo = null;
+    console.log(item.item.tipo)
+
     switch (item.item.tipo) {
         case 'texto':
             campo = (<Texto />)
@@ -58,6 +60,8 @@ const Campo = (item: Item) => {
         case 'desplegable':            
             campo = (<Desplegable />)
             break
+        case 'casilla_de_verificacion':
+            campo = (<Seleccion item={item}/>)
         default:
             null;
     }
