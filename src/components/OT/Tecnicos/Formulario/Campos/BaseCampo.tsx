@@ -11,7 +11,7 @@ export const BaseCampo = ({ item }) => {
     return (
         <View style={styles.containerItem}>
             <Text style={styles.titleItem}>{item.item.titulo}</Text>
-            <Text style={{ color: 'red' }}>{item.requerido ? 'Es requerido' : null}</Text>
+            <Text style={{ color: '#B00020', fontWeight:'700' }}>{item.requerido ? 'Es requerido' : null}</Text>
             <View style={styles.campo}>
                 {Campo(item)}
             </View>
@@ -21,16 +21,17 @@ export const BaseCampo = ({ item }) => {
 
 const styles = StyleSheet.create({
     containerItem: {
-        margin: 10,
+        marginVertical: 2,
         borderLeftWidth: 2,
         borderLeftColor: 'blue',
         backgroundColor: 'white',
-        paddingHorizontal: 5,
+        paddingHorizontal: 10,
         paddingVertical: 10,
     },
     titleItem: {
         marginVertical: 4,
-        fontSize: 0.03 * windowWidth,
+        fontSize: 0.035 * windowWidth,
+        fontWeight:'bold'
     },
     campo: {
         marginVertical: 5
