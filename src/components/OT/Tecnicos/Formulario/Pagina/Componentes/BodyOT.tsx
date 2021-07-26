@@ -17,6 +17,8 @@ export const BodyOT = ({ Formulario }: Props) => {
   const [loading, setLoading] = React.useState(true)
   const [paginator, setPaginator] = React.useState({ pagina: 0, modulos: [] })
 
+  console.log('formulario:',Formulario)
+
   React.useEffect(() => {
     const lastItemIndex = Formulario.propiedadModulos.length - 1
     const lastPage = Formulario.propiedadModulos[lastItemIndex]
@@ -27,17 +29,17 @@ export const BodyOT = ({ Formulario }: Props) => {
   }, [])
 
   return (
-    <View>      
-      <View style={{ marginVertical: 10 }}>
+    <View style={{flex:1}}>      
+      <View style={{ marginVertical: 10,}}>
         <StepIndicator
           stepCount={!loading ? pagesCount : 0}
           currentPosition={currentPage}
         />
       </View>      
-      <View style={{ height: '80%' }}>
-        {!loading ? (showPages(paginator)) : (<Text>'No hay formulario'</Text>)}
+      <View style={{flex:9}}>
+        {!loading ? (showPages(paginator)) : (<Text>No hay formulario</Text>)}
       </View>
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between', margin: 10 }}>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', margin: 10,flex:1 }}>
         <Button mode="text" onPress={() => { }}>
           Atras
         </Button>
