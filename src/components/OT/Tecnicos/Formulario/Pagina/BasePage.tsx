@@ -5,6 +5,7 @@ import { Encabezado } from './Componentes/Encabezado'
 import { BodyOT } from './Componentes/BodyOT'
 import { Formulario, OrdenTrabajo } from './interfaces'
 import { getFormularioAPI } from '../../../../../api/api'
+import { FormProvider } from '../../../../../context/fomulario/FormularioContext'
 
 interface Props {
     OrdenTrabajo: OrdenTrabajo
@@ -16,14 +17,17 @@ export const BasePage = ({ OrdenTrabajo }: Props) => {
     useEffect(() => {
         getFormularioAPI(OrdenTrabajo.formulario.id).then((response) => {
             setFormulario(response)
+            console.log('from base page ',response)
         })
     }, [])
 
     return (        
         <View style={styles.page}>
             <Encabezado OrdenTrabajo={OrdenTrabajo} />
-            <View style={{flex:1}}>                                              
-                {formulario ? <BodyOT Formulario={formulario} /> : null}                
+            <View style={{flex:1}}>
+                <FormState>
+                    {formulario ? <BodyOT Formulario={formulario} /> : null}                
+                </FormState>
             </View>
         </View>
     )
@@ -36,3 +40,12 @@ const styles = StyleSheet.create({
         marginHorizontal: 0.005 * windowWidth,
     }
 })
+
+
+const FormState = ({children}:any) => {
+    return (
+      <FormProvider>
+        {children}
+      </FormProvider>
+    )
+}
