@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { TecnicosOTList } from '../OT/tecnicos/TecnicosOTList'
+import { TecnicosOTList } from '../OT/Tecnicos/TecnicosOTList'
 
 const Tab = createMaterialTopTabNavigator();
 

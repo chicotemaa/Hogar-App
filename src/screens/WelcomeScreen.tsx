@@ -19,15 +19,13 @@ export const WelcomeScreen = ({ navigation }: Props) => {
     getToken().then(token => {
       getUserInfo(token).then(response => {
         const { username, roles } = response.data;
-        console.log(response.data)
         setUserName(capitalizeFirstLetter(username));
 
-        if (roles[1] === 'ROLE_EMPLEADO') {
+        if (getRoleUser(roles,'ROLE_EMPLEADO') != -1) {
           setRoleUser('tecnico')
         } else {
           setRoleUser('user')
         }
-
         setTimeout(() => {
           setLoading(false)
         }, 500)
@@ -71,4 +69,7 @@ function capitalizeFirstLetter(string: string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-
+function getRoleUser(roles:string[], rolBuscado:string){
+  const isRolBuscado = (rol:string) => rol === rolBuscado
+  return roles.findIndex(isRolBuscado)
+}

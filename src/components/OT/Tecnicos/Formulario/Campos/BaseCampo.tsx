@@ -1,30 +1,96 @@
 import React from 'react'
 import { StyleSheet } from 'react-native'
 import { Text, View } from 'react-native'
+import { windowWidth } from '../../../../../../App'
+import { Item } from '../Pagina/interfaces'
+import { Casilla } from './Casilla'
 import { Desplegable } from './Desplegable'
 import { Seleccion } from './Seleccion'
 import { Texto } from './Texto'
+import { DateInput } from './Date'
+import { CampoContext, CampoProvider } from '../../../../../context/campo/CampoContext'
+import { useContext } from 'react'
 
-export const BaseCampo = ({item}) => {
-    console.log(item)
-    const ancho = '100%'
+interface Props {
+    item: Item
+}
+
+export const BaseCampo = ({ item }: Props) => {
+
+    const { campoState: { campoValue, opcionDependeSeleccionada } } = useContext(CampoContext)
     return (
-        <View style={[styles.container, { width:ancho}]}>            
-            {Campo(item)}
+        <View>
+            {
+
+                (!item.opcionDepende || item.opcionDepende.id == campoValue || item.opcionDepende.id == opcionDependeSeleccionada) && (
+                    <View style={styles.containerItem}>
+                        <Text style={styles.titleItem}>{item.item.titulo}</Text>
+                        {item.item.descripcion && (<View><Text style={styles.subtitleItem}>{item.item.descripcion}</Text></View>)}
+                        <Text style={{ color: '#B00020', fontWeight: '700' }}>{item.requerido ? 'Es requerido' : null}</Text>
+                        <View style={styles.campo}>
+                            {Campo(item)}
+                        </View>
+                        {
+                            (item.propiedadItems.length > 0) &&
+                            (<View>
+                                {
+                                    campoValue && (
+                                        item.propiedadItems.map((itemHijo: Item) => {
+                                            if (itemHijo.opcionDepende.id == campoValue || itemHijo.opcionDepende.id == opcionDependeSeleccionada) {
+                                                console.log('es igual!')
+                                                return (
+                                                    <View style={{ borderBottomWidth: 1, borderColor: 'grey', marginBottom: 10 }}>
+
+                                                        <BaseCampo item={itemHijo} />
+
+                                                    </View>
+                                                )
+                                            }
+                                        })
+                                    )
+                                }
+                            </View>)
+                        }
+                    </View>)
+            }
         </View>
+
     )
 }
 
-const styles = StyleSheet.create({
-    container:{
-        height:100,
-        borderWidth:1,
-    }
-}) 
 
-const Campo = (item) => {
+const styles = StyleSheet.create({
+    containerItem: {
+        marginVertical: 4,
+        borderLeftWidth: 2,
+        borderLeftColor: 'blue',
+        backgroundColor: 'white',
+        paddingHorizontal: 10,
+        paddingVertical: 10,
+    },
+    titleItem: {
+        marginVertical: 1,
+        fontSize: 0.037 * windowWidth,
+        fontWeight: '700'
+    },
+    subtitleItem: {
+        fontSize: 0.03 * windowWidth,
+        borderBottomWidth: 0,
+        borderBottomColor: 'grey',
+        paddingVertical: 2,
+        marginVertical: 2,
+        color: '#101010'
+    },
+    campo: {
+        marginVertical: 5,
+        borderTopColor: '#f2f2f2',
+        borderTopWidth: 1,
+    }
+})
+
+const Campo = (item: Item) => {
     let campo = null;
-    switch(item.item.tipo){
+    switch (item.item.tipo) {
         case 'texto':
             campo = (<Texto />)
             break;
@@ -32,10 +98,25 @@ const Campo = (item) => {
             campo = <Text>Es foto</Text>
             break;
         case 'seleccion_multiple':
-            campo = (<Seleccion />)
+            campo = (<Casilla item={item} />)
             break;
         case 'desplegable':
             campo = (<Desplegable />)
+            break
+        case 'casilla_de_verificacion':
+            campo = (<Seleccion item={item} />)
+            break
+        case 'titulo':
+            campo = (<Texto />)
+            break
+        case 'date_time':
+            campo = (<DateInput modo={'completo'} />)
+            break
+        case 'date':
+            campo = (<DateInput modo={'date'} />)
+            break
+        case 'time':
+            campo = (<DateInput modo={'time'} />)
             break
         default:
             null;
@@ -44,3 +125,4 @@ const Campo = (item) => {
     return campo;
 
 }
+

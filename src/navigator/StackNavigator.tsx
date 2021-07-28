@@ -13,7 +13,7 @@ import { SuccessScreen } from '../screens/SuccessScreen';
 import { ListadoOTScreen } from '../screens/ListadoOTScreen';
 import { DetalleOTScreen } from '../screens/DetalleOTScreen';
 import { NewSolicitudScreen } from '../screens/NewSolicitudScreen';
-import { TecnicosOTList } from '../components/OT/tecnicos/TecnicosOTList';
+import { TecnicosOTList } from '../components/OT/Tecnicos/TecnicosOTList';
 import { OTScreen } from '../screens/tecnicos/OTScreen';
 import { Camera } from '../screens/Camera';
 
