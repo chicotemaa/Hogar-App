@@ -239,7 +239,7 @@ const DetalleBtnTecnico = ({ estado, goToScreen, changeState }: PropBtn) => {
             style={{
               color: 'white',
               fontSize: 20,
-              fontWeight: '100',
+              fontWeight: 'normal',
               alignSelf: 'center',
             }}>
             {'No me recibio'}
@@ -268,7 +268,7 @@ const DetalleBtnTecnico = ({ estado, goToScreen, changeState }: PropBtn) => {
             style={{
               color: 'white',
               fontSize: 20,
-              fontWeight: '100',
+              fontWeight: 'normal',
               alignSelf: 'center',
             }}>
             {estado < 3 ? textState[estado] : 'Ver detalle'}

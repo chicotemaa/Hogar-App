@@ -4,9 +4,9 @@ global.Buffer = global.Buffer || require('buffer').Buffer;
 const clientId = '1_4ta05vfoy58ggoggwo08kck000kocckwgcckk8wgkck440cgcw';
 const clientSecret = '176y7wqisfvkcwk8oswowksks0cocsoc00ko4k4oosc0ocwck4';
 
-//const base = 'https://sistemas.hogarmantenimiento.com';
+export const base = 'https://sistemas.hogarmantenimiento.com';
 //export const base = 'http://10.0.2.2:8000';
-export const base = 'http://hogardev.tk';
+//export const base = 'http://hogardev.tk';
 
 export const baseApi = base + '/api';
 const baseToken = base + '/oauth/v2/token';
@@ -166,13 +166,13 @@ export const getAllServiciosAPI = async () => {
     });
 };
 
-export const getFormularioAPI = async (id:number) => {
+export const getFormularioAPI = async (id: number) => {
   const token = await getData('access_token').then(token => {
     return token;
   });
 
-  const query = '/formularios/' + id ;
-  return api.get(baseApi+query, {
+  const query = '/formularios/' + id;
+  return api.get(baseApi + query, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -182,4 +182,4 @@ export const getFormularioAPI = async (id:number) => {
     return error
   })
 
-} 
+}

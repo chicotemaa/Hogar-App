@@ -18,8 +18,8 @@ export const BodyOT = ({ Formulario }: Props) => {
   const [loading, setLoading] = React.useState(true)
   const [paginator, setPaginator] = React.useState(undefined)
 
-  const { formState : {page}, changePage } = useContext(FormContext)
-  
+  const { formState: { page }, changePage } = useContext(FormContext)
+
   React.useEffect(() => {
     const lastItemIndex = Formulario.propiedadModulos.length - 1
     const lastPage = Formulario.propiedadModulos[lastItemIndex]
@@ -29,31 +29,31 @@ export const BodyOT = ({ Formulario }: Props) => {
     setLoading(false)
   }, [])
 
-  const cambiarPagina = (page:number) => {
+  const cambiarPagina = (page: number) => {
     console.log(pagesCount)
-    if(page >= 0 && page <=pagesCount){      
+    if (page >= 0 && page <= pagesCount) {
       changePage(page)
-    } 
+    }
   }
 
   return (
-    <View style={{flex:1}}>      
-      <View style={{ marginVertical: 10,}}>
+    <View style={{ flex: 1 }}>
+      <View style={{ marginVertical: 10, }}>
         <StepIndicator
           stepCount={!loading ? pagesCount : 0}
           currentPosition={page}
         />
-      </View>      
-      <View style={{flex:9}}>
-        {
-          !loading && showPages(paginator)        
-        }        
       </View>
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between', margin: 10, flex:1 }}>
-        <Button mode="text" onPress={ () =>{cambiarPagina(page-1)}}>
+      <View style={{ flex: 9 }}>
+        {
+          !loading && showPages(paginator)
+        }
+      </View>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', margin: 10, flex: 1 }}>
+        <Button mode="text" onPress={() => { cambiarPagina(page - 1) }}>
           Atras
         </Button>
-        <Button mode="text" onPress={() =>{cambiarPagina(page+1)}}>
+        <Button mode="text" onPress={() => { cambiarPagina(page + 1) }}>
           Siguiente
         </Button>
       </View>
@@ -93,20 +93,21 @@ const crearPaginador = (Modulos: Modulo[]) => {
 
 const showPages = (Paginas: { pagina: number, modulos: Modulo[] }[]) => {
 
-  const { changePage, formState: {page} } = useContext(FormContext)  
+  const { changePage, formState: { page } } = useContext(FormContext)
   return (
     <View style={{ flex: 1 }}>
       <Swiper
-       index= {page}
-       showsPagination={false} 
-       loop={false}
-       onIndexChanged={(index)=> {
-        console.log(index, page)
-         changePage(index)}}>
+        index={page}
+        showsPagination={false}
+        loop={false}
+        onIndexChanged={(index) => {
+          console.log(index, page)
+          changePage(index)
+        }}>
         {
           Paginas.map((modulosDePagina) => {
             return (
-              <ScrollView>
+              <ScrollView key={page}>
                 <Pagina Modulos={modulosDePagina.modulos} />
               </ScrollView>
             )

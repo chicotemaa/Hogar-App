@@ -12,10 +12,11 @@ import { CampoContext, CampoProvider } from '../../../../../context/campo/CampoC
 import { useContext } from 'react'
 
 interface Props {
-    item: Item
+    item: Item,
+    styleHijo?: any
 }
 
-export const BaseCampo = ({ item }: Props) => {
+export const BaseCampo = ({ item, styleHijo }: Props) => {
 
     const { campoState: { campoValue, opcionDependeSeleccionada } } = useContext(CampoContext)
     return (
@@ -23,10 +24,12 @@ export const BaseCampo = ({ item }: Props) => {
             {
 
                 (!item.opcionDepende || item.opcionDepende.id == campoValue || item.opcionDepende.id == opcionDependeSeleccionada) && (
-                    <View style={styles.containerItem}>
-                        <Text style={styles.titleItem}>{item.item.titulo}</Text>
+                    <View style={[styles.containerItem, styleHijo]}>
+                        <View style={{ borderBottomWidth: 1, padding: 1, borderColor: 'grey' }} >
+                            <Text style={styles.titleItem}>{item.item.titulo}</Text>
+                        </View>
                         {item.item.descripcion && (<View><Text style={styles.subtitleItem}>{item.item.descripcion}</Text></View>)}
-                        <Text style={{ color: '#B00020', fontWeight: '700' }}>{item.requerido ? 'Es requerido' : null}</Text>
+                        <Text style={{ color: '#B00020', fontWeight: '600' }}>{item.requerido ? 'Campo obligatorio' : null}</Text>
                         <View style={styles.campo}>
                             {Campo(item)}
                         </View>
@@ -38,10 +41,11 @@ export const BaseCampo = ({ item }: Props) => {
                                         item.propiedadItems.map((itemHijo: Item) => {
                                             if (itemHijo.opcionDepende.id == campoValue || itemHijo.opcionDepende.id == opcionDependeSeleccionada) {
                                                 console.log('es igual!')
-                                                return (
-                                                    <View style={{ borderBottomWidth: 1, borderColor: 'grey', marginBottom: 10 }}>
 
-                                                        <BaseCampo item={itemHijo} />
+                                                return (
+                                                    <View style={{ marginBottom: 10 }}>
+
+                                                        <BaseCampo item={itemHijo} styleHijo={{ borderLeftColor: '#F0DD2B', marginLeft: 3 }} />
 
                                                     </View>
                                                 )
@@ -62,22 +66,32 @@ export const BaseCampo = ({ item }: Props) => {
 const styles = StyleSheet.create({
     containerItem: {
         marginVertical: 4,
-        borderLeftWidth: 2,
-        borderLeftColor: 'blue',
+        borderLeftWidth: 3,
+        borderLeftColor: '#F76656',
         backgroundColor: 'white',
-        paddingHorizontal: 10,
-        paddingVertical: 10,
+        paddingHorizontal: 5,
+        paddingBottom: 10,
+        paddingTop: 8,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 1,
+            height: 3,
+        },
+        shadowOpacity: 0.23,
+        shadowRadius: 4.62,
+
+        elevation: 4,
+        borderRadius: 3
     },
     titleItem: {
-        marginVertical: 1,
-        fontSize: 0.037 * windowWidth,
-        fontWeight: '700'
+        fontSize: 0.05 * windowWidth,
+        fontWeight: '600',
     },
     subtitleItem: {
-        fontSize: 0.03 * windowWidth,
+        fontSize: 0.04 * windowWidth,
         borderBottomWidth: 0,
         borderBottomColor: 'grey',
-        paddingVertical: 2,
+        paddingVertical: 8,
         marginVertical: 2,
         color: '#101010'
     },

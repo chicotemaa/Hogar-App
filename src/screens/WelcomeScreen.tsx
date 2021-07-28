@@ -21,14 +21,14 @@ export const WelcomeScreen = ({ navigation }: Props) => {
         const { username, roles } = response.data;
         setUserName(capitalizeFirstLetter(username));
 
-        if (getRoleUser(roles,'ROLE_EMPLEADO') != -1) {
+        if (getRoleUser(roles, 'ROLE_EMPLEADO') != -1) {
           setRoleUser('tecnico')
         } else {
           setRoleUser('user')
         }
         setTimeout(() => {
           setLoading(false)
-        }, 500)
+        }, 2000)
       });
     });
 
@@ -69,7 +69,7 @@ function capitalizeFirstLetter(string: string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-function getRoleUser(roles:string[], rolBuscado:string){
-  const isRolBuscado = (rol:string) => rol === rolBuscado
+function getRoleUser(roles: string[], rolBuscado: string) {
+  const isRolBuscado = (rol: string) => rol === rolBuscado
   return roles.findIndex(isRolBuscado)
 }

@@ -58,8 +58,9 @@ export const Header = ({ pageName, userName, roleUser, id }: Props) => {
         </Appbar.Header>
       ) : (
         <>
-          <Appbar.Header style={{ elevation: 0, marginTop: 0.04 * windowHeight }}>
+          <Appbar.Header style={{ marginTop: 0.04 * windowHeight }}>
             <Appbar.Content
+
               color="white"
               title={pageName}
               titleStyle={{ alignContent: 'center', fontSize: windowHeight * 0.05, }}
@@ -149,9 +150,10 @@ const WelcomeHeader = (username: string, isTecnico) => {
         style={{
           color: '#E8E6F5',
           fontSize: isTecnico ? 0.03 * windowHeight : 0.08 * windowWidth,
-          fontWeight: isTecnico ? '100' : 'bold',
+          fontWeight: isTecnico ? '300' : 'bold',
           textShadowRadius: 1,
-          paddingLeft: isTecnico ? 16 : 0,
+          paddingLeft: 0,
+          textAlign: 'center',
           textTransform: 'capitalize'
         }}>
         {isTecnico ? getCurrentDate() : username}
