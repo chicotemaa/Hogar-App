@@ -1,17 +1,22 @@
 import { CampoState } from "./CampoContext";
 
-type FormAction =
+type CampoAction =
     | { type: 'setValue', payload: string }
+    | { type: 'setOpcionDepende', payload: number }
 
 
-export const campoReducer = (state: CampoState, action: FormAction): CampoState => {
+export const campoReducer = (state: CampoState, action: CampoAction): CampoState => {
 
     switch (action.type) {
         case 'setValue':
             return {
                 ...state,
-                campoId: 1243,
                 campoValue: action.payload
+            }
+        case 'setOpcionDepende':
+            return {
+                ...state,
+                opcionDependeSeleccionada: action.payload
             }
         default:
             return state

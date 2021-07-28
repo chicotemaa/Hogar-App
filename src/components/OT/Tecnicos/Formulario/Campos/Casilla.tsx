@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { useContext } from 'react';
+import { Text, View } from 'react-native';
 import { RadioButton } from 'react-native-paper';
 import { CampoContext } from '../../../../../context/campo/CampoContext';
-import { FormContext } from '../../../../../context/fomulario/FormularioContext';
 import { Item } from '../Pagina/interfaces';
+import { BaseCampo } from './BaseCampo';
 
 interface Props {
     item: Item
@@ -14,13 +15,23 @@ export const Casilla = ({ item }: Props) => {
     let opciones = []
 
 
-    const { campoState, setValue } = useContext(CampoContext)
+    const { campoState, setValue, setOpcionDepende } = useContext(CampoContext)
 
     const handleChangeValue = (value) => {
-        setValue(value)
-        console.log(campoState)
         setValor(value)
+        //TODO: Controlar el desencadenamiento de items hijos en base a la opcion elegida
+        if (!item.opcionDepende) {
+            setValue(value)
+            console.log(campoState)
+        }
+
+        if (item.propiedadItems.length > 0) {
+            console.log('aca viene a cambiar set opcion')
+            setOpcionDepende(value)
+        }
+
     }
+
 
     return (
         <RadioButton.Group onValueChange={value => handleChangeValue(value)} value={value}>

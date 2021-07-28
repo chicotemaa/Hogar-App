@@ -46,7 +46,6 @@ export const Modulo = ({ Items, Modulo }: Props) => {
 
 const styles = StyleSheet.create({
     container: {
-        borderBottomWidth: 1,
         marginVertical: 0.02 * windowHeight
     },
     title: {

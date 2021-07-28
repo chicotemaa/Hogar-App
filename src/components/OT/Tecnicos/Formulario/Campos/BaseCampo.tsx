@@ -17,14 +17,15 @@ interface Props {
 
 export const BaseCampo = ({ item }: Props) => {
 
-    const { campoState } = useContext(CampoContext)
-
+    const { campoState: { campoValue, opcionDependeSeleccionada } } = useContext(CampoContext)
     return (
         <View>
             {
-                (!item.opcionDepende || item.opcionDepende.id == campoState.campoValue) && (
+
+                (!item.opcionDepende || item.opcionDepende.id == campoValue || item.opcionDepende.id == opcionDependeSeleccionada) && (
                     <View style={styles.containerItem}>
                         <Text style={styles.titleItem}>{item.item.titulo}</Text>
+                        {item.item.descripcion && (<View><Text style={styles.subtitleItem}>{item.item.descripcion}</Text></View>)}
                         <Text style={{ color: '#B00020', fontWeight: '700' }}>{item.requerido ? 'Es requerido' : null}</Text>
                         <View style={styles.campo}>
                             {Campo(item)}
@@ -33,19 +34,18 @@ export const BaseCampo = ({ item }: Props) => {
                             (item.propiedadItems.length > 0) &&
                             (<View>
                                 {
-                                    campoState.campoValue && (
-                                        item.propiedadItems.map((itemHijo) => {
-                                            if (itemHijo.opcionDepende.id == campoState.campoValue) {
+                                    campoValue && (
+                                        item.propiedadItems.map((itemHijo: Item) => {
+                                            if (itemHijo.opcionDepende.id == campoValue || itemHijo.opcionDepende.id == opcionDependeSeleccionada) {
                                                 console.log('es igual!')
                                                 return (
-                                                    <View style={{ borderWidth: 1, marginVertical: 4 }}>
+                                                    <View style={{ borderBottomWidth: 1, borderColor: 'grey', marginBottom: 10 }}>
+
                                                         <BaseCampo item={itemHijo} />
+
                                                     </View>
                                                 )
-                                            } else {
-                                                console.log('no es igual')
                                             }
-
                                         })
                                     )
                                 }
@@ -58,6 +58,7 @@ export const BaseCampo = ({ item }: Props) => {
     )
 }
 
+
 const styles = StyleSheet.create({
     containerItem: {
         marginVertical: 4,
@@ -68,9 +69,17 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
     },
     titleItem: {
-        marginVertical: 4,
+        marginVertical: 1,
         fontSize: 0.037 * windowWidth,
         fontWeight: '700'
+    },
+    subtitleItem: {
+        fontSize: 0.03 * windowWidth,
+        borderBottomWidth: 0,
+        borderBottomColor: 'grey',
+        paddingVertical: 2,
+        marginVertical: 2,
+        color: '#101010'
     },
     campo: {
         marginVertical: 5,
