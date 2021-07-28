@@ -148,7 +148,7 @@ const WelcomeHeader = (username: string, isTecnico) => {
       <Text
         style={{
           color: '#E8E6F5',
-          fontSize: isTecnico ? 0.035 * windowHeight : 0.08 * windowWidth,
+          fontSize: isTecnico ? 0.03 * windowHeight : 0.08 * windowWidth,
           fontWeight: isTecnico ? '100' : 'bold',
           textShadowRadius: 1,
           paddingLeft: isTecnico ? 16 : 0,
