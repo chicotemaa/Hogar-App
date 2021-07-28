@@ -68,7 +68,7 @@ export const TecnicosOTList = () => {
                                     id={OT.id}
                                     estadoOT={OT.estado}
                                     cliente={OT.cliente.razonSocial}
-                                    titulo={OT.formulario.descripcion}
+                                    titulo={OT.formulario.titulo}
                                     location={'Sarmiento 123'}
                                     date={OT.fecha}
                                     rol="tecnico"
