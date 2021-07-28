@@ -37,33 +37,47 @@ export interface Formulario {
 }
 
 export interface Modulo {
-    equipo: string;
+    equipo: IEquipo;
     id: number;
     isCollection: boolean;
-    propiedadItem: Item[]
+    modulo: ModuloProps;
     orden: number;
     pagina: number;
     paginaNombre: string;
 }
 
-interface Item {
+interface IEquipo {
+    id: string;
+    codigo: string;
+    descripcion: string;
+}
+
+export interface ModuloProps {
+    id: number;
+    propiedadItems: Item[];
+    titulo: string;
+}
+
+export interface Item {
     ancho: string;
     cantidadMinima: number;
     id: number;
+    isCollection: boolean;
     item: PropiedadItem
     opcion: any;
     opcionDepende: any;
     orden: number;
-    propiedadItems: any;
+    propiedadItems: Item[];
+    requerido: boolean;
 }
 
 interface PropiedadItem {
     id: number;
     descripcion: string;
     nombre: string;
-    tipo: 'foto' | 'seleccion_multiple' | 'desplegable' | 'texto' | string;
+    tipo: 'foto' | 'seleccion_multiple' | 'desplegable' | 'texto' | 'casilla_de_verificacion' | 'titulo' | 'date_time' | 'time' | 'date';
     titulo: string;
-    opcion: [] | OpcionesItem[]
+    opciones: [] | OpcionesItem[]
 }
 
 interface OpcionesItem {

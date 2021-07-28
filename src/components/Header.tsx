@@ -46,7 +46,7 @@ export const Header = ({ pageName, userName, roleUser, id }: Props) => {
             color="white"
             title={pageName}
             titleStyle={{ fontSize: windowHeight * 0.037 }}
-            subtitle={isFormSolicitud ? 'Complete los datos necesarios' : roleUser === 'tecnico' ? ('#' + id) : null}
+            subtitle={isFormSolicitud ? 'Complete los datos necesarios' : null}
           />
 
           <Appbar.Action
@@ -122,6 +122,23 @@ const PageName = (name: string) => {
   );
 };
 
+const getCurrentDate = () => {
+  let date = new Date().getDate();
+  let month = new Date().getMonth() + 1;
+  let year = new Date().getFullYear();
+
+  console.log(date, month, year)
+
+
+  const options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };
+
+  // return date.toLocaleString() + '-' + month + '-' + year;
+  return new Date().toLocaleDateString('es-AR', options);
+}
+
+
+
+
 const WelcomeHeader = (username: string, isTecnico) => {
   return (
     <View
@@ -131,12 +148,13 @@ const WelcomeHeader = (username: string, isTecnico) => {
       <Text
         style={{
           color: '#E8E6F5',
-          fontSize: isTecnico ? 0.035 * windowHeight : 0.08 * windowWidth,
+          fontSize: isTecnico ? 0.03 * windowHeight : 0.08 * windowWidth,
           fontWeight: isTecnico ? '100' : 'bold',
           textShadowRadius: 1,
-          paddingLeft: isTecnico ? 16 : 0
+          paddingLeft: isTecnico ? 16 : 0,
+          textTransform: 'capitalize'
         }}>
-        {isTecnico ? 'Jueves 15 Julio' : username}
+        {isTecnico ? getCurrentDate() : username}
       </Text>
       { }
       <Text

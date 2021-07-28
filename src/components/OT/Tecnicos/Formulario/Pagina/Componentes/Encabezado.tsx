@@ -13,7 +13,7 @@ export const Encabezado = ({ OrdenTrabajo }: Props) => {
     return (
         <>
             <Text style={styles.title}>
-                {OrdenTrabajo.formulario.descripcion}
+                #{OrdenTrabajo.id} - {OrdenTrabajo.formulario.descripcion}
             </Text>
             <Divider />
         </>
@@ -30,8 +30,5 @@ const styles = StyleSheet.create({
         fontWeight: '600',
         textTransform: 'capitalize',
         textAlign: 'auto'
-    },
-    subtitle: {
-
     }
 })

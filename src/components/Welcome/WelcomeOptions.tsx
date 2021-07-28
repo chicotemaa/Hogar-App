@@ -7,7 +7,7 @@ import { styles } from '../../theme/appTheme';
 
 export const WelcomeOptions = ({ navigation }) => {
     const handleSolicitud = () => {
-        navigation.navigate('NewSolicitudScreen');
+        navigation.navigate('FormSolicitudScreen');
     };
     return (
         <View
