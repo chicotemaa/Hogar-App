@@ -15,9 +15,8 @@ export const OTScreen = ({ navigation, route }: Props) => {
 
     return (
         <>
-            <Header pageName="Orden de Trabajo" roleUser={'tecnico'} />     
-                                
-            <View style={[styles.container, { flex:7, borderWidth:1,paddingHorizontal: 0 }]}>
+            <Header pageName="Orden de Trabajo" roleUser={'tecnico'} />                                
+            <View style={[styles.container, { paddingHorizontal: 0 }]}>
                 <BasePage OrdenTrabajo={OT} />
             </View>                  
         </>

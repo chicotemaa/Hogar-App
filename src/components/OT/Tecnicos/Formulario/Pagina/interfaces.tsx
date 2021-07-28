@@ -47,9 +47,9 @@ export interface Modulo {
 }
 
 interface IEquipo {
-    id:string;
-    codigo:string;
-    descripcion:string;
+    id: string;
+    codigo: string;
+    descripcion: string;
 }
 
 export interface ModuloProps {
@@ -62,12 +62,12 @@ export interface Item {
     ancho: string;
     cantidadMinima: number;
     id: number;
-    isCollection:boolean;
+    isCollection: boolean;
     item: PropiedadItem
     opcion: any;
     opcionDepende: any;
     orden: number;
-    propiedadItems: any;
+    propiedadItems: Item[];
     requerido: boolean;
 }
 
@@ -75,7 +75,7 @@ interface PropiedadItem {
     id: number;
     descripcion: string;
     nombre: string;
-    tipo: 'foto' | 'seleccion_multiple' | 'desplegable' | 'texto' | 'casilla_de_verificacion' | 'titulo' | 'date_time' | 'time' | 'date' ;
+    tipo: 'foto' | 'seleccion_multiple' | 'desplegable' | 'texto' | 'casilla_de_verificacion' | 'titulo' | 'date_time' | 'time' | 'date';
     titulo: string;
     opciones: [] | OpcionesItem[]
 }
