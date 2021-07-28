@@ -8,12 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* hogarAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* hogarAppTests.m */; };
-		06F4EB095FD1C9B39B1841E6 /* libPods-hogarApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DE5190554C068CF309CF65E /* libPods-hogarApp.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		3CCF4F30DAE955B8D9DFF2A5 /* libPods-hogarApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DC3EAC31C4825B98779681AE /* libPods-hogarApp.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		A5C35191346FB482129C903B /* libPods-hogarApp-hogarAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E6709BE2AD96A9E763D674B /* libPods-hogarApp-hogarAppTests.a */; };
+		BBBBC5130F2C5B85A1081B59 /* libPods-hogarApp-hogarAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0408CACF53A6D9D854A41A4 /* libPods-hogarApp-hogarAppTests.a */; };
 		FBCC124026AA0E4900EB321F /* ForceBridgingHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCC123F26AA0E4900EB321F /* ForceBridgingHeader.swift */; };
 /* End PBXBuildFile section */
 
@@ -31,20 +31,41 @@
 		00E356EE1AD99517003FC87E /* hogarAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = hogarAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* hogarAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = hogarAppTests.m; sourceTree = "<group>"; };
+		0CCC31BDFB834A80A374115B /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
+		0EFE98BFDAB1C3CA1A0E32D4 /* Pods-hogarApp-hogarAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-hogarApp-hogarAppTests.debug.xcconfig"; path = "Target Support Files/Pods-hogarApp-hogarAppTests/Pods-hogarApp-hogarAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* hogarApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = hogarApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = hogarApp/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = hogarApp/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = hogarApp/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = hogarApp/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = hogarApp/main.m; sourceTree = "<group>"; };
-		2CEB622C591966301A84678B /* Pods-hogarApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-hogarApp.release.xcconfig"; path = "Target Support Files/Pods-hogarApp/Pods-hogarApp.release.xcconfig"; sourceTree = "<group>"; };
-		47A8BE6DC1C125568157E570 /* Pods-hogarApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-hogarApp.debug.xcconfig"; path = "Target Support Files/Pods-hogarApp/Pods-hogarApp.debug.xcconfig"; sourceTree = "<group>"; };
-		5A171F31B7ED43AB6913D882 /* Pods-hogarApp-hogarAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-hogarApp-hogarAppTests.debug.xcconfig"; path = "Target Support Files/Pods-hogarApp-hogarAppTests/Pods-hogarApp-hogarAppTests.debug.xcconfig"; sourceTree = "<group>"; };
+		1AF5CB07F9FB4A8C84265CF6 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
+		2AA5407165694271A1D96B29 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
+		466B6B9147104D95388BF81C /* Pods-hogarApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-hogarApp.release.xcconfig"; path = "Target Support Files/Pods-hogarApp/Pods-hogarApp.release.xcconfig"; sourceTree = "<group>"; };
+		5D00A3C510464BBB9BFCA1A9 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = hogarApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		8DE5190554C068CF309CF65E /* libPods-hogarApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-hogarApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		9E6709BE2AD96A9E763D674B /* libPods-hogarApp-hogarAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-hogarApp-hogarAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		83E9B9E6B1E1D31B36D53465 /* Pods-hogarApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-hogarApp.debug.xcconfig"; path = "Target Support Files/Pods-hogarApp/Pods-hogarApp.debug.xcconfig"; sourceTree = "<group>"; };
+		90D992A2388440C1913ABD5C /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
+		B0408CACF53A6D9D854A41A4 /* libPods-hogarApp-hogarAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-hogarApp-hogarAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC3EAC31C4825B98779681AE /* libPods-hogarApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-hogarApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		EAB06E20D2ACDDE0793D9BA4 /* Pods-hogarApp-hogarAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-hogarApp-hogarAppTests.release.xcconfig"; path = "Target Support Files/Pods-hogarApp-hogarAppTests/Pods-hogarApp-hogarAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		FB29D028B471B5F65C24D1AF /* Pods-hogarApp-hogarAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-hogarApp-hogarAppTests.release.xcconfig"; path = "Target Support Files/Pods-hogarApp-hogarAppTests/Pods-hogarApp-hogarAppTests.release.xcconfig"; sourceTree = "<group>"; };
+		FB31FC0126B1B6B400529CCE /* FontAwesome.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
+		FB31FC0226B1B6B400529CCE /* Entypo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Entypo.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
+		FB31FC0326B1B6B400529CCE /* Fontisto.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Fontisto.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
+		FB31FC0426B1B6B400529CCE /* EvilIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = EvilIcons.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
+		FB31FC0526B1B6B400529CCE /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MaterialCommunityIcons.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
+		FB31FC0626B1B6B400529CCE /* Feather.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Feather.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
+		FB31FC0726B1B6B400529CCE /* Zocial.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Zocial.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
+		FB31FC0826B1B6B400529CCE /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MaterialIcons.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
+		FB31FC0926B1B6B400529CCE /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Ionicons.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
+		FB31FC0A26B1B6B400529CCE /* AntDesign.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = AntDesign.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
+		FB31FC0B26B1B6B400529CCE /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Octicons.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
+		FB31FC0C26B1B6B400529CCE /* Foundation.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Foundation.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
+		FB31FC0D26B1B6B400529CCE /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome5_Brands.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
+		FB31FC0E26B1B6B400529CCE /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = SimpleLineIcons.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
+		FB31FC0F26B1B6B400529CCE /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome5_Solid.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
+		FB31FC1026B1B6B400529CCE /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome5_Regular.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
 		FBCC123E26AA0E4900EB321F /* hogarApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "hogarApp-Bridging-Header.h"; sourceTree = "<group>"; };
 		FBCC123F26AA0E4900EB321F /* ForceBridgingHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForceBridgingHeader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -54,7 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A5C35191346FB482129C903B /* libPods-hogarApp-hogarAppTests.a in Frameworks */,
+				BBBBC5130F2C5B85A1081B59 /* libPods-hogarApp-hogarAppTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -62,7 +83,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				06F4EB095FD1C9B39B1841E6 /* libPods-hogarApp.a in Frameworks */,
+				3CCF4F30DAE955B8D9DFF2A5 /* libPods-hogarApp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -105,8 +126,8 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				8DE5190554C068CF309CF65E /* libPods-hogarApp.a */,
-				9E6709BE2AD96A9E763D674B /* libPods-hogarApp-hogarAppTests.a */,
+				DC3EAC31C4825B98779681AE /* libPods-hogarApp.a */,
+				B0408CACF53A6D9D854A41A4 /* libPods-hogarApp-hogarAppTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -114,10 +135,10 @@
 		57FBFB419C320A6D63A8BC9E /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				47A8BE6DC1C125568157E570 /* Pods-hogarApp.debug.xcconfig */,
-				2CEB622C591966301A84678B /* Pods-hogarApp.release.xcconfig */,
-				5A171F31B7ED43AB6913D882 /* Pods-hogarApp-hogarAppTests.debug.xcconfig */,
-				FB29D028B471B5F65C24D1AF /* Pods-hogarApp-hogarAppTests.release.xcconfig */,
+				83E9B9E6B1E1D31B36D53465 /* Pods-hogarApp.debug.xcconfig */,
+				466B6B9147104D95388BF81C /* Pods-hogarApp.release.xcconfig */,
+				0EFE98BFDAB1C3CA1A0E32D4 /* Pods-hogarApp-hogarAppTests.debug.xcconfig */,
+				EAB06E20D2ACDDE0793D9BA4 /* Pods-hogarApp-hogarAppTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -132,6 +153,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				FB31FBFB26B1AF6F00529CCE /* Fonts */,
 				13B07FAE1A68108700A75B9A /* hogarApp */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* hogarAppTests */,
@@ -157,8 +179,36 @@
 		F3EEFDB56AD84C4D9905E69C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				0CCC31BDFB834A80A374115B /* FontAwesome.ttf */,
+				2AA5407165694271A1D96B29 /* FontAwesome5_Brands.ttf */,
+				90D992A2388440C1913ABD5C /* FontAwesome5_Regular.ttf */,
+				1AF5CB07F9FB4A8C84265CF6 /* FontAwesome5_Solid.ttf */,
+				5D00A3C510464BBB9BFCA1A9 /* MaterialIcons.ttf */,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+		};
+		FB31FBFB26B1AF6F00529CCE /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				FB31FC0A26B1B6B400529CCE /* AntDesign.ttf */,
+				FB31FC0226B1B6B400529CCE /* Entypo.ttf */,
+				FB31FC0426B1B6B400529CCE /* EvilIcons.ttf */,
+				FB31FC0626B1B6B400529CCE /* Feather.ttf */,
+				FB31FC0126B1B6B400529CCE /* FontAwesome.ttf */,
+				FB31FC0D26B1B6B400529CCE /* FontAwesome5_Brands.ttf */,
+				FB31FC1026B1B6B400529CCE /* FontAwesome5_Regular.ttf */,
+				FB31FC0F26B1B6B400529CCE /* FontAwesome5_Solid.ttf */,
+				FB31FC0326B1B6B400529CCE /* Fontisto.ttf */,
+				FB31FC0C26B1B6B400529CCE /* Foundation.ttf */,
+				FB31FC0926B1B6B400529CCE /* Ionicons.ttf */,
+				FB31FC0526B1B6B400529CCE /* MaterialCommunityIcons.ttf */,
+				FB31FC0826B1B6B400529CCE /* MaterialIcons.ttf */,
+				FB31FC0B26B1B6B400529CCE /* Octicons.ttf */,
+				FB31FC0E26B1B6B400529CCE /* SimpleLineIcons.ttf */,
+				FB31FC0726B1B6B400529CCE /* Zocial.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -168,12 +218,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "hogarAppTests" */;
 			buildPhases = (
-				8BE3A158DEABE63FF8722246 /* [CP] Check Pods Manifest.lock */,
+				B05F1112DE2329FDE2D8C1DE /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				D5345D2C89B798DC0E2DCDB4 /* [CP] Embed Pods Frameworks */,
-				9C39E9C63F1716C838C9A7AF /* [CP] Copy Pods Resources */,
+				A2D578FCFDA18F0D2345F472 /* [CP] Embed Pods Frameworks */,
+				EAD8136A9D76EB64718B9057 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -189,14 +239,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "hogarApp" */;
 			buildPhases = (
-				9AE6E5B0BD786430156BF112 /* [CP] Check Pods Manifest.lock */,
+				9ECCF289F264A619611C0641 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				1AFC9EE5EE8DBA5F07E549C9 /* [CP] Embed Pods Frameworks */,
-				D4BA7D66FC751648200CC6A1 /* [CP] Copy Pods Resources */,
+				05A293D633FF9E576F3A8CCF /* [CP] Embed Pods Frameworks */,
+				15A7B2A4C3614FD48ED4ED8C /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -277,7 +327,7 @@
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nexport NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
-		1AFC9EE5EE8DBA5F07E549C9 /* [CP] Embed Pods Frameworks */ = {
+		05A293D633FF9E576F3A8CCF /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -294,29 +344,24 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-hogarApp/Pods-hogarApp-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		8BE3A158DEABE63FF8722246 /* [CP] Check Pods Manifest.lock */ = {
+		15A7B2A4C3614FD48ED4ED8C /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-hogarApp/Pods-hogarApp-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
+			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-hogarApp-hogarAppTests-checkManifestLockResult.txt",
+				"${PODS_ROOT}/Target Support Files/Pods-hogarApp/Pods-hogarApp-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-hogarApp/Pods-hogarApp-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		9AE6E5B0BD786430156BF112 /* [CP] Check Pods Manifest.lock */ = {
+		9ECCF289F264A619611C0641 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -338,41 +383,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		9C39E9C63F1716C838C9A7AF /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-hogarApp-hogarAppTests/Pods-hogarApp-hogarAppTests-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-hogarApp-hogarAppTests/Pods-hogarApp-hogarAppTests-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-hogarApp-hogarAppTests/Pods-hogarApp-hogarAppTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D4BA7D66FC751648200CC6A1 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-hogarApp/Pods-hogarApp-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-hogarApp/Pods-hogarApp-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-hogarApp/Pods-hogarApp-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D5345D2C89B798DC0E2DCDB4 /* [CP] Embed Pods Frameworks */ = {
+		A2D578FCFDA18F0D2345F472 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -387,6 +398,45 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-hogarApp-hogarAppTests/Pods-hogarApp-hogarAppTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B05F1112DE2329FDE2D8C1DE /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-hogarApp-hogarAppTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EAD8136A9D76EB64718B9057 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-hogarApp-hogarAppTests/Pods-hogarApp-hogarAppTests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-hogarApp-hogarAppTests/Pods-hogarApp-hogarAppTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-hogarApp-hogarAppTests/Pods-hogarApp-hogarAppTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
@@ -442,7 +492,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5A171F31B7ED43AB6913D882 /* Pods-hogarApp-hogarAppTests.debug.xcconfig */;
+			baseConfigurationReference = 0EFE98BFDAB1C3CA1A0E32D4 /* Pods-hogarApp-hogarAppTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -471,7 +521,7 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FB29D028B471B5F65C24D1AF /* Pods-hogarApp-hogarAppTests.release.xcconfig */;
+			baseConfigurationReference = EAB06E20D2ACDDE0793D9BA4 /* Pods-hogarApp-hogarAppTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -497,7 +547,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 47A8BE6DC1C125568157E570 /* Pods-hogarApp.debug.xcconfig */;
+			baseConfigurationReference = 83E9B9E6B1E1D31B36D53465 /* Pods-hogarApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -525,7 +575,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2CEB622C591966301A84678B /* Pods-hogarApp.release.xcconfig */;
+			baseConfigurationReference = 466B6B9147104D95388BF81C /* Pods-hogarApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
