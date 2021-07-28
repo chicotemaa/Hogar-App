@@ -5,7 +5,7 @@ export const Texto = () => {
     return (
         <View>
             <TextInput
-                style={{ borderRadius: 5, backgroundColor: '#f2f2f2' }}
+                style={{ borderRadius: 5, backgroundColor: '#f2f2f2', padding: 10 }}
             />
         </View>
     )
