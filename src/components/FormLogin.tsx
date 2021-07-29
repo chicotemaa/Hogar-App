@@ -38,10 +38,10 @@ export const FormLogin = ({ pageToGo }: Props) => {
         setCorrectLogin(true);
         const { access_token, expires_in, refresh_token } = response.data;
         storeData('access_token', access_token);
-        storeData('timeExpire', expires_in.toString()); // hacer string
+        storeData('timeExpire', expires_in.toString());
         storeData('refresh_token', refresh_token);
 
-        getData('access_token').then(token => {
+        getData('access_token').then(() => {
           pageToGo();
         });
       })
@@ -69,7 +69,7 @@ export const FormLogin = ({ pageToGo }: Props) => {
           value={state.email}
           error={correctLogin ? false : true}
           onChangeText={value => setState({ ...state, email: value })}
-          label="Email"
+          label="Usuario"
           style={styles.input}
           theme={{ roundness: 10 }}
           underlineColorAndroid="blue"
