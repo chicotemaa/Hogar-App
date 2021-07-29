@@ -8,12 +8,13 @@ import { DrawerNavigationProp } from '@react-navigation/drawer';
 interface Props {
   pageName?: string;
   userName?: string;
+  clienteName?: string | Promise<string>
   ProgressCircle?: any;
   roleUser?: string;
   id?: number;
 }
 
-export const Header = ({ pageName, userName, roleUser, id }: Props) => {
+export const Header = ({ pageName, userName, roleUser, clienteName }: Props) => {
   const isWelcomePage = pageName === 'Bienvenido';
   const isFormSolicitud = pageName === 'Nueva Solicitud';
   pageName = pageName == 'Solicitud' ? 'Informe de solicitud' : pageName;
@@ -79,23 +80,15 @@ export const Header = ({ pageName, userName, roleUser, id }: Props) => {
             // colors={['#6565C7', '#6565C7']}
             //'#F76656', '#F76656',
 
-            style={{ height: heightPage, backgroundColor: '#32367A' }}>
+            style={{ height: heightPage, backgroundColor: '#ef4920' }}>
             <View
               style={{
-                paddingLeft: paddingHeader,
                 paddingTop: paddingHeader,
-                shadowColor: '#000',
-                shadowOffset: {
-                  width: 0,
-                  height: 20,
-                },
-                shadowOpacity: 0.25,
-                shadowRadius: 3.84,
               }}>
               <View style={{ marginHorizontal: 5 }}>
                 <View style={{ flexDirection: flexDHeader }}>
                   {/* {PageName(pageName)} */}
-                  {isWelcomePage ? WelcomeHeader(userName, isTecnico) : null}
+                  {isWelcomePage ? WelcomeHeader(userName, isTecnico, clienteName) : null}
                 </View>
               </View>
             </View>
@@ -107,21 +100,7 @@ export const Header = ({ pageName, userName, roleUser, id }: Props) => {
   );
 };
 
-const PageName = (name: string) => {
-  return (
-    <View>
-      <Text
-        style={{
-          color: 'white',
-          fontSize: 0.09 * windowWidth,
-          fontWeight: '400',
-          textShadowRadius: 10,
-        }}>
-        {name}
-      </Text>
-    </View>
-  );
-};
+
 
 const getCurrentDate = () => {
   let date = new Date().getDate();
@@ -140,7 +119,7 @@ const getCurrentDate = () => {
 
 
 
-const WelcomeHeader = (username: string, isTecnico) => {
+const WelcomeHeader = (username: string, isTecnico: boolean, clienteName: string) => {
   return (
     <View
       style={{
@@ -151,8 +130,6 @@ const WelcomeHeader = (username: string, isTecnico) => {
           color: '#E8E6F5',
           fontSize: isTecnico ? 0.03 * windowHeight : 0.08 * windowWidth,
           fontWeight: isTecnico ? '300' : 'bold',
-          textShadowRadius: 1,
-          paddingLeft: 0,
           textAlign: 'center',
           textTransform: 'capitalize'
         }}>
@@ -163,11 +140,11 @@ const WelcomeHeader = (username: string, isTecnico) => {
         style={{
           color: '#FFFFFF',
           fontSize: 0.07 * windowWidth,
-          fontWeight: '800',
-          marginTop: 5,
-          textShadowRadius: 1,
+          fontWeight: '600',
+          textAlign: 'center',
+          marginTop: 0.05 * windowHeight,
         }}>
-        {isTecnico ? null : 'Cliente'}
+        {isTecnico ? null : clienteName}
       </Text>
     </View>
   );
