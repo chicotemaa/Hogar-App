@@ -40,7 +40,7 @@ export const styles = StyleSheet.create({
   },
   title: {
     fontSize: 0.1 * windowWidth,
-    fontWeight: '900',
+    fontWeight: '600',
     alignSelf: 'center',
     textAlign: 'center',
     textShadowColor: '#000000',

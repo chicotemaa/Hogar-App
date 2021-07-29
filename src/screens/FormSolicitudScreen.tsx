@@ -1,26 +1,26 @@
-import {StackScreenProps} from '@react-navigation/stack';
-import React, {useEffect, useState} from 'react';
-import {Text, View} from 'react-native';
-import {ScrollView} from 'react-native-gesture-handler';
-import {Colors, IconButton, List, TextInput} from 'react-native-paper';
+import { StackScreenProps } from '@react-navigation/stack';
+import React, { useEffect, useState } from 'react';
+import { Text, View } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
+import { Colors, IconButton, List, TextInput } from 'react-native-paper';
 import {
   Button as BtnDialog,
   Paragraph,
   Dialog,
   Portal,
 } from 'react-native-paper';
-import {getAllServiciosAPI} from '../api/api';
-import {getSucursalesAPI, sendSolicitud} from '../api/apiClientes';
-import {Button} from '../components/Button';
-import {Header} from '../components/Header';
-import {RootStackParams} from '../navigator/StackNavigator';
+import { getAllServiciosAPI } from '../api/api';
+import { getSucursalesAPI, sendSolicitud } from '../api/apiClientes';
+import { Button } from '../components/Button';
+import { Header } from '../components/Header';
+import { RootStackParams } from '../navigator/StackNavigator';
 import Spinner from 'react-native-loading-spinner-overlay';
 import * as Animatable from 'react-native-animatable';
-import {styles} from '../theme/appTheme';
-import {TransitionView} from '../components/TransitionView';
+import { styles } from '../theme/appTheme';
+import { TransitionView } from '../components/TransitionView';
 
 interface Props
-  extends StackScreenProps<RootStackParams, 'FormSolicitudScreen'> {}
+  extends StackScreenProps<RootStackParams, 'FormSolicitudScreen'> { }
 
 interface Servicio {
   ['id']: string;
@@ -28,7 +28,7 @@ interface Servicio {
   titulo: string;
 }
 
-export const FormSolicitudScreen = ({navigation, route}: Props) => {
+export const FormSolicitudScreen = ({ navigation, route }: Props) => {
   const [expanded, setExpanded] = React.useState(false);
   const [servicios, setServicios] = useState([]);
   const [sucursal, setSucursal] = useState('');
@@ -47,7 +47,7 @@ export const FormSolicitudScreen = ({navigation, route}: Props) => {
   });
 
   const validateInputs = () => {
-    const {causa, descripcion} = solicitud;
+    const { causa, descripcion } = solicitud;
     if (causa == '' || descripcion == '') {
       showDialog();
       setValido(false);
@@ -58,7 +58,7 @@ export const FormSolicitudScreen = ({navigation, route}: Props) => {
 
   function enviarSolicitud() {
     sendSolicitud(solicitud).then(success => {
-      navigation.navigate('SuccessScreen', {success});
+      navigation.navigate('SuccessScreen', { success });
     });
   }
 
@@ -78,6 +78,7 @@ export const FormSolicitudScreen = ({navigation, route}: Props) => {
       setSucursal(sucursales);
     });
     getAllServiciosAPI().then(arrayServicios => {
+      console.log(arrayServicios)
       setServicios(arrayServicios);
       setSpinner(!spinner);
     });
@@ -92,11 +93,11 @@ export const FormSolicitudScreen = ({navigation, route}: Props) => {
           <Spinner
             visible={spinner}
             textContent={'Cargando...'}
-            textStyle={{color: '#FFF'}}
+            textStyle={{ color: '#FFF' }}
           />
         </View>
       ) : (
-        <View style={[styles.container, {paddingTop: 10, flex: 8}]}>
+        <View style={[styles.container, { paddingTop: 10, flex: 8 }]}>
           <Alerta
             campo={solicitud.causa == '' ? 'causa' : 'descripción'}
             hideDialog={hideDialog}
@@ -104,10 +105,10 @@ export const FormSolicitudScreen = ({navigation, route}: Props) => {
           />
           <ScrollView>
             <TransitionView>
-              <View style={{justifyContent: 'space-between'}}>
-                {labelInput({text: 'Sucursal'})}
+              <View style={{ justifyContent: 'space-between' }}>
+                {labelInput({ text: 'Sucursal' })}
                 <TextInput disabled value={sucursal} />
-                {labelInput({text: 'Tipo Solicitud'})}
+                {labelInput({ text: 'Tipo Solicitud' })}
                 <List.Accordion
                   title={
                     solicitud.nombreServicio == ''
@@ -124,8 +125,8 @@ export const FormSolicitudScreen = ({navigation, route}: Props) => {
                       }
                     />
                   )}
-                  style={{backgroundColor: 'white', borderRadius: 5}}
-                  theme={{roundness: 20}}
+                  style={{ backgroundColor: 'white', borderRadius: 5 }}
+                  theme={{ roundness: 20 }}
                   expanded={expanded}
                   onPress={handlePress}>
                   {servicios.map((servicio: Servicio) => {
@@ -159,12 +160,12 @@ export const FormSolicitudScreen = ({navigation, route}: Props) => {
                   })}
                 </List.Accordion>
 
-                {labelInput({text: 'Causa del problema'})}
+                {labelInput({ text: 'Causa del problema' })}
                 <TextInput
                   value={solicitud.causa}
                   mode={'outlined'}
                   error={!valido}
-                  theme={{roundness: 5}}
+                  theme={{ roundness: 5 }}
                   style={{
                     fontSize: 20,
                     backgroundColor: 'white',
@@ -178,13 +179,13 @@ export const FormSolicitudScreen = ({navigation, route}: Props) => {
                   }}
                   label=""
                 />
-                {labelInput({text: 'Descripción'})}
+                {labelInput({ text: 'Descripción' })}
                 <TextInput
                   value={solicitud.descripcion}
                   mode={'outlined'}
                   error={!valido}
                   multiline
-                  theme={{roundness: 5}}
+                  theme={{ roundness: 5 }}
                   numberOfLines={5}
                   style={{
                     textTransform: 'uppercase',
@@ -227,10 +228,10 @@ export const FormSolicitudScreen = ({navigation, route}: Props) => {
   );
 };
 
-const labelInput = ({text}) => {
+const labelInput = ({ text }) => {
   return (
-    <View style={{marginVertical: 5}}>
-      <Text style={{fontSize: 23, color: '#111111'}}>{text}</Text>
+    <View style={{ marginVertical: 5 }}>
+      <Text style={{ fontSize: 23, color: '#111111' }}>{text}</Text>
     </View>
   );
 };
@@ -243,13 +244,13 @@ interface PropsAlert {
   visible: boolean;
   hideDialog: () => void;
 }
-const Alerta = ({campo, visible, hideDialog}: PropsAlert) => {
+const Alerta = ({ campo, visible, hideDialog }: PropsAlert) => {
   return (
     <Portal>
       <Dialog visible={visible} onDismiss={hideDialog}>
         <Dialog.Title>Solucitud Erronea</Dialog.Title>
         <Dialog.Content>
-          <Paragraph style={{fontSize: 19}}>
+          <Paragraph style={{ fontSize: 19 }}>
             La {campo} no puede estar vacia.
           </Paragraph>
         </Dialog.Content>
