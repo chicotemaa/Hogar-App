@@ -7,20 +7,25 @@ import { TecnicosWelcomeScreen } from '../components/Welcome/TecnicosWelcomeScre
 import { WelcomeOptions } from '../components/Welcome/WelcomeOptions';
 import { View } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
+import { getNombreCliente } from '../api/apiClientes';
 
 interface Props extends DrawerScreenProps<any, any> { }
 
 export const WelcomeScreen = ({ navigation }: Props) => {
   const [loading, setLoading] = useState(true);
   const [userName, setUserName] = useState('');
+  const [clienteName, setClienteName] = useState<string>()
   const [roleUser, setRoleUser] = useState('');
 
   useEffect(() => {
     getToken().then(token => {
       getUserInfo(token).then(response => {
         const { username, roles } = response.data;
+        console.log(response.data)
         setUserName(capitalizeFirstLetter(username));
-
+        getNombreCliente(response.data.cliente.id).then(nombreCliente => {
+          setClienteName(nombreCliente)
+        })
         if (getRoleUser(roles, 'ROLE_EMPLEADO') != -1) {
           setRoleUser('tecnico')
         } else {
@@ -49,7 +54,7 @@ export const WelcomeScreen = ({ navigation }: Props) => {
         </View>
       ) : (
         <>
-          <Header pageName="Bienvenido" userName={userName} roleUser={roleUser} />
+          <Header pageName="Bienvenido" userName={userName} clienteName={clienteName} roleUser={roleUser} />
           {
             roleUser === 'tecnico' ? (
               <TecnicosWelcomeScreen navigation={navigation} />
