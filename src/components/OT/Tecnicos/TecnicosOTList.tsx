@@ -80,8 +80,7 @@ export const TecnicosOTList = () => {
                                             stackNavigator.navigate('DetalleOTScreen')
                                         }
                                     }}
-                                />
-                            </TransitionView>
+                                /> </TransitionView>
                         )
                     })
                 }

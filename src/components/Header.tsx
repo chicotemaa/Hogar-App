@@ -167,7 +167,7 @@ const WelcomeHeader = (username: string, isTecnico) => {
           marginTop: 5,
           textShadowRadius: 1,
         }}>
-        {isTecnico ? null : 'Santander Rio'}
+        {isTecnico ? null : 'Cliente'}
       </Text>
     </View>
   );

@@ -1,8 +1,8 @@
-import {StackScreenProps} from '@react-navigation/stack';
-import React, {useState} from 'react';
-import {StyleSheet, View} from 'react-native';
-import {functionToGetToken, getData, storeData} from '../api/api';
-import {TextInput, Button, Snackbar} from 'react-native-paper';
+import { StackScreenProps } from '@react-navigation/stack';
+import React, { useState } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { functionToGetToken, getData, storeData } from '../api/api';
+import { TextInput, Button, Snackbar } from 'react-native-paper';
 
 interface Props {
   pageToGo: Function;
@@ -13,7 +13,7 @@ interface User {
   password: string;
 }
 
-export const FormLogin = ({pageToGo}: Props) => {
+export const FormLogin = ({ pageToGo }: Props) => {
   const [state, setState] = useState<User>({
     email: '',
     password: '',
@@ -28,7 +28,7 @@ export const FormLogin = ({pageToGo}: Props) => {
   const onDismissSnackBar = () => setVisibleAlert(false);
 
   const checkAuth = (state: User) => {
-    const {email, password} = state;
+    const { email, password } = state;
 
     setIsLoading(true);
 
@@ -36,12 +36,12 @@ export const FormLogin = ({pageToGo}: Props) => {
       .then(response => {
         setIsLoading(false);
         setCorrectLogin(true);
-        const {access_token, expires_in, refresh_token} = response.data;
+        const { access_token, expires_in, refresh_token } = response.data;
         storeData('access_token', access_token);
         storeData('timeExpire', expires_in); // hacer string
         storeData('refresh_token', refresh_token);
 
-        getData('access_token').then(token => {          
+        getData('access_token').then(token => {
           pageToGo();
         });
       })
@@ -59,27 +59,27 @@ export const FormLogin = ({pageToGo}: Props) => {
         visible={visibleAlert}
         onDismiss={onDismissSnackBar}
         duration={2000}
-        style={{position: 'absolute', top: -280}}>
+        style={{ position: 'absolute', top: -280 }}>
         {correctLogin ? 'sesion iniciada' : 'Datos de cuenta no validos'}
       </Snackbar>
-      <View style={{marginBottom: 15}}>
+      <View style={{ marginBottom: 15 }}>
         <TextInput
           mode={'outlined'}
           outlineColor="#8B8B8B"
           value={state.email}
           error={correctLogin ? false : true}
-          onChangeText={value => setState({...state, email: value})}
+          onChangeText={value => setState({ ...state, email: value })}
           label="Email"
           style={styles.input}
-          theme={{roundness: 10}}
+          theme={{ roundness: 10 }}
           underlineColorAndroid="blue"
         />
         <TextInput
           mode={'outlined'}
           outlineColor="#8B8B8B"
           value={state.password}
-          onChangeText={value => setState({...state, password: value})}
-          theme={{roundness: 10}}
+          onChangeText={value => setState({ ...state, password: value })}
+          theme={{ roundness: 10 }}
           style={styles.input}
           error={correctLogin ? false : true}
           label="Contraseña"
@@ -98,7 +98,7 @@ export const FormLogin = ({pageToGo}: Props) => {
         color="#EC5342"
         style={styles.button}
         onPress={() => checkAuth(state)}
-        theme={{colors: {background: 'transparent'}}}>
+        theme={{ colors: { background: 'transparent' } }}>
         {isLoading ? 'Iniciando Sesión' : 'Iniciar Sesión'}
       </Button>
     </View>
