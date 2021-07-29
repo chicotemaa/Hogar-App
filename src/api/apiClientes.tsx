@@ -1,4 +1,4 @@
-import {api, base, baseApi, getData, getUserInfo} from './api';
+import { api, base, baseApi, getData, getUserInfo } from './api';
 
 //consulta -> descripcion
 //necesitasAyuda -> titulo
@@ -17,6 +17,21 @@ interface Cliente {
   street: string;
 }
 
+export const getNombreCliente = async (id: string): Promise<string> => {
+  const query = {
+    url: `/clientes/${id}`
+  }
+  const token: string = await getData('access_token');
+  return await api.get(baseApi + query.url, {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    }
+  }).then(response => {
+    return (response.data.razonSocial)
+
+  })
+}
+
 const getSolicitudesRequest = async (token: string) => {
   const query = {
     url: '/solicitud/by/user',
@@ -27,7 +42,7 @@ const getSolicitudesRequest = async (token: string) => {
     },
   });
   let arrayResponse = response.data['hydra:member'];
-  
+
   return arrayResponse
 };
 
@@ -36,7 +51,7 @@ const getSolicitudesRequest = async (token: string) => {
 export const getSolicitudesAPI = async (token: string) => {
   return getSolicitudesRequest(token)
     .then(array => {
-      const elements = array.map(({id, cliente, createdAt, SucursalDeCliente, necesitasAyuda, estado}: Solicitud) => {        
+      const elements = array.map(({ id, cliente, createdAt, SucursalDeCliente, necesitasAyuda, estado }: Solicitud) => {
         return {
           number: id,
           location: SucursalDeCliente,
@@ -75,19 +90,19 @@ interface SolicitudPost {
 export const sendSolicitud = async ({
   tipoServicio,
   causa,
-  descripcion,  
+  descripcion,
   foto,
 }: SolicitudPost) => {
   const query = {
     url: '/solicituds',
   };
 
-  const token:string = await getData('access_token');
+  const token: string = await getData('access_token');
   const userInfo = await getUserInfo(token);
 
   const cliente = userInfo.data.cliente['@id'];
-  const {Facility, SucursalDeCliente} = userInfo.data;
-  const sucursalHogar = userInfo.data.sucursal  
+  const { Facility, SucursalDeCliente } = userInfo.data;
+  const sucursalHogar = userInfo.data.sucursal
 
   const data = {
     cliente: cliente,
@@ -99,7 +114,7 @@ export const sendSolicitud = async ({
     imagen: 'string',
     createdAt: '2021-06-09T18:21:48.222Z',
     numeroSucursal: null,
-    pisoSector: '1',    
+    pisoSector: '1',
     consulta: descripcion,
     sucursal: sucursalHogar,
     Facility,
@@ -107,7 +122,7 @@ export const sendSolicitud = async ({
   };
 
   //ESTE CODIGO ES UNA MASA fetch love
-  
+
   return fetch(baseApi + query.url, {
     method: 'POST',
     headers: {
