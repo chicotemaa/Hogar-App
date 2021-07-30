@@ -24,7 +24,7 @@ export const WelcomeOptions = ({ navigation }) => {
             <View style={{ marginBottom: 15 }}>
                 <Button
                     title={'Solicitar asistencia'}
-                    color="#465EA3"
+                    color="#183A9E"
                     height={70}
                     width={270}
                     onPress={handleSolicitud}
@@ -39,7 +39,7 @@ export const WelcomeOptions = ({ navigation }) => {
 
                 <Button
                     title={'Ver mis solicitudes'}
-                    color="#465EA3"
+                    color="#183A9E"
                     height={70}
                     width={270}
                     onPress={() => navigation.navigate('HistorialSolicitudesScreen')}
@@ -53,11 +53,18 @@ export const WelcomeOptions = ({ navigation }) => {
                 </View>
                 <Button
                     title={'Ver ordenes de trabajo'}
-                    color="#465EA3"
+                    color="#183A9E"
                     height={70}
                     width={270}
                     onPress={() => navigation.navigate('ListadoOTScreen')}
                 />
+                <View style={stylesWelcome.aclaraciónContainer}>
+                    <Title
+                        color="#343030"
+                        text={`Ver ordenes de trabajo de sus solicitudes`}
+                        size={14}
+                    />
+                </View>
             </View>
         </View>
     )

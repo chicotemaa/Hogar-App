@@ -59,11 +59,11 @@ export const Header = ({ pageName, userName, roleUser, clienteName }: Props) => 
         </Appbar.Header>
       ) : (
         <>
-          <Appbar.Header style={{ marginTop: 0.04 * windowHeight }}>
+          <Appbar.Header style={{ marginTop: 0.04 * windowHeight, elevation: 0 }}>
             <Appbar.Content
               color="white"
               title={pageName}
-              titleStyle={{ textAlign: 'auto', borderWidth: 1, fontSize: windowHeight * 0.05, }}
+              titleStyle={{ textAlign: 'auto', fontSize: windowHeight * 0.05, }}
               subtitle={isFormSolicitud ? 'Complete los datos necesarios' : null}
             />
             <View>

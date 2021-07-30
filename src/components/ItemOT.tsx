@@ -12,6 +12,8 @@ interface Props {
   tecnico?: string;
   rol?: string;
   cliente?: string;
+  horaDesde: string;
+  horaHasta: string;
 }
 
 export const ItemOT = ({
@@ -23,7 +25,12 @@ export const ItemOT = ({
   goToScreen,
   rol,
   cliente,
+  horaDesde,
+  horaHasta
 }: Props) => {
+
+
+
   const isVistaTecnico = rol == 'tecnico'
   const [estado, setEstado] = useState(estadoOT)
 
@@ -88,8 +95,12 @@ export const ItemOT = ({
             </View>
             <View style={styles.divisor} />
             <View>
-              <Text style={styles.info}>{location}</Text>
-              <Text style={styles.info}>{date}</Text>
+              <Text style={[styles.info, { fontSize: 0.027 * windowHeight, marginBottom: 10 }]}>{location}</Text>
+              <View style={styles.divisor} />
+              <Text style={styles.info}>Fecha: {formatDate(date, 0)}</Text>
+              <View style={styles.divisor} />
+              <Text style={styles.info}>Desde: {formatDate(horaDesde, 1)}</Text>
+              <Text style={styles.info}>Hasta: {formatDate(horaHasta, 1)}</Text>
             </View>
           </View>
         </View>
@@ -104,8 +115,14 @@ export const ItemOT = ({
   );
 };
 
-function formatDate(date: string) {
-  return date.split('T', 1);
+function formatDate(date: string, position: number) {
+
+  const d = date.split('T', 2)[position]
+  if (position === 1) {
+    return d.slice(0, 5)
+  }
+  return d
+
 }
 
 const styles = StyleSheet.create({
@@ -126,16 +143,16 @@ const styles = StyleSheet.create({
   title: {
     marginTop: 5,
     marginBottom: 10,
-    fontWeight: '700',
-    fontSize: 0.028 * windowHeight,
+    fontWeight: '600',
+    fontSize: 0.035 * windowHeight,
     textTransform: 'capitalize'
   },
   tecnico: {
     marginTop: 3,
     marginBottom: 10,
     fontWeight: 'bold',
-    color: '#474747',
-    fontSize: 18,
+    color: '#F13C20',
+    fontSize: 0.025 * windowHeight,
   },
   divisor: {
     height: 1,
@@ -145,9 +162,9 @@ const styles = StyleSheet.create({
   },
   info: {
     marginVertical: 3,
-    color: 'grey',
-    fontWeight: 'bold',
-    fontSize: 16,
+    color: '#282828',
+    fontWeight: '600',
+    fontSize: 19,
   },
 });
 
@@ -228,18 +245,19 @@ const DetalleBtnTecnico = ({ estado, goToScreen, changeState }: PropBtn) => {
           }}
           style={{
             borderRadius: 8,
+            borderWidth: 1,
             alignSelf: 'flex-start',
             width: 0.35 * windowWidth,
-            backgroundColor: '#FF9933',
-            elevation: 10,
+            borderColor: '#D17D2A',
+            elevation: 0,
             paddingVertical: 9,
           }}
         >
           <Text
             style={{
-              color: 'white',
+              color: '#D17D2A',
               fontSize: 20,
-              fontWeight: 'normal',
+              fontWeight: 'bold',
               alignSelf: 'center',
             }}>
             {'No me recibio'}

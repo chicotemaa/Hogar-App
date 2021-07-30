@@ -13,6 +13,8 @@ interface detalleOT {
     SucursalDeCliente: string,
     comentario?: string,
     formulario: Formulario,
+    horaDesde: string,
+    horaHasta: string,
 }
 
 interface Formulario {
@@ -72,6 +74,8 @@ export const TecnicosOTList = () => {
                                     location={'Sarmiento 123'}
                                     date={OT.fecha}
                                     rol="tecnico"
+                                    horaDesde={OT.horaDesde}
+                                    horaHasta={OT.horaHasta}
                                     goToScreen={(estado: string) => {
                                         if (estado === 'realizarOT') {
                                             //TODO: controlar ubicacion
