@@ -25,7 +25,7 @@ export const BaseCampo = ({ item, styleHijo }: Props) => {
 
                 (!item.opcionDepende || item.opcionDepende.id == campoValue || item.opcionDepende.id == opcionDependeSeleccionada) && (
                     <View style={[styles.containerItem, styleHijo]}>
-                        <View style={{ borderBottomWidth: 1, padding: 1, borderColor: 'grey' }} >
+                        <View style={{ borderBottomWidth: 1, padding: 1, borderColor: 'grey', }} >
                             <Text style={styles.titleItem}>{item.item.titulo}</Text>
                         </View>
                         {item.item.descripcion && (<View><Text style={styles.subtitleItem}>{item.item.descripcion}</Text></View>)}
@@ -79,13 +79,14 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.23,
         shadowRadius: 4.62,
-
+        paddingLeft: 0.03 * windowWidth,
         elevation: 4,
         borderRadius: 3
     },
     titleItem: {
         fontSize: 0.05 * windowWidth,
         fontWeight: '600',
+        marginVertical: 10
     },
     subtitleItem: {
         fontSize: 0.04 * windowWidth,
