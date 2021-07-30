@@ -7,6 +7,7 @@ import { Formulario, OrdenTrabajo } from './interfaces'
 import { getFormularioAPI } from '../../../../../api/api'
 import { FormProvider } from '../../../../../context/fomulario/FormularioContext'
 import { Button } from 'react-native-paper'
+import Spinner from 'react-native-loading-spinner-overlay';
 
 interface Props {
     OrdenTrabajo: OrdenTrabajo
@@ -14,36 +15,49 @@ interface Props {
 
 export const BasePage = ({ OrdenTrabajo }: Props) => {
     const [formulario, setFormulario] = useState<Formulario>()
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         getFormularioAPI(OrdenTrabajo.formulario.id).then((response) => {
             setFormulario(response)
-            console.log('from base page ',response)
+            setLoading(false)
         })
     }, [])
 
-    return (        
-        <View style={styles.page}>
-            <Encabezado OrdenTrabajo={OrdenTrabajo} />
-            <FormState>
-                <View style={{flex:1}}>
-                
-                        {formulario ? <BodyOT Formulario={formulario} /> : null}                
-                    
+    return (
+        <>
+            {loading ? (
+                <View>
+                    <Spinner
+                        visible={loading}
+                        textContent={'Cargando formulario...'}
+                        textStyle={{ color: '#FFF' }}
+                    />
                 </View>
-                <View style={styles.footer}>
-                    <Button mode="text" onPress={ () =>{}}>
-                        Postergar
-                    </Button>
-                    <Button mode="text" onPress={() =>{}}>
-                        Firmar
-                    </Button>
-                    <Button mode="text" onPress={() =>{}}>
-                        Guardar
-                    </Button>
+            ) : (
+                <View style={styles.page}>
+                    <Encabezado OrdenTrabajo={OrdenTrabajo} />
+                    <FormState>
+                        <View style={{ flex: 1 }}>
+
+                            {formulario ? <BodyOT Formulario={formulario} /> : null}
+
+                        </View>
+                        <View style={styles.footer}>
+                            <Button mode="text" onPress={() => { }}>
+                                Postergar
+                            </Button>
+                            <Button mode="text" onPress={() => { }}>
+                                Firmar
+                            </Button>
+                            <Button mode="text" onPress={() => { }}>
+                                Guardar
+                            </Button>
+                        </View>
+                    </FormState>
                 </View>
-            </FormState>
-        </View>
+            )
+            }</>
     )
 }
 
@@ -53,19 +67,19 @@ const styles = StyleSheet.create({
         marginVertical: 0.005 * windowHeight,
         marginHorizontal: 0.005 * windowWidth,
     },
-    footer:{ 
+    footer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         borderTopWidth: 1,
-        borderColor:'red',
+        borderColor: 'red',
     }
 })
 
 
-const FormState = ({children}:any) => {
+const FormState = ({ children }: any) => {
     return (
-      <FormProvider>
-        {children}
-      </FormProvider>
+        <FormProvider>
+            {children}
+        </FormProvider>
     )
 }
