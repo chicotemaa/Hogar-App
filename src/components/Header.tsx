@@ -61,7 +61,6 @@ export const Header = ({ pageName, userName, roleUser, clienteName }: Props) => 
         <>
           <Appbar.Header style={{ marginTop: 0.04 * windowHeight }}>
             <Appbar.Content
-
               color="white"
               title={pageName}
               titleStyle={{ alignContent: 'center', fontSize: windowHeight * 0.05, }}
@@ -106,14 +105,7 @@ const getCurrentDate = () => {
   let date = new Date().getDate();
   let month = new Date().getMonth() + 1;
   let year = new Date().getFullYear();
-
-  console.log(date, month, year)
-
-
-  const options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };
-
-  // return date.toLocaleString() + '-' + month + '-' + year;
-  return new Date().toLocaleDateString('es-AR', options);
+  return new Date().toLocaleDateString('es-AR', { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' });
 }
 
 
