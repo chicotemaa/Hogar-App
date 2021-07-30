@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { TecnicosOTList } from '../OT/Tecnicos/TecnicosOTList'
-import { Text, View } from 'react-native';
 
 const Tab = createMaterialTopTabNavigator();
 

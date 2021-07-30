@@ -21,19 +21,18 @@ export const WelcomeScreen = ({ navigation }: Props) => {
     getToken().then(token => {
       getUserInfo(token).then(response => {
         const { username, roles } = response.data;
-        console.log(response.data)
         setUserName(capitalizeFirstLetter(username));
-        getNombreCliente(response.data.cliente.id).then(nombreCliente => {
-          setClienteName(nombreCliente)
-        })
         if (getRoleUser(roles, 'ROLE_EMPLEADO') != -1) {
           setRoleUser('tecnico')
         } else {
+          getNombreCliente(response.data.cliente.id).then(nombreCliente => {
+            setClienteName(nombreCliente)
+          })
           setRoleUser('user')
         }
         setTimeout(() => {
           setLoading(false)
-        }, 2000)
+        }, 500)
       });
     });
 
