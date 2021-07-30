@@ -94,7 +94,7 @@ export const FormLogin = ({ pageToGo }: Props) => {
       <Button
         mode="contained"
         loading={isLoading ? true : false}
-        color="#EC5342"
+        color="#ef4920"
         style={styles.button}
         onPress={() => checkAuth(state)}
         theme={{ colors: { background: 'transparent' } }}>

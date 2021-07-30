@@ -1,17 +1,17 @@
-import {StackScreenProps} from '@react-navigation/stack';
-import React, {useEffect, useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import { StackScreenProps } from '@react-navigation/stack';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, View } from 'react-native';
 import {
   getSolicitudById,
   getSucursalCliente,
 } from '../api/apiClientes';
-import {RootStackParams} from '../navigator/StackNavigator';
-import {getData, getImage, getServicioAPI} from '../api/api';
-import {Solicitud} from '../components/Solicitud';
-import {Header} from '../components/Header';
+import { RootStackParams } from '../navigator/StackNavigator';
+import { getData, getImage, getServicioAPI } from '../api/api';
+import { Solicitud } from '../components/Solicitud';
+import { Header } from '../components/Header';
 
 interface Props
-  extends StackScreenProps<RootStackParams, 'DetalleSolicitudScreen'> {}
+  extends StackScreenProps<RootStackParams, 'DetalleSolicitudScreen'> { }
 
 interface InfoSolicitud {
   consulta: string; //description
@@ -25,7 +25,7 @@ interface InfoSolicitud {
   token: string;
 }
 
-export const DetallesSolicitudScreen = ({navigation, route}: Props) => {
+export const DetallesSolicitudScreen = ({ navigation, route }: Props) => {
   const infoSolicitud: InfoSolicitud = {
     consulta: '',
     createdAt: '',
@@ -67,14 +67,14 @@ export const DetallesSolicitudScreen = ({navigation, route}: Props) => {
   }, []);
 
   return (
-    <View style={{backgroundColor: '#E7E1E1', flex: 1}}>
+    <View style={{ backgroundColor: '#E7E1E1', flex: 1 }}>
       <Header
         pageName={'Solicitud'}
         id={id}
         title={solicitud.necesitasAyuda}
         fecha={solicitud.createdAt}
       />
-      <View style={[{flex: 8}]}>
+      <View style={[{ flex: 8 }]}>
         <View>
           <Solicitud
             id={id}
@@ -107,7 +107,7 @@ const stylesDetalle = StyleSheet.create({
     paddingVertical: 10,
   },
   number: {
-    color: '#EC5342',
+    color: '#ef4920',
   },
 });
 

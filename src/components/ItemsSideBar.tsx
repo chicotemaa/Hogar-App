@@ -41,7 +41,7 @@ export const ItemsSideBar = ({ navigation, isWelcome }: Props) => {
         </View>
         <Button
           mode="text"
-          theme={{ colors: { primary: '#EC534210' } }}
+          theme={{ colors: { primary: '#ef492010' } }}
           onPress={() => {
             deleteItem('access_token');
             navigation.closeDrawer()

@@ -1,12 +1,12 @@
 import React from 'react';
-import {Text, TouchableOpacity, View} from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 
 interface Props {
   navigation: any;
   codigo: string;
 }
 
-export const DetalleButton = ({codigo, navigation}: Props) => {
+export const DetalleButton = ({ codigo, navigation }: Props) => {
   return (
     <View>
       <TouchableOpacity
@@ -18,7 +18,7 @@ export const DetalleButton = ({codigo, navigation}: Props) => {
         }}>
         <Text
           style={{
-            color: '#EC5342',
+            color: '#ef4920',
             fontSize: 21,
             fontWeight: 'bold',
             alignSelf: 'flex-end',

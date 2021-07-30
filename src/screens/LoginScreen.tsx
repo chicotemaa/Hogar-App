@@ -1,5 +1,3 @@
-import { DrawerScreenProps } from '@react-navigation/drawer';
-
 import * as React from 'react';
 
 import { StyleSheet, View, ScrollView } from 'react-native';
@@ -8,9 +6,7 @@ import { FormLogin } from '../components/FormLogin';
 import { Logo } from '../components/Logo';
 import { useNavigation } from '@react-navigation/native';
 
-interface Props extends DrawerScreenProps<any, any> { }
-
-export const LoginScreen = ({ navigation }: Props) => {
+export const LoginScreen = () => {
   const stackNavigator = useNavigation();
 
   return (

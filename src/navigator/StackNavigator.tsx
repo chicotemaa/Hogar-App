@@ -42,7 +42,7 @@ export const StackNavigator = () => {
     <Stack.Navigator
       screenOptions={{
         headerStyle: {
-          backgroundColor: '#EC5342',
+          backgroundColor: '#ef4920',
           shadowColor: 'transparent',
         },
         headerShown: false,

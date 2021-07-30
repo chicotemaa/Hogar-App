@@ -63,7 +63,7 @@ export const Header = ({ pageName, userName, roleUser, clienteName }: Props) => 
             <Appbar.Content
               color="white"
               title={pageName}
-              titleStyle={{ alignContent: 'center', fontSize: windowHeight * 0.05, }}
+              titleStyle={{ textAlign: 'auto', borderWidth: 1, fontSize: windowHeight * 0.05, }}
               subtitle={isFormSolicitud ? 'Complete los datos necesarios' : null}
             />
             <View>
@@ -78,7 +78,6 @@ export const Header = ({ pageName, userName, roleUser, clienteName }: Props) => 
           <View
             // colors={['#6565C7', '#6565C7']}
             //'#F76656', '#F76656',
-
             style={{ height: heightPage, backgroundColor: '#ef4920' }}>
             <View
               style={{
@@ -102,9 +101,6 @@ export const Header = ({ pageName, userName, roleUser, clienteName }: Props) => 
 
 
 const getCurrentDate = () => {
-  let date = new Date().getDate();
-  let month = new Date().getMonth() + 1;
-  let year = new Date().getFullYear();
   return new Date().toLocaleDateString('es-AR', { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' });
 }
 
