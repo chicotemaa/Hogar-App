@@ -5,7 +5,7 @@ import { windowWidth } from '../../../../../../App'
 import { Item } from '../Pagina/interfaces'
 import { Casilla } from './Casilla'
 import { Desplegable } from './Desplegable'
-import { Seleccion } from './Seleccion'
+import { Seleccion, SeleccionGroup } from './Seleccion'
 import { Texto } from './Texto'
 import { DateInput } from './Date'
 import { CampoContext, CampoProvider } from '../../../../../context/campo/CampoContext'
@@ -119,7 +119,7 @@ const Campo = (item: Item) => {
             campo = (<Desplegable />)
             break
         case 'casilla_de_verificacion':
-            campo = (<Seleccion item={item} />)
+            campo = (<SeleccionGroup item={item} />)
             break
         case 'titulo':
             campo = (<Texto />)
