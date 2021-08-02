@@ -67,6 +67,7 @@ export const TecnicosOTList = () => {
                         return (
                             <TransitionView key={OT.id} animation='slideInUp' index={0} isOT>
                                 <ItemOT
+                                    OT={OT}
                                     id={OT.id}
                                     estadoOT={OT.estado}
                                     cliente={OT.cliente.razonSocial}

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { windowHeight, windowWidth } from '../../App';
+import { changeStateOrdenTrabajo } from '../api/apiTecnicos';
 
 interface Props {
   id: number;
@@ -14,6 +15,7 @@ interface Props {
   cliente?: string;
   horaDesde: string;
   horaHasta: string;
+  OT:any;
 }
 
 export const ItemOT = ({
@@ -26,22 +28,24 @@ export const ItemOT = ({
   rol,
   cliente,
   horaDesde,
-  horaHasta
-}: Props) => {
-
-
+  horaHasta,OT
+}: Props) => {  
 
   const isVistaTecnico = rol == 'tecnico'
   const [estado, setEstado] = useState(estadoOT)
 
-  const handleState = (estado: number) => {
+  const handleState = async (estado: number) => {
 
     switch (estado) {
       case 0:
         setEstado(1)
+        console.log('ot',OT)
+        let change = await changeStateOrdenTrabajo(OT,1)
         break;
       case 1:
         setEstado(2)
+        console.log('ot',OT)
+        change = await changeStateOrdenTrabajo(OT,2)
         break;
     }
     // setEstado(estado)
@@ -116,7 +120,6 @@ export const ItemOT = ({
 };
 
 function formatDate(date: string, position: number) {
-
   const d = date.split('T', 2)[position]
   if (position === 1) {
     return d.slice(0, 5)
