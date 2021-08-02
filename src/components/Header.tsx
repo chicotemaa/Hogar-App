@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, Platform } from 'react-native';
 import { Appbar } from 'react-native-paper';
 import { windowWidth, windowHeight } from '../../App';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
@@ -118,7 +118,8 @@ const WelcomeHeader = (username: string, isTecnico: boolean, clienteName: string
           color: '#E8E6F5',
           fontSize: isTecnico ? 0.03 * windowHeight : 0.08 * windowWidth,
           fontWeight: isTecnico ? '300' : 'bold',
-          textAlign: 'center',
+          marginLeft: Platform.OS === 'android' ? 10 : 0,
+          textAlign: Platform.OS === 'ios' ? 'center' : 'auto',
           textTransform: 'capitalize'
         }}>
         {isTecnico ? getCurrentDate() : username}
