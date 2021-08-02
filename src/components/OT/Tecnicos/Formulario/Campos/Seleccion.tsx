@@ -4,29 +4,29 @@ import { Checkbox } from 'react-native-paper';
 import { Item } from '../Pagina/interfaces';
 
 interface Props {
-    item:Item
+    item: Item
 }
 
-export const Seleccion = ({item}:Props) => {
+export const Seleccion = ({ item }: Props) => {
     const [checked, setChecked] = React.useState(false);
-    const opciones = []
-    //TODO: controlar que valores estan seleccionados
+    const [valueSelected, setValueSelected] = React.useState<number>()
+    console.log('seleccion', item)
 
     return (
         <>
-            {item.item.opciones.map((opcion)=> {
-                return(
+            {item.item.opciones.map((opcion) => {
+                return (
                     <Checkbox.Item
                         key={opcion.id}
                         label={opcion.nombre}
-                        status={checked ? 'checked' : 'unchecked'}
+                        status={valueSelected == opcion.id ? 'checked' : 'unchecked'}
                         onPress={() => {
-                            console.log(opcion.nombre)
+                            setValueSelected(opcion.id)
                             setChecked(!checked);
-                        }}                        
+                        }}
                     />
                 )
-            })}            
+            })}
         </>
     );
 };
