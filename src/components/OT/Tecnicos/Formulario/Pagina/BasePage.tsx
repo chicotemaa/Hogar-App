@@ -9,6 +9,8 @@ import { FormProvider } from '../../../../../context/fomulario/FormularioContext
 import { Button, Dialog, Portal } from 'react-native-paper'
 import Spinner from 'react-native-loading-spinner-overlay';
 import { useNavigation } from '@react-navigation/native'
+import { changeStateFinalizado } from '../../../../../services/tecnicosServices'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 interface Props {
     OrdenTrabajo: OrdenTrabajo
@@ -27,8 +29,17 @@ export const BasePage = ({ OrdenTrabajo }: Props) => {
 
     const finalizadoHandler = () => {
         console.log('finalizando')
-        showDialog()
-        //navigator.navigate('SuccessScreen', {success:true})
+        hideDialog()
+
+        changeStateFinalizado(OrdenTrabajo).then((resolved) => {
+            if (resolved) {
+                console.log('finalizado')
+                navigator.navigate('SuccessScreen', { success: true })
+            } else {
+                console.log('error en cierre de ot')
+            }
+            //TODO: setear como finalizado en la lista la ot correspondiente
+        })
     }
 
     const postergarHandler = () => {
@@ -57,9 +68,10 @@ export const BasePage = ({ OrdenTrabajo }: Props) => {
                     />
                 </View>
             ) : (
-                <View style={styles.page}>
-                    <Encabezado OrdenTrabajo={OrdenTrabajo} />
-                    
+
+                <SafeAreaView style={{ flex: 1 }}>
+                    <View style={styles.page}>
+                        <Encabezado OrdenTrabajo={OrdenTrabajo} />
                         <View style={{ flex: 1 }}>
                             <Portal>
                                 <Dialog visible={visible} onDismiss={hideDialog}>
@@ -68,26 +80,27 @@ export const BasePage = ({ OrdenTrabajo }: Props) => {
                                         <Text>Firma</Text>
                                     </Dialog.Content>
                                     <Dialog.Actions>
-                                        <Button onPress={hideDialog}>Done</Button>
+                                        <Button onPress={finalizadoHandler}>Done</Button>
                                     </Dialog.Actions>
-                                </Dialog>                                
+                                </Dialog>
                             </Portal>
                             <FormState>
                                 {formulario ? <BodyOT Formulario={formulario} /> : null}
-                                </FormState>
+                            </FormState>
                         </View>
                         <View style={styles.footer}>
                             <Button mode="text" icon="clock" labelStyle={{ color: 'red' }} onPress={postergarHandler}>
                                 Postergar
                             </Button>
-                            <Button mode="text" icon="draw" labelStyle={{ color: 'blue' }} onPress={finalizadoHandler}>
+                            <Button mode="text" icon="draw" labelStyle={{ color: 'blue' }} onPress={showDialog}>
                                 Firmar
                             </Button>
                             <Button mode="text" labelStyle={{ color: 'green' }} onPress={guardarHandler}>
                                 Guardar
                             </Button>
                         </View>
-                </View>
+                    </View>
+                </SafeAreaView>
             )
             }</>
     )
@@ -96,7 +109,7 @@ export const BasePage = ({ OrdenTrabajo }: Props) => {
 const styles = StyleSheet.create({
     page: {
         flex: 1,
-        marginVertical: 0.005 * windowHeight,
+        // marginVertical: 0.005 * windowHeight,
         marginHorizontal: 0.005 * windowWidth,
     },
     footer: {

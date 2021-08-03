@@ -17,9 +17,8 @@ export const changeStateEnCamino = (OrdenTrabajo: any) => {
 export const changeStateMeRecibio = async (OrdenTrabajo: any) => {
     //TODO: controlar ubicacion antes de cambiar estado
     if (await checkLocationPermission()) {
-
-
         console.log('location l')
+
     } else {
         console.log('Permiso de ubicación denegado')
     }
@@ -32,8 +31,13 @@ export const changeStateNoMeRecibio = (OrdenTrabajo: any) => {
     //TODO: tomar ubicacion donde marco que no me recibió
 }
 
-export const changeStateFinalizado = (OrdenTrabajo: any) => {
-    changeStateAPI(OrdenTrabajo, 4)
+export const changeStateFinalizado = async (OrdenTrabajo: any) => {
+    if (await checkLocationPermission()) {
+        changeStateAPI(OrdenTrabajo, 4)
+        return true
+    } else {
+        return false
+    }
 }
 
 export const changeStatePostergado = (OrdenTrabajo: any) => {
