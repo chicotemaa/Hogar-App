@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { windowHeight, windowWidth } from '../../App';
-import { changeStateOrdenTrabajo } from '../api/apiTecnicos';
+import { changeStateEnCamino, changeStateMeRecibio, changeStateNoMeRecibio } from '../services/tecnicosServices';
 
 interface Props {
   id: number;
@@ -15,8 +15,9 @@ interface Props {
   cliente?: string;
   horaDesde: string;
   horaHasta: string;
-  OT:any;
+  OT: any;
 }
+
 
 export const ItemOT = ({
   id,
@@ -28,27 +29,26 @@ export const ItemOT = ({
   rol,
   cliente,
   horaDesde,
-  horaHasta,OT
-}: Props) => {  
+  horaHasta, OT
+}: Props) => {
 
   const isVistaTecnico = rol == 'tecnico'
   const [estado, setEstado] = useState(estadoOT)
-
-  const handleState = async (estado: number) => {
-
-    switch (estado) {
+  const handleState = async ( state: number) => {
+    console.log('estado estado',state)    
+    switch (state) {
       case 0:
         setEstado(1)
-        console.log('ot',OT)
-        let change = await changeStateOrdenTrabajo(OT,1)
+        changeStateEnCamino(OT);
         break;
       case 1:
         setEstado(2)
-        console.log('ot',OT)
-        change = await changeStateOrdenTrabajo(OT,2)
+        changeStateMeRecibio(OT);
+        break
+      case 3:
+        changeStateNoMeRecibio(OT);
         break;
     }
-    // setEstado(estado)
   }
 
   return (
@@ -112,7 +112,7 @@ export const ItemOT = ({
       <View
         style={{ padding: 10, alignSelf: 'center', margin: 2, width: '100%' }}>
         <View style={[styles.divisor]} />
-        {(isVistaTecnico ? <DetalleBtnTecnico estado={estado} changeState={() => handleState(estado)} goToScreen={goToScreen} /> : <DetalleBtn estado={estado} changeState={() => { }} goToScreen={goToScreen} />)}
+        {(isVistaTecnico ? <DetalleBtnTecnico estado={estado} changeState={(state: number) => handleState( estado)} goToScreen={goToScreen} /> : <DetalleBtn estado={estado} changeState={() => { }} goToScreen={goToScreen} />)}
 
       </View>
     </View>
@@ -125,8 +125,138 @@ function formatDate(date: string, position: number) {
     return d.slice(0, 5)
   }
   return d
-
 }
+
+interface PropEstado {
+  estado: number;
+}
+
+const Estado = ({ estado }: PropEstado) => {
+  const Estado = [
+    { name: 'Pendiente', color: '#F13C20' },
+    { name: 'Estoy en camino', color: '#D79922' },
+    { name: 'Me recibió', color: '#4056A1' },
+    { name: 'No me atendió', color: 'brown' },
+    { name: 'Finalizado', color: 'green' },
+    { name: 'No me recibió', color: 'purple' },
+  ];
+
+  return (
+    <Text
+      style={{
+        fontSize: 21,
+        fontWeight: 'bold',
+        color: Estado[estado].color,
+        textAlign: 'right',
+        alignSelf: 'center',
+      }}>
+      {Estado[estado].name}
+    </Text>
+  );
+};
+
+interface PropBtn {
+  estado: number;
+  goToScreen: Function;
+  changeState: Function
+}
+
+const DetalleBtn = ({ estado, goToScreen }: PropBtn) => {
+  const colorBtn = estado == 4 ? 'green' : '#5E5E5E';
+  return (
+    <View style={{ marginVertical: 5 }}>
+      <TouchableOpacity
+        disabled={estado != 4}
+        onPress={() => {
+          goToScreen();
+        }}>
+        <Text
+          style={{
+            borderColor: colorBtn,
+            color: colorBtn,
+            fontSize: 20,
+            fontWeight: 'bold',
+            alignSelf: 'center',
+          }}>
+          {estado === 4
+            ? 'Ver detalle'
+            : 'Detalle aún no disponible'}
+        </Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
+
+const DetalleBtnTecnico = ({ estado: estadoActual, goToScreen, changeState }: PropBtn) => {
+  const textState = [
+    'Tomar orden',
+    'Ya llegué',
+    'Realizar'
+  ]
+
+  return (
+    <View style={{ marginVertical: 5 }}>
+      <View style={{ flexDirection: estadoActual == 2 ? 'row' : 'column', justifyContent: 'space-between' }}>
+        {estadoActual == 2 ? (<TouchableOpacity
+          onPress={() => {
+            changeState(3)
+            // goToScreen();
+            console.log('no me atendio')
+          }}
+          style={{
+            borderRadius: 8,
+            borderWidth: 1,
+            alignSelf: 'flex-start',
+            width: 0.35 * windowWidth,
+            borderColor: '#D17D2A',
+            elevation: 0,
+            paddingVertical: 9,
+          }}
+        >
+          <Text
+            style={{
+              color: '#D17D2A',
+              fontSize: 20,
+              fontWeight: 'bold',
+              alignSelf: 'center',
+            }}>
+            {'No me recibio'}
+          </Text>
+        </TouchableOpacity>) : null}
+        <TouchableOpacity
+          onPress={() => {
+            changeState()
+            if (estadoActual == 2) {
+              goToScreen('realizarOT');
+            } else if (estadoActual > 3) {
+              goToScreen('detalleOTRealizada')
+            }
+          }}
+          style={{
+            borderRadius: 8,
+            alignSelf: 'flex-end',
+            width: 0.35 * windowWidth,
+            backgroundColor: estadoActual == 0 ? '#32367A' : '#178C54',
+            elevation: 10,
+            paddingVertical: 9,
+          }}
+        >
+          <Text
+            style={{
+              color: 'white',
+              fontSize: 20,
+              fontWeight: 'normal',
+              alignSelf: 'center',
+            }}>
+            {estadoActual < 3 ? textState[estadoActual] : 'Ver detalle'}
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+};
+
+
 
 const styles = StyleSheet.create({
   container: {
@@ -170,134 +300,4 @@ const styles = StyleSheet.create({
     fontSize: 19,
   },
 });
-
-interface PropEstado {
-  estado: number;
-}
-
-const Estado = ({ estado }: PropEstado) => {
-  const Estado = [
-    { name: 'Pendiente', color: '#F13C20' },
-    { name: 'Estoy en camino', color: '#D79922' },
-    { name: 'Me recibió', color: '#4056A1' },
-    { name: 'No me atendió', color: 'brown' },
-    { name: 'Finalizado', color: 'green' },
-    { name: 'No me recibió', color: 'purple' },
-  ];
-
-  return (
-    <Text
-      style={{
-        fontSize: 21,
-        fontWeight: 'bold',
-        color: Estado[estado].color,
-        textAlign: 'right',
-        alignSelf: 'center',
-      }}>
-      {Estado[estado].name}
-    </Text>
-  );
-};
-
-interface PropBtn {
-  estado: number;
-  goToScreen: Function;
-  changeState: Function
-}
-const DetalleBtn = ({ estado, goToScreen }: PropBtn) => {
-  const colorBtn = estado == 4 ? 'green' : '#5E5E5E';
-  return (
-    <View style={{ marginVertical: 5 }}>
-      <TouchableOpacity
-        disabled={estado != 4}
-        onPress={() => {
-          goToScreen();
-        }}>
-        <Text
-          style={{
-            borderColor: colorBtn,
-            color: colorBtn,
-            fontSize: 20,
-            fontWeight: 'bold',
-            alignSelf: 'center',
-          }}>
-          {estado === 4
-            ? 'Ver detalle'
-            : 'Detalle aún no disponible'}
-        </Text>
-      </TouchableOpacity>
-    </View>
-  );
-};
-
-const DetalleBtnTecnico = ({ estado, goToScreen, changeState }: PropBtn) => {
-
-  const textState = [
-    'Tomar orden',
-    'Ya llegué',
-    'Realizar'
-  ]
-  return (
-    <View style={{ marginVertical: 5 }}>
-      <View style={{ flexDirection: estado == 2 ? 'row' : 'column', justifyContent: 'space-between' }}>
-        {estado == 2 ? (<TouchableOpacity
-          onPress={() => {
-            //changeState(3)
-            // goToScreen();
-            console.log('no me atendio')
-          }}
-          style={{
-            borderRadius: 8,
-            borderWidth: 1,
-            alignSelf: 'flex-start',
-            width: 0.35 * windowWidth,
-            borderColor: '#D17D2A',
-            elevation: 0,
-            paddingVertical: 9,
-          }}
-        >
-          <Text
-            style={{
-              color: '#D17D2A',
-              fontSize: 20,
-              fontWeight: 'bold',
-              alignSelf: 'center',
-            }}>
-            {'No me recibio'}
-          </Text>
-        </TouchableOpacity>) : null}
-        <TouchableOpacity
-          onPress={() => {
-            changeState()
-
-            if (estado == 2) {
-              goToScreen('realizarOT');
-            } else if (estado > 3) {
-              goToScreen('detalleOTRealizada')
-            }
-          }}
-          style={{
-            borderRadius: 8,
-            alignSelf: 'flex-end',
-            width: 0.35 * windowWidth,
-            backgroundColor: estado == 0 ? '#32367A' : '#178C54',
-            elevation: 10,
-            paddingVertical: 9,
-          }}
-        >
-          <Text
-            style={{
-              color: 'white',
-              fontSize: 20,
-              fontWeight: 'normal',
-              alignSelf: 'center',
-            }}>
-            {estado < 3 ? textState[estado] : 'Ver detalle'}
-          </Text>
-        </TouchableOpacity>
-      </View>
-    </View>
-  );
-};
-
 
