@@ -34,15 +34,13 @@ export const ItemOT = ({
 
   const isVistaTecnico = rol == 'tecnico'
   const [estado, setEstado] = useState(estadoOT)
-  const handleState = async (state: number) => {
-    console.log('estado estado', state)
-    switch (state) {
-      case 0:
-        setEstado(1)
+  const handleState = async (estado: number, newState: number) => {
+    setEstado(newState)
+    switch (newState) {
+      case 1:
         changeStateEnCamino(OT);
         break;
-      case 1:
-        setEstado(2)
+      case 2:
         changeStateMeRecibio(OT);
         break
       case 3:
@@ -112,7 +110,7 @@ export const ItemOT = ({
       <View
         style={{ padding: 10, alignSelf: 'center', width: '100%' }}>
         <View style={[styles.divisor]} />
-        {(isVistaTecnico ? <DetalleBtnTecnico estado={estado} changeState={(state: number) => handleState(estado)} goToScreen={goToScreen} /> : <DetalleBtn estado={estado} changeState={() => { }} goToScreen={goToScreen} />)}
+        {(isVistaTecnico ? <DetalleBtnTecnico estado={estado} changeState={(state: number) => handleState(estado, state)} goToScreen={goToScreen} /> : <DetalleBtn estado={estado} changeState={() => { }} goToScreen={goToScreen} />)}
 
       </View>
     </View>
@@ -227,11 +225,14 @@ const DetalleBtnTecnico = ({ estado: estadoActual, goToScreen, changeState }: Pr
         </TouchableOpacity>) : null}
         <TouchableOpacity
           onPress={() => {
-            changeState()
-            if (estadoActual == 2) {
+            estadoActual === 0 ? changeState(1) : estadoActual === 1 && changeState(2)
+            if (estadoActual === 2) {
               goToScreen('realizarOT');
             } else if (estadoActual > 3) {
               goToScreen('detalleOTRealizada')
+            } else if (estadoActual === 3) {
+              //TODO: mostrar en que momento fue a la sucursal
+              console.log('no me recibio el dia x a las x horas')
             }
           }}
           style={{
