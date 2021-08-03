@@ -38,24 +38,21 @@ export const BodyOT = ({ Formulario }: Props) => {
 
   return (
     <View style={{ flex: 1 }}>
-      <View style={{ marginVertical: 10, }}>
-        <StepIndicator
-          stepCount={!loading ? pagesCount : 0}
-          currentPosition={page}
-        />
+      <View style={{ marginVertical: 10, flex: 1 }}>
+
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', margin: 10, }}>
+          <Button mode="text" onPress={() => { cambiarPagina(page - 1) }}>
+            Atras
+          </Button>
+          <Button mode="text" onPress={() => { cambiarPagina(page + 1) }}>
+            Siguiente
+          </Button>
+        </View>
       </View>
       <View style={{ flex: 9 }}>
         {
           !loading && showPages(paginator)
         }
-      </View>
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between', margin: 10, flex: 1 }}>
-        <Button mode="text" onPress={() => { cambiarPagina(page - 1) }}>
-          Atras
-        </Button>
-        <Button mode="text" onPress={() => { cambiarPagina(page + 1) }}>
-          Siguiente
-        </Button>
       </View>
     </View>
   );
