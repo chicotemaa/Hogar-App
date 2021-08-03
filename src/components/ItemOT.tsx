@@ -34,8 +34,8 @@ export const ItemOT = ({
 
   const isVistaTecnico = rol == 'tecnico'
   const [estado, setEstado] = useState(estadoOT)
-  const handleState = async ( state: number) => {
-    console.log('estado estado',state)    
+  const handleState = async (state: number) => {
+    console.log('estado estado', state)
     switch (state) {
       case 0:
         setEstado(1)
@@ -110,9 +110,9 @@ export const ItemOT = ({
         </View>
       </View>
       <View
-        style={{ padding: 10, alignSelf: 'center', margin: 2, width: '100%' }}>
+        style={{ padding: 10, alignSelf: 'center', width: '100%' }}>
         <View style={[styles.divisor]} />
-        {(isVistaTecnico ? <DetalleBtnTecnico estado={estado} changeState={(state: number) => handleState( estado)} goToScreen={goToScreen} /> : <DetalleBtn estado={estado} changeState={() => { }} goToScreen={goToScreen} />)}
+        {(isVistaTecnico ? <DetalleBtnTecnico estado={estado} changeState={(state: number) => handleState(estado)} goToScreen={goToScreen} /> : <DetalleBtn estado={estado} changeState={() => { }} goToScreen={goToScreen} />)}
 
       </View>
     </View>
@@ -196,8 +196,8 @@ const DetalleBtnTecnico = ({ estado: estadoActual, goToScreen, changeState }: Pr
 
   return (
     <View style={{ marginVertical: 5 }}>
-      <View style={{ flexDirection: estadoActual == 2 ? 'row' : 'column', justifyContent: 'space-between' }}>
-        {estadoActual == 2 ? (<TouchableOpacity
+      <View style={{ flexDirection: estadoActual == 1 ? 'row' : 'column', justifyContent: 'space-between' }}>
+        {estadoActual == 1 ? (<TouchableOpacity
           onPress={() => {
             changeState(3)
             // goToScreen();
@@ -207,10 +207,11 @@ const DetalleBtnTecnico = ({ estado: estadoActual, goToScreen, changeState }: Pr
             borderRadius: 8,
             borderWidth: 1,
             alignSelf: 'flex-start',
-            width: 0.35 * windowWidth,
+            width: 0.39 * windowWidth,
             borderColor: '#D17D2A',
             elevation: 0,
             paddingVertical: 9,
+            paddingHorizontal: 2
           }}
         >
           <Text
@@ -219,6 +220,7 @@ const DetalleBtnTecnico = ({ estado: estadoActual, goToScreen, changeState }: Pr
               fontSize: 20,
               fontWeight: 'bold',
               alignSelf: 'center',
+
             }}>
             {'No me recibio'}
           </Text>
