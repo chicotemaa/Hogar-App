@@ -16,6 +16,7 @@ import logo from '../assets/images/util/logo.png'
 
 import { StyleSheet } from 'react-native';
 import { Button } from '../components/Button';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 interface Props extends DrawerScreenProps<any, any> { }
 
@@ -27,16 +28,18 @@ export const HomeScreen = ({ navigation }: Props) => {
   }, []);
 
   return (
-    <View style={{ flex: 1 }}>
-      <ScrollView>
-        <Header navigation={navigation} />
-        <View style={{ backgroundColor: '#E7E1E1',marginTop:100, paddingHorizontal: 0.05 * windowWidth }}>
-          <Info />
-          <Clientes />
-          <ContactoSection />
-        </View>
-      </ScrollView>
-    </View>
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={{ flex: 1 }}>
+        <ScrollView>
+          <Header navigation={navigation} />
+          <View style={{ backgroundColor: '#E7E1E1', paddingHorizontal: 0.05 * windowWidth }}>
+            <Info />
+            <Clientes />
+            <ContactoSection />
+          </View>
+        </ScrollView>
+      </View>
+    </SafeAreaView>
   );
 };
 
@@ -47,11 +50,11 @@ export const HomeScreen = ({ navigation }: Props) => {
 const Header = ({ navigation }) => {
   return (
     <View style={{ flex: 1 }}>
-      <ImageBackground style={{ flex: 1, height: 0.3 * windowHeight, padding: 5, paddingBottom: 20 }} imageStyle={{ opacity: 0.3 }} resizeMode='repeat' source={fondo}>
+      <ImageBackground style={{ flex: 1, height: 0.3 * windowHeight, padding: 5, paddingBottom: 40, justifyContent: 'center' }} imageStyle={{ opacity: 0.3 }} resizeMode='cover' source={fondo}>
         <View style={{ justifyContent: 'flex-end', alignSelf: 'flex-end', marginBottom: 30 }}>
-          <Button onPress={() => { navigation.navigate('Stack'); }} title="Iniciar Sesion" width={windowWidth * 0.3} color="#ef4920" />
+          <Button onPress={() => { navigation.navigate('Stack'); }} title="Iniciar Sesion" width={windowWidth * 0.4} color="#ef4920" />
         </View>
-        <Image resizeMode="contain" style={{ borderRadius: windowWidth * 0.2, alignSelf: 'center', width: windowWidth * 0.65, height: '60%' }} source={logo} />
+        <Image resizeMode="contain" style={{ borderRadius: 20, alignSelf: 'center', width: windowWidth * 0.55, height: '60%' }} source={logo} />
       </ImageBackground>
     </View>)
 }
