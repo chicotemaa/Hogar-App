@@ -18,17 +18,10 @@ export const changeStateMeRecibio = async (OrdenTrabajo: any) => {
     //TODO: controlar ubicacion antes de cambiar estado
     if (await checkLocationPermission()) {
 
-        Geolocation.getCurrentPosition(
-            (position) => {
-                console.log('ubicacion', position)
-            },
-            (error) => {
-                console.log(error.code, error.message)
-            },
-            {
-                enableHighAccuracy: true, timeout: 14000, maximumAge: 100
-            }
-        )
+
+        console.log('location l')
+    } else {
+        console.log('Permiso de ubicación denegado')
     }
 
     //changeStateAPI(OrdenTrabajo,2)
@@ -47,13 +40,30 @@ export const changeStatePostergado = (OrdenTrabajo: any) => {
     changeStateAPI(OrdenTrabajo, 5)
 }
 
+const getLocation = async () => {
+    let location
+    Geolocation.getCurrentPosition(
+        (position) => {
+            console.log('ubicacion', position)
+            location = position.coords
+        },
+        (error) => {
+            console.log(error.code, error.message)
+            return null
+        },
+        {
+            enableHighAccuracy: true, timeout: 14000, maximumAge: 100
+        }
+    )
+
+    return location
+}
+
 const checkLocationPermission = async () => {
     let permissionStatus: PermissionStatus
     if (Platform.OS === 'ios') {
-
         permissionStatus = await request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE)
     } else {
-
         permissionStatus = await request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION)
     }
 
