@@ -30,7 +30,7 @@ export const HomeScreen = ({ navigation }: Props) => {
     <View style={{ flex: 1 }}>
       <ScrollView>
         <Header navigation={navigation} />
-        <View style={{ backgroundColor: '#E7E1E1', paddingHorizontal: 0.05 * windowWidth }}>
+        <View style={{ backgroundColor: '#E7E1E1',marginTop:100, paddingHorizontal: 0.05 * windowWidth }}>
           <Info />
           <Clientes />
           <ContactoSection />
@@ -51,7 +51,7 @@ const Header = ({ navigation }) => {
         <View style={{ justifyContent: 'flex-end', alignSelf: 'flex-end', marginBottom: 30 }}>
           <Button onPress={() => { navigation.navigate('Stack'); }} title="Iniciar Sesion" width={windowWidth * 0.3} color="#ef4920" />
         </View>
-        <Image resizeMode="contain" style={{ borderRadius: windowWidth * 0.2, alignSelf: 'center', width: '65%', height: '60%' }} source={logo} />
+        <Image resizeMode="contain" style={{ borderRadius: windowWidth * 0.2, alignSelf: 'center', width: windowWidth * 0.65, height: '60%' }} source={logo} />
       </ImageBackground>
     </View>)
 }
