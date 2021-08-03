@@ -39,7 +39,7 @@ export const Casilla = ({ item }: Props) => {
                 const opcionItem = opcion.id.toString()
                 opciones.push(opcionItem)
                 return (
-                    <RadioButton.Item label={opcion.nombre} value={opcionItem} />
+                    <RadioButton.Item key={opcion.id} label={opcion.nombre} value={opcionItem} />
                 )
             }
             )}
