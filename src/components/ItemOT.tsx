@@ -279,7 +279,7 @@ const styles = StyleSheet.create({
   title: {
     marginTop: 5,
     marginBottom: 10,
-    fontWeight: '600',
+    fontWeight: '500',
     fontSize: 0.035 * windowHeight,
     textTransform: 'capitalize'
   },
@@ -300,7 +300,7 @@ const styles = StyleSheet.create({
     marginVertical: 3,
     color: '#282828',
     fontWeight: '600',
-    fontSize: 19,
+    fontSize: 0.05 * windowWidth,
   },
 });
 
