@@ -62,7 +62,7 @@ export const TecnicosOTList = () => {
                     />
                 } >
                 {loading ? null :
-                    listaOT.map((OT) => {
+                    listaOT && listaOT.map((OT) => {
                         console.log(OT)
                         return (
                             <TransitionView key={OT.id} animation='slideInUp' index={0} isOT>
