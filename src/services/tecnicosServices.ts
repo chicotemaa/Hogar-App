@@ -30,7 +30,6 @@ export const changeStateMeRecibio = async (OrdenTrabajo: any) => {
             (position) => {
                 console.log('ot con estado 2', OrdenTrabajo, position.coords)
                 const {latitude,longitude} = position.coords
-                const date = new Date()
 
                 const data = {
                     estado: 2,
@@ -59,9 +58,26 @@ export const changeStateNoMeRecibio = (OrdenTrabajo: any) => {
     //TODO: tomar ubicacion donde marco que no me recibió
 }
 
-export const changeStateFinalizado = async (OrdenTrabajo: any) => {
+export const changeStateFinalizado = async (OrdenTrabajo: any) => {    
     if (await checkLocationPermission()) {
-        changeStateOTAPI(OrdenTrabajo, 4)
+        Geolocation.getCurrentPosition(
+            (position) => {
+                const {latitude,longitude} = position.coords
+                const data = {
+                    estado: 4,
+                    latitudCierre: latitude.toString(),
+                    longitudCierre: longitude.toString(),
+                    horaFin: getISODate(),
+                }                
+                changeStateOTAPI(OrdenTrabajo,data)
+            },
+            (error) => {
+                console.log(error.code, error.message)
+            },
+            {
+                enableHighAccuracy: true, timeout: 14000, maximumAge: 100
+            } 
+        )
         return true
     } else {
         return false
