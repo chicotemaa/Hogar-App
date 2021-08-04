@@ -1,4 +1,4 @@
-import { changeStateOrdenTrabajo as changeStateOTAPI } from '../api/apiTecnicos';
+import { changeStateOrdenTrabajo as changeStateOTAPI, getOtById } from '../api/apiTecnicos';
 import Geolocation from 'react-native-geolocation-service'
 import { Platform } from 'react-native';
 import { check, PERMISSIONS, PermissionStatus, request } from 'react-native-permissions';
@@ -16,7 +16,7 @@ const getISODate = () => {
 
 export const changeStateEnCamino = (OrdenTrabajo: any) => {
     const data = {
-        estado:1
+        estado: 1
     }
     changeStateOTAPI(OrdenTrabajo, data)
 }
@@ -29,22 +29,22 @@ export const changeStateMeRecibio = async (OrdenTrabajo: any) => {
         Geolocation.getCurrentPosition(
             (position) => {
                 console.log('ot con estado 2', OrdenTrabajo, position.coords)
-                const {latitude,longitude} = position.coords
+                const { latitude, longitude } = position.coords
 
                 const data = {
                     estado: 2,
                     latitud: latitude.toString(),
                     longitud: longitude.toString(),
                     horaInicio: getISODate(),
-                }                
-                changeStateOTAPI(OrdenTrabajo,data)
+                }
+                changeStateOTAPI(OrdenTrabajo, data)
             },
             (error) => {
                 console.log(error.code, error.message)
             },
             {
                 enableHighAccuracy: true, timeout: 14000, maximumAge: 100
-            }    
+            }
         )
         return true
     } else {
@@ -58,25 +58,33 @@ export const changeStateNoMeRecibio = (OrdenTrabajo: any) => {
     //TODO: tomar ubicacion donde marco que no me recibió
 }
 
-export const changeStateFinalizado = async (OrdenTrabajo: any) => {    
+export const changeStateFinalizado = async (OrdenTrabajo: any) => {
     if (await checkLocationPermission()) {
         Geolocation.getCurrentPosition(
             (position) => {
-                const {latitude,longitude} = position.coords
-                const data = {
-                    estado: 4,
-                    latitudCierre: latitude.toString(),
-                    longitudCierre: longitude.toString(),
-                    horaFin: getISODate(),
-                }                
-                changeStateOTAPI(OrdenTrabajo,data)
+                const { latitude, longitude } = position.coords
+                getOtById(OrdenTrabajo.id).then(({ horaInicio }) => {
+                    console.log('orden trabajo hora inicio' + horaInicio)
+                    console.log('ot hora fin ', getISODate())
+                    const diffMinutes = getDiffMinutes(horaInicio)
+                    console.log(diffMinutes)
+                    const data = {
+                        estado: 4,
+                        latitudCierre: latitude.toString(),
+                        longitudCierre: longitude.toString(),
+                        horaFin: getISODate(),
+                    }
+                    //crear formulario resultado con los minutos trabajados 
+
+                    //changeStateOTAPI(OrdenTrabajo, data)
+                })
             },
             (error) => {
                 console.log(error.code, error.message)
             },
             {
                 enableHighAccuracy: true, timeout: 14000, maximumAge: 100
-            } 
+            }
         )
         return true
     } else {
@@ -99,4 +107,13 @@ const checkLocationPermission = async () => {
         permissionStatus = await request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION)
     }
     return permissionStatus === 'granted'
+}
+
+const getDiffMinutes = (startTime: string) => {
+    const start = new Date(startTime)
+    const currentTime = new Date()
+
+    const diffMins = currentTime.getTime() - start.getTime()
+
+    return Math.floor(diffMins / 60000)
 }
