@@ -19,16 +19,12 @@ export const getOtByUserAPI = async () => {
 };
 
 
-export const changeStateOrdenTrabajo = async (ordenTrabajo: any, estado: number) => {
+export const changeStateOrdenTrabajo = async (ordenTrabajo: any, data: any) => {
     let headers = {
         'Content-Type': 'application/ld+json',
         'Authorization': 'Bearer ' + await getData('access_token')
     }
-
-    const data = {
-        estado: estado,
-        SucursalDeCliente: "/api/sucursal_de_clientes/17"
-    }
+    
 
     return fetch(baseApi + '/orden_trabajos/' + ordenTrabajo.id, {
         method: 'PUT',

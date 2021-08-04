@@ -35,15 +35,19 @@ export const ItemOT = ({
   const isVistaTecnico = rol == 'tecnico'
   const [estado, setEstado] = useState(estadoOT)
   const handleState = async (estado: number, newState: number) => {
-    setEstado(newState)
+   
     switch (newState) {
       case 1:
+        setEstado(newState)
         changeStateEnCamino(OT);
         break;
       case 2:
-        changeStateMeRecibio(OT);
+        changeStateMeRecibio(OT).then((status)=> {        
+          status && setEstado(newState)
+        })
         break
       case 3:
+        setEstado(newState)
         changeStateNoMeRecibio(OT);
         break;
     }
@@ -225,7 +229,7 @@ const DetalleBtnTecnico = ({ estado: estadoActual, goToScreen, changeState }: Pr
         </TouchableOpacity>) : null}
         <TouchableOpacity
           onPress={() => {
-            estadoActual === 0 ? changeState(1) : estadoActual === 1 && changeState(2)
+            estadoActual === 0 ? changeState(1) : estadoActual === 1 && changeState(2)            
             if (estadoActual === 2) {
               goToScreen('realizarOT');
             } else if (estadoActual > 3) {
@@ -300,7 +304,7 @@ const styles = StyleSheet.create({
     marginVertical: 3,
     color: '#282828',
     fontWeight: '600',
-    fontSize: 0.05 * windowWidth,
+    fontSize: 0.04 * windowWidth,
   },
 });
 

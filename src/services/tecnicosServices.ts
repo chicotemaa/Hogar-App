@@ -1,4 +1,4 @@
-import { changeStateOrdenTrabajo as changeStateAPI } from '../api/apiTecnicos';
+import { changeStateOrdenTrabajo as changeStateOTAPI } from '../api/apiTecnicos';
 import Geolocation from 'react-native-geolocation-service'
 import { Platform } from 'react-native';
 import { check, PERMISSIONS, PermissionStatus, request } from 'react-native-permissions';
@@ -9,31 +9,59 @@ import { check, PERMISSIONS, PermissionStatus, request } from 'react-native-perm
 // 'No me atendió': 3
 // 'Finalizado': 4
 // 'Postergado': 5
+const getISODate = () => {
+    const date = new Date()
+    return new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toISOString();
+}
 
 export const changeStateEnCamino = (OrdenTrabajo: any) => {
-    changeStateAPI(OrdenTrabajo, 1)
+    const data = {
+        estado:1
+    }
+    changeStateOTAPI(OrdenTrabajo, data)
 }
+
+
 
 export const changeStateMeRecibio = async (OrdenTrabajo: any) => {
     //TODO: controlar ubicacion antes de cambiar estado
     if (await checkLocationPermission()) {
-        console.log('location l')
+        Geolocation.getCurrentPosition(
+            (position) => {
+                console.log('ot con estado 2', OrdenTrabajo, position.coords)
+                const {latitude,longitude} = position.coords
+                const date = new Date()
 
+                const data = {
+                    estado: 2,
+                    latitud: latitude.toString(),
+                    longitud: longitude.toString(),
+                    horaInicio: getISODate(),
+                }                
+                changeStateOTAPI(OrdenTrabajo,data)
+            },
+            (error) => {
+                console.log(error.code, error.message)
+            },
+            {
+                enableHighAccuracy: true, timeout: 14000, maximumAge: 100
+            }    
+        )
+        return true
     } else {
         console.log('Permiso de ubicación denegado')
+        return false
     }
-
-    //changeStateAPI(OrdenTrabajo,2)
 }
 
 export const changeStateNoMeRecibio = (OrdenTrabajo: any) => {
-    changeStateAPI(OrdenTrabajo, 3)
+    changeStateOTAPI(OrdenTrabajo, 3)
     //TODO: tomar ubicacion donde marco que no me recibió
 }
 
 export const changeStateFinalizado = async (OrdenTrabajo: any) => {
     if (await checkLocationPermission()) {
-        changeStateAPI(OrdenTrabajo, 4)
+        changeStateOTAPI(OrdenTrabajo, 4)
         return true
     } else {
         return false
@@ -41,27 +69,11 @@ export const changeStateFinalizado = async (OrdenTrabajo: any) => {
 }
 
 export const changeStatePostergado = (OrdenTrabajo: any) => {
-    changeStateAPI(OrdenTrabajo, 5)
+    changeStateOTAPI(OrdenTrabajo, 5)
 }
 
-const getLocation = async () => {
-    let location
-    Geolocation.getCurrentPosition(
-        (position) => {
-            console.log('ubicacion', position)
-            location = position.coords
-        },
-        (error) => {
-            console.log(error.code, error.message)
-            return null
-        },
-        {
-            enableHighAccuracy: true, timeout: 14000, maximumAge: 100
-        }
-    )
 
-    return location
-}
+
 
 const checkLocationPermission = async () => {
     let permissionStatus: PermissionStatus
@@ -70,6 +82,5 @@ const checkLocationPermission = async () => {
     } else {
         permissionStatus = await request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION)
     }
-
     return permissionStatus === 'granted'
 }
