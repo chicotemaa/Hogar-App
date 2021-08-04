@@ -32,12 +32,7 @@ export const BasePage = ({ OrdenTrabajo }: Props) => {
         hideDialog()
 
         changeStateFinalizado(OrdenTrabajo).then((resolved) => {
-            if (resolved) {
-                console.log('finalizado')
-                navigator.navigate('SuccessScreen', { success: true })
-            } else {
-                console.log('error en cierre de ot')
-            }
+            navigator.navigate('SuccessScreen', { success: resolved })
             //TODO: setear como finalizado en la lista la ot correspondiente
         })
     }
