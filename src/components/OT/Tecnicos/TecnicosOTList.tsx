@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native'
 import React, { useEffect, useState } from 'react'
 import { ScrollView, View, RefreshControl } from 'react-native'
-import { getOtByUserAPI } from '../../../api/apiTecnicos'
+import { getOtByEstadoAPI } from '../../../api/apiTecnicos'
 import { ItemOT } from '../../ItemOT'
 import { TransitionView } from '../../TransitionView'
 
@@ -34,7 +34,7 @@ export const TecnicosOTList = () => {
     const stackNavigator = useNavigation();
     const onRefresh = React.useCallback(() => {
         setRefreshing(true);
-        getOtByUserAPI()
+        getOtByEstadoAPI()
             .then((response) => {
                 setListaOT([])
                 setListaOT(response)
@@ -45,7 +45,7 @@ export const TecnicosOTList = () => {
     }, []);
 
     useEffect(() => {
-        getOtByUserAPI()
+        getOtByEstadoAPI()
             .then((response) => {
                 setListaOT(response)
                 setLoading(false)
