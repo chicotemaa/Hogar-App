@@ -41,13 +41,11 @@ export const getOtById = async (id: number) => {
     });
 }
 
-
 export const changeStateOrdenTrabajo = async (ordenTrabajo: any, data: any) => {
     let headers = {
         'Content-Type': 'application/ld+json',
         'Authorization': 'Bearer ' + await getData('access_token')
     }
-
 
     return fetch(baseApi + '/orden_trabajos/' + ordenTrabajo.id, {
         method: 'PUT',
@@ -58,11 +56,5 @@ export const changeStateOrdenTrabajo = async (ordenTrabajo: any, data: any) => {
     }).catch(error => {
         console.log(error)
     })
-
-
-
-
-
 }
-
 

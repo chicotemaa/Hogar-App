@@ -184,3 +184,22 @@ export const getFormularioAPI = async (id: number) => {
   })
 
 }
+
+export const getFormularioResultado = async (id: number) => {
+  const token = await getData('access_token')
+
+  const query = '/formulario_resultados/' + id
+
+  return api.get(baseApi + query, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    }
+  })
+    .then(response => {
+      return response.data
+    })
+    .catch(error => {
+      return error
+    })
+}
