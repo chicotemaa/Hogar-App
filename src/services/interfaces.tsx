@@ -1,5 +1,6 @@
 export interface OrdenTrabajo {
     SucursalDeCliente: string;
+    direccionSucursalCliente: string
     cliente: Cliente;
     comentario: string;
     estado: number;

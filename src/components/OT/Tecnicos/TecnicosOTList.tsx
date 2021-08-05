@@ -1,56 +1,38 @@
 import { useNavigation } from '@react-navigation/native'
 import React, { useEffect, useState } from 'react'
 import { ScrollView, View, RefreshControl } from 'react-native'
-import { getOtByEstadoAPI } from '../../../api/apiTecnicos'
+import { OrdenTrabajo } from '../../../services/interfaces'
+import { getOrdenesTrabajoInfo } from '../../../services/tecnicosServices'
 import { ItemOT } from '../../ItemOT'
 import { TransitionView } from '../../TransitionView'
 
-interface detalleOT {
-    id: number,
-    estado: number,
-    cliente: Cliente,
-    fecha: string,
-    SucursalDeCliente: string,
-    comentario?: string,
-    formulario: Formulario,
-    horaDesde: string,
-    horaHasta: string,
-}
-
-interface Formulario {
-    id: number,
-    descripcion: string,
-    titulo: string,
-}
-
-interface Cliente {
-    razonSocial: string
-}
 
 export const TecnicosOTList = () => {
-    const [listaOT, setListaOT] = useState<detalleOT[]>([])
+    const [listaOT, setListaOT] = useState<OrdenTrabajo[]>()
     const [loading, setLoading] = useState(true)
     const [refreshing, setRefreshing] = React.useState(false);
     const stackNavigator = useNavigation();
     const onRefresh = React.useCallback(() => {
         setRefreshing(true);
-        getOtByEstadoAPI()
-            .then((response) => {
-                setListaOT([])
-                setListaOT(response)
-            })
-        setTimeout(() => {
-            setRefreshing(false)
-        }, 2000)
+        getOrdenesTrabajoInfo().then((listaOT) => {
+            setListaOT(listaOT)
+            setTimeout(() => {
+                setRefreshing(false)
+            }, 2000)
+        })
+
     }, []);
 
     useEffect(() => {
-        getOtByEstadoAPI()
-            .then((response) => {
-                setListaOT(response)
-                setLoading(false)
-            })
+        setRefreshing(true)
+        getOrdenesTrabajoInfo().then((listaOt) => {
+            setListaOT(listaOt)
+            setLoading(false)
+            setRefreshing(false)
+        })
     }, [])
+
+
 
     return (
         <View>
@@ -62,8 +44,7 @@ export const TecnicosOTList = () => {
                     />
                 } >
                 {loading ? null :
-                    listaOT && listaOT.map((OT) => {
-                        console.log(OT)
+                    listaOT && listaOT.map((OT: OrdenTrabajo) => {
                         return (
                             <TransitionView key={OT.id} animation='slideInUp' index={0} isOT>
                                 <ItemOT
@@ -72,7 +53,7 @@ export const TecnicosOTList = () => {
                                     estadoOT={OT.estado}
                                     cliente={OT.cliente.razonSocial}
                                     titulo={OT.formulario.titulo}
-                                    location={'Sarmiento 123'}
+                                    location={OT.direccionSucursalCliente}
                                     date={OT.fecha}
                                     rol="tecnico"
                                     horaDesde={OT.horaDesde}
@@ -93,3 +74,4 @@ export const TecnicosOTList = () => {
         </View>
     )
 }
+
