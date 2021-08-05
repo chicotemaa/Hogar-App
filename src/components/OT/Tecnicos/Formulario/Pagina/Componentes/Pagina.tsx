@@ -1,7 +1,7 @@
 import React from 'react'
 import { Text, View } from 'react-native'
 import { windowHeight } from '../../../../../../../App'
-import { Modulo } from '../interfaces'
+import { Modulo } from '../../../../../../services/interfaces'
 import { Modulo as ModulosItem } from './Modulo'
 
 interface Props {
@@ -16,7 +16,7 @@ export const Pagina = ({ Modulos }: Props) => {
             <Text style={{ textTransform: 'uppercase', fontWeight: 'bold', fontSize: 0.022 * windowHeight }}>{Modulos[0].paginaNombre}</Text>
             {Modulos.map((modulo) => {
                 return (
-                    <ModulosItem Modulo={modulo} Items={modulo.modulo} />
+                    <ModulosItem key={modulo.id} Modulo={modulo} Items={modulo.modulo} />
                 )
             })}
         </View>

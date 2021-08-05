@@ -1,6 +1,6 @@
 import React from 'react'
 import { Text, View } from 'react-native'
-import { Item as ItemProps } from '../interfaces'
+import { Item as ItemProps } from '../../../../../../services/interfaces'
 
 interface Props {
     Item: ItemProps

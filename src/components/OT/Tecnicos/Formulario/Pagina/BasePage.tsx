@@ -3,8 +3,8 @@ import { StyleSheet, Text, View } from 'react-native'
 import { windowHeight, windowWidth } from '../../../../../../App'
 import { Encabezado } from './Componentes/Encabezado'
 import { BodyOT } from './Componentes/BodyOT'
-import { Formulario, OrdenTrabajo } from './interfaces'
-import { getFormularioAPI } from '../../../../../api/api'
+import { Formulario, OrdenTrabajo } from '../../../../../services/interfaces'
+import { getFormularioAPI, storeData } from '../../../../../api/api'
 import { FormProvider } from '../../../../../context/fomulario/FormularioContext'
 import { Button, Dialog, Portal } from 'react-native-paper'
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -13,10 +13,11 @@ import { changeStateFinalizado } from '../../../../../services/tecnicosServices'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 interface Props {
-    OrdenTrabajo: OrdenTrabajo
+    OrdenTrabajo: OrdenTrabajo,
+    hasResultado: boolean
 }
 
-export const BasePage = ({ OrdenTrabajo }: Props) => {
+export const BasePage = ({ OrdenTrabajo, hasResultado }: Props) => {
     const [formulario, setFormulario] = useState<Formulario>()
     const [loading, setLoading] = useState(true)
     const navigator = useNavigation()
@@ -25,6 +26,8 @@ export const BasePage = ({ OrdenTrabajo }: Props) => {
     const [visible, setVisible] = React.useState(false);
     const showDialog = () => setVisible(true);
     const hideDialog = () => setVisible(false);
+
+    hasResultado ? console.log('tiene resultado ', OrdenTrabajo) : console.log('no tiene resultado')
 
 
     const finalizadoHandler = () => {
@@ -48,6 +51,7 @@ export const BasePage = ({ OrdenTrabajo }: Props) => {
     useEffect(() => {
         getFormularioAPI(OrdenTrabajo.formulario.id).then((response) => {
             setFormulario(response)
+
             setLoading(false)
         })
     }, [])
@@ -113,6 +117,8 @@ const styles = StyleSheet.create({
         borderColor: 'red',
     }
 })
+
+
 
 
 const FormState = ({ children }: any) => {

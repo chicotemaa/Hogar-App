@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import { Text, View } from 'react-native';
 import { RadioButton } from 'react-native-paper';
 import { CampoContext } from '../../../../../context/campo/CampoContext';
-import { Item } from '../Pagina/interfaces';
+import { Item } from '../../../../../services/interfaces';
 import { BaseCampo } from './BaseCampo';
 
 interface Props {

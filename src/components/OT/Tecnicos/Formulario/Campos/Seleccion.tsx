@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Text } from 'react-native';
 import { View } from 'react-native';
 import { Checkbox } from 'react-native-paper';
-import { Item } from '../Pagina/interfaces';
+import { Item } from '../../../../../services/interfaces';
 
 interface Props {
     item: Item
@@ -10,12 +10,12 @@ interface Props {
 
 
 export const SeleccionGroup = ({ item }: Props) => {
-    console.log('seleccion group',item)
+    console.log('seleccion group', item)
     const valuesSelected = []
 
     const SeleccionContext = React.useContext({})
 
-    const { item : { opciones }} = item;
+    const { item: { opciones } } = item;
 
     return (
         <View>

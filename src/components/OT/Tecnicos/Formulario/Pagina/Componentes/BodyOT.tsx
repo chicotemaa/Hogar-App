@@ -2,7 +2,7 @@ import * as React from 'react';
 import { ScrollView } from 'react-native';
 import { StyleSheet, View } from 'react-native';
 import { Button } from 'react-native-paper';
-import { Formulario, Modulo } from '../interfaces';
+import { Formulario, Modulo } from '../../../../../../services/interfaces';
 import { Pagina } from './Pagina';
 import Swiper from 'react-native-swiper';
 import StepIndicator from 'react-native-step-indicator';

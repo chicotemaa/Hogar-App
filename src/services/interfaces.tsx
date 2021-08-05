@@ -12,6 +12,7 @@ export interface OrdenTrabajo {
     longitud: string;
     longitudCierre: string;
     formulario: Formulario;
+    formularioResultado?: any
 }
 
 export interface Formulario {
