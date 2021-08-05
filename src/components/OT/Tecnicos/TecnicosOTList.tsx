@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native'
 import React, { useEffect, useState } from 'react'
-import { ScrollView, View, RefreshControl } from 'react-native'
+import { ScrollView, View, RefreshControl, Text } from 'react-native'
 import { OrdenTrabajo } from '../../../services/interfaces'
 import { getOrdenesTrabajoInfo } from '../../../services/tecnicosServices'
 import { ItemOT } from '../../ItemOT'
@@ -35,7 +35,7 @@ export const TecnicosOTList = () => {
 
 
     return (
-        <View>
+        <View style={{ flex: 1 }}>
             <ScrollView
                 refreshControl={
                     <RefreshControl
@@ -43,7 +43,7 @@ export const TecnicosOTList = () => {
                         onRefresh={onRefresh}
                     />
                 } >
-                {loading ? null :
+                {loading ? <EmptyList /> :
                     listaOT && listaOT.map((OT: OrdenTrabajo) => {
                         return (
                             <TransitionView key={OT.id} animation='slideInUp' index={0} isOT>
@@ -75,3 +75,9 @@ export const TecnicosOTList = () => {
     )
 }
 
+const EmptyList = () => {
+    return (
+        <View style={{ flex: 1 }}>
+            {(<Text>No hay ot pendientes</Text>)}
+        </View>)
+}
