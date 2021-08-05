@@ -38,13 +38,12 @@ export const BodyOT = ({ Formulario }: Props) => {
 
   return (
     <View style={{ flex: 1 }}>
-      <View style={{ marginVertical: 10, flex: 1 }}>
-
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', margin: 10, }}>
+      <View style={{ marginVertical: 5, marginHorizontal: 5, flex: 1 }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <Button mode="text" onPress={() => { cambiarPagina(page - 1) }}>
             Atras
           </Button>
-          <Button mode="text" onPress={() => { cambiarPagina(page + 1) }}>
+          <Button mode="contained" color={'green'} onPress={() => { cambiarPagina(page + 1) }}>
             Siguiente
           </Button>
         </View>

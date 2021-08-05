@@ -17,7 +17,7 @@ export const OTScreen = ({ navigation, route }: Props) => {
     return (
         <>
             <Header pageName="Orden de Trabajo" roleUser={'tecnico'} />
-            <View style={[styles.container, { paddingHorizontal: 0 }]}>
+            <View style={[{ flex: 1, paddingHorizontal: 0 }]}>
                 <BasePage OrdenTrabajo={OT} hasResultado={OT.formularioResultado != null} />
             </View>
         </>

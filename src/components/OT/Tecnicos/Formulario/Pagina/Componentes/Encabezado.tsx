@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { Divider } from 'react-native-paper'
-import { windowWidth } from '../../../../../../../App'
+import { windowHeight, windowWidth } from '../../../../../../../App'
 import { OrdenTrabajo } from '../../../../../../services/interfaces'
 
 interface Props {
@@ -12,9 +12,10 @@ interface Props {
 export const Encabezado = ({ OrdenTrabajo }: Props) => {
     return (
         <View>
-            <View >
+            <View style={styles.container} >
                 <Text style={styles.id}>#{OrdenTrabajo.id}</Text>
-                <Text style={styles.title}>{OrdenTrabajo.formulario.descripcion}</Text>
+                <Text style={styles.title}>{OrdenTrabajo.formulario.titulo}</Text>
+                <Text style={styles.subtitle}>{OrdenTrabajo.formulario.descripcion}</Text>
             </View>
             <Divider />
         </View>
@@ -24,6 +25,10 @@ export const Encabezado = ({ OrdenTrabajo }: Props) => {
 
 
 const styles = StyleSheet.create({
+    container: {
+        marginBottom: windowHeight * 0.03,
+        marginHorizontal: 5,
+    },
     id: {
         padding: 3,
         color: 'red',
@@ -34,6 +39,9 @@ const styles = StyleSheet.create({
         fontSize: 0.06 * windowWidth,
         fontWeight: '600',
         textTransform: 'capitalize',
-        textAlign: 'center'
+        textAlign: 'left'
+    },
+    subtitle: {
+        fontSize: 0.04 * windowWidth
     }
 })

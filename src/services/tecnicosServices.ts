@@ -23,7 +23,7 @@ export const getSucursalStreet = async (sucursalId: string) => {
 }
 
 export const getOrdenesTrabajoInfo = async (): Promise<OrdenTrabajo[]> => {
-    return await getOtByEstadoAPI().then(async (OrdenesTrabajo) => {
+    return await getOtByEstadoAPI().then(async (OrdenesTrabajo: OrdenTrabajo[]) => {
         return await Promise.all(
             OrdenesTrabajo.map(async (OrdenTrabajo: OrdenTrabajo) => {
                 return {
