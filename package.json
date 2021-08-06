@@ -43,6 +43,7 @@
     "react-native-swiper": "^1.6.0",
     "react-native-tab-view": "^2.16.0",
     "react-native-vector-icons": "^8.1.0",
+    "react-query": "^3.19.2",
     "rn-material-ui-textfield": "^1.0.4"
   },
   "devDependencies": {
