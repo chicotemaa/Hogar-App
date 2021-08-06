@@ -1,6 +1,7 @@
 import { useNavigation } from '@react-navigation/native'
 import React, { useEffect, useState } from 'react'
 import { ScrollView, View, RefreshControl, Text } from 'react-native'
+import { useQuery } from 'react-query'
 import { OrdenTrabajo } from '../../../services/interfaces'
 import { getOrdenesTrabajoInfo } from '../../../services/tecnicosServices'
 import { ItemOT } from '../../ItemOT'
@@ -8,31 +9,23 @@ import { TransitionView } from '../../TransitionView'
 
 
 export const TecnicosOTList = () => {
-    const [listaOT, setListaOT] = useState<OrdenTrabajo[]>()
-    const [loading, setLoading] = useState(true)
+    const queryOrdenesTrabajo = useQuery('OTList', getOrdenesTrabajoInfo)
+
     const [refreshing, setRefreshing] = React.useState(false);
     const stackNavigator = useNavigation();
-    const onRefresh = React.useCallback(() => {
-        setRefreshing(true);
-        getOrdenesTrabajoInfo().then((listaOT) => {
-            setListaOT(listaOT)
-            setTimeout(() => {
-                setRefreshing(false)
-            }, 2000)
-        })
 
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true)
+        queryOrdenesTrabajo.refetch
+        setRefreshing(false)
     }, []);
 
-    useEffect(() => {
-        setRefreshing(true)
-        getOrdenesTrabajoInfo().then((listaOt) => {
-            setListaOT(listaOt)
-            setLoading(false)
-            setRefreshing(false)
-        })
-    }, [])
+    if(queryOrdenesTrabajo.isError){
+        return (<View><Text>Error al obtener el listado de las ot {queryOrdenesTrabajo.error}</Text></View>)
+    }
 
-
+    const EmptyList = () => {return (<View><Text>No hay ot cargadas</Text></View>)}
+    
 
     return (
         <View style={{ flex: 1 }}>
@@ -43,8 +36,9 @@ export const TecnicosOTList = () => {
                         onRefresh={onRefresh}
                     />
                 } >
-                {loading ? <EmptyList /> :
-                    listaOT && listaOT.map((OT: OrdenTrabajo) => {
+                {queryOrdenesTrabajo.data && (
+                queryOrdenesTrabajo.data.length === 0 ? <EmptyList /> :
+                queryOrdenesTrabajo.data.map((OT: OrdenTrabajo) => {
                         return (
                             <TransitionView key={OT.id} animation='slideInUp' index={0} isOT>
                                 <ItemOT
@@ -66,10 +60,11 @@ export const TecnicosOTList = () => {
                                             stackNavigator.navigate('DetalleOTScreen')
                                         }
                                     }}
-                                /></TransitionView>
+                                />
+                            </TransitionView>
                         )
                     })
-                }
+                )}
             </ScrollView>
         </View>
     )
