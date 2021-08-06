@@ -18,7 +18,14 @@ const theme = {
   },
 };
 
-const queryClient = new QueryClient() 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries:{
+      retry: 0, //cantidad de intentos en error 
+      refetchOnWindowFocus: false
+    }
+  }
+}) 
 
 export const windowWidth = Dimensions.get('window').width;
 export const windowHeight = Dimensions.get('window').height;
