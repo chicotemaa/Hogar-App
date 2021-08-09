@@ -21,7 +21,7 @@ const theme = {
 const queryClient = new QueryClient({
   defaultOptions: {
     queries:{
-      retry: 0, //cantidad de intentos en error 
+      retry: 1, //cantidad de intentos en error 
       refetchOnWindowFocus: false
     }
   }
