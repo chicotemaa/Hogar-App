@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useContext } from 'react';
 import { Text, View } from 'react-native';
 import { RadioButton } from 'react-native-paper';
-import { CampoContext } from '../../../../../context/campo/CampoContext';
+import { CampoContext } from '~/context/campo/CampoContext';
 import { Item } from '../Pagina/interfaces';
 import { BaseCampo } from './BaseCampo';
 

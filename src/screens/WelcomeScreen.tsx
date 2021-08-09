@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { DrawerScreenProps } from '@react-navigation/drawer';
 
-import { Header } from '../components/Header';
-import { getToken, getUserInfo } from '../api/api';
-import { TecnicosWelcomeScreen } from '../components/Welcome/TecnicosWelcomeScreen';
-import { WelcomeOptions } from '../components/Welcome/WelcomeOptions';
+import { Header } from '~/components/Header';
+import { getToken, getUserInfo } from '~/api/api';
+import { TecnicosWelcomeScreen } from '~/components/Welcome/TecnicosWelcomeScreen';
+import { WelcomeOptions } from '~/components/Welcome/WelcomeOptions';
 import { View } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
-import { getNombreCliente } from '../api/apiClientes';
+import { getNombreCliente } from '~/api/apiClientes';
 
 interface Props extends DrawerScreenProps<any, any> {}
 

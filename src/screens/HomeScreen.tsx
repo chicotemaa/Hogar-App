@@ -2,20 +2,20 @@ import React, { useEffect } from 'react';
 
 import { DrawerScreenProps } from '@react-navigation/drawer';
 import { Text, View, Image, ScrollView, ImageBackground } from 'react-native';
-import { windowHeight, windowWidth } from '../../App';
+import { windowHeight, windowWidth } from '~/dimensions';
 
-import santander from '../assets/images/clientes/santander.png';
-import apex from '../assets/images/clientes/apex.png';
-import easy from '../assets/images/clientes/easy.png';
-import atento from '../assets/images/clientes/atento.png';
-import naranja from '../assets/images/clientes/naranja.jpg';
-import libertad from '../assets/images/clientes/libertad.png';
+import santander from '~/assets/images/clientes/santander.png';
+import apex from '~/assets/images/clientes/apex.png';
+import easy from '~/assets/images/clientes/easy.png';
+import atento from '~/assets/images/clientes/atento.png';
+import naranja from '~/assets/images/clientes/naranja.jpg';
+import libertad from '~/assets/images/clientes/libertad.png';
 
-import fondo from '../assets/images/util/fondo.jpeg';
-import logo from '../assets/images/util/logo.png';
+import fondo from '~/assets/images/util/fondo.jpeg';
+import logo from '~/assets/images/util/logo.png';
 
 import { StyleSheet } from 'react-native';
-import { Button } from '../components/Button';
+import { Button } from '~/components/Button';
 
 interface Props extends DrawerScreenProps<any, any> {}
 

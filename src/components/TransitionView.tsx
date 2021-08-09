@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { View } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import { theme } from '../theme/appTheme';
+import { theme } from '~/theme/appTheme';
 
 type PropsType = {
   isOT?: boolean;

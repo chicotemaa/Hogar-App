@@ -2,11 +2,11 @@ import { StackScreenProps } from '@react-navigation/stack';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-elements';
-import { RootStackParams } from '../navigator/StackNavigator';
+import { RootStackParams } from '~/navigator/StackNavigator';
 import { DetalleButton } from './Historial/DetalleButton';
 import { Estado } from './Historial/Estado';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import { getSucursalCliente } from '../api/apiClientes';
+import { getSucursalCliente } from '~/api/apiClientes';
 import { TransitionView } from './TransitionView';
 
 interface Props

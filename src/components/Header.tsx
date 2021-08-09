@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { Text, View, Platform } from 'react-native';
 import { Appbar } from 'react-native-paper';
-import { windowWidth, windowHeight } from '../../App';
+import { windowWidth, windowHeight } from '~/dimensions';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 
 interface Props {

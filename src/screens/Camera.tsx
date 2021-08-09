@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 
 import { RNCamera } from 'react-native-camera';
 import { useCamera } from 'react-native-camera-hooks';
-import { Button } from '../components/Button';
+import { Button } from '~/components/Button';
 
 export const Camera = () => {
   const [{ cameraRef }, { takePicture }] = useCamera();

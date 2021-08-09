@@ -3,7 +3,7 @@ import { View, Button, Platform, TouchableOpacity, Text } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { StyleSheet } from 'react-native';
 import { IconButton } from 'react-native-paper';
-import { windowHeight } from '../../../../../../App';
+import { windowHeight } from '~/dimensions';
 
 interface DatePickerProps {
   modo: 'date' | 'time' | 'completo';
