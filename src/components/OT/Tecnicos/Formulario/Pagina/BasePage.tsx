@@ -10,8 +10,9 @@ import { Button, Dialog, Portal } from 'react-native-paper'
 import Spinner from 'react-native-loading-spinner-overlay';
 import { useNavigation } from '@react-navigation/native'
 import { changeStateFinalizado } from '../../../../../services/tecnicosServices'
-import { SafeAreaView } from 'react-native-safe-area-context'
 import { Platform } from 'react-native'
+import {useMutation, useQueryClient} from 'react-query'
+
 
 interface Props {
     OrdenTrabajo: OrdenTrabajo,
@@ -23,6 +24,20 @@ export const BasePage = ({ OrdenTrabajo, hasResultado }: Props) => {
     const [loading, setLoading] = useState(true)
     const navigator = useNavigation()
 
+    const mutateFinalizado = useMutation(changeStateFinalizado, {
+        onSettled: () => {
+            console.log('final')
+        },
+        onSuccess:  () => {
+            console.log('exito')
+            navigator.navigate('SuccessScreen', { success: true })
+        },
+        onError: () => {
+            console.log('error')
+            navigator.navigate('SuccessScreen', { success: false })
+        }
+    })
+
     //Para firma
     const [visible, setVisible] = React.useState(false);
     const showDialog = () => setVisible(true);
@@ -32,10 +47,8 @@ export const BasePage = ({ OrdenTrabajo, hasResultado }: Props) => {
 
 
     const finalizadoHandler = () => {
-        console.log('finalizando')
         hideDialog()
-
-        changeStateFinalizado(OrdenTrabajo).then((resolved) => {
+        changeStateFinalizado(OrdenTrabajo).then((resolved) => {           
             navigator.navigate('SuccessScreen', { success: resolved })
             //TODO: setear como finalizado en la lista la ot correspondiente
         })
@@ -52,7 +65,6 @@ export const BasePage = ({ OrdenTrabajo, hasResultado }: Props) => {
     useEffect(() => {
         getFormularioAPI(OrdenTrabajo.formulario.id).then((response) => {
             setFormulario(response)
-
             setLoading(false)
         })
     }, [])
@@ -117,6 +129,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         borderColor: 'red',
+        marginTop: 10,
+        marginBottom: Platform.OS === 'android' ? 20 : 0 
     }
 })
 
