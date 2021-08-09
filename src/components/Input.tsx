@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {StyleSheet, TextInput} from 'react-native';
+import { StyleSheet, TextInput } from 'react-native';
 
 export const Input = () => {
   return <TextInput style={styles.component} placeholder={'Input'} />;

@@ -92,14 +92,8 @@ export const StackNavigator = () => {
         component={TecnicosOTList}
         options={{ headerShown: false }}
       />
-      <Stack.Screen
-        name="OTScreen"
-        component={OTScreen}
-      />
-      <Stack.Screen
-        name="Camera"
-        component={Camera}
-      />
+      <Stack.Screen name="OTScreen" component={OTScreen} />
+      <Stack.Screen name="Camera" component={Camera} />
     </Stack.Navigator>
   );
 };

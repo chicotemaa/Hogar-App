@@ -8,7 +8,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 const errorAnimation = require('../assets/lottie/error');
 const successAnimation = require('../assets/lottie/success');
 
-interface Props extends StackScreenProps<any, any> { }
+interface Props extends StackScreenProps<any, any> {}
 
 export const SuccessScreen = ({ navigation, route }: Props) => {
   const [success, setSuccess] = useState(true);
@@ -48,8 +48,8 @@ export const SuccessScreen = ({ navigation, route }: Props) => {
 
 const message = (success: boolean) => {
   return success
-    ? `Su solicitud será procesada en la brevedad`
-    : `Su solicitud no pudo ser generada`;
+    ? 'Su solicitud será procesada en la brevedad'
+    : 'Su solicitud no pudo ser generada';
 };
 
 const lottieAnimation = (success: boolean) => {

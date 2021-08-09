@@ -1,11 +1,11 @@
 import React from 'react';
-import {FlexStyle, Text, View} from 'react-native';
+import { FlexStyle, Text, View } from 'react-native';
 
 interface PropsEstado {
   horaInicio: string;
   horaFin: string;
 }
-export const Estado = ({horaInicio, horaFin}: PropsEstado) => {
+export const Estado = ({ horaInicio, horaFin }: PropsEstado) => {
   const right = {
     marginVertical: 5,
     paddingLeft: 20,
@@ -19,7 +19,7 @@ export const Estado = ({horaInicio, horaFin}: PropsEstado) => {
   };
 
   const Divisor = () => {
-    return <View style={{borderWidth: 1, borderColor: '#DFDFDF', flex: 1}} />;
+    return <View style={{ borderWidth: 1, borderColor: '#DFDFDF', flex: 1 }} />;
   };
 
   return (
@@ -28,8 +28,8 @@ export const Estado = ({horaInicio, horaFin}: PropsEstado) => {
         flexDirection: 'row',
         marginVertical: 20,
       }}>
-      <View style={{flex: 1}}>
-        <Text style={[right, {fontSize: 20}]}>Estado</Text>
+      <View style={{ flex: 1 }}>
+        <Text style={[right, { fontSize: 20 }]}>Estado</Text>
         <Divisor />
 
         <Text style={right}>Inicio</Text>
@@ -42,8 +42,8 @@ export const Estado = ({horaInicio, horaFin}: PropsEstado) => {
         <Text style={right}>Minutos Trabajados</Text>
         <Divisor />
       </View>
-      <View style={{flex: 1}}>
-        <Text style={[left, {fontSize: 20}]}>Finalizado</Text>
+      <View style={{ flex: 1 }}>
+        <Text style={[left, { fontSize: 20 }]}>Finalizado</Text>
         <Divisor />
         <Text style={left}>{horaFin}</Text>
         <Divisor />

@@ -8,18 +8,23 @@ import { DrawerNavigationProp } from '@react-navigation/drawer';
 interface Props {
   pageName?: string;
   userName?: string;
-  clienteName?: string | Promise<string>
+  clienteName?: string | Promise<string>;
   ProgressCircle?: any;
   roleUser?: string;
   id?: number;
 }
 
-export const Header = ({ pageName, userName, roleUser, clienteName }: Props) => {
+export const Header = ({
+  pageName,
+  userName,
+  roleUser,
+  clienteName,
+}: Props) => {
   const isWelcomePage = pageName === 'Bienvenido';
   const isFormSolicitud = pageName === 'Nueva Solicitud';
   pageName = pageName == 'Solicitud' ? 'Informe de solicitud' : pageName;
   const isTecnico = roleUser == 'tecnico';
-  const paddingHeader = isWelcomePage ? isTecnico ? 0 : 10 : 0;
+  const paddingHeader = isWelcomePage ? (isTecnico ? 0 : 10) : 0;
   const flexDHeader = isWelcomePage ? 'column' : 'row';
   const heightPage = isTecnico ? '12%' : '30%';
 
@@ -36,9 +41,9 @@ export const Header = ({ pageName, userName, roleUser, clienteName }: Props) => 
       {!isWelcomePage ? (
         <Appbar.Header
           style={{
-            height: windowHeight * 0.12
+            height: windowHeight * 0.12,
           }}>
-          < Appbar.BackAction
+          <Appbar.BackAction
             color="white"
             onPress={_goBack}
             size={windowHeight * 0.035}
@@ -59,12 +64,15 @@ export const Header = ({ pageName, userName, roleUser, clienteName }: Props) => 
         </Appbar.Header>
       ) : (
         <>
-          <Appbar.Header style={{ marginTop: 0.04 * windowHeight, elevation: 0 }}>
+          <Appbar.Header
+            style={{ marginTop: 0.04 * windowHeight, elevation: 0 }}>
             <Appbar.Content
               color="white"
               title={pageName}
-              titleStyle={{ textAlign: 'auto', fontSize: windowHeight * 0.05, }}
-              subtitle={isFormSolicitud ? 'Complete los datos necesarios' : null}
+              titleStyle={{ textAlign: 'auto', fontSize: windowHeight * 0.05 }}
+              subtitle={
+                isFormSolicitud ? 'Complete los datos necesarios' : null
+              }
             />
             <View>
               <Appbar.Action
@@ -86,28 +94,33 @@ export const Header = ({ pageName, userName, roleUser, clienteName }: Props) => 
               <View style={{ marginHorizontal: 5 }}>
                 <View style={{ flexDirection: flexDHeader }}>
                   {/* {PageName(pageName)} */}
-                  {isWelcomePage ? WelcomeHeader(userName, isTecnico, clienteName) : null}
+                  {isWelcomePage
+                    ? WelcomeHeader(userName, isTecnico, clienteName)
+                    : null}
                 </View>
               </View>
             </View>
           </View>
         </>
-      )
-      }
+      )}
     </>
   );
 };
 
-
-
 const getCurrentDate = () => {
-  return new Date().toLocaleDateString('es-AR', { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' });
-}
+  return new Date().toLocaleDateString('es-AR', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  });
+};
 
-
-
-
-const WelcomeHeader = (username: string, isTecnico: boolean, clienteName: string) => {
+const WelcomeHeader = (
+  username: string,
+  isTecnico: boolean,
+  clienteName: string,
+) => {
   return (
     <View
       style={{
@@ -120,11 +133,11 @@ const WelcomeHeader = (username: string, isTecnico: boolean, clienteName: string
           fontWeight: isTecnico ? '300' : 'bold',
           marginLeft: Platform.OS === 'android' ? 10 : 0,
           textAlign: Platform.OS === 'ios' ? 'center' : 'auto',
-          textTransform: 'capitalize'
+          textTransform: 'capitalize',
         }}>
         {isTecnico ? getCurrentDate() : username}
       </Text>
-      { }
+      {}
       <Text
         style={{
           color: '#FFFFFF',

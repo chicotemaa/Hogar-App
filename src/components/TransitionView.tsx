@@ -5,7 +5,7 @@ import { theme } from '../theme/appTheme';
 
 type PropsType = {
   isOT?: boolean;
-  index?: number
+  index?: number;
 };
 
 export class TransitionView extends PureComponent<PropsType> {

@@ -19,18 +19,19 @@ interface Cliente {
 
 export const getNombreCliente = async (id: string): Promise<string> => {
   const query = {
-    url: `/clientes/${id}`
-  }
+    url: `/clientes/${id}`,
+  };
   const token: string = await getData('access_token');
-  return await api.get(baseApi + query.url, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    }
-  }).then(response => {
-    return (response.data.razonSocial)
-
-  })
-}
+  return await api
+    .get(baseApi + query.url, {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    })
+    .then(response => {
+      return response.data.razonSocial;
+    });
+};
 
 const getSolicitudesRequest = async (token: string) => {
   const query = {
@@ -43,23 +44,30 @@ const getSolicitudesRequest = async (token: string) => {
   });
   let arrayResponse = response.data['hydra:member'];
 
-  return arrayResponse
+  return arrayResponse;
 };
-
-
 
 export const getSolicitudesAPI = async (token: string) => {
   return getSolicitudesRequest(token)
     .then(array => {
-      const elements = array.map(({ id, cliente, createdAt, SucursalDeCliente, necesitasAyuda, estado }: Solicitud) => {
-        return {
-          number: id,
-          location: SucursalDeCliente,
-          date: createdAt,
-          title: necesitasAyuda,
+      const elements = array.map(
+        ({
+          id,
+          cliente,
+          createdAt,
+          SucursalDeCliente,
+          necesitasAyuda,
           estado,
-        };
-      });
+        }: Solicitud) => {
+          return {
+            number: id,
+            location: SucursalDeCliente,
+            date: createdAt,
+            title: necesitasAyuda,
+            estado,
+          };
+        },
+      );
       return elements.reverse();
     })
     .catch(error => {
@@ -102,7 +110,7 @@ export const sendSolicitud = async ({
 
   const cliente = userInfo.data.cliente['@id'];
   const { Facility, SucursalDeCliente } = userInfo.data;
-  const sucursalHogar = userInfo.data.sucursal
+  const sucursalHogar = userInfo.data.sucursal;
 
   const data = {
     cliente: cliente,

@@ -20,7 +20,7 @@ import { styles } from '../theme/appTheme';
 import { TransitionView } from '../components/TransitionView';
 
 interface Props
-  extends StackScreenProps<RootStackParams, 'FormSolicitudScreen'> { }
+  extends StackScreenProps<RootStackParams, 'FormSolicitudScreen'> {}
 
 interface Servicio {
   ['id']: string;
@@ -78,7 +78,7 @@ export const FormSolicitudScreen = ({ navigation, route }: Props) => {
       setSucursal(sucursales);
     });
     getAllServiciosAPI().then(arrayServicios => {
-      console.log(arrayServicios)
+      console.log(arrayServicios);
       setServicios(arrayServicios);
       setSpinner(!spinner);
     });
