@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { windowHeight, windowWidth } from '../../App';
+import { windowHeight, windowWidth } from '~/dimensions';
 
 interface Props {
   id: number;

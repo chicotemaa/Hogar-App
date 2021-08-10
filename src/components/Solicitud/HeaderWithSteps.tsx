@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import ProgressCircle from 'react-native-progress-circle';
-import { windowHeight, windowWidth } from '../../../App';
+import { windowHeight, windowWidth } from '~/dimensions';
 import { Header } from '../Header';
 
 interface Props {

@@ -2,8 +2,7 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Avatar, Text } from 'react-native-elements';
 import { Image } from 'react-native-elements/dist/image/Image';
-
-const logo = require('../assets/images/util/hogarLogo.png');
+import logo from '~/assets/images/util/hogarLogo.png';
 
 export const Logo = () => {
   return (

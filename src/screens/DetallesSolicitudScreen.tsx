@@ -1,14 +1,14 @@
 import { StackScreenProps } from '@react-navigation/stack';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { getSolicitudById, getSucursalCliente } from '../api/apiClientes';
-import { RootStackParams } from '../navigator/StackNavigator';
-import { getImage, getServicioAPI } from '../api/api';
-import { Solicitud } from '../components/Solicitud';
-import { Header } from '../components/Header';
+import { getSolicitudById, getSucursalCliente } from '~/api/apiClientes';
+import { RootStackParams } from '~/navigator/StackNavigator';
+import { getData, getImage, getServicioAPI } from '~/api/api';
+import { Solicitud } from '~/components/Solicitud';
+import { Header } from '~/components/Header';
 
 interface Props
-  extends StackScreenProps<RootStackParams, 'DetalleSolicitudScreen'> {}
+  extends StackScreenProps<RootStackParams, 'DetalleSolicitudScreen'> { }
 
 interface InfoSolicitud {
   consulta: string; //description

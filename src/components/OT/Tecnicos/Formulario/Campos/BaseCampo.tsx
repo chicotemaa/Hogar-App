@@ -1,17 +1,14 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Text, View } from 'react-native';
-import { windowWidth } from '../../../../../../App';
+import { windowWidth } from '~/dimensions';
 import { Item } from '../Pagina/interfaces';
 import { Casilla } from './Casilla';
 import { Desplegable } from './Desplegable';
 import { SeleccionGroup } from './Seleccion';
 import { Texto } from './Texto';
 import { DateInput } from './Date';
-import {
-  CampoContext,
-  CampoProvider,
-} from '../../../../../context/campo/CampoContext';
+import { CampoContext, CampoProvider } from '~/context/campo/CampoContext';
 import { useContext } from 'react';
 
 interface Props {

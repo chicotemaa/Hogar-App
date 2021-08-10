@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Button, ScrollView } from 'react-native';
-import { Header } from '../components/Header';
-import { ItemOT } from '../components/ItemOT';
+import { Header } from '~/components/Header';
+import { ItemOT } from '~/components/ItemOT';
 
 export const ListadoOTScreen = ({ navigation }) => {
   return (

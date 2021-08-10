@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { styles, theme } from '../theme/appTheme';
-import { ItemHistorial } from '../components/ItemHistorial';
+import { styles, theme } from '~/theme/appTheme';
+import { ItemHistorial } from '~/components/ItemHistorial';
 import { ScrollView } from 'react-native-gesture-handler';
-import { getSolicitudesAPI } from '../api/apiClientes';
-import { RootStackParams } from '../navigator/StackNavigator';
+import { getSolicitudesAPI } from '~/api/apiClientes';
+import { RootStackParams } from '~/navigator/StackNavigator';
 import { StackScreenProps } from '@react-navigation/stack';
-import { Header } from '../components/Header';
+import { getData } from '~/api/api';
+import { Header } from '~/components/Header';
 import Spinner from 'react-native-loading-spinner-overlay';
-import { TransitionView } from '../components/TransitionView';
+import { TransitionView } from '~/components/TransitionView';
 
 interface Props
-  extends StackScreenProps<RootStackParams, 'HistorialSolicitudesScreen'> {}
+  extends StackScreenProps<RootStackParams, 'HistorialSolicitudesScreen'> { }
 
 interface Solicitud {
   title: string;

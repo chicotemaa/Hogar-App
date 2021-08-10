@@ -2,20 +2,20 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
 /* Screens */
-import { HomeScreen } from '../screens/HomeScreen';
-import { LoginScreen } from '../screens/LoginScreen';
-import { WelcomeScreen } from '../screens/WelcomeScreen';
+import { HomeScreen } from '~/screens/HomeScreen';
+import { LoginScreen } from '~/screens/LoginScreen';
+import { WelcomeScreen } from '~/screens/WelcomeScreen';
 //Para cliente
-import { HistorialSolicitudesScreen } from '../screens/HistorialSolicitudesScreen';
-import { DetallesSolicitudScreen } from '../screens/DetallesSolicitudScreen';
-import { FormSolicitudScreen } from '../screens/FormSolicitudScreen';
-import { SuccessScreen } from '../screens/SuccessScreen';
-import { ListadoOTScreen } from '../screens/ListadoOTScreen';
-import { DetalleOTScreen } from '../screens/DetalleOTScreen';
-import { NewSolicitudScreen } from '../screens/NewSolicitudScreen';
-import { TecnicosOTList } from '../components/OT/Tecnicos/TecnicosOTList';
-import { OTScreen } from '../screens/tecnicos/OTScreen';
-import { Camera } from '../screens/Camera';
+import { HistorialSolicitudesScreen } from '~/screens/HistorialSolicitudesScreen';
+import { DetallesSolicitudScreen } from '~/screens/DetallesSolicitudScreen';
+import { FormSolicitudScreen } from '~/screens/FormSolicitudScreen';
+import { SuccessScreen } from '~/screens/SuccessScreen';
+import { ListadoOTScreen } from '~/screens/ListadoOTScreen';
+import { DetalleOTScreen } from '~/screens/DetalleOTScreen';
+import { NewSolicitudScreen } from '~/screens/NewSolicitudScreen';
+import { TecnicosOTList } from '~/components/OT/Tecnicos/TecnicosOTList';
+import { OTScreen } from '~/screens/tecnicos/OTScreen';
+import { Camera } from '~/screens/Camera';
 
 /* Params in pages */
 export type RootStackParams = {

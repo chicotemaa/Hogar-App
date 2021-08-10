@@ -6,7 +6,7 @@ import { Formulario, Modulo } from '../interfaces';
 import { Pagina } from './Pagina';
 import Swiper from 'react-native-swiper';
 import StepIndicator from 'react-native-step-indicator';
-import { FormContext } from '../../../../../../context/fomulario/FormularioContext';
+import { FormContext } from '~/context/fomulario/FormularioContext';
 import { useContext } from 'react';
 
 interface Props {

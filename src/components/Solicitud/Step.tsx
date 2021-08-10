@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { windowHeight, windowWidth } from '../../../App';
+import { windowHeight, windowWidth } from '~/dimensions';
 import { HeaderWithSteps } from './HeaderWithSteps';
 
 class Step extends PureComponent {
