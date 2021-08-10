@@ -58,3 +58,68 @@ export const changeStateOrdenTrabajo = async (ordenTrabajo: any, data: any) => {
     })
 }
 
+export const postResultado = async () => {
+    let headers = {
+        'Content-Type' : 'application/ld+json',
+        'Authorization' : 'Bearer ' + await getData('access_token')
+    }
+
+    const data = {
+        resultados:[
+           {
+              valor:[
+                 "asd"
+              ],
+              propiedadItem:"/api/propiedad_items/2444",
+              imageName:"string",
+              imageSize:0,
+              latitud:"2",
+              longitud:"3",
+              indiceItem:0,
+              indiceModulo:0,
+              idModulo:0,
+              isColeccionable:false
+           },{
+            valor:[
+               847
+            ],
+            propiedadItem:"/api/propiedad_items/2459",
+            imageName:"string",
+            imageSize:0,
+            latitud:"2",
+            longitud:"3",
+            indiceItem:0,
+            indiceModulo:0,
+            idModulo:0,
+            isColeccionable:false
+         },
+         {
+            valor:[
+               847
+            ],
+            propiedadItem:"/api/propiedad_items/2459",
+            imageName:"string",
+            imageSize:0,
+            latitud:"2",
+            longitud:"3",
+            indiceItem:0,
+            indiceModulo:0,
+            idModulo:0,
+            isColeccionable:false
+         },
+        ],
+        latitud:"12345",
+        longitud:"000000",
+        ordenTrabajo:"/api/orden_trabajos/4887",
+        minutosTrabajado:16,
+        minutosReales:6
+     }
+
+    return fetch(baseApi+'/formulario_resultados',{
+        method:'POST',
+        headers,
+        body: JSON.stringify(data)
+    }).then((response) => {
+        console.log(response)
+    })
+}
