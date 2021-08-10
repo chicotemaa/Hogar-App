@@ -32,17 +32,11 @@ export const FormLogin = ({ pageToGo }: Props) => {
 
     setIsLoading(true);
 
-    functionToGetToken(email, password)
-      .then(response => {
+    login(email, password)
+      .then(() => {
         setIsLoading(false);
         setCorrectLogin(true);
-        const { access_token, expires_in, refresh_token } = response.data;
-        storeData('access_token', access_token);
-        storeData('timeExpire', expires_in.toString());
-        storeData('refresh_token', refresh_token);
-        getData('access_token').then(() => {
-          pageToGo();
-        });
+        pageToGo();
       })
       .catch(error => {
         onToggleSnackBar();

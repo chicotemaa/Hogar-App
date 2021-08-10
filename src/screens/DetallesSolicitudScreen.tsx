@@ -8,7 +8,7 @@ import { Solicitud } from '~/components/Solicitud';
 import { Header } from '~/components/Header';
 
 interface Props
-  extends StackScreenProps<RootStackParams, 'DetalleSolicitudScreen'> {}
+  extends StackScreenProps<RootStackParams, 'DetalleSolicitudScreen'> { }
 
 interface InfoSolicitud {
   consulta: string; //description
@@ -41,22 +41,20 @@ export const DetallesSolicitudScreen = ({ navigation, route }: Props) => {
   const estados = ['Pendiente', 'Generada OT', 'Derivada'];
 
   useEffect(() => {
-    getData('access_token').then(token => {
-      getSolicitudById(id, token).then(solicitud => {
-        console.log(solicitud);
-        getSucursalCliente(solicitud.SucursalDeCliente).then(sucursal => {
-          getImage(solicitud.imagen).then(imagen => {
-            setSolicitud({
-              token,
-              consulta: solicitud.consulta,
-              createdAt: solicitud.createdAt,
-              estado: estados[solicitud.estado],
-              necesitasAyuda: solicitud.necesitasAyuda,
-              servicio: solicitud.servicio.titulo,
-              sucursalClienteDir: sucursal.direccion,
-              sector: solicitud.pisoSector,
-              imagen,
-            });
+    getSolicitudById(id).then(solicitud => {
+      console.log(solicitud);
+      getSucursalCliente(solicitud.SucursalDeCliente).then(sucursal => {
+        getImage(solicitud.imagen).then(({ imagen, token }) => {
+          setSolicitud({
+            consulta: solicitud.consulta,
+            createdAt: solicitud.createdAt,
+            estado: estados[solicitud.estado],
+            necesitasAyuda: solicitud.necesitasAyuda,
+            servicio: solicitud.servicio.titulo,
+            sucursalClienteDir: sucursal.direccion,
+            sector: solicitud.pisoSector,
+            imagen,
+            token,
           });
         });
       });

@@ -43,7 +43,7 @@ export const ItemsSideBar = ({ navigation, isWelcome }: Props) => {
           mode="text"
           theme={{ colors: { primary: '#ef492010' } }}
           onPress={() => {
-            deleteItem('access_token');
+            logout();
             navigation.closeDrawer();
             navigation.dispatch(StackActions.popToTop());
           }}>
