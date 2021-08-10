@@ -1,9 +1,9 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { ScrollView, View, RefreshControl } from 'react-native';
-import { getOtByUserAPI } from '../../../api/apiTecnicos';
-import { ItemOT } from '../../ItemOT';
-import { TransitionView } from '../../TransitionView';
+import { getOtByUserAPI } from '~/api/apiTecnicos';
+import { ItemOT } from '~/components/ItemOT';
+import { TransitionView } from '~/components/TransitionView';
 
 interface detalleOT {
   id: number;

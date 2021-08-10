@@ -1,4 +1,4 @@
-import { api, base, baseApi, getData, getUserInfo } from './api';
+import { api, apiFetch, baseApi, getUserInfo } from './api';
 
 //consulta -> descripcion
 //necesitasAyuda -> titulo
@@ -17,76 +17,6 @@ interface Cliente {
   street: string;
 }
 
-export const getNombreCliente = async (id: string): Promise<string> => {
-  const query = {
-    url: `/clientes/${id}`,
-  };
-  const token: string = await getData('access_token');
-  return await api
-    .get(baseApi + query.url, {
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
-    })
-    .then(response => {
-      return response.data.razonSocial;
-    });
-};
-
-const getSolicitudesRequest = async (token: string) => {
-  const query = {
-    url: '/solicitud/by/user',
-  };
-  const response = await api.get(baseApi + query.url, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-  let arrayResponse = response.data['hydra:member'];
-
-  return arrayResponse;
-};
-
-export const getSolicitudesAPI = async (token: string) => {
-  return getSolicitudesRequest(token)
-    .then(array => {
-      const elements = array.map(
-        ({
-          id,
-          cliente,
-          createdAt,
-          SucursalDeCliente,
-          necesitasAyuda,
-          estado,
-        }: Solicitud) => {
-          return {
-            number: id,
-            location: SucursalDeCliente,
-            date: createdAt,
-            title: necesitasAyuda,
-            estado,
-          };
-        },
-      );
-      return elements.reverse();
-    })
-    .catch(error => {
-      console.log(error);
-    });
-};
-
-export const getSolicitudById = async (id: string, token: string) => {
-  const query = {
-    url: '/solicituds/' + id,
-  };
-  const response = await api.get(baseApi + query.url, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-  return response.data;
-};
-
 interface SolicitudPost {
   tipoServicio: string;
   nombreServicio: string;
@@ -95,18 +25,50 @@ interface SolicitudPost {
   foto: string;
 }
 
+export const getNombreCliente = async (id: string): Promise<string> => {
+  const response = await api.get(`/clientes/${id}`);
+  return response.data.razonSocial;
+};
+
+const getSolicitudesRequest = async () => {
+  const response = await api.get('/solicitud/by/user');
+  return response.data['hydra:member'];
+};
+
+export const getSolicitudesAPI = async () => {
+  const array = await getSolicitudesRequest();
+  const elements = array.map(
+    ({
+      id,
+      createdAt,
+      SucursalDeCliente,
+      necesitasAyuda,
+      estado,
+    }: Solicitud) => {
+      return {
+        number: id,
+        location: SucursalDeCliente,
+        date: createdAt,
+        title: necesitasAyuda,
+        estado,
+      };
+    },
+  );
+  return elements.reverse();
+};
+
+export const getSolicitudById = async (id: string) => {
+  const response = await api.get(`/solicituds/${id}`);
+  return response.data;
+};
+
 export const sendSolicitud = async ({
   tipoServicio,
   causa,
   descripcion,
   foto,
-}: SolicitudPost) => {
-  const query = {
-    url: '/solicituds',
-  };
-
-  const token: string = await getData('access_token');
-  const userInfo = await getUserInfo(token);
+}: SolicitudPost): Promise<boolean> => {
+  const userInfo = await getUserInfo();
 
   const cliente = userInfo.data.cliente['@id'];
   const { Facility, SucursalDeCliente } = userInfo.data;
@@ -114,7 +76,7 @@ export const sendSolicitud = async ({
 
   const data = {
     cliente: cliente,
-    servicio: tipoServicio == '' ? '/api/servicios/8' : tipoServicio,
+    servicio: tipoServicio === '' ? '/api/servicios/8' : tipoServicio,
     estado: 0,
     necesitasAyuda: causa,
     imageSize: 0,
@@ -131,53 +93,30 @@ export const sendSolicitud = async ({
 
   //ESTE CODIGO ES UNA MASA fetch love
 
-  return fetch(baseApi + query.url, {
+  return apiFetch('/solicituds', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/ld+json',
-      Authorization: 'Bearer ' + token,
     },
     body: JSON.stringify(data),
   })
     .then(response => {
-      return response.status == 201;
+      return response.status === 201;
     })
     .catch(err => {
       console.log(err);
+      return false;
     });
 };
 
 export const getSucursalesAPI = async () => {
-  const token = await getData('access_token');
-  const user = await getUserInfo(token);
+  const user = await getUserInfo();
   const sucursalCliente = user.data.SucursalDeCliente;
-  return api
-    .get(base + sucursalCliente, {
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
-    })
-    .then(response => {
-      return response.data.direccion;
-    })
-    .catch(err => {
-      return err;
-    });
+  const response = await baseApi.get(sucursalCliente);
+  return response.data.direccion;
 };
 
 export const getSucursalCliente = async (sucursal: string) => {
-  const token = await getData('access_token');
-
-  return api
-    .get(base + sucursal, {
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
-    })
-    .then(response => {
-      return response.data;
-    })
-    .catch(err => {
-      return err;
-    });
+  const response = await baseApi.get(sucursal);
+  return response.data;
 };

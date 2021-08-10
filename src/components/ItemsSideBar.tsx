@@ -5,8 +5,8 @@ import {
 } from '@react-navigation/drawer';
 import { Text, View } from 'react-native';
 import { Button } from 'react-native-paper';
-import { deleteItem, getToken } from '../api/api';
-import { styles } from '../theme/appTheme';
+import { deleteItem, getToken } from '~/api/api';
+import { styles } from '~/theme/appTheme';
 import { StackActions } from '@react-navigation/native';
 
 interface Props
@@ -43,7 +43,7 @@ export const ItemsSideBar = ({ navigation, isWelcome }: Props) => {
           mode="text"
           theme={{ colors: { primary: '#ef492010' } }}
           onPress={() => {
-            deleteItem('access_token');
+            logout();
             navigation.closeDrawer();
             navigation.dispatch(StackActions.popToTop());
           }}>

@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { View, Text } from 'react-native';
 import LottieView from 'lottie-react-native';
 import { StackScreenProps } from '@react-navigation/stack';
-import { styles } from '../theme/appTheme';
+import { styles } from '~/theme/appTheme';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-const errorAnimation = require('../assets/lottie/error');
-const successAnimation = require('../assets/lottie/success');
+const errorAnimation = require('~/assets/lottie/error');
+const successAnimation = require('~/assets/lottie/success');
 
 interface Props extends StackScreenProps<any, any> {}
 

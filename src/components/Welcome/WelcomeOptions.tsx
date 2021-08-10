@@ -1,9 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-import { Title } from '../Title';
-import { Button } from '../Button';
-import { styles } from '../../theme/appTheme';
+import { Title } from '~/components/Title';
+import { Button } from '~/components/Button';
+import { styles } from '~/theme/appTheme';
 
 export const WelcomeOptions = ({ navigation }) => {
   const handleSolicitud = () => {

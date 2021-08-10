@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { windowHeight, windowWidth } from '../../../../../../App';
+import { windowHeight, windowWidth } from '~/dimensions';
 import { Encabezado } from './Componentes/Encabezado';
 import { BodyOT } from './Componentes/BodyOT';
 import { Formulario, OrdenTrabajo } from './interfaces';
-import { getFormularioAPI } from '../../../../../api/api';
-import { FormProvider } from '../../../../../context/fomulario/FormularioContext';
+import { getFormularioAPI } from '~/api/api';
+import { FormProvider } from '~/context/fomulario/FormularioContext';
 import { Button } from 'react-native-paper';
 import Spinner from 'react-native-loading-spinner-overlay';
 

@@ -2,8 +2,8 @@ import React from 'react';
 
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { StackNavigator } from './StackNavigator';
-import { HomeScreen } from '../screens/HomeScreen';
-import { ItemsSideBar } from '../components/ItemsSideBar';
+import { HomeScreen } from '~/screens/HomeScreen';
+import { ItemsSideBar } from '~/components/ItemsSideBar';
 
 const Drawer = createDrawerNavigator();
 

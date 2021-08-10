@@ -1,7 +1,7 @@
 import { StackScreenProps } from '@react-navigation/stack';
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { functionToGetToken, getData, storeData } from '../api/api';
+import { functionToGetToken, getData, storeData } from '~/api/api';
 import { TextInput, Button, Snackbar } from 'react-native-paper';
 
 interface Props {
@@ -32,17 +32,11 @@ export const FormLogin = ({ pageToGo }: Props) => {
 
     setIsLoading(true);
 
-    functionToGetToken(email, password)
-      .then(response => {
+    login(email, password)
+      .then(() => {
         setIsLoading(false);
         setCorrectLogin(true);
-        const { access_token, expires_in, refresh_token } = response.data;
-        storeData('access_token', access_token);
-        storeData('timeExpire', expires_in.toString());
-        storeData('refresh_token', refresh_token);
-        getData('access_token').then(() => {
-          pageToGo();
-        });
+        pageToGo();
       })
       .catch(error => {
         onToggleSnackBar();

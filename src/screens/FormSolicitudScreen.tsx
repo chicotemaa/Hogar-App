@@ -9,15 +9,15 @@ import {
   Dialog,
   Portal,
 } from 'react-native-paper';
-import { getAllServiciosAPI } from '../api/api';
-import { getSucursalesAPI, sendSolicitud } from '../api/apiClientes';
-import { Button } from '../components/Button';
-import { Header } from '../components/Header';
-import { RootStackParams } from '../navigator/StackNavigator';
+import { getAllServiciosAPI } from '~/api/api';
+import { getSucursalesAPI, sendSolicitud } from '~/api/apiClientes';
+import { Button } from '~/components/Button';
+import { Header } from '~/components/Header';
+import { RootStackParams } from '~/navigator/StackNavigator';
 import Spinner from 'react-native-loading-spinner-overlay';
 import * as Animatable from 'react-native-animatable';
-import { styles } from '../theme/appTheme';
-import { TransitionView } from '../components/TransitionView';
+import { styles } from '~/theme/appTheme';
+import { TransitionView } from '~/components/TransitionView';
 
 interface Props
   extends StackScreenProps<RootStackParams, 'FormSolicitudScreen'> {}

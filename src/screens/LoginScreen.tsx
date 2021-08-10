@@ -2,8 +2,8 @@ import * as React from 'react';
 
 import { StyleSheet, View, ScrollView } from 'react-native';
 
-import { FormLogin } from '../components/FormLogin';
-import { Logo } from '../components/Logo';
+import { FormLogin } from '~/components/FormLogin';
+import { Logo } from '~/components/Logo';
 import { useNavigation } from '@react-navigation/native';
 
 export const LoginScreen = () => {
