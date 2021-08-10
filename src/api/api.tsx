@@ -157,7 +157,7 @@ export const getAllServiciosAPI = async () => {
       },
     })
     .then(response => {
-      console.log('from api servicios ', response.data)
+      console.log('from api servicios ', response.data);
       return response.data['hydra:member'];
     })
     .catch(error => {
@@ -173,14 +173,16 @@ export const getFormularioAPI = async (id: number) => {
   });
 
   const query = '/formularios/' + id;
-  return api.get(baseApi + query, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  }).then(response => {
-    return response.data
-  }).catch(error => {
-    return error
-  })
-
-}
+  return api
+    .get(baseApi + query, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then(response => {
+      return response.data;
+    })
+    .catch(error => {
+      return error;
+    });
+};

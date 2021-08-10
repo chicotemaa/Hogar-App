@@ -55,7 +55,6 @@ export const styles = StyleSheet.create({
   },
 });
 
-
 export const secondIndicatorStyles = {
   stepIndicatorSize: 30,
   currentStepIndicatorSize: 40,

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import {
   DrawerContentComponentProps,
   DrawerContentScrollView,
@@ -44,7 +44,7 @@ export const ItemsSideBar = ({ navigation, isWelcome }: Props) => {
           theme={{ colors: { primary: '#ef492010' } }}
           onPress={() => {
             deleteItem('access_token');
-            navigation.closeDrawer()
+            navigation.closeDrawer();
             navigation.dispatch(StackActions.popToTop());
           }}>
           <Text style={styles.menuTexto}>Cerrar Sesión</Text>
@@ -52,4 +52,4 @@ export const ItemsSideBar = ({ navigation, isWelcome }: Props) => {
       </View>
     </DrawerContentScrollView>
   );
-}
+};

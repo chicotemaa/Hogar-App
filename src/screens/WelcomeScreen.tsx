@@ -9,12 +9,12 @@ import { View } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { getNombreCliente } from '../api/apiClientes';
 
-interface Props extends DrawerScreenProps<any, any> { }
+interface Props extends DrawerScreenProps<any, any> {}
 
 export const WelcomeScreen = ({ navigation }: Props) => {
   const [loading, setLoading] = useState(true);
   const [userName, setUserName] = useState('');
-  const [clienteName, setClienteName] = useState<string>()
+  const [clienteName, setClienteName] = useState<string>();
   const [roleUser, setRoleUser] = useState('');
 
   useEffect(() => {
@@ -23,16 +23,16 @@ export const WelcomeScreen = ({ navigation }: Props) => {
         const { username, roles } = response.data;
         setUserName(capitalizeFirstLetter(username));
         if (getRoleUser(roles, 'ROLE_EMPLEADO') != -1) {
-          setRoleUser('tecnico')
+          setRoleUser('tecnico');
         } else {
           getNombreCliente(response.data.cliente.id).then(nombreCliente => {
-            setClienteName(nombreCliente)
-          })
-          setRoleUser('user')
+            setClienteName(nombreCliente);
+          });
+          setRoleUser('user');
         }
         setTimeout(() => {
-          setLoading(false)
-        }, 500)
+          setLoading(false);
+        }, 500);
       });
     });
 
@@ -53,16 +53,19 @@ export const WelcomeScreen = ({ navigation }: Props) => {
         </View>
       ) : (
         <>
-          <Header pageName="Bienvenido" userName={userName} clienteName={clienteName} roleUser={roleUser} />
-          {
-            roleUser === 'tecnico' ? (
-              <TecnicosWelcomeScreen navigation={navigation} />
-            ) : (
-              <>
-                <WelcomeOptions navigation={navigation} />
-              </>
-            )
-          }
+          <Header
+            pageName="Bienvenido"
+            userName={userName}
+            clienteName={clienteName}
+            roleUser={roleUser}
+          />
+          {roleUser === 'tecnico' ? (
+            <TecnicosWelcomeScreen navigation={navigation} />
+          ) : (
+            <>
+              <WelcomeOptions navigation={navigation} />
+            </>
+          )}
         </>
       )}
     </>
@@ -74,6 +77,6 @@ function capitalizeFirstLetter(string: string) {
 }
 
 function getRoleUser(roles: string[], rolBuscado: string) {
-  const isRolBuscado = (rol: string) => rol === rolBuscado
-  return roles.findIndex(isRolBuscado)
+  const isRolBuscado = (rol: string) => rol === rolBuscado;
+  return roles.findIndex(isRolBuscado);
 }

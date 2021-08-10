@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, View, Image} from 'react-native';
-import {ScrollView} from 'react-native-gesture-handler';
-import {Divider} from 'react-native-paper';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, View, Image } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
+import { Divider } from 'react-native-paper';
 
 interface Solicitud {
   id: string;
@@ -32,19 +32,19 @@ export const Solicitud = ({
     <ScrollView>
       <View>
         <View style={styleSolicitud.body}>
-          <View style={{marginBottom: 20}}>
+          <View style={{ marginBottom: 20 }}>
             <Elemento title={'Incidencia'} body={title} />
             <Elemento title={'Código incidencia'} body={id} />
           </View>
-          <View style={{marginBottom: 20}}>
+          <View style={{ marginBottom: 20 }}>
             <Elemento title={'Fecha'} body={formatDate(fecha)} />
             <Elemento title={'Hora'} body={formatHour(fecha)} />
           </View>
-          <View style={{marginBottom: 20}}>
+          <View style={{ marginBottom: 20 }}>
             <Elemento title={'Sucursal'} body={sucursal} />
             <Elemento title={'Sector'} body={sector} />
           </View>
-          <View style={{marginBottom: 20}}>
+          <View style={{ marginBottom: 20 }}>
             <Elemento title={'Estado'} body={estado} />
             <Elemento title={'Tipo de Servicio'} body={servicio} />
           </View>
@@ -99,11 +99,11 @@ function mostrarImagen(imagen: string, token: string) {
     />
   );
 }
-const Elemento = ({title, body}: PropsElement) => {
+const Elemento = ({ title, body }: PropsElement) => {
   const flexD = title == 'Descripción' ? 'column' : 'row';
   return (
     <View style={styleSolicitud.containerElement}>
-      <View style={{flexDirection: flexD, paddingHorizontal: 20}}>
+      <View style={{ flexDirection: flexD, paddingHorizontal: 20 }}>
         <Text style={styleSolicitud.titleElement}>{title}</Text>
         {title == 'Descripción' ? (
           <>
@@ -115,7 +115,7 @@ const Elemento = ({title, body}: PropsElement) => {
                 height: 2,
               }}
             />
-            <Text style={{fontSize: 17, marginBottom: 15}}>{body}</Text>
+            <Text style={{ fontSize: 17, marginBottom: 15 }}>{body}</Text>
           </>
         ) : (
           <>

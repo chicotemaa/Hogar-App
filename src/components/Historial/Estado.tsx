@@ -1,10 +1,10 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import { Text, View } from 'react-native';
 
 interface Props {
   estado: 'Pendiente' | 'Generada OT' | 'Derivada';
 }
-export const Estado = ({estado}: Props) => {
+export const Estado = ({ estado }: Props) => {
   const color =
     estado === 'Pendiente'
       ? 'red'
@@ -12,10 +12,11 @@ export const Estado = ({estado}: Props) => {
       ? 'orange'
       : 'green';
   return (
-    <View style={{flexDirection: 'row', marginBottom: 3, alignSelf:'flex-end'}}>
+    <View
+      style={{ flexDirection: 'row', marginBottom: 3, alignSelf: 'flex-end' }}>
       <IconoEstado color={color} />
       <Text
-        style={{          
+        style={{
           marginLeft: 2,
           color: color,
           fontSize: 23,
@@ -30,7 +31,7 @@ export const Estado = ({estado}: Props) => {
 interface PropsIcono {
   color: 'red' | 'orange' | 'green';
 }
-const IconoEstado = ({color}: PropsIcono) => {
+const IconoEstado = ({ color }: PropsIcono) => {
   return (
     <View
       style={[
@@ -41,7 +42,8 @@ const IconoEstado = ({color}: PropsIcono) => {
           alignSelf: 'center',
           borderRadius: 50,
         },
-        {backgroundColor: color},
-      ]}></View>
+        { backgroundColor: color },
+      ]}
+    />
   );
 };

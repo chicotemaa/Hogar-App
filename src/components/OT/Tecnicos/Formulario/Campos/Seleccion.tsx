@@ -5,41 +5,39 @@ import { Checkbox } from 'react-native-paper';
 import { Item } from '../Pagina/interfaces';
 
 interface Props {
-    item: Item
+  item: Item;
 }
-
 
 export const SeleccionGroup = ({ item }: Props) => {
-    console.log('seleccion group',item)
-    const valuesSelected = []
+  console.log('seleccion group', item);
+  const valuesSelected = [];
 
-    const SeleccionContext = React.useContext({})
+  const SeleccionContext = React.useContext({});
 
-    const { item : { opciones }} = item;
+  const {
+    item: { opciones },
+  } = item;
 
-    return (
-        <View>
-            {
-                opciones.map(opcion => {
-                    return (<Seleccion opcion={opcion} />)
-                })
-            }
-        </View>
-    )
-}
-
-const Seleccion = ({ opcion }) => {
-    const [checked, setChecked] = React.useState(false);
-
-    return (
-        <Checkbox.Item
-            key={opcion.id}
-            label={opcion.nombre}
-            status={checked ? 'checked' : 'unchecked'}
-            onPress={() => {
-                setChecked(!checked);
-            }}
-        />
-    )
+  return (
+    <View>
+      {opciones.map(opcion => {
+        return <Seleccion opcion={opcion} />;
+      })}
+    </View>
+  );
 };
 
+const Seleccion = ({ opcion }) => {
+  const [checked, setChecked] = React.useState(false);
+
+  return (
+    <Checkbox.Item
+      key={opcion.id}
+      label={opcion.nombre}
+      status={checked ? 'checked' : 'unchecked'}
+      onPress={() => {
+        setChecked(!checked);
+      }}
+    />
+  );
+};

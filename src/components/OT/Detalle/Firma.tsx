@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import { Text, View } from 'react-native';
 
 export const Firma = () => {
   const textStyle = {
@@ -19,7 +19,8 @@ export const Firma = () => {
           width: '50%',
           height: 200,
           backgroundColor: 'grey',
-        }}></View>
+        }}
+      />
       <Text style={textStyle}>Aclaración</Text>
     </View>
   );
