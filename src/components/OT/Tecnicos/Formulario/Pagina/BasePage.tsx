@@ -4,14 +4,14 @@ import { windowHeight, windowWidth } from '../../../../../../App'
 import { Encabezado } from './Componentes/Encabezado'
 import { BodyOT } from './Componentes/BodyOT'
 import { Formulario, OrdenTrabajo } from '../../../../../services/interfaces'
-import { getFormularioAPI, storeData } from '../../../../../api/api'
+import { getData, getFormularioAPI, storeData } from '../../../../../api/api'
 import { FormProvider } from '../../../../../context/fomulario/FormularioContext'
 import { Button, Dialog, Portal } from 'react-native-paper'
 import Spinner from 'react-native-loading-spinner-overlay';
 import { useNavigation } from '@react-navigation/native'
 import { changeStateFinalizado } from '../../../../../services/tecnicosServices'
 import { Platform } from 'react-native'
-import {useMutation, useQueryClient} from 'react-query'
+import { buildResult } from '../../../../../services/ResultadoServices'
 
 
 interface Props {
@@ -23,20 +23,7 @@ export const BasePage = ({ OrdenTrabajo, hasResultado }: Props) => {
     const [formulario, setFormulario] = useState<Formulario>()
     const [loading, setLoading] = useState(true)
     const navigator = useNavigation()
-
-    const mutateFinalizado = useMutation(changeStateFinalizado, {
-        onSettled: () => {
-            console.log('final')
-        },
-        onSuccess:  () => {
-            console.log('exito')
-            navigator.navigate('SuccessScreen', { success: true })
-        },
-        onError: () => {
-            console.log('error')
-            navigator.navigate('SuccessScreen', { success: false })
-        }
-    })
+    
 
     //Para firma
     const [visible, setVisible] = React.useState(false);
@@ -48,10 +35,15 @@ export const BasePage = ({ OrdenTrabajo, hasResultado }: Props) => {
 
     const finalizadoHandler = () => {
         hideDialog()
-        changeStateFinalizado(OrdenTrabajo).then((resolved) => {           
-            navigator.navigate('SuccessScreen', { success: resolved })
-            //TODO: setear como finalizado en la lista la ot correspondiente
+        getData('@Result4919').then((result)=> {
+            console.log('aca viene get data',result)
+            console.log(JSON.parse(result))
         })
+
+        // changeStateFinalizado(OrdenTrabajo).then((resolved) => {           
+        //     navigator.navigate('SuccessScreen', { success: resolved })
+        //     TODO: setear como finalizado en la lista la ot correspondiente
+        // })
     }
 
     const postergarHandler = () => {
@@ -64,6 +56,8 @@ export const BasePage = ({ OrdenTrabajo, hasResultado }: Props) => {
 
     useEffect(() => {
         getFormularioAPI(OrdenTrabajo.formulario.id).then((response) => {
+            console.log('builded form ',buildResult(response))
+            storeData('@Result4919',JSON.stringify(buildResult(response)))
             setFormulario(response)
             setLoading(false)
         })
