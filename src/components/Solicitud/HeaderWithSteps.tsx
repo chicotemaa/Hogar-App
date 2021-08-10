@@ -24,7 +24,7 @@ export const HeaderWithSteps = ({page}: Props) => {
       </ProgressCircle>
       <View style={styles.textHeaderContainer}>
         <Text style={styles.titleHeader}>Elija Sucursal</Text>
-        <Text style={styles.subtitleHeader}></Text>
+        <Text style={styles.subtitleHeader} />
       </View>
     </View>
   );
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#DDDDDD',
     paddingHorizontal: 10,
     flexDirection: 'row',
-    padding:windowHeight*0.03,
+    padding: windowHeight * 0.03,
     elevation: 10,
   },
   textHeaderContainer: {marginHorizontal: 20, marginVertical: 10},

@@ -19,7 +19,8 @@ export const Firma = () => {
           width: '50%',
           height: 200,
           backgroundColor: 'grey',
-        }}></View>
+        }}
+      />
       <Text style={textStyle}>Aclaración</Text>
     </View>
   );

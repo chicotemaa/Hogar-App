@@ -1,90 +1,99 @@
 export interface OrdenTrabajo {
-    SucursalDeCliente: string;
-    direccionSucursalCliente: string
-    cliente: Cliente;
-    comentario: string;
-    estado: number;
-    fecha: string;
-    horaDesde: string;
-    horaHasta: string;
-    id: number;
-    latitud: string;
-    latitudCierre: string;
-    longitud: string;
-    longitudCierre: string;
-    formulario: Formulario;
-    formularioResultado?: any
+  SucursalDeCliente: string;
+  direccionSucursalCliente: string;
+  cliente: Cliente;
+  comentario: string;
+  estado: number;
+  fecha: string;
+  horaDesde: string;
+  horaHasta: string;
+  id: number;
+  latitud: string;
+  latitudCierre: string;
+  longitud: string;
+  longitudCierre: string;
+  formulario: Formulario;
+  formularioResultado?: any;
 }
 
 export interface Formulario {
-    descripcion: string;
-    id: number;
-    titulo: string;
+  descripcion: string;
+  id: number;
+  titulo: string;
 }
 
 export interface Cliente {
-    id: string;
-    nombre: string;
-    apellido: string;
-    razonSocial: string;
-    street: string
+  id: string;
+  nombre: string;
+  apellido: string;
+  razonSocial: string;
+  street: string;
 }
 
 export interface Formulario {
-    compraMateriales: boolean;
-    descripcion: string;
-    express: boolean;
-    id: number;
-    propiedadModulos: Modulo[];
+  compraMateriales: boolean;
+  descripcion: string;
+  express: boolean;
+  id: number;
+  propiedadModulos: Modulo[];
 }
 
 export interface Modulo {
-    equipo: IEquipo;
-    id: number;
-    isCollection: boolean;
-    modulo: ModuloProps;
-    orden: number;
-    pagina: number;
-    paginaNombre: string;
+  equipo: IEquipo;
+  id: number;
+  isCollection: boolean;
+  modulo: ModuloProps;
+  orden: number;
+  pagina: number;
+  paginaNombre: string;
 }
 
 interface IEquipo {
-    id: string;
-    codigo: string;
-    descripcion: string;
+  id: string;
+  codigo: string;
+  descripcion: string;
 }
 
 export interface ModuloProps {
-    id: number;
-    propiedadItems: Item[];
-    titulo: string;
+  id: number;
+  propiedadItems: Item[];
+  titulo: string;
 }
 
 export interface Item {
-    ancho: string;
-    cantidadMinima: number;
-    id: number;
-    isCollection: boolean;
-    item: PropiedadItem
-    opcion: any;
-    opcionDepende: any;
-    orden: number;
-    propiedadItems: Item[];
-    requerido: boolean;
+  ancho: string;
+  cantidadMinima: number;
+  id: number;
+  isCollection: boolean;
+  item: PropiedadItem;
+  opcion: any;
+  opcionDepende: any;
+  orden: number;
+  propiedadItems: Item[];
+  requerido: boolean;
 }
 
 interface PropiedadItem {
-    id: number;
-    descripcion: string;
-    nombre: string;
-    tipo: 'foto' | 'seleccion_multiple' | 'desplegable' | 'texto' | 'casilla_de_verificacion' | 'titulo' | 'date_time' | 'time' | 'date';
-    titulo: string;
-    opciones: [] | OpcionesItem[]
+  id: number;
+  descripcion: string;
+  nombre: string;
+  tipo:
+    | 'foto'
+    | 'seleccion_multiple'
+    | 'desplegable'
+    | 'texto'
+    | 'casilla_de_verificacion'
+    | 'titulo'
+    | 'date_time'
+    | 'time'
+    | 'date';
+  titulo: string;
+  opciones: [] | OpcionesItem[];
 }
 
 interface OpcionesItem {
-    id: number;
-    imageSize: string | null;
-    image: string | null;
-    nombre: string;
+  id: number;
+  imageSize: string | null;
+  image: string | null;
+  nombre: string;
 }

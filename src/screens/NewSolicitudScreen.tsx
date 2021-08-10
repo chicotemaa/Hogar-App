@@ -10,7 +10,7 @@ import {DescripcionStep} from '../components/Solicitud/Steps/DescripcionStep';
 
 export const NewSolicitudScreen = () => {
   return (
-    <View style={{flex:1}}>
+    <View style={{flex: 1}}>
       <Wizard>
         <Wizard.Step>
           <SucursalStep />
@@ -23,7 +23,7 @@ export const NewSolicitudScreen = () => {
         </Wizard.Step>
         <Wizard.Step>
           <DescripcionStep />
-        </Wizard.Step>        
+        </Wizard.Step>
       </Wizard>
     </View>
   );

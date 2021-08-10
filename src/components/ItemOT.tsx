@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { windowHeight, windowWidth } from '../../App';
-import { changeStateEnCamino, changeStateMeRecibio, changeStateNoMeRecibio } from '../services/tecnicosServices';
+import React, {useState} from 'react';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {windowHeight, windowWidth} from '../../App';
+import {
+  changeStateEnCamino,
+  changeStateMeRecibio,
+  changeStateNoMeRecibio,
+} from '../services/tecnicosServices';
 
 interface Props {
   id: number;
@@ -18,7 +22,6 @@ interface Props {
   OT: any;
 }
 
-
 export const ItemOT = ({
   id,
   titulo,
@@ -29,30 +32,29 @@ export const ItemOT = ({
   rol,
   cliente,
   horaDesde,
-  horaHasta, OT
+  horaHasta,
+  OT,
 }: Props) => {
-
-  const isVistaTecnico = rol == 'tecnico'
-  const [estado, setEstado] = useState(estadoOT)
+  const isVistaTecnico = rol == 'tecnico';
+  const [estado, setEstado] = useState(estadoOT);
   const handleState = async (estado: number, newState: number) => {
-
     switch (newState) {
       case 1:
-        setEstado(newState)
+        setEstado(newState);
         changeStateEnCamino(OT);
         break;
       case 2:
         //Verificar si existe resultado de ot
-        changeStateMeRecibio(OT).then((status) => {
-          status && setEstado(newState)
-        })
-        break
+        changeStateMeRecibio(OT).then(status => {
+          status && setEstado(newState);
+        });
+        break;
       case 3:
-        setEstado(newState)
+        setEstado(newState);
         changeStateNoMeRecibio(OT);
         break;
     }
-  }
+  };
 
   return (
     <View style={styles.container}>
@@ -63,7 +65,7 @@ export const ItemOT = ({
           marginHorizontal: 10,
           marginVertical: 5,
         }}>
-        <View style={{ flex: 1 }}>
+        <View style={{flex: 1}}>
           <View
             style={{
               flexDirection: 'row',
@@ -82,12 +84,17 @@ export const ItemOT = ({
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}>
-              <View style={{ flexDirection: 'row' }}>
-                <Text style={styles.tecnico}>{!isVistaTecnico ? 'Técnico:' : null}</Text>
+              <View style={{flexDirection: 'row'}}>
+                <Text style={styles.tecnico}>
+                  {!isVistaTecnico ? 'Técnico:' : null}
+                </Text>
                 <Text
                   style={[
                     styles.tecnico,
-                    { paddingHorizontal: !isVistaTecnico ? 5 : 0, textAlign: 'auto' },
+                    {
+                      paddingHorizontal: !isVistaTecnico ? 5 : 0,
+                      textAlign: 'auto',
+                    },
                   ]}>
                   {isVistaTecnico ? cliente : 'Martin Sastre'}
                 </Text>
@@ -102,7 +109,13 @@ export const ItemOT = ({
             </View>
             <View style={styles.divisor} />
             <View>
-              <Text style={[styles.info, { fontSize: 0.027 * windowHeight, marginBottom: 10 }]}>{location}</Text>
+              <Text
+                style={[
+                  styles.info,
+                  {fontSize: 0.027 * windowHeight, marginBottom: 10},
+                ]}>
+                {location}
+              </Text>
               <View style={styles.divisor} />
               <Text style={styles.info}>Fecha: {formatDate(date, 0)}</Text>
               <View style={styles.divisor} />
@@ -112,36 +125,46 @@ export const ItemOT = ({
           </View>
         </View>
       </View>
-      <View
-        style={{ padding: 10, alignSelf: 'center', width: '100%' }}>
+      <View style={{padding: 10, alignSelf: 'center', width: '100%'}}>
         <View style={[styles.divisor]} />
-        {(isVistaTecnico ? <DetalleBtnTecnico estado={estado} changeState={(state: number) => handleState(estado, state)} goToScreen={goToScreen} /> : <DetalleBtn estado={estado} changeState={() => { }} goToScreen={goToScreen} />)}
-
+        {isVistaTecnico ? (
+          <DetalleBtnTecnico
+            estado={estado}
+            changeState={(state: number) => handleState(estado, state)}
+            goToScreen={goToScreen}
+          />
+        ) : (
+          <DetalleBtn
+            estado={estado}
+            changeState={() => {}}
+            goToScreen={goToScreen}
+          />
+        )}
       </View>
     </View>
   );
 };
 
 function formatDate(date: string, position: number) {
-  const d = date.split('T', 2)[position]
+  const d = date.split('T', 2)[position];
   if (position === 1) {
-    return d.slice(0, 5)
+    return d.slice(0, 5);
   }
-  return d
+  return d;
 }
 
 interface PropEstado {
   estado: number;
 }
 
-const Estado = ({ estado }: PropEstado) => {
+const Estado = ({estado}: PropEstado) => {
   const Estado = [
-    { name: 'Pendiente', color: '#F13C20' },
-    { name: 'Estoy en camino', color: '#D79922' },
-    { name: 'Me recibió', color: '#4056A1' },
-    { name: 'No me atendió', color: 'brown' },
-    { name: 'Finalizado', color: 'green' },
-    { name: 'No me recibió', color: 'purple' },
+    {name: 'Pendiente', color: '#F13C20'},
+    {name: 'Estoy en camino', color: '#D79922'},
+    {name: 'Me recibió', color: '#4056A1'},
+    {name: 'No me atendió', color: 'brown'},
+    {name: 'Finalizado', color: 'green'},
+    {name: 'No me recibió', color: 'purple'},
   ];
 
   return (
@@ -161,13 +184,13 @@ const Estado = ({ estado }: PropEstado) => {
 interface PropBtn {
   estado: number;
   goToScreen: Function;
-  changeState: Function
+  changeState: Function;
 }
 
-const DetalleBtn = ({ estado, goToScreen }: PropBtn) => {
+const DetalleBtn = ({estado, goToScreen}: PropBtn) => {
   const colorBtn = estado == 4 ? 'green' : '#5E5E5E';
   return (
-    <View style={{ marginVertical: 5 }}>
+    <View style={{marginVertical: 5}}>
       <TouchableOpacity
         disabled={estado != 4}
         onPress={() => {
@@ -181,63 +204,67 @@ const DetalleBtn = ({ estado, goToScreen }: PropBtn) => {
             fontWeight: 'bold',
             alignSelf: 'center',
           }}>
-          {estado === 4
-            ? 'Ver detalle'
-            : 'Detalle aún no disponible'}
+          {estado === 4 ? 'Ver detalle' : 'Detalle aún no disponible'}
         </Text>
       </TouchableOpacity>
     </View>
   );
 };
 
-const DetalleBtnTecnico = ({ estado: estadoActual, goToScreen, changeState }: PropBtn) => {
-  const textState = [
-    'Tomar orden',
-    'Ya llegué',
-    'Realizar'
-  ]
+const DetalleBtnTecnico = ({
+  estado: estadoActual,
+  goToScreen,
+  changeState,
+}: PropBtn) => {
+  const textState = ['Tomar orden', 'Ya llegué', 'Realizar'];
 
   return (
-    <View style={{ marginVertical: 5 }}>
-      <View style={{ flexDirection: estadoActual == 1 ? 'row' : 'column', justifyContent: 'space-between' }}>
-        {estadoActual == 1 ? (<TouchableOpacity
-          onPress={() => {
-            changeState(3)
-            // goToScreen();
-            console.log('no me atendio')
-          }}
-          style={{
-            borderRadius: 8,
-            borderWidth: 1,
-            alignSelf: 'flex-start',
-            width: 0.39 * windowWidth,
-            borderColor: '#D17D2A',
-            elevation: 0,
-            paddingVertical: 9,
-            paddingHorizontal: 2
-          }}
-        >
-          <Text
+    <View style={{marginVertical: 5}}>
+      <View
+        style={{
+          flexDirection: estadoActual == 1 ? 'row' : 'column',
+          justifyContent: 'space-between',
+        }}>
+        {estadoActual == 1 ? (
+          <TouchableOpacity
+            onPress={() => {
+              changeState(3);
+              // goToScreen();
+              console.log('no me atendio');
+            }}
             style={{
-              color: '#D17D2A',
-              fontSize: 20,
-              fontWeight: 'bold',
-              alignSelf: 'center',
-
+              borderRadius: 8,
+              borderWidth: 1,
+              alignSelf: 'flex-start',
+              width: 0.39 * windowWidth,
+              borderColor: '#D17D2A',
+              elevation: 0,
+              paddingVertical: 9,
+              paddingHorizontal: 2,
             }}>
-            {'No me recibio'}
-          </Text>
-        </TouchableOpacity>) : null}
+            <Text
+              style={{
+                color: '#D17D2A',
+                fontSize: 20,
+                fontWeight: 'bold',
+                alignSelf: 'center',
+              }}>
+              {'No me recibio'}
+            </Text>
+          </TouchableOpacity>
+        ) : null}
         <TouchableOpacity
           onPress={() => {
-            estadoActual === 0 ? changeState(1) : estadoActual === 1 && changeState(2)
+            estadoActual === 0
+              ? changeState(1)
+              : estadoActual === 1 && changeState(2);
             if (estadoActual === 2) {
               goToScreen('realizarOT');
             } else if (estadoActual > 3) {
-              goToScreen('detalleOTRealizada')
+              goToScreen('detalleOTRealizada');
             } else if (estadoActual === 3) {
               //TODO: mostrar en que momento fue a la sucursal
-              console.log('no me recibio el dia x a las x horas')
+              console.log('no me recibio el dia x a las x horas');
             }
           }}
           style={{
@@ -247,8 +274,7 @@ const DetalleBtnTecnico = ({ estado: estadoActual, goToScreen, changeState }: Pr
             backgroundColor: estadoActual == 0 ? '#32367A' : '#178C54',
             elevation: 10,
             paddingVertical: 9,
-          }}
-        >
+          }}>
           <Text
             style={{
               color: 'white',
@@ -263,8 +289,6 @@ const DetalleBtnTecnico = ({ estado: estadoActual, goToScreen, changeState }: Pr
     </View>
   );
 };
-
-
 
 const styles = StyleSheet.create({
   container: {
@@ -286,7 +310,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     fontWeight: '500',
     fontSize: 0.035 * windowHeight,
-    textTransform: 'capitalize'
+    textTransform: 'capitalize',
   },
   tecnico: {
     marginTop: 3,
@@ -308,4 +332,3 @@ const styles = StyleSheet.create({
     fontSize: 0.04 * windowWidth,
   },
 });
-

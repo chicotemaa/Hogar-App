@@ -1,5 +1,5 @@
-import { StyleSheet } from 'react-native';
-import { windowWidth } from '../../App';
+import {StyleSheet} from 'react-native';
+import {windowWidth} from '../../App';
 
 export const theme = {
   transitionDuration: 1800,
@@ -54,7 +54,6 @@ export const styles = StyleSheet.create({
     color: '#534B4B',
   },
 });
-
 
 export const secondIndicatorStyles = {
   stepIndicatorSize: 30,

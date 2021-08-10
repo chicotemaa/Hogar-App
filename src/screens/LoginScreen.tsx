@@ -1,11 +1,11 @@
 import * as React from 'react';
 
-import { StyleSheet, View, ScrollView } from 'react-native';
+import {StyleSheet, View, ScrollView} from 'react-native';
 
-import { FormLogin } from '../components/FormLogin';
-import { Logo } from '../components/Logo';
-import { useNavigation } from '@react-navigation/native';
-import { windowWidth } from '../../App';
+import {FormLogin} from '../components/FormLogin';
+import {Logo} from '../components/Logo';
+import {useNavigation} from '@react-navigation/native';
+import {windowWidth} from '../../App';
 
 export const LoginScreen = () => {
   const stackNavigator = useNavigation();
@@ -37,6 +37,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   form: {
-    paddingHorizontal: 0.01*windowWidth,
+    paddingHorizontal: 0.01 * windowWidth,
   },
 });

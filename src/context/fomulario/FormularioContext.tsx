@@ -1,56 +1,57 @@
-import React, { createContext, useReducer } from "react"
-import { formReducer } from "./FormReducer"
+import React, {createContext, useReducer} from 'react';
+import {formReducer} from './FormReducer';
 
-export interface FormState{
-    formularioId?:number,
-    esExpress?:boolean,
-    campoValue?:string,
-    page:number
+export interface FormState {
+  formularioId?: number;
+  esExpress?: boolean;
+  campoValue?: string;
+  page: number;
 }
 
 //Estado Inicial
-export const formInitialState: FormState =  {
-    formularioId: undefined,
-    esExpress:false,
-    campoValue:undefined,
-    page:0,
-}
+export const formInitialState: FormState = {
+  formularioId: undefined,
+  esExpress: false,
+  campoValue: undefined,
+  page: 0,
+};
 
 //Context form Props
 export interface FormContextProps {
-    formState: FormState,
-    getFormId: () => void;
-    setValue: (value:string) => void;
-    changePage: (value:number) => void
+  formState: FormState;
+  getFormId: () => void;
+  setValue: (value: string) => void;
+  changePage: (value: number) => void;
 }
 
 //Crear context
-export const FormContext = createContext({} as FormContextProps)
+export const FormContext = createContext({} as FormContextProps);
 
-//Provider 
-export const FormProvider = ({children}:any) => {    
-    const [formState, dispatch] = useReducer( formReducer, formInitialState)
+//Provider
+export const FormProvider = ({children}: any) => {
+  const [formState, dispatch] = useReducer(formReducer, formInitialState);
 
-    const getFormId = () => {
-        dispatch({type:'getFormId'})
-    }
+  const getFormId = () => {
+    dispatch({type: 'getFormId'});
+  };
 
-    const setValue = (value:string) => {
-        dispatch({type:'setValue', payload: value})
-    }
+  const setValue = (value: string) => {
+    dispatch({type: 'setValue', payload: value});
+  };
 
-    const changePage = (page:number) => {
-        dispatch({type:'setPage', payload: page})
-    }
+  const changePage = (page: number) => {
+    dispatch({type: 'setPage', payload: page});
+  };
 
-    return (
-        <FormContext.Provider value={{
-            formState,
-            getFormId,
-            setValue,
-            changePage
-        }}>
-            {children}
-        </FormContext.Provider>
-    )
-}
+  return (
+    <FormContext.Provider
+      value={{
+        formState,
+        getFormId,
+        setValue,
+        changePage,
+      }}>
+      {children}
+    </FormContext.Provider>
+  );
+};

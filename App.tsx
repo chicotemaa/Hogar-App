@@ -1,12 +1,12 @@
 import 'react-native-gesture-handler';
 import React from 'react';
-import { Dimensions } from 'react-native';
+import {Dimensions} from 'react-native';
 
-import { NavigationContainer } from '@react-navigation/native';
-import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
-import { MenuLeft } from './src/navigator/MenuLeft';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { QueryClient , QueryClientProvider} from 'react-query';
+import {NavigationContainer} from '@react-navigation/native';
+import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
+import {MenuLeft} from './src/navigator/MenuLeft';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {QueryClient, QueryClientProvider} from 'react-query';
 
 const theme = {
   ...DefaultTheme,
@@ -20,12 +20,12 @@ const theme = {
 
 const queryClient = new QueryClient({
   defaultOptions: {
-    queries:{
-      retry: 1, //cantidad de intentos en error 
-      refetchOnWindowFocus: false
-    }
-  }
-}) 
+    queries: {
+      retry: 1, //cantidad de intentos en error
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 export const windowWidth = Dimensions.get('window').width;
 export const windowHeight = Dimensions.get('window').height;
@@ -35,9 +35,9 @@ const App = () => {
     <SafeAreaProvider>
       <PaperProvider theme={theme}>
         <QueryClientProvider client={queryClient}>
-        <NavigationContainer>
-          <MenuLeft />
-        </NavigationContainer>
+          <NavigationContainer>
+            <MenuLeft />
+          </NavigationContainer>
         </QueryClientProvider>
       </PaperProvider>
     </SafeAreaProvider>
