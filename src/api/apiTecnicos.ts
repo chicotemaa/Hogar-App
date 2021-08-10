@@ -1,19 +1,6 @@
-import { api, baseApi, getData } from './api';
+import { api } from './api';
 
 export const getOtByUserAPI = async () => {
-  const token = await getData('access_token');
-  console.log(token);
-  return api
-    .get(baseApi + '/ordentrabajo/by/user/without-form', {
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
-    })
-    .then(response => {
-      return response.data['hydra:member'];
-    })
-    .catch(err => {
-      console.log(err);
-      return err;
-    });
+  const response = await api.get('/ordentrabajo/by/user/without-form');
+  return response.data['hydra:member'];
 };
