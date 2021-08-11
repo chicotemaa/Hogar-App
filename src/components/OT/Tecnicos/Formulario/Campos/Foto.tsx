@@ -1,4 +1,4 @@
-import React, {PureComponent} from 'react';
+import React, { PureComponent } from 'react';
 import {
   AppRegistry,
   StyleSheet,
@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {RNCamera} from 'react-native-camera';
+import { RNCamera } from 'react-native-camera';
 
 export class Foto extends PureComponent {
   render() {
@@ -31,15 +31,16 @@ export class Foto extends PureComponent {
             buttonPositive: 'Ok',
             buttonNegative: 'Cancel',
           }}
-          onGoogleVisionBarcodesDetected={({barcodes}) => {
+          onGoogleVisionBarcodesDetected={({ barcodes }) => {
             console.log(barcodes);
           }}
         />
-        <View style={{flex: 0, flexDirection: 'row', justifyContent: 'center'}}>
+        <View
+          style={{ flex: 0, flexDirection: 'row', justifyContent: 'center' }}>
           <TouchableOpacity
             onPress={this.takePicture.bind(this)}
             style={styles.capture}>
-            <Text style={{fontSize: 14}}> SNAP </Text>
+            <Text style={{ fontSize: 14 }}> SNAP </Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -48,7 +49,7 @@ export class Foto extends PureComponent {
 
   takePicture = async () => {
     if (this.camera) {
-      const options = {quality: 0.5, base64: true};
+      const options = { quality: 0.5, base64: true };
       const data = await this.camera.takePictureAsync(options);
       console.log(data.uri);
     }

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import { Text, View } from 'react-native';
 
 /* TODO: ver tipos de campos
     -Texto
@@ -31,27 +31,27 @@ export const Modulo = () => {
 const Subtitulo = () => {
   return (
     <View>
-      <Text style={{fontSize: 20, paddingVertical: 10}}>Subtitulo</Text>
+      <Text style={{ fontSize: 20, paddingVertical: 10 }}>Subtitulo</Text>
     </View>
   );
 };
 
 const Divisor = () => {
-  return <View style={{borderWidth: 1, borderColor: '#DFDFDF', flex: 1}} />;
+  return <View style={{ borderWidth: 1, borderColor: '#DFDFDF', flex: 1 }} />;
 };
 
 const Campo = () => {
-  const textStyle = {fontSize: 15, flex: 1, paddingVertical: 10};
+  const textStyle = { fontSize: 15, flex: 1, paddingVertical: 10 };
   return (
-    <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
       <Text style={textStyle}>Campo</Text>
-      <Text style={[textStyle, {textAlign: 'center'}]}>Si</Text>
+      <Text style={[textStyle, { textAlign: 'center' }]}>Si</Text>
     </View>
   );
 };
 
 const CampoFoto = () => {
-  const textStyle = {fontSize: 15, flex: 1, paddingVertical: 10};
+  const textStyle = { fontSize: 15, flex: 1, paddingVertical: 10 };
   const Imagen = () => {
     return (
       <View
@@ -69,7 +69,7 @@ const CampoFoto = () => {
     <View>
       <Text style={textStyle}>Fotografia</Text>
       <Divisor />
-      <View style={{flexDirection: 'row'}}>
+      <View style={{ flexDirection: 'row' }}>
         <Imagen />
         <Imagen />
       </View>

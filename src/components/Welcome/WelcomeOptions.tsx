@@ -1,11 +1,11 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
-import {Title} from '../Title';
-import {Button} from '../Button';
-import {styles} from '../../theme/appTheme';
+import { Title } from '~/components/Title';
+import { Button } from '~/components/Button';
+import { styles } from '~/theme/appTheme';
 
-export const WelcomeOptions = ({navigation}) => {
+export const WelcomeOptions = ({ navigation }) => {
   const handleSolicitud = () => {
     navigation.navigate('FormSolicitudScreen');
   };
@@ -21,7 +21,7 @@ export const WelcomeOptions = ({navigation}) => {
           justifyContent: 'center',
         },
       ]}>
-      <View style={{marginBottom: 15}}>
+      <View style={{ marginBottom: 15 }}>
         <Button
           title={'Solicitar asistencia'}
           color="#183A9E"

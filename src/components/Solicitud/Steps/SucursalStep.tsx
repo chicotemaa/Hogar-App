@@ -6,8 +6,8 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {RadioButton} from 'react-native-paper';
-import {styleStep} from './styleStep';
+import { RadioButton } from 'react-native-paper';
+import { styleStep } from './styleStep';
 
 export const SucursalStep = () => {
   const sucursales = [
@@ -31,7 +31,7 @@ export const SucursalStep = () => {
               <View style={style.item}>
                 <RadioButton.Item
                   label={sucursal}
-                  labelStyle={{color: 'grey'}}
+                  labelStyle={{ color: 'grey' }}
                   color="orange"
                   value={sucursal}
                 />

@@ -1,14 +1,14 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import {Divider} from 'react-native-paper';
-import {windowHeight, windowWidth} from '../../../../../../../App';
-import {OrdenTrabajo} from '../../../../../../services/interfaces';
+import { StyleSheet, Text } from 'react-native';
+import { Divider } from 'react-native-paper';
+import { windowWidth } from '~/dimensions';
+import { OrdenTrabajo } from '../interfaces';
 
 interface Props {
   OrdenTrabajo: OrdenTrabajo;
 }
 
-export const Encabezado = ({OrdenTrabajo}: Props) => {
+export const Encabezado = ({ OrdenTrabajo }: Props) => {
   return (
     <View>
       <View style={styles.container}>

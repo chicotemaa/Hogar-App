@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import { Text, View } from 'react-native';
 
 export const ServicioStep = () => {
   const servicios = [
@@ -10,7 +10,7 @@ export const ServicioStep = () => {
   ];
 
   return (
-    <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+    <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
       <ButtonServicio />
       <ButtonServicio />
       <ButtonServicio />
@@ -21,7 +21,7 @@ export const ServicioStep = () => {
 
 const ButtonServicio = () => {
   return (
-    <View style={{borderWidth: 1, padding: 10}}>
+    <View style={{ borderWidth: 1, padding: 10 }}>
       <Text>Servicio</Text>
     </View>
   );

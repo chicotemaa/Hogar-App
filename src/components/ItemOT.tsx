@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {windowHeight, windowWidth} from '../../App';
+import React, { useState } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { windowHeight, windowWidth } from '~/dimensions';
 import {
   changeStateEnCamino,
   changeStateMeRecibio,
@@ -65,7 +65,7 @@ export const ItemOT = ({
           marginHorizontal: 10,
           marginVertical: 5,
         }}>
-        <View style={{flex: 1}}>
+        <View style={{ flex: 1 }}>
           <View
             style={{
               flexDirection: 'row',
@@ -84,7 +84,7 @@ export const ItemOT = ({
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}>
-              <View style={{flexDirection: 'row'}}>
+              <View style={{ flexDirection: 'row' }}>
                 <Text style={styles.tecnico}>
                   {!isVistaTecnico ? 'Técnico:' : null}
                 </Text>
@@ -112,7 +112,7 @@ export const ItemOT = ({
               <Text
                 style={[
                   styles.info,
-                  {fontSize: 0.027 * windowHeight, marginBottom: 10},
+                  { fontSize: 0.027 * windowHeight, marginBottom: 10 },
                 ]}>
                 {location}
               </Text>
@@ -125,7 +125,7 @@ export const ItemOT = ({
           </View>
         </View>
       </View>
-      <View style={{padding: 10, alignSelf: 'center', width: '100%'}}>
+      <View style={{ padding: 10, alignSelf: 'center', width: '100%' }}>
         <View style={[styles.divisor]} />
         {isVistaTecnico ? (
           <DetalleBtnTecnico
@@ -157,14 +157,14 @@ interface PropEstado {
   estado: number;
 }
 
-const Estado = ({estado}: PropEstado) => {
+const Estado = ({ estado }: PropEstado) => {
   const Estado = [
-    {name: 'Pendiente', color: '#F13C20'},
-    {name: 'Estoy en camino', color: '#D79922'},
-    {name: 'Me recibió', color: '#4056A1'},
-    {name: 'No me atendió', color: 'brown'},
-    {name: 'Finalizado', color: 'green'},
-    {name: 'No me recibió', color: 'purple'},
+    { name: 'Pendiente', color: '#F13C20' },
+    { name: 'Estoy en camino', color: '#D79922' },
+    { name: 'Me recibió', color: '#4056A1' },
+    { name: 'No me atendió', color: 'brown' },
+    { name: 'Finalizado', color: 'green' },
+    { name: 'No me recibió', color: 'purple' },
   ];
 
   return (
@@ -187,10 +187,10 @@ interface PropBtn {
   changeState: Function;
 }
 
-const DetalleBtn = ({estado, goToScreen}: PropBtn) => {
+const DetalleBtn = ({ estado, goToScreen }: PropBtn) => {
   const colorBtn = estado == 4 ? 'green' : '#5E5E5E';
   return (
-    <View style={{marginVertical: 5}}>
+    <View style={{ marginVertical: 5 }}>
       <TouchableOpacity
         disabled={estado != 4}
         onPress={() => {
@@ -219,7 +219,7 @@ const DetalleBtnTecnico = ({
   const textState = ['Tomar orden', 'Ya llegué', 'Realizar'];
 
   return (
-    <View style={{marginVertical: 5}}>
+    <View style={{ marginVertical: 5 }}>
       <View
         style={{
           flexDirection: estadoActual == 1 ? 'row' : 'column',
@@ -236,11 +236,10 @@ const DetalleBtnTecnico = ({
               borderRadius: 8,
               borderWidth: 1,
               alignSelf: 'flex-start',
-              width: 0.39 * windowWidth,
+              width: 0.35 * windowWidth,
               borderColor: '#D17D2A',
               elevation: 0,
               paddingVertical: 9,
-              paddingHorizontal: 2,
             }}>
             <Text
               style={{

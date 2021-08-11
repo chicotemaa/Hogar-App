@@ -1,20 +1,17 @@
 import * as React from 'react';
-import {useContext} from 'react';
-import {Text, View} from 'react-native';
-import {RadioButton} from 'react-native-paper';
-import {CampoContext} from '../../../../../context/campo/CampoContext';
-import {Item} from '../../../../../services/interfaces';
-import {BaseCampo} from './BaseCampo';
-
+import { useContext } from 'react';
+import { RadioButton } from 'react-native-paper';
+import { CampoContext } from '~/context/campo/CampoContext';
+import { Item } from '../Pagina/interfaces';
 interface Props {
   item: Item;
 }
 
-export const Casilla = ({item}: Props) => {
+export const Casilla = ({ item }: Props) => {
   const [value, setValor] = React.useState('');
   let opciones = [];
 
-  const {campoState, setValue, setOpcionDepende} = useContext(CampoContext);
+  const { campoState, setValue, setOpcionDepende } = useContext(CampoContext);
 
   const handleChangeValue = value => {
     setValor(value);

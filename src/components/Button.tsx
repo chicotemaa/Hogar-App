@@ -1,6 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity} from 'react-native';
-import {windowWidth} from '../../App';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 interface Props {
   title: string;
@@ -10,17 +9,10 @@ interface Props {
   onPress: () => void;
 }
 
-export const Button = ({
-  title,
-  color,
-  onPress,
-  height,
-  width,
-  style = {},
-}: Props) => {
+export const Button = ({ title, color, onPress, height, width }: Props) => {
   return (
     <TouchableOpacity
-      style={[styles.button, {backgroundColor: color, height, width}]}
+      style={[styles.button, { backgroundColor: color, height, width }]}
       onPress={onPress}>
       <Text style={[styles.text, {}]}>{title}</Text>
     </TouchableOpacity>

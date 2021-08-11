@@ -1,5 +1,5 @@
-import React, {createContext, useReducer} from 'react';
-import {formReducer} from './FormReducer';
+import React, { createContext, useReducer } from 'react';
+import { formReducer } from './FormReducer';
 
 export interface FormState {
   formularioId?: number;
@@ -28,19 +28,19 @@ export interface FormContextProps {
 export const FormContext = createContext({} as FormContextProps);
 
 //Provider
-export const FormProvider = ({children}: any) => {
+export const FormProvider = ({ children }: any) => {
   const [formState, dispatch] = useReducer(formReducer, formInitialState);
 
   const getFormId = () => {
-    dispatch({type: 'getFormId'});
+    dispatch({ type: 'getFormId' });
   };
 
   const setValue = (value: string) => {
-    dispatch({type: 'setValue', payload: value});
+    dispatch({ type: 'setValue', payload: value });
   };
 
   const changePage = (page: number) => {
-    dispatch({type: 'setPage', payload: page});
+    dispatch({ type: 'setPage', payload: page });
   };
 
   return (

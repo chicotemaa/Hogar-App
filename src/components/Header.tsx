@@ -1,9 +1,9 @@
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import {Text, View, Platform} from 'react-native';
-import {Appbar} from 'react-native-paper';
-import {windowWidth, windowHeight} from '../../App';
-import {DrawerNavigationProp} from '@react-navigation/drawer';
+import { Text, View, Platform } from 'react-native';
+import { Appbar } from 'react-native-paper';
+import { windowWidth, windowHeight } from '~/dimensions';
+import { DrawerNavigationProp } from '@react-navigation/drawer';
 
 interface Props {
   pageName?: string;
@@ -14,7 +14,12 @@ interface Props {
   id?: number;
 }
 
-export const Header = ({pageName, userName, roleUser, clienteName}: Props) => {
+export const Header = ({
+  pageName,
+  userName,
+  roleUser,
+  clienteName,
+}: Props) => {
   const isWelcomePage = pageName === 'Bienvenido';
   const isFormSolicitud = pageName === 'Nueva Solicitud';
   pageName = pageName == 'Solicitud' ? 'Informe de solicitud' : pageName;
@@ -46,7 +51,7 @@ export const Header = ({pageName, userName, roleUser, clienteName}: Props) => {
           <Appbar.Content
             color="white"
             title={pageName}
-            titleStyle={{fontSize: windowHeight * 0.037}}
+            titleStyle={{ fontSize: windowHeight * 0.037 }}
             subtitle={isFormSolicitud ? 'Complete los datos necesarios' : null}
           />
 
@@ -59,11 +64,12 @@ export const Header = ({pageName, userName, roleUser, clienteName}: Props) => {
         </Appbar.Header>
       ) : (
         <>
-          <Appbar.Header style={{marginTop: 0.04 * windowHeight, elevation: 0}}>
+          <Appbar.Header
+            style={{ marginTop: 0.04 * windowHeight, elevation: 0 }}>
             <Appbar.Content
               color="white"
               title={pageName}
-              titleStyle={{textAlign: 'auto', fontSize: windowHeight * 0.05}}
+              titleStyle={{ textAlign: 'auto', fontSize: windowHeight * 0.05 }}
               subtitle={
                 isFormSolicitud ? 'Complete los datos necesarios' : null
               }
@@ -80,13 +86,13 @@ export const Header = ({pageName, userName, roleUser, clienteName}: Props) => {
           <View
             // colors={['#6565C7', '#6565C7']}
             //'#F76656', '#F76656',
-            style={{height: heightPage, backgroundColor: '#ef4920'}}>
+            style={{ height: heightPage, backgroundColor: '#ef4920' }}>
             <View
               style={{
                 paddingTop: paddingHeader,
               }}>
-              <View style={{marginHorizontal: 5}}>
-                <View style={{flexDirection: flexDHeader}}>
+              <View style={{ marginHorizontal: 5 }}>
+                <View style={{ flexDirection: flexDHeader }}>
                   {/* {PageName(pageName)} */}
                   {isWelcomePage
                     ? WelcomeHeader(userName, isTecnico, clienteName)

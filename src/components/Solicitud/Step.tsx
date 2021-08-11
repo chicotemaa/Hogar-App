@@ -1,14 +1,14 @@
-import React, {PureComponent} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {windowHeight, windowWidth} from '../../../App';
-import {HeaderWithSteps} from './HeaderWithSteps';
+import React, { PureComponent } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { windowHeight, windowWidth } from '~/dimensions';
+import { HeaderWithSteps } from './HeaderWithSteps';
 
 class Step extends PureComponent {
   state = {};
 
   render() {
     console.log(this.props);
-    const {isLast} = this.props;
+    const { isLast } = this.props;
     console.log('es ultimo', isLast);
     return (
       <View>
@@ -17,7 +17,8 @@ class Step extends PureComponent {
             <HeaderWithSteps page={this.props.currentIndex} />
           </View>
           <View style={styles.content}>{this.props.children}</View>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <View
+            style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
             <TouchableOpacity
               style={styles.buttonStep}
               onPress={this.props.prevStep}>

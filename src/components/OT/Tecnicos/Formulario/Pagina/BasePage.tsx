@@ -1,24 +1,24 @@
-import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import {windowHeight, windowWidth} from '../../../../../../App';
-import {Encabezado} from './Componentes/Encabezado';
-import {BodyOT} from './Componentes/BodyOT';
-import {Formulario, OrdenTrabajo} from '../../../../../services/interfaces';
-import {getData, getFormularioAPI, storeData} from '../../../../../api/api';
-import {FormProvider} from '../../../../../context/fomulario/FormularioContext';
-import {Button, Dialog, Portal} from 'react-native-paper';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { windowHeight, windowWidth } from '~/dimensions';
+import { Encabezado } from './Componentes/Encabezado';
+import { BodyOT } from './Componentes/BodyOT';
+import { Formulario, OrdenTrabajo } from '~/services/interfaces';
+import { getData, getFormularioAPI, storeData } from '~/api/api';
+import { FormProvider } from '~/context/fomulario/FormularioContext';
+import { Button, Dialog, Portal } from 'react-native-paper';
 import Spinner from 'react-native-loading-spinner-overlay';
-import {useNavigation} from '@react-navigation/native';
-import {changeStateFinalizado} from '../../../../../services/tecnicosServices';
-import {Platform} from 'react-native';
-import {buildResult} from '../../../../../services/ResultadoServices';
+import { useNavigation } from '@react-navigation/native';
+import { changeStateFinalizado } from '~/services/tecnicosServices';
+import { Platform } from 'react-native';
+import { buildResult } from '~/services/ResultadoServices';
 
 interface Props {
   OrdenTrabajo: OrdenTrabajo;
   hasResultado: boolean;
 }
 
-export const BasePage = ({OrdenTrabajo, hasResultado}: Props) => {
+export const BasePage = ({ OrdenTrabajo, hasResultado }: Props) => {
   const [formulario, setFormulario] = useState<Formulario>();
   const [loading, setLoading] = useState(true);
   const navigator = useNavigation();
@@ -69,13 +69,13 @@ export const BasePage = ({OrdenTrabajo, hasResultado}: Props) => {
           <Spinner
             visible={loading}
             textContent={'Cargando formulario...'}
-            textStyle={{color: '#FFF'}}
+            textStyle={{ color: '#FFF' }}
           />
         </View>
       ) : (
         <View style={styles.page}>
           <Encabezado OrdenTrabajo={OrdenTrabajo} />
-          <View style={{flex: 1}}>
+          <View style={{ flex: 1 }}>
             <Portal>
               <Dialog visible={visible} onDismiss={hideDialog}>
                 <Dialog.Title>Alert</Dialog.Title>
@@ -95,20 +95,20 @@ export const BasePage = ({OrdenTrabajo, hasResultado}: Props) => {
             <Button
               mode="text"
               icon="clock"
-              labelStyle={{color: 'red'}}
+              labelStyle={{ color: 'red' }}
               onPress={postergarHandler}>
               Postergar
             </Button>
             <Button
               mode="text"
               icon="draw"
-              labelStyle={{color: 'blue'}}
+              labelStyle={{ color: 'blue' }}
               onPress={showDialog}>
               Firmar
             </Button>
             <Button
               mode="text"
-              labelStyle={{color: 'green'}}
+              labelStyle={{ color: 'green' }}
               onPress={guardarHandler}>
               Guardar
             </Button>
@@ -136,6 +136,6 @@ const styles = StyleSheet.create({
   },
 });
 
-const FormState = ({children}: any) => {
+const FormState = ({ children }: any) => {
   return <FormProvider>{children}</FormProvider>;
 };

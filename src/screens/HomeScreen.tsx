@@ -1,26 +1,25 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 
-import {DrawerScreenProps} from '@react-navigation/drawer';
-import {Text, View, Image, ScrollView, ImageBackground} from 'react-native';
-import {windowHeight, windowWidth} from '../../App';
+import { DrawerScreenProps } from '@react-navigation/drawer';
+import { Text, View, Image, ScrollView, ImageBackground } from 'react-native';
+import { windowHeight, windowWidth } from '~/dimensions';
 
-import santander from '../assets/images/clientes/santander.png';
-import apex from '../assets/images/clientes/apex.png';
-import easy from '../assets/images/clientes/easy.png';
-import atento from '../assets/images/clientes/atento.png';
-import naranja from '../assets/images/clientes/naranja.jpg';
-import libertad from '../assets/images/clientes/libertad.png';
+import santander from '~/assets/images/clientes/santander.png';
+import apex from '~/assets/images/clientes/apex.png';
+import easy from '~/assets/images/clientes/easy.png';
+import atento from '~/assets/images/clientes/atento.png';
+import naranja from '~/assets/images/clientes/naranja.jpg';
+import libertad from '~/assets/images/clientes/libertad.png';
 
-import fondo from '../assets/images/util/fondo.jpeg';
-import logo from '../assets/images/util/logo.png';
+import fondo from '~/assets/images/util/fondo.jpeg';
+import logo from '~/assets/images/util/logo.png';
 
-import {StyleSheet} from 'react-native';
-import {Button} from '../components/Button';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { StyleSheet } from 'react-native';
+import { Button } from '~/components/Button';
 
 interface Props extends DrawerScreenProps<any, any> {}
 
-export const HomeScreen = ({navigation}: Props) => {
+export const HomeScreen = ({ navigation }: Props) => {
   useEffect(() => {
     navigation.setOptions({
       headerShown: false,
@@ -28,38 +27,35 @@ export const HomeScreen = ({navigation}: Props) => {
   }, []);
 
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <View style={{flex: 1}}>
-        <ScrollView>
-          <Header navigation={navigation} />
-          <View
-            style={{
-              backgroundColor: '#E7E1E1',
-              paddingHorizontal: 0.05 * windowWidth,
-            }}>
-            <Info />
-            <Clientes />
-            <ContactoSection />
-          </View>
-        </ScrollView>
-      </View>
-    </SafeAreaView>
+    <View style={{ flex: 1 }}>
+      <ScrollView>
+        <Header navigation={navigation} />
+        <View
+          style={{
+            backgroundColor: '#E7E1E1',
+            paddingHorizontal: 0.05 * windowWidth,
+          }}>
+          <Info />
+          <Clientes />
+          <ContactoSection />
+        </View>
+      </ScrollView>
+    </View>
   );
 };
 
-const Header = ({navigation}) => {
+const Header = ({ navigation }) => {
   return (
-    <View style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
       <ImageBackground
         style={{
           flex: 1,
           height: 0.3 * windowHeight,
           padding: 5,
-          paddingBottom: 40,
-          justifyContent: 'center',
+          paddingBottom: 20,
         }}
-        imageStyle={{opacity: 0.3}}
-        resizeMode="cover"
+        imageStyle={{ opacity: 0.3 }}
+        resizeMode="repeat"
         source={fondo}>
         <View
           style={{
@@ -93,9 +89,9 @@ const Header = ({navigation}) => {
 
 const Info = () => {
   return (
-    <View style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
       <Title text="Nosotros" />
-      <Text style={{fontSize: 20, color: '#171616'}}>
+      <Text style={{ fontSize: 20, color: '#171616' }}>
         Hogar Servicios de Mantenimiento, es una empresa dedicada a la solución
         de las necesidades de mantenimiento y remodelación de industrias,
         comercios y hogares.
@@ -104,7 +100,7 @@ const Info = () => {
   );
 };
 
-const Title = ({text}) => {
+const Title = ({ text }) => {
   return (
     <View
       style={{
@@ -121,15 +117,15 @@ const Title = ({text}) => {
 
 const Clientes = () => {
   return (
-    <View style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
       <Title text="Clientes" />
-      <View style={{padding: 10}}>
-        <View style={{flex: 1, flexDirection: 'row'}}>
+      <View style={{ padding: 10 }}>
+        <View style={{ flex: 1, flexDirection: 'row' }}>
           <Image style={styles.logoCliente} source={santander} />
           <Image style={styles.logoCliente} source={apex} />
           <Image style={styles.logoCliente} source={easy} />
         </View>
-        <View style={{flex: 1, flexDirection: 'row', paddingTop: 10}}>
+        <View style={{ flex: 1, flexDirection: 'row', paddingTop: 10 }}>
           <Image style={styles.logoCliente} source={atento} />
           <Image style={styles.logoCliente} source={naranja} />
           <Image style={styles.logoCliente} source={libertad} />
@@ -141,7 +137,7 @@ const Clientes = () => {
 
 const ContactoSection = () => {
   return (
-    <View style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
       <Title text="Contacto" />
       <View
         style={{
@@ -153,7 +149,7 @@ const ContactoSection = () => {
         <Text
           style={[
             styles.contactoText,
-            {fontWeight: 'bold', textAlign: 'center'},
+            { fontWeight: 'bold', textAlign: 'center' },
           ]}>
           Oficina Principal
         </Text>

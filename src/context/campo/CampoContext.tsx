@@ -1,5 +1,5 @@
-import React, {createContext, useReducer} from 'react';
-import {campoReducer} from './CampoReducer';
+import React, { createContext, useReducer } from 'react';
+import { campoReducer } from './CampoReducer';
 
 export interface CampoState {
   campoId?: number;
@@ -27,15 +27,15 @@ export interface CampoContextProps {
 export const CampoContext = createContext({} as CampoContextProps);
 
 //Provider
-export const CampoProvider = ({children}: any) => {
+export const CampoProvider = ({ children }: any) => {
   const [campoState, dispatch] = useReducer(campoReducer, campoInitialState);
 
   const setValue = (value: string) => {
-    dispatch({type: 'setValue', payload: value});
+    dispatch({ type: 'setValue', payload: value });
   };
 
   const setOpcionDepende = (value: number) => {
-    dispatch({type: 'setOpcionDepende', payload: value});
+    dispatch({ type: 'setOpcionDepende', payload: value });
   };
 
   return (

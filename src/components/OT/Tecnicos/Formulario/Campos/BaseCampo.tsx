@@ -1,27 +1,24 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
-import {Text, View} from 'react-native';
-import {windowWidth} from '../../../../../../App';
-import {Item} from '../../../../../services/interfaces';
-import {Casilla} from './Casilla';
-import {Desplegable} from './Desplegable';
-import {SeleccionGroup} from './Seleccion';
-import {Texto} from './Texto';
-import {DateInput} from './Date';
-import {
-  CampoContext,
-  CampoProvider,
-} from '../../../../../context/campo/CampoContext';
-import {useContext} from 'react';
+import { StyleSheet } from 'react-native';
+import { Text, View } from 'react-native';
+import { windowWidth } from '~/dimensions';
+import { Item } from '../Pagina/interfaces';
+import { Casilla } from './Casilla';
+import { Desplegable } from './Desplegable';
+import { SeleccionGroup } from './Seleccion';
+import { Texto } from './Texto';
+import { DateInput } from './Date';
+import { CampoContext, CampoProvider } from '~/context/campo/CampoContext';
+import { useContext } from 'react';
 
 interface Props {
   item: Item;
   styleHijo?: any;
 }
 
-export const BaseCampo = ({item, styleHijo}: Props) => {
+export const BaseCampo = ({ item, styleHijo }: Props) => {
   const {
-    campoState: {campoValue, opcionDependeSeleccionada},
+    campoState: { campoValue, opcionDependeSeleccionada },
   } = useContext(CampoContext);
   return (
     <View>
@@ -29,7 +26,8 @@ export const BaseCampo = ({item, styleHijo}: Props) => {
         item.opcionDepende.id === campoValue ||
         item.opcionDepende.id === opcionDependeSeleccionada) && (
         <View style={[styles.containerItem, styleHijo]}>
-          <View style={{borderBottomWidth: 1, padding: 1, borderColor: 'grey'}}>
+          <View
+            style={{ borderBottomWidth: 1, padding: 1, borderColor: 'grey' }}>
             <Text style={styles.titleItem}>{item.item.titulo}</Text>
           </View>
           {item.item.descripcion && (
@@ -37,7 +35,7 @@ export const BaseCampo = ({item, styleHijo}: Props) => {
               <Text style={styles.subtitleItem}>{item.item.descripcion}</Text>
             </View>
           )}
-          <Text style={{color: '#B00020', fontWeight: '600'}}>
+          <Text style={{ color: '#B00020', fontWeight: '600' }}>
             {item.requerido ? 'Campo obligatorio' : null}
           </Text>
           <View style={styles.campo}>{Campo(item)}</View>
@@ -52,7 +50,7 @@ export const BaseCampo = ({item, styleHijo}: Props) => {
                     console.log('es igual!');
 
                     return (
-                      <View style={{marginBottom: 10}}>
+                      <View style={{ marginBottom: 10 }}>
                         <BaseCampo
                           item={itemHijo}
                           styleHijo={{

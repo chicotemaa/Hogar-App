@@ -7,7 +7,7 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx,.md"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.15.5",
@@ -55,6 +55,7 @@
     "@types/react-native-material-textfield": "^0.16.4",
     "@types/react-test-renderer": "^16.9.2",
     "babel-jest": "^26.6.3",
+    "babel-plugin-module-resolver": "^4.1.0",
     "eslint": "^7.14.0",
     "jest": "^26.6.3",
     "metro-react-native-babel-preset": "^0.64.0",

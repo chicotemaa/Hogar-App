@@ -1,15 +1,15 @@
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import {ScrollView, View, RefreshControl, Text} from 'react-native';
-import {useQuery, useMutation, useQueryClient} from 'react-query';
-import {OrdenTrabajo} from '../../../services/interfaces';
-import {getOrdenesTrabajoInfo} from '../../../services/tecnicosServices';
-import {ItemOT} from '../../ItemOT';
-import {TransitionView} from '../../TransitionView';
+import { ScrollView, View, RefreshControl, Text } from 'react-native';
+import { useQuery, useQueryClient } from 'react-query';
+import { OrdenTrabajo } from '~/services/interfaces';
+import { getOrdenesTrabajoInfo } from '~/services/tecnicosServices';
+import { ItemOT } from '~/components/ItemOT';
+import { TransitionView } from '~/components/TransitionView';
 
 export const TecnicosOTList = () => {
   const queryClient = useQueryClient();
-  const {data, error, isFetching} = useQuery('OTList', getOrdenesTrabajoInfo);
+  const { data, error, isFetching } = useQuery('OTList', getOrdenesTrabajoInfo);
 
   const [refreshing, setRefreshing] = React.useState(false);
   const stackNavigator = useNavigation();
@@ -37,7 +37,7 @@ export const TecnicosOTList = () => {
   }
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
       <ScrollView
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
@@ -65,7 +65,7 @@ export const TecnicosOTList = () => {
                     goToScreen={(estado: string) => {
                       if (estado === 'realizarOT') {
                         //TODO: controlar ubicacion
-                        stackNavigator.navigate('OTScreen', {OT});
+                        stackNavigator.navigate('OTScreen', { OT });
                       } else if ((estado = 'detalleOTRealizada')) {
                         stackNavigator.navigate('DetalleOTScreen');
                       }
@@ -83,5 +83,5 @@ export const TecnicosOTList = () => {
 };
 
 const EmptyList = () => {
-  return <View style={{flex: 1}}>{<Text>No hay ot pendientes</Text>}</View>;
+  return <View style={{ flex: 1 }}>{<Text>No hay ot pendientes</Text>}</View>;
 };

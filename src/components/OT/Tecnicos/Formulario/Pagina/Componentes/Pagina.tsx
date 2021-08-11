@@ -1,18 +1,18 @@
 import React from 'react';
-import {Text, View} from 'react-native';
-import {windowHeight} from '../../../../../../../App';
-import {Modulo} from '../../../../../../services/interfaces';
-import {Modulo as ModulosItem} from './Modulo';
+import { Text, View } from 'react-native';
+import { windowHeight } from '~/dimensions';
+import { Modulo } from '../interfaces';
+import { Modulo as ModulosItem } from './Modulo';
 
 interface Props {
   Modulos: Modulo[];
 }
 
-export const Pagina = ({Modulos}: Props) => {
+export const Pagina = ({ Modulos }: Props) => {
   //TODO: Agregar scrollview
   console.log(Modulos);
   return (
-    <View style={{paddingHorizontal: 5, paddingVertical: 5}}>
+    <View style={{ paddingHorizontal: 5, paddingVertical: 5 }}>
       <Text
         style={{
           textTransform: 'uppercase',

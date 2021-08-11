@@ -1,13 +1,13 @@
-import {StackScreenProps} from '@react-navigation/stack';
-import React, {useEffect, useState} from 'react';
-import {StyleSheet, View} from 'react-native';
-import {Text} from 'react-native-elements';
-import {RootStackParams} from '../navigator/StackNavigator';
-import {DetalleButton} from './Historial/DetalleButton';
-import {Estado} from './Historial/Estado';
+import { StackScreenProps } from '@react-navigation/stack';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { Text } from 'react-native-elements';
+import { RootStackParams } from '~/navigator/StackNavigator';
+import { DetalleButton } from './Historial/DetalleButton';
+import { Estado } from './Historial/Estado';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import {getSucursalCliente} from '../api/apiClientes';
-import {TransitionView} from './TransitionView';
+import { getSucursalCliente } from '~/api/apiClientes';
+import { TransitionView } from './TransitionView';
 
 interface Props
   extends StackScreenProps<RootStackParams, 'HistorialSolicitudesScreen'> {
@@ -50,7 +50,7 @@ export const ItemHistorial = ({
           marginHorizontal: 10,
           marginVertical: 5,
         }}>
-        <View style={{flex: 1}}>
+        <View style={{ flex: 1 }}>
           <View
             style={{
               paddingVertical: 10,
@@ -62,30 +62,30 @@ export const ItemHistorial = ({
           </View>
           <Text style={styles.title}>{title}</Text>
 
-          <View style={{flexDirection: 'row', marginBottom: 20}}>
+          <View style={{ flexDirection: 'row', marginBottom: 20 }}>
             <Icon
               size={20}
               name="map-marker-alt"
               color="red"
-              style={{marginRight: 11}}
+              style={{ marginRight: 11 }}
             />
-            <Text style={[styles.info, {width: '135%'}]}>{street}</Text>
+            <Text style={[styles.info, { width: '135%' }]}>{street}</Text>
           </View>
 
-          <View style={{flexDirection: 'row'}}>
+          <View style={{ flexDirection: 'row' }}>
             <Icon
               size={18}
               name="calendar-alt"
               color="skyblue"
-              style={{marginRight: 10}}
+              style={{ marginRight: 10 }}
             />
-            <Text style={[styles.info, {textAlignVertical: 'top'}]}>
+            <Text style={[styles.info, { textAlignVertical: 'top' }]}>
               {formatDate(date)}
             </Text>
           </View>
         </View>
         <View
-          style={{flex: 1, justifyContent: 'space-between', marginRight: 5}}>
+          style={{ flex: 1, justifyContent: 'space-between', marginRight: 5 }}>
           <View
             style={{
               paddingVertical: 10,
