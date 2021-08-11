@@ -196,7 +196,6 @@ export const getFormularioResultado = async (id: number) => {
     .get(baseApi + query, {
       headers: {
         Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
       },
     })
     .then(response => {

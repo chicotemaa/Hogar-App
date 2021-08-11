@@ -46,7 +46,7 @@ export const BodyOT = ({Formulario}: Props) => {
             onPress={() => {
               cambiarPagina(page - 1);
             }}>
-            Atras
+            Atrás
           </Button>
           <Button
             mode="contained"

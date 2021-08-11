@@ -5,12 +5,7 @@ import {
 } from '../api/apiTecnicos';
 import Geolocation from 'react-native-geolocation-service';
 import {Platform} from 'react-native';
-import {
-  check,
-  PERMISSIONS,
-  PermissionStatus,
-  request,
-} from 'react-native-permissions';
+import {PERMISSIONS, PermissionStatus, request} from 'react-native-permissions';
 import {getSucursalCliente} from '../api/apiClientes';
 import {OrdenTrabajo} from './interfaces';
 
@@ -28,25 +23,21 @@ const getISODate = () => {
 };
 
 export const getSucursalStreet = async (sucursalId: string) => {
-  return await getSucursalCliente(sucursalId).then(sucursal => {
-    return sucursal.direccion;
-  });
+  const sucursal = await getSucursalCliente(sucursalId);
+  return sucursal.direccion;
 };
 
 export const getOrdenesTrabajoInfo = async (): Promise<OrdenTrabajo[]> => {
-  return await getOtByEstadoAPI().then(
-    async (OrdenesTrabajo: OrdenTrabajo[]) => {
-      return await Promise.all(
-        OrdenesTrabajo.map(async (OrdenTrabajo: OrdenTrabajo) => {
-          return {
-            ...OrdenTrabajo,
-            direccionSucursalCliente: await getSucursalStreet(
-              OrdenTrabajo.SucursalDeCliente,
-            ),
-          };
-        }),
-      );
-    },
+  const ordenesTrabajo: OrdenTrabajo[] = await getOtByEstadoAPI();
+  return await Promise.all(
+    ordenesTrabajo.map(async (ordenTrabajo: OrdenTrabajo) => {
+      return {
+        ...ordenTrabajo,
+        direccionSucursalCliente: await getSucursalStreet(
+          ordenTrabajo.SucursalDeCliente,
+        ),
+      };
+    }),
   );
 };
 
