@@ -32,8 +32,9 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   text: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontSize: 0.045 * windowWidth,
+    fontWeight: 'normal',
+    textAlign: 'center',
     alignSelf: 'center',
     color: 'white',
   },

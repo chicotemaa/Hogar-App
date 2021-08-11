@@ -10,22 +10,37 @@ interface Props {
 
 export const Encabezado = ({ OrdenTrabajo }: Props) => {
   return (
-    <>
-      <Text style={styles.title}>
-        #{OrdenTrabajo.id} - {OrdenTrabajo.formulario.descripcion}
-      </Text>
+    <View>
+      <View style={styles.container}>
+        <Text style={styles.id}>#{OrdenTrabajo.id}</Text>
+        <Text style={styles.title}>{OrdenTrabajo.formulario.titulo}</Text>
+        <Text style={styles.subtitle}>
+          {OrdenTrabajo.formulario.descripcion}
+        </Text>
+      </View>
       <Divider />
-    </>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  title: {
+  container: {
+    marginBottom: windowHeight * 0.03,
+    marginHorizontal: 5,
+  },
+  id: {
+    padding: 3,
+    color: 'red',
     fontSize: 0.04 * windowWidth,
-    margin: 10,
-    paddingVertical: 5,
+    fontWeight: 'bold',
+  },
+  title: {
+    fontSize: 0.06 * windowWidth,
     fontWeight: '600',
     textTransform: 'capitalize',
-    textAlign: 'auto',
+    textAlign: 'left',
+  },
+  subtitle: {
+    fontSize: 0.04 * windowWidth,
   },
 });

@@ -1,7 +1,5 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { Button } from 'react-native-paper';
-import { Header } from '~/components/Header';
+import React from 'react';
+import { View } from 'react-native';
 import Wizard from '~/components/Wizard';
 import { SucursalStep } from '~/components/Solicitud/Steps/SucursalStep';
 import { ServicioStep } from '~/components/Solicitud/Steps/ServicioStep';

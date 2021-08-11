@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Button, ScrollView } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import { Header } from '~/components/Header';
 import { ItemOT } from '~/components/ItemOT';
 
@@ -14,27 +14,9 @@ export const ListadoOTScreen = ({ navigation }) => {
             id={3}
             titulo="Vidrio roto"
             location="Sarmiento 123"
+            horaDesde="1234"
+            horaHasta="4141"
             date="13 Agosto 2020"
-            goToScreen={() => {
-              navigation.navigate('DetalleOTScreen');
-            }}
-          />
-          <ItemOT
-            estadoOT={2}
-            id={3}
-            titulo="Vidrio roto"
-            location="Sarmiento 123"
-            date="13 Agosto 2021"
-            goToScreen={() => {
-              navigation.navigate('DetalleOTScreen');
-            }}
-          />
-          <ItemOT
-            estadoOT={4}
-            id={3}
-            titulo="Vidrio roto"
-            location="Sarmiento 123"
-            date="13 Agosto 2021"
             goToScreen={() => {
               navigation.navigate('DetalleOTScreen');
             }}

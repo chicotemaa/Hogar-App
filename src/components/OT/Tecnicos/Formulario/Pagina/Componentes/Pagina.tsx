@@ -22,7 +22,9 @@ export const Pagina = ({ Modulos }: Props) => {
         {Modulos[0].paginaNombre}
       </Text>
       {Modulos.map(modulo => {
-        return <ModulosItem Modulo={modulo} Items={modulo.modulo} />;
+        return (
+          <ModulosItem key={modulo.id} Modulo={modulo} Items={modulo.modulo} />
+        );
       })}
     </View>
   );

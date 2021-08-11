@@ -23,8 +23,8 @@ export const BaseCampo = ({ item, styleHijo }: Props) => {
   return (
     <View>
       {(!item.opcionDepende ||
-        item.opcionDepende.id == campoValue ||
-        item.opcionDepende.id == opcionDependeSeleccionada) && (
+        item.opcionDepende.id === campoValue ||
+        item.opcionDepende.id === opcionDependeSeleccionada) && (
         <View style={[styles.containerItem, styleHijo]}>
           <View
             style={{ borderBottomWidth: 1, padding: 1, borderColor: 'grey' }}>
@@ -44,8 +44,8 @@ export const BaseCampo = ({ item, styleHijo }: Props) => {
               {campoValue &&
                 item.propiedadItems.map((itemHijo: Item) => {
                   if (
-                    itemHijo.opcionDepende.id == campoValue ||
-                    itemHijo.opcionDepende.id == opcionDependeSeleccionada
+                    itemHijo.opcionDepende.id === campoValue ||
+                    itemHijo.opcionDepende.id === opcionDependeSeleccionada
                   ) {
                     console.log('es igual!');
 
@@ -123,7 +123,7 @@ const Campo = (item: Item) => {
       campo = <Casilla item={item} />;
       break;
     case 'desplegable':
-      campo = <Desplegable />;
+      campo = <Desplegable item={item} />;
       break;
     case 'casilla_de_verificacion':
       campo = <SeleccionGroup item={item} />;

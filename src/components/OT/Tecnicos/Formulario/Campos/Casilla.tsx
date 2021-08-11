@@ -1,11 +1,8 @@
 import * as React from 'react';
 import { useContext } from 'react';
-import { Text, View } from 'react-native';
 import { RadioButton } from 'react-native-paper';
 import { CampoContext } from '~/context/campo/CampoContext';
 import { Item } from '../Pagina/interfaces';
-import { BaseCampo } from './BaseCampo';
-
 interface Props {
   item: Item;
 }
@@ -37,7 +34,13 @@ export const Casilla = ({ item }: Props) => {
       {item.item.opciones.map(opcion => {
         const opcionItem = opcion.id.toString();
         opciones.push(opcionItem);
-        return <RadioButton.Item label={opcion.nombre} value={opcionItem} />;
+        return (
+          <RadioButton.Item
+            key={opcion.id}
+            label={opcion.nombre}
+            value={opcionItem}
+          />
+        );
       })}
     </RadioButton.Group>
   );

@@ -1,7 +1,5 @@
-import { StackScreenProps } from '@react-navigation/stack';
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { functionToGetToken, getData, storeData } from '~/api/api';
 import { TextInput, Button, Snackbar } from 'react-native-paper';
 
 interface Props {

@@ -31,7 +31,7 @@ export const Modulo = ({ Items, Modulo }: Props) => {
       <View style={styles.container}>
         {Items.propiedadItems.map(item => {
           return (
-            <CampoState>
+            <CampoState key={item.id}>
               <BaseCampo item={item} />
             </CampoState>
           );

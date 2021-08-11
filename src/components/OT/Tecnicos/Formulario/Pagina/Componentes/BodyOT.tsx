@@ -2,7 +2,7 @@ import * as React from 'react';
 import { ScrollView } from 'react-native';
 import { StyleSheet, View } from 'react-native';
 import { Button } from 'react-native-paper';
-import { Formulario, Modulo } from '../interfaces';
+import { Formulario, Modulo } from '~/services/interfaces';
 import { Pagina } from './Pagina';
 import Swiper from 'react-native-swiper';
 import StepIndicator from 'react-native-step-indicator';
@@ -70,6 +70,7 @@ export const BodyOT = ({ Formulario }: Props) => {
           Siguiente
         </Button>
       </View>
+      <View style={{ flex: 9 }}>{!loading && showPages(paginator)}</View>
     </View>
   );
 };
@@ -116,7 +117,6 @@ const showPages = (Paginas: { pagina: number; modulos: Modulo[] }[]) => {
         showsPagination={false}
         loop={false}
         onIndexChanged={index => {
-          console.log(index, page);
           changePage(index);
         }}>
         {Paginas.map(modulosDePagina => {

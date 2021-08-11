@@ -1,65 +1,50 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useEffect, useState } from 'react';
-import { ScrollView, View, RefreshControl } from 'react-native';
-import { getOtByUserAPI } from '~/api/apiTecnicos';
+import React from 'react';
+import { ScrollView, View, RefreshControl, Text } from 'react-native';
+import { useQuery, useQueryClient } from 'react-query';
+import { OrdenTrabajo } from '~/services/interfaces';
+import { getOrdenesTrabajoInfo } from '~/services/tecnicosServices';
 import { ItemOT } from '~/components/ItemOT';
 import { TransitionView } from '~/components/TransitionView';
 
-interface detalleOT {
-  id: number;
-  estado: number;
-  cliente: Cliente;
-  fecha: string;
-  SucursalDeCliente: string;
-  comentario?: string;
-  formulario: Formulario;
-  horaDesde: string;
-  horaHasta: string;
-}
-
-interface Formulario {
-  id: number;
-  descripcion: string;
-  titulo: string;
-}
-
-interface Cliente {
-  razonSocial: string;
-}
-
 export const TecnicosOTList = () => {
-  const [listaOT, setListaOT] = useState<detalleOT[]>([]);
-  const [loading, setLoading] = useState(true);
+  const queryClient = useQueryClient();
+  const { data, error, isFetching } = useQuery('OTList', getOrdenesTrabajoInfo);
+
   const [refreshing, setRefreshing] = React.useState(false);
   const stackNavigator = useNavigation();
+
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
-    getOtByUserAPI().then(response => {
-      setListaOT([]);
-      setListaOT(response);
-    });
-    setTimeout(() => {
-      setRefreshing(false);
-    }, 2000);
+    queryClient.refetchQueries('OTList');
+    setRefreshing(false);
   }, []);
 
-  useEffect(() => {
-    getOtByUserAPI().then(response => {
-      setListaOT(response);
-      setLoading(false);
-    });
-  }, []);
+  if (error) {
+    return (
+      <View>
+        <Text>Error al obtener el listado de las ot {error}</Text>
+      </View>
+    );
+  }
+
+  if (isFetching) {
+    return (
+      <View>
+        <Text>Cargando ot </Text>
+      </View>
+    );
+  }
 
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <ScrollView
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }>
-        {loading
-          ? null
-          : listaOT.map(OT => {
-              console.log(OT);
+        {data &&
+          (data.length > 0 ? (
+            data.map((OT: OrdenTrabajo) => {
               return (
                 <TransitionView
                   key={OT.id}
@@ -67,11 +52,12 @@ export const TecnicosOTList = () => {
                   index={0}
                   isOT>
                   <ItemOT
+                    OT={OT}
                     id={OT.id}
                     estadoOT={OT.estado}
                     cliente={OT.cliente.razonSocial}
                     titulo={OT.formulario.titulo}
-                    location={'Sarmiento 123'}
+                    location={OT.direccionSucursalCliente}
                     date={OT.fecha}
                     rol="tecnico"
                     horaDesde={OT.horaDesde}
@@ -87,8 +73,15 @@ export const TecnicosOTList = () => {
                   />
                 </TransitionView>
               );
-            })}
+            })
+          ) : (
+            <EmptyList />
+          ))}
       </ScrollView>
     </View>
   );
+};
+
+const EmptyList = () => {
+  return <View style={{ flex: 1 }}>{<Text>No hay ot pendientes</Text>}</View>;
 };

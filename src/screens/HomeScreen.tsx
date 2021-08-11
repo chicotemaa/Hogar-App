@@ -68,16 +68,16 @@ const Header = ({ navigation }) => {
               navigation.navigate('Stack');
             }}
             title="Iniciar Sesion"
-            width={windowWidth * 0.3}
+            width={windowWidth * 0.4}
             color="#ef4920"
           />
         </View>
         <Image
           resizeMode="contain"
           style={{
-            borderRadius: windowWidth * 0.2,
+            borderRadius: 20,
             alignSelf: 'center',
-            width: '65%',
+            width: windowWidth * 0.55,
             height: '60%',
           }}
           source={logo}

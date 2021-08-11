@@ -36,6 +36,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   form: {
-    padding: 10,
+    paddingHorizontal: 0.01 * windowWidth,
   },
 });

@@ -11,18 +11,16 @@ const successAnimation = require('~/assets/lottie/success');
 interface Props extends StackScreenProps<any, any> {}
 
 export const SuccessScreen = ({ navigation, route }: Props) => {
-  const [success, setSuccess] = useState(true);
-  const [animation, setAnimation] = useState(null);
+  const [success, setSuccess] = useState(route.params?.success || false);
 
   useEffect(() => {
-    setSuccess(route.params.success);
     goToWelcomeScreen();
   }, []);
 
-  const goToWelcomeScreen = async () => {
+  const goToWelcomeScreen = () => {
     setTimeout(() => {
-      navigation.navigate('WelcomeScreen');
-    }, 2800);
+      success ? navigation.navigate('WelcomeScreen') : navigation.goBack();
+    }, 3000);
   };
 
   return (

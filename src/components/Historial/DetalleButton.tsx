@@ -1,12 +1,12 @@
 import React from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 
 interface Props {
   navigation: any;
   codigo: string;
 }
 
-export const DetalleButton = ({ codigo, navigation }: Props) => {
+export const DetalleButton = ({codigo, navigation}: Props) => {
   return (
     <View>
       <TouchableOpacity

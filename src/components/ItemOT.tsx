@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { windowHeight, windowWidth } from '~/dimensions';
+import {
+  changeStateEnCamino,
+  changeStateMeRecibio,
+  changeStateNoMeRecibio,
+} from '../services/tecnicosServices';
 
 interface Props {
   id: number;
@@ -14,6 +19,7 @@ interface Props {
   cliente?: string;
   horaDesde: string;
   horaHasta: string;
+  OT: any;
 }
 
 export const ItemOT = ({
@@ -27,20 +33,27 @@ export const ItemOT = ({
   cliente,
   horaDesde,
   horaHasta,
+  OT,
 }: Props) => {
   const isVistaTecnico = rol == 'tecnico';
   const [estado, setEstado] = useState(estadoOT);
-
-  const handleState = (estado: number) => {
-    switch (estado) {
-      case 0:
-        setEstado(1);
-        break;
+  const handleState = async (estado: number, newState: number) => {
+    switch (newState) {
       case 1:
-        setEstado(2);
+        setEstado(newState);
+        changeStateEnCamino(OT);
+        break;
+      case 2:
+        //Verificar si existe resultado de ot
+        changeStateMeRecibio(OT).then(status => {
+          status && setEstado(newState);
+        });
+        break;
+      case 3:
+        setEstado(newState);
+        changeStateNoMeRecibio(OT);
         break;
     }
-    // setEstado(estado)
   };
 
   return (
@@ -112,13 +125,12 @@ export const ItemOT = ({
           </View>
         </View>
       </View>
-      <View
-        style={{ padding: 10, alignSelf: 'center', margin: 2, width: '100%' }}>
+      <View style={{ padding: 10, alignSelf: 'center', width: '100%' }}>
         <View style={[styles.divisor]} />
         {isVistaTecnico ? (
           <DetalleBtnTecnico
             estado={estado}
-            changeState={() => handleState(estado)}
+            changeState={(state: number) => handleState(estado, state)}
             goToScreen={goToScreen}
           />
         ) : (
@@ -140,49 +152,6 @@ function formatDate(date: string, position: number) {
   }
   return d;
 }
-
-const styles = StyleSheet.create({
-  container: {
-    borderWidth: 1,
-    borderColor: '#c5cbe3',
-    padding: 5,
-    backgroundColor: 'white',
-    borderRadius: 4,
-    marginHorizontal: 8,
-    marginVertical: 10,
-    elevation: 6,
-  },
-  number: {
-    fontSize: 23,
-    color: '#3D3D3D',
-  },
-  title: {
-    marginTop: 5,
-    marginBottom: 10,
-    fontWeight: '600',
-    fontSize: 0.035 * windowHeight,
-    textTransform: 'capitalize',
-  },
-  tecnico: {
-    marginTop: 3,
-    marginBottom: 10,
-    fontWeight: 'bold',
-    color: '#F13C20',
-    fontSize: 0.025 * windowHeight,
-  },
-  divisor: {
-    height: 1,
-    width: '100%',
-    backgroundColor: '#CCCCCC',
-    marginBottom: 5,
-  },
-  info: {
-    marginVertical: 3,
-    color: '#282828',
-    fontWeight: '600',
-    fontSize: 19,
-  },
-});
 
 interface PropEstado {
   estado: number;
@@ -217,6 +186,7 @@ interface PropBtn {
   goToScreen: Function;
   changeState: Function;
 }
+
 const DetalleBtn = ({ estado, goToScreen }: PropBtn) => {
   const colorBtn = estado == 4 ? 'green' : '#5E5E5E';
   return (
@@ -241,19 +211,24 @@ const DetalleBtn = ({ estado, goToScreen }: PropBtn) => {
   );
 };
 
-const DetalleBtnTecnico = ({ estado, goToScreen, changeState }: PropBtn) => {
+const DetalleBtnTecnico = ({
+  estado: estadoActual,
+  goToScreen,
+  changeState,
+}: PropBtn) => {
   const textState = ['Tomar orden', 'Ya llegué', 'Realizar'];
+
   return (
     <View style={{ marginVertical: 5 }}>
       <View
         style={{
-          flexDirection: estado == 2 ? 'row' : 'column',
+          flexDirection: estadoActual == 1 ? 'row' : 'column',
           justifyContent: 'space-between',
         }}>
-        {estado == 2 ? (
+        {estadoActual == 1 ? (
           <TouchableOpacity
             onPress={() => {
-              //changeState(3)
+              changeState(3);
               // goToScreen();
               console.log('no me atendio');
             }}
@@ -279,19 +254,23 @@ const DetalleBtnTecnico = ({ estado, goToScreen, changeState }: PropBtn) => {
         ) : null}
         <TouchableOpacity
           onPress={() => {
-            changeState();
-
-            if (estado == 2) {
+            estadoActual === 0
+              ? changeState(1)
+              : estadoActual === 1 && changeState(2);
+            if (estadoActual === 2) {
               goToScreen('realizarOT');
-            } else if (estado > 3) {
+            } else if (estadoActual > 3) {
               goToScreen('detalleOTRealizada');
+            } else if (estadoActual === 3) {
+              //TODO: mostrar en que momento fue a la sucursal
+              console.log('no me recibio el dia x a las x horas');
             }
           }}
           style={{
             borderRadius: 8,
             alignSelf: 'flex-end',
             width: 0.35 * windowWidth,
-            backgroundColor: estado == 0 ? '#32367A' : '#178C54',
+            backgroundColor: estadoActual == 0 ? '#32367A' : '#178C54',
             elevation: 10,
             paddingVertical: 9,
           }}>
@@ -302,10 +281,53 @@ const DetalleBtnTecnico = ({ estado, goToScreen, changeState }: PropBtn) => {
               fontWeight: 'normal',
               alignSelf: 'center',
             }}>
-            {estado < 3 ? textState[estado] : 'Ver detalle'}
+            {estadoActual < 3 ? textState[estadoActual] : 'Ver detalle'}
           </Text>
         </TouchableOpacity>
       </View>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    borderWidth: 1,
+    borderColor: '#c5cbe3',
+    padding: 5,
+    backgroundColor: 'white',
+    borderRadius: 4,
+    marginHorizontal: 8,
+    marginVertical: 10,
+    elevation: 6,
+  },
+  number: {
+    fontSize: 23,
+    color: '#3D3D3D',
+  },
+  title: {
+    marginTop: 5,
+    marginBottom: 10,
+    fontWeight: '500',
+    fontSize: 0.035 * windowHeight,
+    textTransform: 'capitalize',
+  },
+  tecnico: {
+    marginTop: 3,
+    marginBottom: 10,
+    fontWeight: 'bold',
+    color: '#F13C20',
+    fontSize: 0.025 * windowHeight,
+  },
+  divisor: {
+    height: 1,
+    width: '100%',
+    backgroundColor: '#CCCCCC',
+    marginBottom: 5,
+  },
+  info: {
+    marginVertical: 3,
+    color: '#282828',
+    fontWeight: '600',
+    fontSize: 0.04 * windowWidth,
+  },
+});
