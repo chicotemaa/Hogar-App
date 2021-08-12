@@ -4,7 +4,7 @@ import { windowHeight, windowWidth } from '~/dimensions';
 import { Encabezado } from './Componentes/Encabezado';
 import { BodyOT } from './Componentes/BodyOT';
 import { Formulario, OrdenTrabajo } from '~/services/interfaces';
-import { getData, getFormularioAPI, storeData } from '~/api/api';
+import { getFormularioAPI } from '~/api/api';
 import { FormProvider } from '~/context/fomulario/FormularioContext';
 import { Button, Dialog, Portal } from 'react-native-paper';
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -21,8 +21,6 @@ interface Props {
 export const BasePage = ({ OrdenTrabajo, hasResultado }: Props) => {
   const [formulario, setFormulario] = useState<Formulario>();
   const [loading, setLoading] = useState(true);
-  const navigator = useNavigation();
-
   //Para firma
   const [visible, setVisible] = React.useState(false);
   const showDialog = () => setVisible(true);
@@ -34,10 +32,6 @@ export const BasePage = ({ OrdenTrabajo, hasResultado }: Props) => {
 
   const finalizadoHandler = () => {
     hideDialog();
-    getData('@Result4919').then(result => {
-      console.log('aca viene get data', result);
-      console.log(JSON.parse(result));
-    });
 
     // changeStateFinalizado(OrdenTrabajo).then((resolved) => {
     //     navigator.navigate('SuccessScreen', { success: resolved })
@@ -56,7 +50,6 @@ export const BasePage = ({ OrdenTrabajo, hasResultado }: Props) => {
   useEffect(() => {
     getFormularioAPI(OrdenTrabajo.formulario.id).then(response => {
       console.log('builded form ', buildResult(response));
-      storeData('@Result4919', JSON.stringify(buildResult(response)));
       setFormulario(response);
       setLoading(false);
     });
