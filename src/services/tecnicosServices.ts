@@ -4,10 +4,14 @@ import {
   getOtById,
 } from '../api/apiTecnicos';
 import Geolocation from 'react-native-geolocation-service';
-import {Platform} from 'react-native';
-import {PERMISSIONS, PermissionStatus, request} from 'react-native-permissions';
-import {getSucursalCliente} from '../api/apiClientes';
-import {OrdenTrabajo} from './interfaces';
+import { Platform } from 'react-native';
+import {
+  PERMISSIONS,
+  PermissionStatus,
+  request,
+} from 'react-native-permissions';
+import { getSucursalCliente } from '../api/apiClientes';
+import { OrdenTrabajo } from './interfaces';
 
 // 'Pendiente': 0
 // 'Estoy en camino': 1
@@ -53,7 +57,7 @@ export const changeStateMeRecibio = async (OrdenTrabajo: any) => {
   if (await checkLocationPermission()) {
     Geolocation.getCurrentPosition(
       position => {
-        const {latitude, longitude} = position.coords;
+        const { latitude, longitude } = position.coords;
 
         const data = {
           estado: 2,
@@ -88,8 +92,8 @@ export const changeStateFinalizado = async (OrdenTrabajo: any) => {
   if (await checkLocationPermission()) {
     Geolocation.getCurrentPosition(
       position => {
-        const {latitude, longitude} = position.coords;
-        getOtById(OrdenTrabajo.id).then(({horaInicio}) => {
+        const { latitude, longitude } = position.coords;
+        getOtById(OrdenTrabajo.id).then(({ horaInicio }) => {
           const diffMinutes = getDiffMinutes(horaInicio);
           const data = {
             estado: 4,
