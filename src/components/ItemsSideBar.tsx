@@ -22,7 +22,7 @@ export const ItemsSideBar = ({ navigation, isWelcome }: Props) => {
       }}>
       <View style={styles.menuContainer}>
         <View style={{ flex: 1 }}>
-          <View style={styles.MenuBtnOpciones}>
+          {/* <View style={styles.MenuBtnOpciones}>
             <Button
               mode="text"
               theme={{ colors: { primary: '#32367A' } }}
@@ -37,7 +37,7 @@ export const ItemsSideBar = ({ navigation, isWelcome }: Props) => {
                 <Text>Holas</Text>
               </Button>
             ) : null}
-          </View>
+          </View> */}
         </View>
         <Button
           mode="text"
