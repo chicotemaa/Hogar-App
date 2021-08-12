@@ -14,8 +14,8 @@ export const ListadoOTScreen = ({ navigation }) => {
             id={3}
             titulo="Vidrio roto"
             location="Sarmiento 123"
-            horaDesde="1234"
-            horaHasta="4141"
+            horaDesde="2021-03-31T15:30"
+            horaHasta="2021-03-31T15:30"
             date="13 Agosto 2020"
             goToScreen={() => {
               navigation.navigate('DetalleOTScreen');

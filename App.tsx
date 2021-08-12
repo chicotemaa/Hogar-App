@@ -1,6 +1,5 @@
 import 'react-native-gesture-handler';
 import React from 'react';
-import { Dimensions } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
@@ -17,6 +16,15 @@ const theme = {
     accent: '#f1c40f',
   },
 };
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 1, //cantidad de intentos en error
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 const App = () => {
   return (
