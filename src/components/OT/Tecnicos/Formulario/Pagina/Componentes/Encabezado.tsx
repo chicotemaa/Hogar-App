@@ -1,7 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { Divider } from 'react-native-paper';
-import { windowWidth } from '~/dimensions';
+import { windowWidth, windowHeight } from '~/dimensions';
 import { OrdenTrabajo } from '../interfaces';
 
 interface Props {
