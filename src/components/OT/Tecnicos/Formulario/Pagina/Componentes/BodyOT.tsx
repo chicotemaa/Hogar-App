@@ -41,13 +41,6 @@ export const BodyOT = ({ Formulario }: Props) => {
 
   return (
     <View style={{ flex: 1 }}>
-      <View style={{ marginVertical: 10 }}>
-        <StepIndicator
-          stepCount={!loading ? pagesCount : 0}
-          currentPosition={page}
-        />
-      </View>
-      <View style={{ flex: 9 }}>{!loading && showPages(paginator)}</View>
       <View
         style={{
           flexDirection: 'row',
