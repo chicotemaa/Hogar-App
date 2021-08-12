@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { TextInput, Button, Snackbar } from 'react-native-paper';
+import { login } from '~/api/api';
 
 interface Props {
   pageToGo: Function;
