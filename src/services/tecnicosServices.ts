@@ -84,7 +84,7 @@ export const changeStateMeRecibio = async (OrdenTrabajo: any) => {
 };
 
 export const changeStateNoMeRecibio = (OrdenTrabajo: any) => {
-  changeStateOTAPI(OrdenTrabajo, 3);
+  changeStateOTAPI(OrdenTrabajo, { estado: 3 });
   //TODO: tomar ubicacion donde marco que no me recibió
 };
 

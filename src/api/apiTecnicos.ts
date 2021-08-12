@@ -22,14 +22,8 @@ export const getOtByEstadoAPI = async (isPendientes = true) => {
 };
 
 export const getOtById = async (id: number) => {
-  const token = await getData('access_token');
-
   return api
-    .get(baseApi + '/orden_trabajos/' + id, {
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
-    })
+    .get('/orden_trabajos/' + id)
     .then(ordenTrabajo => {
       console.log('ot obtenida: ', ordenTrabajo.data);
       return ordenTrabajo.data;
@@ -43,26 +37,23 @@ export const getOtById = async (id: number) => {
 export const changeStateOrdenTrabajo = async (ordenTrabajo: any, data: any) => {
   let headers = {
     'Content-Type': 'application/ld+json',
-    Authorization: 'Bearer ' + (await getData('access_token')),
   };
 
-  return fetch(baseApi + '/orden_trabajos/' + ordenTrabajo.id, {
-    method: 'PUT',
+  const body = {
+    estado: 3,
+  };
+
+  const response = await api.put(`/orden_trabajos/${ordenTrabajo.id}`, body, {
     headers,
-    body: JSON.stringify(data),
-  })
-    .then(response => {
-      console.log(response);
-    })
-    .catch(error => {
-      console.log(error);
-    });
+  });
+
+  console.log(response);
 };
 
 export const postResultado = async () => {
   let headers = {
     'Content-Type': 'application/ld+json',
-    Authorization: 'Bearer ' + (await getData('access_token')),
+    Authorization: 'Bearer ',
   };
 
   const data = {
