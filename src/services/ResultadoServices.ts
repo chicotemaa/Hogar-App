@@ -1,11 +1,11 @@
-import {Formulario, Item, ModuloProps} from './interfaces';
+import { Formulario, Item, ModuloProps } from './interfaces';
 
 export const buildResult = (formulario: Formulario) => {
-  const {propiedadModulos, id} = formulario;
+  const { propiedadModulos, id } = formulario;
 
   return {
     id,
-    modulos: propiedadModulos.map(({id, modulo}) => {
+    modulos: propiedadModulos.map(({ id, modulo }) => {
       return {
         moduloId: id,
         moduloItems: getModulo(modulo),
