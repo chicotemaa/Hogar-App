@@ -97,3 +97,12 @@ interface OpcionesItem {
   image: string | null;
   nombre: string;
 }
+
+export enum EstadosOT {
+  Pendiente = 0,
+  EstoyEnCamino = 1,
+  MeRecibio = 2,
+  NoMeAtendio = 3,
+  Finalizado = 4,
+  Postergado = 5,
+}
