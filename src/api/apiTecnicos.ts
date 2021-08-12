@@ -9,9 +9,10 @@ export const getOtByEstadoAPI = async (isPendientes = true) => {
       'estado[]=' + estados[i] + (estados[i + 1] !== undefined ? '&' : '');
   }
 
-  return baseApi
+  return api
     .get('/ordentrabajo/by/user/without-form?' + estadosOrdenes)
     .then(response => {
+      console.log(response);
       return response.data['hydra:member'];
     })
     .catch(err => {
