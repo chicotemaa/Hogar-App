@@ -8,33 +8,21 @@ import {
 } from '../services/tecnicosServices';
 
 interface Props {
-  id: number;
   titulo: string;
-  location: string;
-  date: string;
-  estadoOT: number;
   goToScreen: Function;
   tecnico?: string;
   rol?: string;
   cliente?: string;
-  horaDesde: string;
-  horaHasta: string;
   OT: any;
 }
 
-export const ItemOT = ({
-  id,
-  titulo,
-  location,
-  date,
-  estadoOT,
-  goToScreen,
-  rol,
-  cliente,
-  horaDesde,
-  horaHasta,
-  OT,
-}: Props) => {
+export const ItemOT = ({ titulo, goToScreen, rol, OT }: Props) => {
+  const { id, horaDesde, horaHasta } = OT;
+  const location = OT.direccionSucursalCliente;
+  const date = OT.fecha;
+  const estadoOT = OT.estado;
+  const cliente = OT.cliente.razonSocial;
+
   const isVistaTecnico = rol == 'tecnico';
   const [estado, setEstado] = useState(estadoOT);
   const handleState = async (estado: number, newState: number) => {
