@@ -10,6 +10,7 @@ import { Texto } from './Texto';
 import { DateInput } from './Date';
 import { CampoContext, CampoProvider } from '~/context/campo/CampoContext';
 import { useContext } from 'react';
+import { Numero } from './Numero';
 
 interface Props {
   item: Item;
@@ -20,6 +21,7 @@ export const BaseCampo = ({ item, styleHijo }: Props) => {
   const {
     campoState: { campoValue, opcionDependeSeleccionada },
   } = useContext(CampoContext);
+  console.log(item);
   return (
     <View>
       {(!item.opcionDepende ||
@@ -28,7 +30,9 @@ export const BaseCampo = ({ item, styleHijo }: Props) => {
         <View style={[styles.containerItem, styleHijo]}>
           <View
             style={{ borderBottomWidth: 1, padding: 1, borderColor: 'grey' }}>
-            <Text style={styles.titleItem}>{item.item.titulo}</Text>
+            <Text style={styles.titleItem}>
+              {item.item.id} {item.item.titulo} {item.item.tipo}
+            </Text>
           </View>
           {item.item.descripcion && (
             <View>
@@ -139,6 +143,9 @@ const Campo = (item: Item) => {
       break;
     case 'time':
       campo = <DateInput modo={'time'} />;
+      break;
+    case 'numero':
+      campo = <Numero />;
       break;
     default:
       null;
