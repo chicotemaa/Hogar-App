@@ -9,8 +9,8 @@ export const Texto = () => {
       <TextInput
         style={{ backgroundColor: '#FFFFFF', padding: 10 }}
         onChangeText={value => {
-          setValue(...value);
-          console.log(value)
+          setValue(value);
+          console.log(value);
         }}
         placeholder=""
       />
