@@ -5,7 +5,6 @@ import { Button } from 'react-native-paper';
 import { Formulario, Modulo } from '~/services/interfaces';
 import { Pagina } from './Pagina';
 import Swiper from 'react-native-swiper';
-import StepIndicator from 'react-native-step-indicator';
 import { FormContext } from '~/context/fomulario/FormularioContext';
 import { useContext } from 'react';
 
@@ -33,7 +32,6 @@ export const BodyOT = ({ Formulario }: Props) => {
   }, []);
 
   const cambiarPagina = (page: number) => {
-    console.log(pagesCount);
     if (page >= 0 && page <= pagesCount) {
       changePage(page);
     }
@@ -94,7 +92,6 @@ const crearPaginador = (Modulos: Modulo[]) => {
     pagina: paginaActual,
     modulos: arrayModulos,
   });
-  console.log('paginador', paginador);
   return paginador;
 };
 
@@ -123,9 +120,3 @@ const showPages = (Paginas: { pagina: number; modulos: Modulo[] }[]) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  stepIndicator: {
-    marginVertical: 10,
-  },
-});

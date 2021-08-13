@@ -21,53 +21,50 @@ export const BaseCampo = ({ item, styleHijo }: Props) => {
   const {
     campoState: { campoValue, opcionDependeSeleccionada },
   } = useContext(CampoContext);
+
   console.log(item);
+
   return (
     <View>
-      {(!item.opcionDepende ||
-        item.opcionDepende.id === campoValue ||
-        item.opcionDepende.id === opcionDependeSeleccionada) && (
-        <View style={[styles.containerItem, styleHijo]}>
-          <View
-            style={{ borderBottomWidth: 1, padding: 1, borderColor: 'grey' }}>
-            <Text style={styles.titleItem}>{item.item.titulo}</Text>
-          </View>
-          {item.item.descripcion && (
-            <View>
-              <Text style={styles.subtitleItem}>{item.item.descripcion}</Text>
-            </View>
-          )}
-          <Text style={{ color: '#B00020', fontWeight: '600' }}>
-            {item.requerido ? 'Campo obligatorio' : null}
-          </Text>
-          <View style={styles.campo}>{Campo(item)}</View>
-          {item.propiedadItems.length > 0 && (
-            <View>
-              {campoValue &&
-                item.propiedadItems.map((itemHijo: Item) => {
-                  if (
-                    itemHijo.opcionDepende.id === campoValue ||
-                    itemHijo.opcionDepende.id === opcionDependeSeleccionada
-                  ) {
-                    console.log('es igual!');
-
-                    return (
-                      <View style={{ marginBottom: 10 }}>
-                        <BaseCampo
-                          item={itemHijo}
-                          styleHijo={{
-                            borderLeftColor: '#F0DD2B',
-                            marginLeft: 3,
-                          }}
-                        />
-                      </View>
-                    );
-                  }
-                })}
-            </View>
-          )}
+      <View style={[styles.containerItem, styleHijo]}>
+        <View style={{ borderBottomWidth: 1, padding: 1, borderColor: 'grey' }}>
+          <Text style={styles.titleItem}>{item.item.titulo}</Text>
         </View>
-      )}
+        {item.item.descripcion && (
+          <View>
+            <Text style={styles.subtitleItem}>{item.item.descripcion}</Text>
+          </View>
+        )}
+        <Text style={{ color: '#B00020', fontWeight: '600' }}>
+          {item.requerido ? 'Campo obligatorio' : null}
+        </Text>
+        <View style={styles.campo}>{Campo(item)}</View>
+        {item.propiedadItems.length > 0 && (
+          <View>
+            {campoValue &&
+              item.propiedadItems.map((itemHijo: Item) => {
+                if (
+                  itemHijo.opcionDepende.id === campoValue ||
+                  itemHijo.opcionDepende.id === opcionDependeSeleccionada
+                ) {
+                  console.log('es igual!');
+
+                  return (
+                    <View style={{ marginBottom: 10 }}>
+                      <BaseCampo
+                        item={itemHijo}
+                        styleHijo={{
+                          borderLeftColor: '#F0DD2B',
+                          marginLeft: 3,
+                        }}
+                      />
+                    </View>
+                  );
+                }
+              })}
+          </View>
+        )}
+      </View>
     </View>
   );
 };
@@ -77,7 +74,7 @@ const styles = StyleSheet.create({
     marginVertical: 4,
     borderLeftWidth: 3,
     borderLeftColor: '#F76656',
-    backgroundColor: 'white',
+    backgroundColor: '#F2F2F2',
     paddingHorizontal: 5,
     paddingBottom: 10,
     paddingTop: 8,
