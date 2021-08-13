@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import { windowHeight } from '~/dimensions';
-import { Modulo } from '../interfaces';
+import { Modulo } from '~/services/interfaces';
 import { Modulo as ModulosItem } from './Modulo';
 
 interface Props {

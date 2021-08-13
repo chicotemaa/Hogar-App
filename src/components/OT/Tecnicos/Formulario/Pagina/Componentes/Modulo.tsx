@@ -1,9 +1,10 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { windowHeight, windowWidth } from '~/dimensions';
 import { CampoProvider } from '~/context/campo/CampoContext';
 import { BaseCampo } from '../../Campos/BaseCampo';
-import { Modulo as IModulo, ModuloProps } from '../interfaces';
+import { Modulo as IModulo, ModuloProps } from '~/services/interfaces';
 
 interface Props {
   Items: ModuloProps;
