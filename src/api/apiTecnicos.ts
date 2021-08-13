@@ -35,11 +35,8 @@ export const getOtById = async (id: number) => {
 };
 
 export const changeStateOrdenTrabajo = async (ordenTrabajo: any, data: any) => {
-  const body = {
-    estado: 3,
-  };
 
-  const response = await api.put(`/orden_trabajos/${ordenTrabajo.id}`, body);
+  const response = await api.put(`/orden_trabajos/${ordenTrabajo.id}`, data);
 
   console.log(response);
 };
