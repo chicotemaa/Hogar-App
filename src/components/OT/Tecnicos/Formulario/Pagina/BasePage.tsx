@@ -26,6 +26,8 @@ export const BasePage = ({ OrdenTrabajo, hasResultado }: Props) => {
   const showDialog = () => setVisible(true);
   const hideDialog = () => setVisible(false);
 
+  const navigator = useNavigation();
+
   hasResultado
     ? console.log('tiene resultado ', OrdenTrabajo)
     : console.log('no tiene resultado');
@@ -33,10 +35,10 @@ export const BasePage = ({ OrdenTrabajo, hasResultado }: Props) => {
   const finalizadoHandler = () => {
     hideDialog();
 
-    // changeStateFinalizado(OrdenTrabajo).then((resolved) => {
-    //     navigator.navigate('SuccessScreen', { success: resolved })
-    //     TODO: setear como finalizado en la lista la ot correspondiente
-    // })
+    changeStateFinalizado(OrdenTrabajo).then(resolved => {
+      navigator.navigate('SuccessScreen', { success: resolved });
+      //TODO: setear como finalizado en la lista la ot correspondiente
+    });
   };
 
   const postergarHandler = () => {
