@@ -11,19 +11,7 @@ const baseUrl = 'http://hogardev.tk';
 const getAccessToken = () => AsyncStorage.getItem('access_token');
 
 const createApi = (config: AxiosRequestConfig) => {
-  const instance = axios.create({
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    transformRequest: function (obj) {
-      var str = [];
-      for (var p in obj) {
-        str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]));
-      }
-      return str.join('&');
-    },
-    ...config,
-  });
+  const instance = axios.create(config);
 
   instance.interceptors.request.use(async requestConfig => {
     const token = await getAccessToken();
@@ -50,13 +38,28 @@ export const apiFetch: typeof fetch = async (input, init) => {
 };
 
 export const login = async (username?: string, password?: string) => {
-  const response = await baseApi.post('/oauth/v2/token', {
-    client_id: clientId,
-    client_secret: clientSecret,
-    grant_type: 'password',
-    username,
-    password,
-  });
+  const response = await baseApi.post(
+    '/oauth/v2/token',
+    {
+      client_id: clientId,
+      client_secret: clientSecret,
+      grant_type: 'password',
+      username,
+      password,
+    },
+    {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      transformRequest: function (obj) {
+        var str = [];
+        for (var p in obj) {
+          str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]));
+        }
+        return str.join('&');
+      },
+    },
+  );
   const { access_token, expires_in, refresh_token } = response.data;
   await Promise.all([
     AsyncStorage.setItem('access_token', access_token),
