@@ -1,0 +1,37 @@
+export interface OrdenTrabajo {
+  "@id"?: string;
+  estados?: any;
+  estadosGestion?: any;
+  estado?: number;
+  servicio?: string;
+  horaInicio?: Date;
+  orden?: number;
+  horaFin?: Date;
+  formulario?: string;
+  user?: string;
+  formularioResultado?: string;
+  latitud?: string;
+  longitud?: string;
+  cliente?: string;
+  horaDesde?: Date;
+  horaHasta?: Date;
+  fecha?: Date;
+  motivo?: string;
+  sucursal?: string;
+  imageName?: string;
+  imageSize?: number;
+  solicitud?: string;
+  responsableFirma?: string;
+  estadoGestion?: number;
+  comentario?: string;
+  latitudCierre?: string;
+  longitudCierre?: string;
+  Facility?: string;
+  SucursalDeCliente?: string;
+  firma?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+  deletedAt?: Date;
+  readonly imageFile?: any;
+  readonly deleted?: boolean;
+}

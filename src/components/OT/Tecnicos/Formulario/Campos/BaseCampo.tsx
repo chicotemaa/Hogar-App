@@ -30,9 +30,7 @@ export const BaseCampo = ({ item, styleHijo }: Props) => {
         <View style={[styles.containerItem, styleHijo]}>
           <View
             style={{ borderBottomWidth: 1, padding: 1, borderColor: 'grey' }}>
-            <Text style={styles.titleItem}>
-              {item.item.id} {item.item.titulo} {item.item.tipo}
-            </Text>
+            <Text style={styles.titleItem}>{item.item.titulo}</Text>
           </View>
           {item.item.descripcion && (
             <View>

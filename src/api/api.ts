@@ -4,9 +4,9 @@ global.Buffer = global.Buffer || require('buffer').Buffer;
 const clientId = '1_4ta05vfoy58ggoggwo08kck000kocckwgcckk8wgkck440cgcw';
 const clientSecret = '176y7wqisfvkcwk8oswowksks0cocsoc00ko4k4oosc0ocwck4';
 
-const baseUrl = 'https://sistemas.hogarmantenimiento.com';
+//const baseUrl = 'https://sistemas.hogarmantenimiento.com';
 //const baseUrl = 'http://10.0.2.2:8000';
-//const baseUrl = 'http://hogardev.tk';
+const baseUrl = 'http://hogardev.tk';
 
 const getAccessToken = () => AsyncStorage.getItem('access_token');
 
