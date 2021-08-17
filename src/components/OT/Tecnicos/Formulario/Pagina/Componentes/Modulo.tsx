@@ -2,7 +2,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { windowHeight, windowWidth } from '~/dimensions';
-import { CampoProvider } from '~/context/campo/CampoContext';
 import { BaseCampo } from '../../Campos/BaseCampo';
 import { Modulo as IModulo, ModuloProps } from '~/services/interfaces';
 
@@ -31,11 +30,7 @@ export const Modulo = ({ Items, Modulo }: Props) => {
       </View>
       <View style={styles.container}>
         {Items.propiedadItems.map(item => {
-          return (
-            <CampoState key={item.id}>
-              <BaseCampo item={item} />
-            </CampoState>
-          );
+          return <BaseCampo key={item.id} item={item} />;
         })}
       </View>
     </View>
@@ -60,6 +55,3 @@ const styles = StyleSheet.create({
   },
 });
 
-const CampoState = ({ children }: any) => {
-  return <CampoProvider>{children}</CampoProvider>;
-};
