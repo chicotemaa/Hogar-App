@@ -4,36 +4,35 @@ import { StyleSheet, Text, View } from 'react-native';
 import { windowHeight, windowWidth } from '~/dimensions';
 import { CampoProvider } from '~/context/campo/CampoContext';
 import { BaseCampo } from '../../Campos/BaseCampo';
-import { Modulo as IModulo, ModuloProps } from '~/services/interfaces';
+import { PaginaModulo } from '~/api/types';
 
 interface Props {
-  Items: ModuloProps;
-  Modulo: IModulo;
+  modulo: PaginaModulo;
 }
 
-export const Modulo = ({ Items, Modulo }: Props) => {
+export const Modulo = ({ modulo }: Props) => {
   return (
     <View>
       <View>
         <View style={{ marginTop: 0.03 * windowHeight }}>
-          <Text style={styles.title}>{Items.titulo}</Text>
+          <Text style={styles.title}>{modulo.modulo.titulo}</Text>
         </View>
-        {Modulo.equipo ? (
+        {modulo.equipo ? (
           <View style={{ flexDirection: 'row' }}>
             <Text style={[styles.equipo, { fontWeight: 'bold' }]}>
               Equipo asignado:{' '}
             </Text>
             <Text style={styles.equipo}>
-              {Modulo.equipo.codigo} | {Modulo.equipo.descripcion}
+              {modulo.equipo.codigo} | {modulo.equipo.descripcion}
             </Text>
           </View>
         ) : null}
       </View>
       <View style={styles.container}>
-        {Items.propiedadItems.map(item => {
+        {modulo.modulo.propiedadItems.map(item => {
           return (
             <CampoState key={item.id}>
-              <BaseCampo item={item} />
+              <BaseCampo propiedadItem={item} />
             </CampoState>
           );
         })}
