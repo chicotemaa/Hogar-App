@@ -81,7 +81,8 @@ interface PropiedadItem {
     | 'titulo'
     | 'date_time'
     | 'time'
-    | 'date';
+    | 'date'
+    | 'numero';
   titulo: string;
   opciones: [] | OpcionesItem[];
 }
