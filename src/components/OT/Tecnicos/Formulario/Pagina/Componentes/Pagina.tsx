@@ -9,8 +9,6 @@ interface Props {
 }
 
 export const Pagina = ({ Modulos }: Props) => {
-  //TODO: Agregar scrollview
-  console.log(Modulos);
   return (
     <View style={{ paddingHorizontal: 5, paddingVertical: 5 }}>
       <Text

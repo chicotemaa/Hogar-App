@@ -16,11 +16,11 @@ interface Props {
   item: Item;
   styleHijo?: any;
   propiedadItem: any;
-  parentItem: any;
+  parentItem?: any;
 }
 
-function isRenderedField(item: Item) {
-  if (!item.opcionDepende) {
+function isRenderedField(propiedadItem: Item) {
+  if (!propiedadItem.opcionDepende) {
     return true;
   }
 
@@ -29,32 +29,43 @@ function isRenderedField(item: Item) {
   // return propiedadItem.opcionDepende.id === parentValue;
 }
 
-export const BaseCampo = ({ item, styleHijo }: Props) => {
-  console.log();
+export const BaseCampo = ({ item, parentItem, styleHijo }: Props) => {
+  parentItem && console.log('tiene padre', item.id);
 
   const { getResultado } = useContext(FormContext);
 
   if (!isRenderedField(item)) {
+    //console.log('no se tiene que renderizar');
     return null;
   }
 
   return (
-    <View>
-      <View style={[styles.containerItem, styleHijo]}>
-        <View style={{ borderBottomWidth: 1, padding: 1, borderColor: 'grey' }}>
-          <Text style={styles.titleItem}>{item.item.titulo}</Text>
-        </View>
-        {item.item.descripcion && (
-          <View>
-            <Text style={styles.subtitleItem}>{item.item.descripcion}</Text>
+    <>
+      <View>
+        <View style={[styles.containerItem, styleHijo]}>
+          <View
+            style={{ borderBottomWidth: 1, padding: 1, borderColor: 'grey' }}>
+            <Text style={styles.titleItem}>{item.item.titulo}</Text>
           </View>
-        )}
-        <Text style={{ color: '#B00020', fontWeight: '600' }}>
-          {item.requerido ? 'Campo obligatorio' : null}
-        </Text>
-        <View style={styles.campo}>{Campo(item)}</View>
+          {item.item.descripcion && (
+            <View>
+              <Text style={styles.subtitleItem}>{item.item.descripcion}</Text>
+            </View>
+          )}
+          <Text style={{ color: '#B00020', fontWeight: '600' }}>
+            {item.requerido ? 'Campo obligatorio' : null}
+          </Text>
+          <View style={styles.campo}>{Campo(item)}</View>
+        </View>
       </View>
-    </View>
+      {item.propiedadItems
+        ? item.propiedadItems.map(propiedadItem => {
+            return (
+              <BaseCampo item={propiedadItem} parentItem={propiedadItem} />
+            );
+          })
+        : null}
+    </>
   );
 };
 
