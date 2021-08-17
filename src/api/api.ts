@@ -8,6 +8,11 @@ const clientSecret = '176y7wqisfvkcwk8oswowksks0cocsoc00ko4k4oosc0ocwck4';
 //const baseUrl = 'http://10.0.2.2:8000';
 const baseUrl = 'http://hogardev.tk';
 
+export const getData = (key: string) => AsyncStorage.getItem(key);
+
+export const setData = (key: string, value: string) =>
+  AsyncStorage.setItem(key, value);
+
 const getAccessToken = () => AsyncStorage.getItem('access_token');
 
 const createApi = (config: AxiosRequestConfig) => {
