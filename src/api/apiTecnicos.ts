@@ -41,8 +41,11 @@ export const changeStateOrdenTrabajo = async (ordenTrabajo: any, data: any) => {
   console.log(response);
 };
 
-export const postResultado = async (idOt: number, resultado: any) => {
-  console.log('resultado viejo', resultado);
+export const postResultado = async (
+  idOt: number,
+  minutosTrabajados: number,
+  resultado: any,
+) => {
   const newResult = resultado.resultados.map(resultado => {
     return {
       ...resultado,
@@ -50,14 +53,13 @@ export const postResultado = async (idOt: number, resultado: any) => {
       propiedadItem: `/api/propiedad_items/${resultado.idPropiedadItem}`,
     };
   });
-  console.log('new resultado', newResult);
   const data = {
     resultados: newResult,
     ordenTrabajo: `/api/orden_trabajos/${idOt}`,
-    latitud: '12312',
-    longitud: '1231241',
-    minutosTrabajado: 16,
-    minutosReales: 6,
+    latitud: '1',
+    longitud: '1',
+    minutosTrabajado: minutosTrabajados,
+    minutosReales: minutosTrabajados,
   };
 
   const response = await api.post('/formulario_resultados', data);

@@ -11,8 +11,6 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import { useNavigation } from '@react-navigation/native';
 import { changeStateFinalizado } from '~/services/tecnicosServices';
 import { Platform } from 'react-native';
-import { getStorageFormularioResultado } from '~/storage';
-import { postResultado } from '~/api/apiTecnicos';
 
 interface Props {
   OrdenTrabajo: OrdenTrabajo;
@@ -36,13 +34,9 @@ export const BasePage = ({ OrdenTrabajo, hasResultado }: Props) => {
   const finalizadoHandler = () => {
     hideDialog();
 
-    getStorageFormularioResultado(OrdenTrabajo.id).then(resultado => {
-      postResultado(OrdenTrabajo.id, resultado).then(resultado => {
-        changeStateFinalizado(OrdenTrabajo).then(resolved => {
-          navigator.navigate('SuccessScreen', { success: resolved });
-          //TODO: setear como finalizado en la lista la ot correspondiente
-        });
-      });
+    changeStateFinalizado(OrdenTrabajo).then(resolved => {
+      navigator.navigate('SuccessScreen', { success: resolved });
+      //TODO: setear como finalizado en la lista la ot correspondiente
     });
   };
 

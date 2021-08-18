@@ -12,6 +12,8 @@ import {
 } from 'react-native-permissions';
 import { getSucursalCliente } from '../api/apiClientes';
 import { OrdenTrabajo } from './interfaces';
+import { getStorageFormularioResultado } from '~/storage';
+import { postResultado } from '~/api/apiTecnicos';
 
 // 'Pendiente': 0
 // 'Estoy en camino': 1
@@ -95,15 +97,21 @@ export const changeStateFinalizado = async (OrdenTrabajo: any) => {
         const { latitude, longitude } = position.coords;
         getOtById(OrdenTrabajo.id).then(({ horaInicio }) => {
           const diffMinutes = getDiffMinutes(horaInicio);
-          const data = {
-            estado: 4,
-            latitudCierre: latitude.toString(),
-            longitudCierre: longitude.toString(),
-            horaFin: getISODate(),
-          };
-          //crear formulario resultado con los minutos trabajados
-
-          changeStateOTAPI(OrdenTrabajo, data);
+          getStorageFormularioResultado(OrdenTrabajo.id).then(resultado => {
+            postResultado(OrdenTrabajo.id, diffMinutes, resultado).then(
+              resultadoPosted => {
+                console.log('resultado publicado', resultadoPosted);
+                const data = {
+                  estado: 4,
+                  latitudCierre: latitude.toString(),
+                  longitudCierre: longitude.toString(),
+                  horaFin: getISODate(),
+                };
+                //crear formulario resultado con los minutos trabajados
+                changeStateOTAPI(OrdenTrabajo, data);
+              },
+            );
+          });
         });
       },
       error => {
