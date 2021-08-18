@@ -11,7 +11,6 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import { useNavigation } from '@react-navigation/native';
 import { changeStateFinalizado } from '~/services/tecnicosServices';
 import { Platform } from 'react-native';
-import { buildResult } from '~/services/ResultadoServices';
 import { getStorageFormularioResultado } from '~/storage';
 import { postResultado } from '~/api/apiTecnicos';
 
@@ -59,7 +58,6 @@ export const BasePage = ({ OrdenTrabajo, hasResultado }: Props) => {
 
   useEffect(() => {
     getFormularioAPI(OrdenTrabajo.formulario.id).then(response => {
-      console.log('builded form ', buildResult(response));
       setFormulario(response);
       setLoading(false);
     });
