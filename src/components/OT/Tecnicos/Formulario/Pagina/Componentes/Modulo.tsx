@@ -29,11 +29,7 @@ export const Modulo = ({ modulo }: Props) => {
       </View>
       <View style={styles.container}>
         {modulo.modulo.propiedadItems.map(item => {
-          return (
-            <CampoState key={item.id}>
-              <BaseCampo propiedadItem={item} />
-            </CampoState>
-          );
+          return <BaseCampo propiedadItem={item} />;
         })}
       </View>
     </View>
@@ -57,4 +53,3 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0.005 * windowWidth,
   },
 });
-
