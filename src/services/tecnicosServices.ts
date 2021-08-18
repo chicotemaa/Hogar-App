@@ -98,19 +98,16 @@ export const changeStateFinalizado = async (OrdenTrabajo: any) => {
         getOtById(OrdenTrabajo.id).then(({ horaInicio }) => {
           const diffMinutes = getDiffMinutes(horaInicio);
           getStorageFormularioResultado(OrdenTrabajo.id).then(resultado => {
-            postResultado(OrdenTrabajo.id, diffMinutes, resultado).then(
-              resultadoPosted => {
-                console.log('resultado publicado', resultadoPosted);
-                const data = {
-                  estado: 4,
-                  latitudCierre: latitude.toString(),
-                  longitudCierre: longitude.toString(),
-                  horaFin: getISODate(),
-                };
-                //crear formulario resultado con los minutos trabajados
-                changeStateOTAPI(OrdenTrabajo, data);
-              },
-            );
+            postResultado(OrdenTrabajo.id, diffMinutes, resultado).then(() => {
+              const data = {
+                estado: 4,
+                latitudCierre: latitude.toString(),
+                longitudCierre: longitude.toString(),
+                horaFin: getISODate(),
+              };
+              //crear formulario resultado con los minutos trabajados
+              changeStateOTAPI(OrdenTrabajo, data);
+            });
           });
         });
       },

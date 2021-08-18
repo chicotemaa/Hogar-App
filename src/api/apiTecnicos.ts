@@ -13,11 +13,9 @@ export const getOtByEstadoAPI = async (isPendientes = true) => {
   return api
     .get('/ordentrabajo/by/user/without-form?' + estadosOrdenes)
     .then(response => {
-      console.log(response);
       return response.data['hydra:member'];
     })
     .catch(err => {
-      console.log(err);
       return err;
     });
 };
