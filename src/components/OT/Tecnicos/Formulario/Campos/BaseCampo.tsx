@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Text, View } from 'react-native';
 import { windowWidth } from '~/dimensions';
-import { Item } from '~/services/interfaces';
+import { PropiedadItem } from '~/api/types';
 import { Casilla } from './Casilla';
 import { Desplegable } from './Desplegable';
 import { SeleccionGroup } from './Seleccion';
@@ -10,61 +10,66 @@ import { Texto } from './Texto';
 import { DateInput } from './Date';
 import { useContext } from 'react';
 import { Numero } from './Numero';
-import { FormContext } from '~/context/fomulario/FormularioContext';
+import { FormContext } from '~/context/formulario/FormularioContext';
 
 interface Props {
-  item: Item;
-  styleHijo?: any;
-  propiedadItem: any;
-  parentItem?: any;
+  propiedadItem: PropiedadItem;
+  parentItem?: PropiedadItem;
 }
 
-function isRenderedField(propiedadItem: Item) {
+function isRenderedField({
+  propiedadItem,
+  getResultado,
+  parentItem,
+}: {
+  propiedadItem: PropiedadItem;
+  getResultado: FormContext['getResultado'];
+  parentItem?: PropiedadItem;
+}) {
   if (!propiedadItem.opcionDepende) {
     return true;
   }
 
-  // const parentValue = getResultado(parentItem?.id).value;
+  if (!parentItem) {
+    return false;
+  }
 
-  // return propiedadItem.opcionDepende.id === parentValue;
+  const parentValue = getResultado(parentItem.id)?.valor;
+
+  return propiedadItem.opcionDepende.id === parentValue;
 }
 
-export const BaseCampo = ({ item, parentItem, styleHijo }: Props) => {
-  parentItem && console.log('tiene padre', item.id);
-
+export const BaseCampo = ({ propiedadItem, parentItem }: Props) => {
   const { getResultado } = useContext(FormContext);
 
-  if (!isRenderedField(item)) {
-    //console.log('no se tiene que renderizar');
+  if (!isRenderedField({ propiedadItem, getResultado, parentItem })) {
     return null;
   }
 
   return (
     <>
       <View>
-        <View style={[styles.containerItem, styleHijo]}>
+        <View style={styles.containerItem}>
           <View
             style={{ borderBottomWidth: 1, padding: 1, borderColor: 'grey' }}>
-            <Text style={styles.titleItem}>{item.item.titulo}</Text>
+            <Text style={styles.titleItem}>{propiedadItem.item.titulo}</Text>
           </View>
-          {item.item.descripcion && (
+          {propiedadItem.item.descripcion && (
             <View>
-              <Text style={styles.subtitleItem}>{item.item.descripcion}</Text>
+              <Text style={styles.subtitleItem}>
+                {propiedadItem.item.descripcion}
+              </Text>
             </View>
           )}
           <Text style={{ color: '#B00020', fontWeight: '600' }}>
-            {item.requerido ? 'Campo obligatorio' : null}
+            {propiedadItem.requerido ? 'Campo obligatorio' : null}
           </Text>
-          <View style={styles.campo}>{Campo(item)}</View>
+          <View style={styles.campo}>{Campo(propiedadItem)}</View>
         </View>
       </View>
-      {item.propiedadItems
-        ? item.propiedadItems.map(propiedadItem => {
-            return (
-              <BaseCampo item={propiedadItem} parentItem={propiedadItem} />
-            );
-          })
-        : null}
+      {propiedadItem.propiedadItems.map(childItem => (
+        <BaseCampo propiedadItem={childItem} parentItem={propiedadItem} />
+      ))}
     </>
   );
 };
@@ -109,9 +114,9 @@ const styles = StyleSheet.create({
   },
 });
 
-const Campo = (item: Item) => {
+const Campo = (propiedadItem: PropiedadItem) => {
   let campo = null;
-  switch (item.item.tipo) {
+  switch (propiedadItem.item.tipo) {
     case 'texto':
       campo = <Texto />;
       break;
@@ -119,13 +124,13 @@ const Campo = (item: Item) => {
       campo = <Text>Es foto</Text>;
       break;
     case 'seleccion_multiple':
-      campo = <Casilla item={item} />;
+      campo = <Casilla propiedadItem={propiedadItem} />;
       break;
     case 'desplegable':
-      campo = <Desplegable item={item} />;
+      campo = <Desplegable item={propiedadItem} />;
       break;
     case 'casilla_de_verificacion':
-      campo = <SeleccionGroup item={item} />;
+      campo = <SeleccionGroup item={propiedadItem} />;
       break;
     case 'titulo':
       campo = <Texto />;
