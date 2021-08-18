@@ -35,7 +35,7 @@ export const BasePage = ({ OrdenTrabajo, hasResultado }: Props) => {
     hideDialog();
 
     changeStateFinalizado(OrdenTrabajo).then(resolved => {
-      navigator.navigate('SuccessScreen', { success: resolved });
+      navigator.navigate('SuccessScreen', { success: true, isOt: true });
       //TODO: setear como finalizado en la lista la ot correspondiente
     });
   };
