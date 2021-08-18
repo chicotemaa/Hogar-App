@@ -62,14 +62,4 @@ export const postResultado = async (idOt: number, resultado: any) => {
 
   const response = await api.post('/formulario_resultados', data);
   console.log('respuesta de resultado', response);
-  console.log('aca llega');
-
-  // return fetch('http://hogardev.tk/api' + '/formulario_resultados', {
-  //   method: 'POST',
-  //   headers,
-  //   body: JSON.stringify(data),
-  // }).then(response => {
-  //   console.log('de vuelta aca');
-  //   console.log(response);
-  // });
 };

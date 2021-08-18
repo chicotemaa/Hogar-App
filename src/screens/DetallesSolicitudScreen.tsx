@@ -42,7 +42,6 @@ export const DetallesSolicitudScreen = ({ navigation, route }: Props) => {
 
   useEffect(() => {
     getSolicitudById(id).then(solicitud => {
-      console.log(solicitud);
       getSucursalCliente(solicitud.SucursalDeCliente).then(sucursal => {
         getImage(solicitud.imagen).then(({ imagen, token }) => {
           setSolicitud({

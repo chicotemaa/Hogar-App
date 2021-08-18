@@ -48,11 +48,13 @@ export const BasePage = ({ OrdenTrabajo, hasResultado }: Props) => {
   };
 
   const postergarHandler = () => {
+    showDialog();
     console.log('postergar');
   };
 
   const guardarHandler = () => {
     console.log('guardando');
+    navigator.goBack();
   };
 
   useEffect(() => {
