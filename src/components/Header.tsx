@@ -11,7 +11,7 @@ interface Props {
   clienteName?: string | Promise<string>;
   ProgressCircle?: any;
   roleUser?: string;
-  id?: number;
+  id?: number | string;
 }
 
 export const Header = ({

@@ -74,7 +74,7 @@ export const logout = async () => {
 
 export const getUserInfo = () => api.get('/user/info');
 
-export const getImage = async (imagen: string) => {
+export const getImage = async (imagen: string | null) => {
   const response = await baseApi.get(`/uploads/imagenes/solicitud/${imagen}`, {
     responseType: 'arraybuffer',
   });
