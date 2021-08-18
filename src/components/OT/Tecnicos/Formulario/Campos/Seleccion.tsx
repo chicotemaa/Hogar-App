@@ -9,11 +9,6 @@ interface Props {
 }
 
 export const SeleccionGroup = ({ item }: Props) => {
-  console.log('seleccion group', item);
-  const valuesSelected = [];
-
-  const SeleccionContext = React.useContext({});
-
   const {
     item: { opciones },
   } = item;
