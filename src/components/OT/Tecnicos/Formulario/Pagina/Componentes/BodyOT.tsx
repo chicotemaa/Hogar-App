@@ -11,15 +11,13 @@ import { FormProvider } from '~/context/formulario/FormularioContext';
 
 interface Props {
   Formulario: Formulario;
-  otID: number
+  otID: number;
 }
 
 export const BodyOT = ({ Formulario, otID }: Props) => {
   const [pagesCount, setPagesCount] = React.useState<number>(0);
   const [loading, setLoading] = React.useState(true);
   const [paginator, setPaginator] = React.useState(undefined);
-
-  console.log(Formulario)
 
   const {
     formState: { page },

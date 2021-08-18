@@ -118,7 +118,7 @@ const Campo = (propiedadItem: PropiedadItem) => {
   let campo = null;
   switch (propiedadItem.item.tipo) {
     case 'texto':
-      campo = <Texto />;
+      campo = <Texto propiedadItem={propiedadItem} />;
       break;
     case 'foto':
       campo = <Text>Es foto</Text>;
@@ -133,7 +133,7 @@ const Campo = (propiedadItem: PropiedadItem) => {
       campo = <SeleccionGroup item={propiedadItem} />;
       break;
     case 'titulo':
-      campo = <Texto />;
+      campo = <Texto propiedadItem={propiedadItem} />;
       break;
     case 'date_time':
       campo = <DateInput modo={'completo'} />;
