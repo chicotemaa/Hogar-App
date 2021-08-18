@@ -9,7 +9,7 @@ import { TransitionView } from '~/components/TransitionView';
 
 export const TecnicosOTListRealizadas = () => {
   const { data, error, isFetching, refetch } = useQuery(
-    'OTList',
+    'OTListRealizada',
     getOrdenesTrabajoRealizadasInfo,
   );
   const stackNavigator = useNavigation();
@@ -52,6 +52,7 @@ const ListItem = ({ OT, stackNavigator }) => {
         goToScreen={(estado: string) => {
           if (estado === 'realizarOT') {
             //TODO: controlar ubicacion
+            
             stackNavigator.navigate('OTScreen', { OT });
           } else if ((estado = 'detalleOTRealizada')) {
             stackNavigator.navigate('DetalleOTScreen');
@@ -65,7 +66,12 @@ const ListItem = ({ OT, stackNavigator }) => {
 const LoadingMessage = () => {
   return (
     <View>
-      <Text>Cargando ot </Text>
+      <Text style={{
+        textAlign:'center',
+        color:'orange',
+        fontSize:25,
+        textAlignVertical:'center',
+        fontFamily:'Sans'}}>Cargando OT </Text>
     </View>
   );
 };
