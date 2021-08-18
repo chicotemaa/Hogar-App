@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import { windowHeight } from '~/dimensions';
 import { PaginaModulo } from '~/api/types';
-import { PaginaModulo as ModulosItem } from './Modulo';
+import { Modulo as ModulosItem } from './Modulo';
 import { ModuloProvider } from '~/context/modulo/ModuloContext';
 
 interface Props {
