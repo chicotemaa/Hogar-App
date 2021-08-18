@@ -20,10 +20,15 @@ export interface FormContext {
 export const FormContext = createContext<FormContext>({} as any);
 
 //Provider
-export const FormProvider = ({ children }: { children: ReactNode }) => {
+export const FormProvider = ({
+  children,
+  otID,
+}: {
+  children: ReactNode;
+  otID: number;
+}) => {
   const [formularioResultado, setFormularioResultado] =
     useState<FormularioResultado>();
-
   const getResultado = useCallback(
     (propiedadItemId: number) => {
       return formularioResultado?.resultados.find(
@@ -52,14 +57,14 @@ export const FormProvider = ({ children }: { children: ReactNode }) => {
         resultados: newResultados,
       };
       setFormularioResultado(newFormularioResultado);
-      await setStorageFormularioResultado(newFormularioResultado);
+      await setStorageFormularioResultado(newFormularioResultado, otID);
     },
-    [formularioResultado],
+    [formularioResultado, otID],
   );
 
   useEffect(() => {
     (async () => {
-      let result = await getStorageFormularioResultado();
+      let result = await getStorageFormularioResultado(otID);
       if (!result) {
         result = {
           resultados: [],

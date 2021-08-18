@@ -83,7 +83,9 @@ export const BasePage = ({ OrdenTrabajo, hasResultado }: Props) => {
               </Dialog>
             </Portal>
             <FormState>
-              {formulario ? <BodyOT Formulario={formulario} /> : null}
+              {formulario ? (
+                <BodyOT Formulario={formulario} otID={OrdenTrabajo.id} />
+              ) : null}
             </FormState>
           </View>
           <View style={styles.footer}>
