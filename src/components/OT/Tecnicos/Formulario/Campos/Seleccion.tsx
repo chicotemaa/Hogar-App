@@ -1,28 +1,34 @@
 import * as React from 'react';
-import { Text } from 'react-native';
 import { View } from 'react-native';
 import { Checkbox } from 'react-native-paper';
-import { Item } from '../../../../../services/interfaces';
+import { PropiedadItem, ItemOpcion } from '~/api/types';
 
 interface Props {
-  item: Item;
+  item: PropiedadItem;
 }
 
 export const SeleccionGroup = ({ item }: Props) => {
-  const {
-    item: { opciones },
-  } = item;
+  let arrayItems: string[] = [];
+  const modifyArray = (id: string, checked: boolean) => {
+    checked ? arrayItems.push(id) : (arrayItems = arrayRemove(arrayItems, id));
+  };
 
   return (
     <View>
-      {opciones.map(opcion => {
-        return <Seleccion opcion={opcion} />;
+      {item.item.opciones.map(opcion => {
+        return <Seleccion opcion={opcion} modifyArray={modifyArray} />;
       })}
     </View>
   );
 };
 
-const Seleccion = ({ opcion }) => {
+const Seleccion = ({
+  opcion,
+  modifyArray,
+}: {
+  opcion: ItemOpcion;
+  modifyArray: Function;
+}) => {
   const [checked, setChecked] = React.useState(false);
 
   return (
@@ -32,7 +38,14 @@ const Seleccion = ({ opcion }) => {
       status={checked ? 'checked' : 'unchecked'}
       onPress={() => {
         setChecked(!checked);
+        modifyArray(opcion.id, !checked);
       }}
     />
   );
 };
+
+function arrayRemove(arr: string[], value: string) {
+  return arr.filter(function (ele) {
+    return ele !== value;
+  });
+}
