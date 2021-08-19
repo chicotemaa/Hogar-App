@@ -16,12 +16,6 @@ export interface OrdenTrabajo {
   formularioResultado?: any;
 }
 
-export interface Formulario {
-  descripcion: string;
-  id: number;
-  titulo: string;
-}
-
 export interface Cliente {
   id: string;
   nombre: string;
@@ -32,6 +26,7 @@ export interface Cliente {
 
 export interface Formulario {
   compraMateriales: boolean;
+  titulo: string;
   descripcion: string;
   express: boolean;
   id: number;
@@ -86,7 +81,8 @@ interface PropiedadItem {
     | 'titulo'
     | 'date_time'
     | 'time'
-    | 'date';
+    | 'date'
+    | 'numero';
   titulo: string;
   opciones: [] | OpcionesItem[];
 }

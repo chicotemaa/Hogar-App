@@ -11,7 +11,6 @@ import { Solicitudes } from '~/api/interfaces/types';
 interface Props
   extends StackScreenProps<RootStackParams, 'DetalleSolicitudScreen'> {}
 
-
 export const DetallesSolicitudScreen = ({ navigation, route }: Props) => {
   const infoSolicitud: Solicitudes = {
     consulta: '',
@@ -30,25 +29,23 @@ export const DetallesSolicitudScreen = ({ navigation, route }: Props) => {
 
   useEffect(() => {
     getSolicitudById(id).then(solicitud => {
-
-      getSucursalCliente(solicitud.SucursalDeCliente).then(async sucursal => {
+      getSucursalCliente(solicitud.SucursalDeCliente).then(sucursal => {
         //getImage(solicitud.imagen).then(({ imagen, token }) => {
-          setSolicitud({
-            consulta: solicitud.consulta,
-            createdAt: solicitud.createdAt,
-            estado: estados[solicitud.estado],
-            necesitasAyuda: solicitud.necesitasAyuda,
-            servicio: solicitud.servicio.titulo,
-            pisoSector: solicitud.pisoSector,
-            SucursalDeCliente: sucursal.SucursalDeCliente,
-          });
+        setSolicitud({
+          consulta: solicitud.consulta,
+          createdAt: solicitud.createdAt,
+          estado: estados[solicitud.estado],
+          necesitasAyuda: solicitud.necesitasAyuda,
+          servicio: solicitud.servicio.titulo,
+          pisoSector: solicitud.pisoSector,
+          SucursalDeCliente: sucursal.SucursalDeCliente,
+        });
         //});
       });
     });
   }, []);
-  
+
   return (
-    
     <View style={{ backgroundColor: '#E7E1E1', flex: 1 }}>
       <Header
         pageName={'Solicitud'}
@@ -98,4 +95,3 @@ async function getServicio(id: string) {
 function serialize(arg0: Promise<any>): any {
   throw new Error('Function not implemented.');
 }
-

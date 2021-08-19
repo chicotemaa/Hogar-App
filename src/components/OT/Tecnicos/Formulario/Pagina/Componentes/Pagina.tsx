@@ -1,16 +1,15 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import { windowHeight } from '~/dimensions';
-import { Modulo } from '../interfaces';
+import { PaginaModulo } from '~/api/types';
 import { Modulo as ModulosItem } from './Modulo';
+import { ModuloProvider } from '~/context/modulo/ModuloContext';
 
 interface Props {
-  Modulos: Modulo[];
+  modulos: PaginaModulo[];
 }
 
-export const Pagina = ({ Modulos }: Props) => {
-  //TODO: Agregar scrollview
-  console.log(Modulos);
+export const Pagina = ({ modulos }: Props) => {
   return (
     <View style={{ paddingHorizontal: 5, paddingVertical: 5 }}>
       <Text
@@ -19,11 +18,13 @@ export const Pagina = ({ Modulos }: Props) => {
           fontWeight: 'bold',
           fontSize: 0.022 * windowHeight,
         }}>
-        {Modulos[0].paginaNombre}
+        {modulos[0].paginaNombre}
       </Text>
-      {Modulos.map(modulo => {
+      {modulos.map((modulo, index) => {
         return (
-          <ModulosItem key={modulo.id} Modulo={modulo} Items={modulo.modulo} />
+          <ModuloProvider modulo={modulo} moduloIndice={index}>
+            <ModulosItem key={modulo.id} modulo={modulo} />
+          </ModuloProvider>
         );
       })}
     </View>

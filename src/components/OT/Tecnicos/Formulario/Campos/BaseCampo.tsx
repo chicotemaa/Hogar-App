@@ -2,73 +2,75 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Text, View } from 'react-native';
 import { windowWidth } from '~/dimensions';
-import { Item } from '../Pagina/interfaces';
+import { PropiedadItem } from '~/api/types';
 import { Casilla } from './Casilla';
 import { Desplegable } from './Desplegable';
 import { SeleccionGroup } from './Seleccion';
 import { Texto } from './Texto';
 import { DateInput } from './Date';
-import { CampoContext, CampoProvider } from '~/context/campo/CampoContext';
 import { useContext } from 'react';
 import { Numero } from './Numero';
+import { FormContext } from '~/context/formulario/FormularioContext';
 
 interface Props {
-  item: Item;
-  styleHijo?: any;
+  propiedadItem: PropiedadItem;
+  parentItem?: PropiedadItem;
 }
 
-export const BaseCampo = ({ item, styleHijo }: Props) => {
-  const {
-    campoState: { campoValue, opcionDependeSeleccionada },
-  } = useContext(CampoContext);
-  console.log(item);
+function isRenderedField({
+  propiedadItem,
+  getResultado,
+  parentItem,
+}: {
+  propiedadItem: PropiedadItem;
+  getResultado: FormContext['getResultado'];
+  parentItem?: PropiedadItem;
+}) {
+  if (!propiedadItem.opcionDepende) {
+    return true;
+  }
+
+  if (!parentItem) {
+    return false;
+  }
+
+  const parentValue = getResultado(parentItem.id)?.valor;
+
+  return propiedadItem.opcionDepende.id === parentValue;
+}
+
+export const BaseCampo = ({ propiedadItem, parentItem }: Props) => {
+  const { getResultado } = useContext(FormContext);
+
+  if (!isRenderedField({ propiedadItem, getResultado, parentItem })) {
+    return null;
+  }
+
   return (
-    <View>
-      {(!item.opcionDepende ||
-        item.opcionDepende.id === campoValue ||
-        item.opcionDepende.id === opcionDependeSeleccionada) && (
-        <View style={[styles.containerItem, styleHijo]}>
+    <>
+      <View>
+        <View style={styles.containerItem}>
           <View
             style={{ borderBottomWidth: 1, padding: 1, borderColor: 'grey' }}>
-            <Text style={styles.titleItem}>{item.item.titulo}</Text>
+            <Text style={styles.titleItem}>{propiedadItem.item.titulo}</Text>
           </View>
-          {item.item.descripcion && (
+          {propiedadItem.item.descripcion && (
             <View>
-              <Text style={styles.subtitleItem}>{item.item.descripcion}</Text>
+              <Text style={styles.subtitleItem}>
+                {propiedadItem.item.descripcion}
+              </Text>
             </View>
           )}
           <Text style={{ color: '#B00020', fontWeight: '600' }}>
-            {item.requerido ? 'Campo obligatorio' : null}
+            {propiedadItem.requerido ? 'Campo obligatorio' : null}
           </Text>
-          <View style={styles.campo}>{Campo(item)}</View>
-          {item.propiedadItems.length > 0 && (
-            <View>
-              {campoValue &&
-                item.propiedadItems.map((itemHijo: Item) => {
-                  if (
-                    itemHijo.opcionDepende.id === campoValue ||
-                    itemHijo.opcionDepende.id === opcionDependeSeleccionada
-                  ) {
-                    console.log('es igual!');
-
-                    return (
-                      <View style={{ marginBottom: 10 }}>
-                        <BaseCampo
-                          item={itemHijo}
-                          styleHijo={{
-                            borderLeftColor: '#F0DD2B',
-                            marginLeft: 3,
-                          }}
-                        />
-                      </View>
-                    );
-                  }
-                })}
-            </View>
-          )}
+          <View style={styles.campo}>{Campo(propiedadItem)}</View>
         </View>
-      )}
-    </View>
+      </View>
+      {propiedadItem.propiedadItems.map(childItem => (
+        <BaseCampo propiedadItem={childItem} parentItem={propiedadItem} />
+      ))}
+    </>
   );
 };
 
@@ -112,26 +114,26 @@ const styles = StyleSheet.create({
   },
 });
 
-const Campo = (item: Item) => {
+const Campo = (propiedadItem: PropiedadItem) => {
   let campo = null;
-  switch (item.item.tipo) {
+  switch (propiedadItem.item.tipo) {
     case 'texto':
-      campo = <Texto />;
+      campo = <Texto propiedadItem={propiedadItem} />;
       break;
     case 'foto':
       campo = <Text>Es foto</Text>;
       break;
     case 'seleccion_multiple':
-      campo = <Casilla item={item} />;
+      campo = <Casilla propiedadItem={propiedadItem} />;
       break;
     case 'desplegable':
-      campo = <Desplegable item={item} />;
+      campo = <Desplegable item={propiedadItem} />;
       break;
     case 'casilla_de_verificacion':
-      campo = <SeleccionGroup item={item} />;
+      campo = <SeleccionGroup propiedadItem={propiedadItem} />;
       break;
     case 'titulo':
-      campo = <Texto />;
+      campo = <Texto propiedadItem={propiedadItem} />;
       break;
     case 'date_time':
       campo = <DateInput modo={'completo'} />;

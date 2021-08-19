@@ -22,6 +22,8 @@ export interface FormContextProps {
   getFormId: () => void;
   setValue: (value: string) => void;
   changePage: (value: number) => void;
+  getResultado: (propiedadItemId: number) => void;
+  setResultado: () => void;
 }
 
 //Crear context
@@ -43,6 +45,14 @@ export const FormProvider = ({ children }: any) => {
     dispatch({ type: 'setPage', payload: page });
   };
 
+  const getResultado = (propiedadItemId: number) => {
+    dispatch({ type: 'getResultado', payload: propiedadItemId });
+  };
+
+  const setResultado = () => {
+    dispatch({ type: 'setResultado' });
+  };
+
   return (
     <FormContext.Provider
       value={{
@@ -50,6 +60,8 @@ export const FormProvider = ({ children }: any) => {
         getFormId,
         setValue,
         changePage,
+        getResultado,
+        setResultado,
       }}>
       {children}
     </FormContext.Provider>
