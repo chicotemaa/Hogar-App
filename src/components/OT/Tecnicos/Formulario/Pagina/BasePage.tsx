@@ -21,7 +21,7 @@ export const BasePage = ({ OrdenTrabajo, hasResultado }: Props) => {
   const [formulario, setFormulario] = useState<Formulario>();
   const [loading, setLoading] = useState(true);
   //Para firma
-  const [visible, setVisible] = React.useState(false);
+  const [visible, setVisible] = useState(false);
   const showDialog = () => setVisible(true);
   const hideDialog = () => setVisible(false);
 
@@ -35,7 +35,7 @@ export const BasePage = ({ OrdenTrabajo, hasResultado }: Props) => {
     hideDialog();
 
     changeStateFinalizado(OrdenTrabajo).then(resolved => {
-      navigator.navigate('SuccessScreen', { success: true, isOt: true });
+      navigator.navigate('SuccessScreen', { success: resolved, isOt: true });
       //TODO: setear como finalizado en la lista la ot correspondiente
     });
   };

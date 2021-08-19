@@ -167,7 +167,7 @@ export interface PropiedadItem {
 }
 
 export interface Resultado {
-  valor: string;
+  valor: string | string[];
   imageName?: string;
   imageSize?: number;
   latitud: string;

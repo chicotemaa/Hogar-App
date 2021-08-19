@@ -130,7 +130,7 @@ const Campo = (propiedadItem: PropiedadItem) => {
       campo = <Desplegable item={propiedadItem} />;
       break;
     case 'casilla_de_verificacion':
-      campo = <SeleccionGroup item={propiedadItem} />;
+      campo = <SeleccionGroup propiedadItem={propiedadItem} />;
       break;
     case 'titulo':
       campo = <Texto propiedadItem={propiedadItem} />;
