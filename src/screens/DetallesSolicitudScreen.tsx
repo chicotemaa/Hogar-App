@@ -31,9 +31,8 @@ export const DetallesSolicitudScreen = ({ navigation, route }: Props) => {
   useEffect(() => {
     getSolicitudById(id).then(solicitud => {
 
-      getSucursalCliente(solicitud.SucursalDeCliente).then(sucursal => {
+      getSucursalCliente(solicitud.SucursalDeCliente).then(async sucursal => {
         //getImage(solicitud.imagen).then(({ imagen, token }) => {
-          console.log(getSucursalCliente(solicitud.SucursalDeCliente));
           setSolicitud({
             consulta: solicitud.consulta,
             createdAt: solicitud.createdAt,
@@ -96,3 +95,7 @@ const stylesDetalle = StyleSheet.create({
 async function getServicio(id: string) {
   return getServicioAPI(id);
 }
+function serialize(arg0: Promise<any>): any {
+  throw new Error('Function not implemented.');
+}
+
