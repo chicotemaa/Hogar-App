@@ -2,7 +2,7 @@ import * as React from 'react';
 import { View } from 'react-native';
 import { Checkbox } from 'react-native-paper';
 import { PropiedadItem, ItemOpcion } from '~/api/types';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { FormContext } from '~/context/formulario/FormularioContext';
 import { ModuloContext } from '~/context/modulo/ModuloContext';
 
@@ -13,19 +13,13 @@ interface Props {
 export const SeleccionGroup = ({ propiedadItem }: Props) => {
   const { setResultado } = useContext(FormContext);
   const { modulo, moduloIndice, getIndiceItem } = useContext(ModuloContext);
-  const [selectedOptions, setSelectedOptions] = useState<string[]>();
 
-  let arrayItems: string[] = [];
-  const modifyArray = (id: string, checked: boolean) => {
-    if (checked) {
-      setSelectedOptions(selectedOptions?.push(id));
-    }
-    checked ? arrayItems.push(id) : (arrayItems = arrayRemove(arrayItems, id));
-    console.log('aca se rompe', arrayItems);
-    handleValueChange();
+  const modifyArray = (id: string, checked) => {
+    console.log(id);
+    handleValueChange(id.toString());
   };
 
-  const handleValueChange = (changedArray?: any) => {
+  const handleValueChange = (id: string) => {
     setResultado(propiedadItem.id, {
       idModulo: modulo.id,
       idPropiedadItem: propiedadItem.id,
@@ -34,7 +28,7 @@ export const SeleccionGroup = ({ propiedadItem }: Props) => {
       isColeccionable: false,
       latitud: '',
       longitud: '',
-      valor: [...['valor valor ']],
+      valor: id,
     });
   };
 
@@ -69,8 +63,3 @@ const Seleccion = ({
   );
 };
 
-function arrayRemove(arr: string[], value: string) {
-  return arr.filter(function (ele) {
-    return ele !== value;
-  });
-}
