@@ -77,3 +77,14 @@ export const secondIndicatorStyles = {
   stepIndicatorLabelUnFinishedColor: '#aaaaaa',
   currentStepLabelColor: '#00BA0C',
 };
+export const otStyle ={
+    TextCargando:{
+      marginTop:'20%',
+        textAlign:'center',
+        color:'orange',
+        fontSize:25,
+        textAlignVertical:'center',
+        fontFamily:'Sans',
+        alignItems:'center'
+    }
+}

@@ -17,7 +17,7 @@ export const TecnicosWelcomeScreen = ({ navigation }) => {
         }
 
       }}>
-      <Tab.Screen name="Pendientes" children={()=>< TecnicosOTList userData={true}/>} />
+      <Tab.Screen name="Pendientes" component={TecnicosOTList} />
       <Tab.Screen name="Realizadas" component={TecnicosOTListRealizadas} 
        />
     </Tab.Navigator>

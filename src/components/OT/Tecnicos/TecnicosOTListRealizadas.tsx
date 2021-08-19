@@ -6,6 +6,7 @@ import { OrdenTrabajo } from '~/services/interfaces';
 import {  getOrdenesTrabajoRealizadasInfo } from '~/services/tecnicosServices';
 import { ItemOT } from '~/components/ItemOT';
 import { TransitionView } from '~/components/TransitionView';
+import { otStyle } from '../../../theme/appTheme';
 
 export const TecnicosOTListRealizadas = () => {
   const { data, error, isFetching, refetch } = useQuery(
@@ -65,13 +66,8 @@ const ListItem = ({ OT, stackNavigator }) => {
 
 const LoadingMessage = () => {
   return (
-    <View>
-      <Text style={{
-        textAlign:'center',
-        color:'orange',
-        fontSize:25,
-        textAlignVertical:'center',
-        fontFamily:'Sans'}}>Cargando OT </Text>
+    <View >
+      <Text style={otStyle.TextCargando}>Cargando OT </Text>
     </View>
   );
 };
