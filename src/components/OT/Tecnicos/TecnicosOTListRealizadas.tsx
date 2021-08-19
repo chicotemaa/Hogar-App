@@ -3,15 +3,15 @@ import React from 'react';
 import { ScrollView, View, RefreshControl, Text } from 'react-native';
 import { useQuery } from 'react-query';
 import { OrdenTrabajo } from '~/services/interfaces';
-import { getOrdenesTrabajoInfo } from '~/services/tecnicosServices';
+import {  getOrdenesTrabajoRealizadasInfo } from '~/services/tecnicosServices';
 import { ItemOT } from '~/components/ItemOT';
 import { TransitionView } from '~/components/TransitionView';
-import { otStyle } from '~/theme/appTheme';
+import { otStyle } from '../../../theme/appTheme';
 
-export const TecnicosOTList = () => {
+export const TecnicosOTListRealizadas = () => {
   const { data, error, isFetching, refetch } = useQuery(
-    'OTList',
-    getOrdenesTrabajoInfo,
+    'OTListRealizada',
+    getOrdenesTrabajoRealizadasInfo,
   );
   const stackNavigator = useNavigation();
 
@@ -53,6 +53,7 @@ const ListItem = ({ OT, stackNavigator }) => {
         goToScreen={(estado: string) => {
           if (estado === 'realizarOT') {
             //TODO: controlar ubicacion
+            
             stackNavigator.navigate('OTScreen', { OT });
           } else if ((estado = 'detalleOTRealizada')) {
             stackNavigator.navigate('DetalleOTScreen');
@@ -65,8 +66,8 @@ const ListItem = ({ OT, stackNavigator }) => {
 
 const LoadingMessage = () => {
   return (
-    <View>
-      <Text style={otStyle.TextCargando}>Cargando ot </Text>
+    <View >
+      <Text style={otStyle.TextCargando}>Cargando OT </Text>
     </View>
   );
 };

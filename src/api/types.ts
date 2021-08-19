@@ -186,29 +186,29 @@ export interface Servicio {
   image?: string;
 }
 
-export interface Solicitud {
+export interface Solicitudes {
   '@id'?: string;
   estados?: any;
   imageFile?: any;
   cliente?: string;
-  servicio?: string;
-  estado?: number;
+  servicio?:  undefined  | string;
+  estado?: any;
   imageSize?: number;
   updatedImageAt?: Date;
-  imagen?: string;
+  imagen?: string | null  ;
   ordenTrabajo?: string;
   numeroSucursal?: string;
   direccionSucursal?: string;
   pisoSector?: string;
   fechaCompromiso?: Date;
   nroIncidencia?: string;
-  consulta?: string;
+  consulta?: string | undefined;
   sucursal?: string;
   necesitasAyuda?: string;
   leido?: boolean;
   Facility?: string;
   SucursalDeCliente?: string;
-  createdAt?: Date;
+  createdAt: string | Date;
   updatedAt?: Date;
   deletedAt?: Date;
   readonly deleted?: boolean;

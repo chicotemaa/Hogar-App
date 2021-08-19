@@ -13,7 +13,7 @@ export const MenuLeft = () => {
       drawerType={'front'}
       drawerPosition="right"
       screenOptions={{ headerShown: true }}
-      drawerContent={props => <ItemsSideBar {...props} />}>
+      drawerContent={(props:any) => <ItemsSideBar {...props} />}>
       <Drawer.Screen name="home" component={HomeScreen} />
       <Drawer.Screen
         name="Stack"

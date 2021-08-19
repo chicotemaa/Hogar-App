@@ -46,6 +46,20 @@ export const getOrdenesTrabajoInfo = async (): Promise<OrdenTrabajo[]> => {
     }),
   );
 };
+export const getOrdenesTrabajoRealizadasInfo = async (): Promise<OrdenTrabajo[]> => {
+  const ordenesTrabajoRealizadas: OrdenTrabajo[] = await getOtByEstadoAPI(false);
+  return await Promise.all(
+    ordenesTrabajoRealizadas.map(async (ordenTrabajo: OrdenTrabajo) => {
+      return {
+        ...ordenTrabajo,
+        direccionSucursalCliente: await getSucursalStreet(
+          ordenTrabajo.SucursalDeCliente,
+        ),
+      };
+    }),
+  );
+};
+
 
 export const changeStateEnCamino = (OrdenTrabajo: any) => {
   const data = {
