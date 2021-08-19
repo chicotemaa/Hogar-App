@@ -2,28 +2,25 @@ import React, { useState, useContext } from 'react';
 import { List } from 'react-native-paper';
 import { FormContext } from '~/context/formulario/FormularioContext';
 import { ModuloContext } from '~/context/modulo/ModuloContext';
+import { PropiedadItem } from '~/api/types';
 
-export const Desplegable = ({ item }) => {
+interface Props {
+  propiedadItem: PropiedadItem;
+}
+
+export const Desplegable = ({ propiedadItem }: Props) => {
   const [expanded, setExpanded] = useState(true);
-  const [value, setValue] = useState(0); //TODO: seleccionar un valor inicial adecuado
 
-  const { getResultado, setResultado } = useContext(FormContext);
-  const { modulo, moduloIndice, getIndiceItem } = useContext(ModuloContext);
+  const { getResultado, setResultado } = useContext(ModuloContext);
+
+  const value = getResultado(propiedadItem.id)?.valor ?? ['0'];
 
   const handlePress = () => setExpanded(!expanded);
-  const handleSelected = (id: any) => {
+  const handleSelected = (id: number) => {
     handlePress();
-    setValue(id);
 
-    setResultado(item.id, {
-      idModulo: modulo.id,
-      idPropiedadItem: item.id,
-      indiceItem: getIndiceItem(item.id),
-      indiceModulo: moduloIndice,
-      isColeccionable: false,
-      latitud: '',
-      longitud: '',
-      valor: id,
+    setResultado(propiedadItem, {
+      valor: [String(id)],
     });
 
     console.log(value);
@@ -34,8 +31,8 @@ export const Desplegable = ({ item }) => {
       <List.Accordion
         expanded={expanded}
         onPress={handlePress}
-        title={item.item.titulo}>
-        {item.item.opciones.map(opcion => {
+        title={propiedadItem.item.titulo}>
+        {propiedadItem.item.opciones.map(opcion => {
           return (
             <List.Item
               key={opcion.id}

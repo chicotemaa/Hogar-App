@@ -1,65 +1,49 @@
 import * as React from 'react';
 import { View } from 'react-native';
 import { Checkbox } from 'react-native-paper';
-import { PropiedadItem, ItemOpcion } from '~/api/types';
+import { PropiedadItem } from '~/api/types';
 import { useContext } from 'react';
-import { FormContext } from '~/context/formulario/FormularioContext';
 import { ModuloContext } from '~/context/modulo/ModuloContext';
 
 interface Props {
   propiedadItem: PropiedadItem;
 }
 
-export const SeleccionGroup = ({ propiedadItem }: Props) => {
-  const { setResultado } = useContext(FormContext);
-  const { modulo, moduloIndice, getIndiceItem } = useContext(ModuloContext);
+export const Seleccion = ({ propiedadItem }: Props) => {
+  const { getResultado, setResultado } = useContext(ModuloContext);
 
-  const modifyArray = (id: string, checked) => {
-    console.log(id);
-    handleValueChange(id.toString());
+  // valor: ["12,23,54"]
+  const values = (getResultado(propiedadItem.id)?.valor[0] ?? '').split(',');
+
+  const isChecked = (id: number) => {
+    return values.includes(String(id));
   };
 
-  const handleValueChange = (id: string) => {
-    setResultado(propiedadItem.id, {
-      idModulo: modulo.id,
-      idPropiedadItem: propiedadItem.id,
-      indiceItem: getIndiceItem(propiedadItem.id),
-      indiceModulo: moduloIndice,
-      isColeccionable: false,
-      latitud: '',
-      longitud: '',
-      valor: id,
+  const handlePress = (id: number) => {
+    const index = values.indexOf(String(id));
+    const newValues = [...values];
+    if (index >= 0) {
+      newValues.splice(index, 1);
+    } else {
+      newValues.push(String(id));
+    }
+    setResultado(propiedadItem, {
+      valor: [newValues.join(',')],
     });
   };
 
   return (
     <View>
-      {propiedadItem.item.opciones.map(opcion => {
-        return <Seleccion opcion={opcion} modifyArray={modifyArray} />;
-      })}
+      {propiedadItem.item.opciones.map(opcion => (
+        <Checkbox.Item
+          key={opcion.id}
+          label={opcion.nombre}
+          status={isChecked(opcion.id) ? 'checked' : 'unchecked'}
+          onPress={() => {
+            handlePress(opcion.id);
+          }}
+        />
+      ))}
     </View>
   );
 };
-
-const Seleccion = ({
-  opcion,
-  modifyArray,
-}: {
-  opcion: ItemOpcion;
-  modifyArray: Function;
-}) => {
-  const [checked, setChecked] = React.useState(false);
-
-  return (
-    <Checkbox.Item
-      key={opcion.id}
-      label={opcion.nombre}
-      status={checked ? 'checked' : 'unchecked'}
-      onPress={() => {
-        setChecked(!checked);
-        modifyArray(opcion.id, !checked);
-      }}
-    />
-  );
-};
-
