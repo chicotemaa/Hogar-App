@@ -5592,9 +5592,10 @@ react-native-camera-hooks@^0.5.1:
   resolved "https://registry.yarnpkg.com/react-native-camera-hooks/-/react-native-camera-hooks-0.5.1.tgz#0112611fb4fe3fd2c30832aa33bcb5a8cf735da2"
   integrity sha512-+Jr2PBKa9MVbKRroiJop89hAxq/j+IG5Lui4W5k54EuGfvjFQ8GxMz5mAq6TaPQCZYqZCBtUy6mApPAfM8An/Q==
 
-"react-native-camera@git+https://git@github.com/react-native-community/react-native-camera.git":
-  version "4.0.0"
-  resolved "git+https://git@github.com/react-native-community/react-native-camera.git#215b5643ba7f8c5e291958a51f92be310589a2f1"
+react-native-camera@^4.0.3:
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/react-native-camera/-/react-native-camera-4.0.3.tgz#a75ab913db96604a2b4c62d392e0537e5f71f4bf"
+  integrity sha512-5mGZDuzo7X3MbH3Z9vdkvz8tOAc1JqL3k0ldm9afCmwzN6JBMXYhMomnki6E8OrF+OE45sDpQURsozg2qO/k9A==
   dependencies:
     prop-types "^15.6.2"
 
