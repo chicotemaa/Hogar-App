@@ -4,13 +4,13 @@ import { Header } from '~/components/Header';
 import { Estado } from '~/components/OT/Detalle/Estado';
 import { Formulario } from '~/components/OT/Detalle/Formulario';
 
-export const DetalleOTScreen = () => {
+export const DetalleOTScreen = (OT: any) => {
   return (
     <>
       <Header pageName="Informe de Trabajo" />
       <View style={{ flex: 10, backgroundColor: '#FFFFFF' }}>
         <ScrollView>
-          <Text style={styles.tituloText}>Informaciones Generales</Text>
+          <Text style={styles.tituloText}>Información General</Text>
 
           <Text style={styles.subtitulo}>Cliente</Text>
           <Text style={styles.contenido}>Pedidos ya</Text>

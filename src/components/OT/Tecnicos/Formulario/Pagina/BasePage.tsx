@@ -11,7 +11,6 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import { useNavigation } from '@react-navigation/native';
 import { changeStateFinalizado } from '~/services/tecnicosServices';
 import { Platform } from 'react-native';
-import { buildResult } from '~/services/ResultadoServices';
 
 interface Props {
   OrdenTrabajo: OrdenTrabajo;
@@ -22,40 +21,36 @@ export const BasePage = ({ OrdenTrabajo, hasResultado }: Props) => {
   const [formulario, setFormulario] = useState<Formulario>();
   const [loading, setLoading] = useState(true);
   //Para firma
-  const [visible, setVisible] = React.useState(false);
+  const [visible, setVisible] = useState(false);
   const showDialog = () => setVisible(true);
   const hideDialog = () => setVisible(false);
 
   const navigator = useNavigation();
 
-  hasResultado
-    ? console.log('tiene resultado ', OrdenTrabajo)
-    : console.log('no tiene resultado');
-
   const finalizadoHandler = () => {
     hideDialog();
 
     changeStateFinalizado(OrdenTrabajo).then(resolved => {
-      navigator.navigate('SuccessScreen', { success: resolved });
-      //TODO: setear como finalizado en la lista la ot correspondiente
+      navigator.navigate('SuccessScreen', { success: resolved, isOt: true });
     });
   };
 
   const postergarHandler = () => {
+    showDialog();
     console.log('postergar');
   };
 
   const guardarHandler = () => {
     console.log('guardando');
+    navigator.goBack();
   };
 
   useEffect(() => {
     getFormularioAPI(OrdenTrabajo.formulario.id).then(response => {
-      console.log('builded form ', buildResult(response));
       setFormulario(response);
       setLoading(false);
     });
-  }, []);
+  }, [OrdenTrabajo.formulario.id]);
 
   return (
     <>
@@ -83,7 +78,9 @@ export const BasePage = ({ OrdenTrabajo, hasResultado }: Props) => {
               </Dialog>
             </Portal>
             <FormState>
-              {formulario ? <BodyOT Formulario={formulario} /> : null}
+              {formulario ? (
+                <BodyOT Formulario={formulario} otID={OrdenTrabajo.id} />
+              ) : null}
             </FormState>
           </View>
           <View style={styles.footer}>

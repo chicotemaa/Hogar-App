@@ -6,33 +6,20 @@ import { RootStackParams } from '~/navigator/StackNavigator';
 import { getImage, getServicioAPI } from '~/api/api';
 import { Solicitud } from '~/components/Solicitud';
 import { Header } from '~/components/Header';
+import { Solicitudes } from '~/api/interfaces/types';
 
 interface Props
   extends StackScreenProps<RootStackParams, 'DetalleSolicitudScreen'> {}
 
-interface InfoSolicitud {
-  consulta: string; //description
-  createdAt: string;
-  estado: string;
-  servicio: string;
-  necesitasAyuda: string; //incidencia-title
-  sector: string;
-  sucursalClienteDir: string;
-  imagen: string | null;
-  token: string;
-}
-
 export const DetallesSolicitudScreen = ({ navigation, route }: Props) => {
-  const infoSolicitud: InfoSolicitud = {
+  const infoSolicitud: Solicitudes = {
     consulta: '',
     createdAt: '',
     servicio: '',
     estado: '',
     necesitasAyuda: '',
-    sector: '',
-    sucursalClienteDir: '',
-    imagen: '',
-    token: '',
+    pisoSector: '',
+    SucursalDeCliente: '',
   };
 
   const [solicitud, setSolicitud] = useState(infoSolicitud);
@@ -42,21 +29,18 @@ export const DetallesSolicitudScreen = ({ navigation, route }: Props) => {
 
   useEffect(() => {
     getSolicitudById(id).then(solicitud => {
-      console.log(solicitud);
       getSucursalCliente(solicitud.SucursalDeCliente).then(sucursal => {
-        getImage(solicitud.imagen).then(({ imagen, token }) => {
-          setSolicitud({
-            consulta: solicitud.consulta,
-            createdAt: solicitud.createdAt,
-            estado: estados[solicitud.estado],
-            necesitasAyuda: solicitud.necesitasAyuda,
-            servicio: solicitud.servicio.titulo,
-            sucursalClienteDir: sucursal.direccion,
-            sector: solicitud.pisoSector,
-            imagen,
-            token,
-          });
+        //getImage(solicitud.imagen).then(({ imagen, token }) => {
+        setSolicitud({
+          consulta: solicitud.consulta,
+          createdAt: solicitud.createdAt,
+          estado: estados[solicitud.estado],
+          necesitasAyuda: solicitud.necesitasAyuda,
+          servicio: solicitud.servicio.titulo,
+          pisoSector: solicitud.pisoSector,
+          SucursalDeCliente: sucursal.SucursalDeCliente,
         });
+        //});
       });
     });
   }, []);
@@ -74,12 +58,11 @@ export const DetallesSolicitudScreen = ({ navigation, route }: Props) => {
           <Solicitud
             id={id}
             title={solicitud.necesitasAyuda}
-            fecha={solicitud.createdAt}
-            token={solicitud.token}
+            createdAt={solicitud.createdAt}
             consulta={solicitud.consulta}
             servicio={solicitud.servicio}
-            sucursal={solicitud.sucursalClienteDir}
-            sector={solicitud.sector}
+            SucursalDeCliente={solicitud.SucursalDeCliente}
+            pisoSector={solicitud.pisoSector}
             estado={solicitud.estado}
             imagen={solicitud.imagen}
           />
@@ -108,4 +91,7 @@ const stylesDetalle = StyleSheet.create({
 
 async function getServicio(id: string) {
   return getServicioAPI(id);
+}
+function serialize(arg0: Promise<any>): any {
+  throw new Error('Function not implemented.');
 }

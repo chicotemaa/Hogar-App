@@ -9,15 +9,16 @@ export interface Cliente {
   readonly province?: string;
   readonly country?: string;
 }
+
 export interface Equipo {
-  '@id'?: string;
-  codigo?: string;
-  descripcion?: string;
-  propiedadModulos?: any;
-  cliente?: string;
-  createdAt?: Date;
-  updatedAt?: Date;
+  codigo: string;
+  descripcion: string;
+  propiedadModulos: any;
+  cliente: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
+
 export interface Facility {
   '@id'?: string;
   readonly apellido?: string;
@@ -41,17 +42,18 @@ export interface Formulario {
 }
 
 export interface FormularioResultado {
-  '@id'?: string;
-  resultados?: any;
-  latitud?: string;
-  longitud?: string;
+  id?: number;
+  resultados: Resultado[];
+  latitud: string;
+  longitud: string;
   ordenTrabajo?: string;
-  minutosTrabajado?: number;
-  minutosReales?: number;
-  readonly numero?: number;
-  readonly updatedAt?: Date;
-  readonly indetificacion?: string;
+  minutosTrabajado: number;
+  minutosReales: number;
+  numero?: number;
+  updatedAt?: Date;
+  indetificacion?: string;
 }
+
 export interface FormularioResultadoExpress {
   '@id'?: string;
   resultados?: any;
@@ -72,14 +74,40 @@ export interface FormularioResultadoExpress {
   readonly updatedAt?: Date;
   readonly indetificacion?: string;
 }
-export interface Item {
-  '@id'?: string;
-  readonly nombre?: string;
-  readonly titulo?: string;
-  readonly descripcion?: string;
-  readonly tipo?: string;
-  readonly opciones?: any;
+
+export interface PaginaModulo {
+  equipo: Equipo;
+  id: number;
+  isCollection: boolean;
+  modulo: Modulo;
+  orden: number;
+  pagina: number;
+  paginaNombre: string;
 }
+
+export interface Modulo {
+  id: number;
+  propiedadItems: PropiedadItem[];
+  titulo: string;
+}
+
+export interface Item {
+  '@id': string;
+  id: number;
+  nombre: string;
+  titulo: string;
+  descripcion: string;
+  tipo: string;
+  opciones: ItemOpcion[];
+}
+
+export interface ItemOpcion {
+  id: number;
+  nombre: string;
+  imagen: string | null;
+  imageSize: string | null;
+}
+
 export interface MediaObject {
   '@id'?: string;
   contentUrl?: string;
@@ -87,23 +115,29 @@ export interface MediaObject {
 }
 
 export interface OrdenTrabajo {
-  '@id'?: string;
+  SucursalDeCliente: string;
+  direccionSucursalCliente: string;
+  cliente: Cliente;
+  comentario: string;
+  estado: number;
+  fecha: string;
+  horaDesde: string;
+  horaHasta: string;
+  id: number;
+  latitud: string;
+  latitudCierre: string;
+  longitud: string;
+  longitudCierre: string;
+  formulario: Formulario;
+  formularioResultado?: FormularioResultado;
+
   estados?: any;
   estadosGestion?: any;
-  estado?: number;
   servicio?: string;
   horaInicio?: Date;
   orden?: number;
   horaFin?: Date;
-  formulario?: string;
   user?: string;
-  formularioResultado?: string;
-  latitud?: string;
-  longitud?: string;
-  cliente?: string;
-  horaDesde?: Date;
-  horaHasta?: Date;
-  fecha?: Date;
   motivo?: string;
   sucursal?: string;
   imageName?: string;
@@ -111,11 +145,7 @@ export interface OrdenTrabajo {
   solicitud?: string;
   responsableFirma?: string;
   estadoGestion?: number;
-  comentario?: string;
-  latitudCierre?: string;
-  longitudCierre?: string;
   Facility?: string;
-  SucursalDeCliente?: string;
   firma?: string;
   createdAt?: Date;
   updatedAt?: Date;
@@ -123,32 +153,35 @@ export interface OrdenTrabajo {
   readonly imageFile?: any;
   readonly deleted?: boolean;
 }
+
 export interface PropiedadItem {
-  '@id'?: string;
-  readonly orden?: number;
-  readonly ancho?: string;
-  readonly requerido?: boolean;
-  readonly opcion?: any;
-  readonly item?: any;
-  readonly isCollection?: boolean;
-  readonly propiedadItems?: any;
-  readonly opcionDepende?: any;
-  readonly cantidadMinima?: number;
+  '@id': string;
+  id: number;
+  orden: number;
+  ancho: string;
+  requerido: boolean;
+  opcion: any;
+  item: Item;
+  isCollection: boolean;
+  propiedadItems: PropiedadItem[];
+  opcionDepende?: any;
+  cantidadMinima?: number;
 }
+
 export interface Resultado {
-  '@id'?: string;
-  valor?: string;
-  propiedadItem?: any;
+  valor: string[];
   imageName?: string;
   imageSize?: number;
-  latitud?: string;
-  longitud?: string;
-  indiceItem?: number;
-  indiceModulo?: number;
-  idModulo?: number;
-  isColeccionable?: boolean;
-  readonly idPropiedadItem?: number;
+  latitud: string;
+  longitud: string;
+  indiceItem: number;
+  indiceModulo: number;
+  idModulo: number;
+  isColeccionable: boolean;
+  idPropiedadItem: number;
+  propiedadItem: string;
 }
+
 export interface Servicio {
   '@id'?: string;
   titulo?: string;
@@ -156,29 +189,29 @@ export interface Servicio {
   image?: string;
 }
 
-export interface Solicitud {
+export interface Solicitudes {
   '@id'?: string;
   estados?: any;
   imageFile?: any;
   cliente?: string;
-  servicio?: string;
-  estado?: number;
+  servicio?: undefined | string;
+  estado?: any;
   imageSize?: number;
   updatedImageAt?: Date;
-  imagen?: string;
+  imagen?: string | null;
   ordenTrabajo?: string;
   numeroSucursal?: string;
   direccionSucursal?: string;
   pisoSector?: string;
   fechaCompromiso?: Date;
   nroIncidencia?: string;
-  consulta?: string;
+  consulta?: string | undefined;
   sucursal?: string;
   necesitasAyuda?: string;
   leido?: boolean;
   Facility?: string;
   SucursalDeCliente?: string;
-  createdAt?: Date;
+  createdAt: string | Date;
   updatedAt?: Date;
   deletedAt?: Date;
   readonly deleted?: boolean;

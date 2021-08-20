@@ -91,8 +91,6 @@ export const sendSolicitud = async ({
     SucursalDeCliente,
   };
 
-  //ESTE CODIGO ES UNA MASA fetch love
-
   return apiFetch('/solicituds', {
     method: 'POST',
     headers: {

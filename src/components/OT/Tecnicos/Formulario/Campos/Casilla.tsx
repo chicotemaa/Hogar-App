@@ -1,47 +1,34 @@
 import * as React from 'react';
 import { useContext } from 'react';
 import { RadioButton } from 'react-native-paper';
-import { CampoContext } from '~/context/campo/CampoContext';
-import { Item } from '../Pagina/interfaces';
+import { PropiedadItem } from '~/api/types';
+import { FormContext } from '~/context/formulario/FormularioContext';
+import { ModuloContext } from '~/context/modulo/ModuloContext';
+
 interface Props {
-  item: Item;
+  propiedadItem: PropiedadItem;
 }
 
-export const Casilla = ({ item }: Props) => {
-  const [value, setValor] = React.useState('');
-  let opciones = [];
+export const Casilla = ({ propiedadItem }: Props) => {
+  const { getResultado, setResultado } = useContext(ModuloContext);
 
-  const { campoState, setValue, setOpcionDepende } = useContext(CampoContext);
+  const value = getResultado(propiedadItem.id)?.valor ?? [''];
 
-  const handleChangeValue = value => {
-    setValor(value);
-    //TODO: Controlar el desencadenamiento de items hijos en base a la opcion elegida
-    if (!item.opcionDepende) {
-      setValue(value);
-      console.log(campoState);
-    }
-
-    if (item.propiedadItems.length > 0) {
-      console.log('aca viene a cambiar set opcion');
-      setOpcionDepende(value);
-    }
+  const handleValueChange = (changedValue: string) => {
+    setResultado(propiedadItem, {
+      valor: [changedValue],
+    });
   };
 
   return (
-    <RadioButton.Group
-      onValueChange={value => handleChangeValue(value)}
-      value={value}>
-      {item.item.opciones.map(opcion => {
-        const opcionItem = opcion.id.toString();
-        opciones.push(opcionItem);
-        return (
-          <RadioButton.Item
-            key={opcion.id}
-            label={opcion.nombre}
-            value={opcionItem}
-          />
-        );
-      })}
+    <RadioButton.Group onValueChange={handleValueChange} value={value[0]}>
+      {propiedadItem.item.opciones.map(opcion => (
+        <RadioButton.Item
+          key={opcion.id}
+          label={opcion.nombre}
+          value={String(opcion.id)}
+        />
+      ))}
     </RadioButton.Group>
   );
 };

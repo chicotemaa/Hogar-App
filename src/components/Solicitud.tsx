@@ -5,29 +5,29 @@ import { Divider } from 'react-native-paper';
 
 interface Solicitud {
   id: string;
-  fecha: string;
+  createdAt: string | Date;
   title: string;
   estado: string;
-  servicio: string;
-  sucursal: string;
-  sector: string;
-  consulta: string;
-  imagen: string;
-  token: string;
+  servicio: string | undefined;
+  SucursalDeCliente: string | undefined;
+  pisoSector: string | undefined;
+  necesitasAyuda: string | undefined;
+  imagen: string | null | undefined ;
+  consulta: string | undefined;
 }
 
 export const Solicitud = ({
   id,
-  fecha,
+  createdAt,
   title,
-  token,
   estado,
   servicio,
-  sucursal,
-  sector,
+  SucursalDeCliente,
+  pisoSector,
   consulta,
-  imagen,
-}: Solicitud) => {
+
+}: Solicitud) => { 
+  console.log(id);
   return (
     <ScrollView>
       <View>
@@ -37,12 +37,12 @@ export const Solicitud = ({
             <Elemento title={'Código incidencia'} body={id} />
           </View>
           <View style={{ marginBottom: 20 }}>
-            <Elemento title={'Fecha'} body={formatDate(fecha)} />
-            <Elemento title={'Hora'} body={formatHour(fecha)} />
+            <Elemento title={'Fecha'} body={formatDate(createdAt)} />
+            <Elemento title={'Hora'} body={formatHour(createdAt)} />
           </View>
           <View style={{ marginBottom: 20 }}>
-            <Elemento title={'Sucursal'} body={sucursal} />
-            <Elemento title={'Sector'} body={sector} />
+            <Elemento title={'Sucursal'} body={SucursalDeCliente} />
+            <Elemento title={'Sector'} body={pisoSector} />
           </View>
           <View style={{ marginBottom: 20 }}>
             <Elemento title={'Estado'} body={estado} />
@@ -51,7 +51,7 @@ export const Solicitud = ({
 
           <Elemento title={'Descripción'} body={consulta} />
           <Elemento title={'Fotos'} body={''} />
-          {imagen === null ? noImagen() : mostrarImagen(imagen, token)}
+          {Image === null ? noImagen() : mostrarImagen(Image)}
         </View>
       </View>
     </ScrollView>
@@ -60,7 +60,7 @@ export const Solicitud = ({
 
 interface PropsElement {
   title: string;
-  body: string;
+  body: string | undefined;
 }
 
 function noImagen() {

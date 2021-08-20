@@ -1,43 +1,49 @@
 import * as React from 'react';
-import { Text } from 'react-native';
 import { View } from 'react-native';
 import { Checkbox } from 'react-native-paper';
-import { Item } from '../../../../../services/interfaces';
+import { PropiedadItem } from '~/api/types';
+import { useContext } from 'react';
+import { ModuloContext } from '~/context/modulo/ModuloContext';
 
 interface Props {
-  item: Item;
+  propiedadItem: PropiedadItem;
 }
 
-export const SeleccionGroup = ({ item }: Props) => {
-  console.log('seleccion group', item);
-  const valuesSelected = [];
+export const Seleccion = ({ propiedadItem }: Props) => {
+  const { getResultado, setResultado } = useContext(ModuloContext);
 
-  const SeleccionContext = React.useContext({});
+  // valor: ["12,23,54"]
+  const values = (getResultado(propiedadItem.id)?.valor[0] ?? '').split(',');
 
-  const {
-    item: { opciones },
-  } = item;
+  const isChecked = (id: number) => {
+    return values.includes(String(id));
+  };
+
+  const handlePress = (id: number) => {
+    const index = values.indexOf(String(id));
+    const newValues = [...values];
+    if (index >= 0) {
+      newValues.splice(index, 1);
+    } else {
+      newValues.push(String(id));
+    }
+    setResultado(propiedadItem, {
+      valor: [newValues.join(',')],
+    });
+  };
 
   return (
     <View>
-      {opciones.map(opcion => {
-        return <Seleccion opcion={opcion} />;
-      })}
+      {propiedadItem.item.opciones.map(opcion => (
+        <Checkbox.Item
+          key={opcion.id}
+          label={opcion.nombre}
+          status={isChecked(opcion.id) ? 'checked' : 'unchecked'}
+          onPress={() => {
+            handlePress(opcion.id);
+          }}
+        />
+      ))}
     </View>
-  );
-};
-
-const Seleccion = ({ opcion }) => {
-  const [checked, setChecked] = React.useState(false);
-
-  return (
-    <Checkbox.Item
-      key={opcion.id}
-      label={opcion.nombre}
-      status={checked ? 'checked' : 'unchecked'}
-      onPress={() => {
-        setChecked(!checked);
-      }}
-    />
   );
 };
