@@ -11,6 +11,7 @@ import { DateInput } from './Date';
 import { useContext } from 'react';
 import { Numero } from './Numero';
 import { ModuloContext } from '~/context/modulo/ModuloContext';
+import { Foto } from './Foto';
 
 interface Props {
   propiedadItem: PropiedadItem;
@@ -121,7 +122,7 @@ const Campo = (propiedadItem: PropiedadItem) => {
       campo = <Texto propiedadItem={propiedadItem} />;
       break;
     case 'foto':
-      campo = <Text>Es foto</Text>;
+      campo = <Foto />;
       break;
     case 'seleccion_multiple':
       campo = <Casilla propiedadItem={propiedadItem} />;
