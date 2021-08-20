@@ -34,7 +34,8 @@ export const FormProvider = ({
   const [resultados, setResultados] = useState<Resultado[]>();
   const getResultado = useCallback(
     (moduloId: number, propiedadItemId: number) => {
-      return resultados?.find(
+      //console.log('resultados value? ', resultados);
+      return resultados?.resultados.find(
         res =>
           res.idModulo === moduloId && res.idPropiedadItem === propiedadItemId,
       );
@@ -43,13 +44,18 @@ export const FormProvider = ({
   );
 
   const setResultado = useCallback(
-    async (moduloId: number, propiedadItemId: number, resultado: Resultado) => {
+    async (
+      moduloId: number,
+      propiedadItem: PropiedadItem,
+      resultado: Resultado,
+    ) => {
       if (!resultados) {
         throw new Error('resultados debe existir');
       }
+      console.log('resultados del set', resultados);
       let itemResIndex = resultados.findIndex(
         res =>
-          res.idModulo === moduloId && res.idPropiedadItem === propiedadItemId,
+          res.idModulo === moduloId && res.idPropiedadItem === propiedadItem.id,
       );
       const newResultados = [...resultados];
       if (itemResIndex === -1) {
