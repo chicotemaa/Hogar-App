@@ -27,16 +27,11 @@ export const BasePage = ({ OrdenTrabajo, hasResultado }: Props) => {
 
   const navigator = useNavigation();
 
-  hasResultado
-    ? console.log('tiene resultado ', OrdenTrabajo)
-    : console.log('no tiene resultado');
-
   const finalizadoHandler = () => {
     hideDialog();
 
     changeStateFinalizado(OrdenTrabajo).then(resolved => {
       navigator.navigate('SuccessScreen', { success: resolved, isOt: true });
-      //TODO: setear como finalizado en la lista la ot correspondiente
     });
   };
 
@@ -55,7 +50,7 @@ export const BasePage = ({ OrdenTrabajo, hasResultado }: Props) => {
       setFormulario(response);
       setLoading(false);
     });
-  }, []);
+  }, [OrdenTrabajo.formulario.id]);
 
   return (
     <>

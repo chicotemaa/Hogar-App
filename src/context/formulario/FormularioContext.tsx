@@ -34,8 +34,7 @@ export const FormProvider = ({
   const [resultados, setResultados] = useState<Resultado[]>();
   const getResultado = useCallback(
     (moduloId: number, propiedadItemId: number) => {
-      //console.log('resultados value? ', resultados);
-      return resultados?.resultados.find(
+      return resultados?.find(
         res =>
           res.idModulo === moduloId && res.idPropiedadItem === propiedadItemId,
       );
