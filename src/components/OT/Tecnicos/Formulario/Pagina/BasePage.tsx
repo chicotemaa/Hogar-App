@@ -98,12 +98,12 @@ export const BasePage = ({ OrdenTrabajo, hasResultado }: Props) => {
               onPress={showDialog}>
               Firmar
             </Button>
-            <Button
+            {/* <Button
               mode="text"
               labelStyle={{ color: 'green' }}
               onPress={guardarHandler}>
               Guardar
-            </Button>
+            </Button> */}
           </View>
         </View>
       )}
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     borderColor: 'red',
-    marginTop: 10,
+    marginTop: 5,
     marginBottom: Platform.OS === 'android' ? 20 : 0,
   },
 });

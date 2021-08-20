@@ -1,18 +1,35 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { tookPicture } from '~/services/cameraService';
+import React, { useState } from 'react';
+import { View, StyleSheet, Image } from 'react-native';
 import { Button } from 'react-native-paper';
+import { launchCamera } from 'react-native-image-picker';
 
 export const Foto = () => {
+  const [tempUri, setTempUri] = useState<string>();
+
+  const handlePress = () => {
+    launchCamera(
+      {
+        includeBase64: true,
+        mediaType: 'photo',
+        saveToPhotos: true,
+        quality: 0.1,
+      },
+      resp => {
+        setTempUri(resp.assets[0].uri || '');
+      },
+    );
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.fotoTomada}>
-        <Text>Imagen tomada</Text>
+        {tempUri && (
+          <Image style={styles.fotoTomada} source={{ uri: tempUri }} />
+        )}
       </View>
       <View style={styles.boton}>
-        <Button icon="camera" mode="contained" onPress={tookPicture}>
-          Sacar Foto
+        <Button icon="camera" mode="contained" onPress={handlePress}>
+          Tomar Foto
         </Button>
       </View>
     </View>
@@ -22,11 +39,12 @@ export const Foto = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    borderWidth: 1,
+    width: '50%',
+    justifyContent: 'center',
   },
   fotoTomada: {
     flex: 1,
-    borderWidth: 1,
+    height: 200,
   },
   boton: {
     flex: 1,
