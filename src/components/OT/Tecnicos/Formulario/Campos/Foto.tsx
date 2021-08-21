@@ -15,6 +15,8 @@ export const Foto = () => {
         quality: 0.1,
       },
       resp => {
+        if (resp.didCancel) return null;
+        if (resp.errorCode) return null;
         setTempUri(resp.assets[0].uri || '');
       },
     );
@@ -24,7 +26,11 @@ export const Foto = () => {
     <View style={styles.container}>
       <View style={styles.fotoTomada}>
         {tempUri && (
-          <Image style={styles.fotoTomada} source={{ uri: tempUri }} />
+          <Image
+            style={styles.fotoTomada}
+            resizeMode={'cover'}
+            source={{ uri: tempUri }}
+          />
         )}
       </View>
       <View style={styles.boton}>
@@ -44,7 +50,7 @@ const styles = StyleSheet.create({
   },
   fotoTomada: {
     flex: 1,
-    height: 200,
+    height: 150,
   },
   boton: {
     flex: 1,
