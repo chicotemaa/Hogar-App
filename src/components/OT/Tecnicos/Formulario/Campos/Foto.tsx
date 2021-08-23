@@ -1,10 +1,20 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { View, StyleSheet, Image } from 'react-native';
 import { Button } from 'react-native-paper';
 import { launchCamera } from 'react-native-image-picker';
+import { ModuloContext } from '~/context/modulo/ModuloContext';
+import { b64toBlob } from '~/services/cameraService';
+import { PropiedadItem } from '~/api/types';
 
-export const Foto = () => {
+interface Props {
+  propiedadItem: PropiedadItem;
+}
+
+export const Foto = ({ propiedadItem }: Props) => {
   const [tempUri, setTempUri] = useState<string>();
+  const { getResultado, setResultado } = useContext(ModuloContext);
+
+  const value = getResultado(propiedadItem.id)?.valor ?? [''];
 
   const handlePress = () => {
     launchCamera(
@@ -15,9 +25,26 @@ export const Foto = () => {
         quality: 0.1,
       },
       resp => {
-        if (resp.didCancel) return null;
-        if (resp.errorCode) return null;
+        if (resp.didCancel) {
+          return null;
+        }
+        if (resp.errorCode) {
+          return null;
+        }
+
         setTempUri(resp.assets[0].uri || '');
+
+        setResultado(propiedadItem, {
+          valor: [resp.assets[0].uri],
+          imageSize: 4411,
+          imageName: resp.assets[0].uri,
+        });
+
+        let contentType = 'image/png';
+        let b64Data = resp.assets[0].base64;
+        let blob = b64toBlob(b64Data, contentType);
+
+        console.log(blob);
       },
     );
   };
@@ -29,7 +56,7 @@ export const Foto = () => {
           <Image
             style={styles.fotoTomada}
             resizeMode={'cover'}
-            source={{ uri: tempUri }}
+            source={{ uri: tempUri ?? value[0] }}
           />
         )}
       </View>

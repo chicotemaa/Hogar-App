@@ -122,7 +122,7 @@ const Campo = (propiedadItem: PropiedadItem) => {
       campo = <Texto propiedadItem={propiedadItem} />;
       break;
     case 'foto':
-      campo = <Foto />;
+      campo = <Foto propiedadItem={propiedadItem} />;
       break;
     case 'seleccion_multiple':
       campo = <Casilla propiedadItem={propiedadItem} />;
