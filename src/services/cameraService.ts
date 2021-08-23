@@ -1,4 +1,9 @@
 import { launchCamera, ImagePickerResponse } from 'react-native-image-picker';
+import { uploadImage } from '~/api/api';
+const b64toBlob = require('b64-to-blob');
+
+import { PermissionsAndroid } from 'react-native';
+import ReactNativeBlobUtil from 'react-native-blob-util';
 
 export const tookPicture = () => {
   console.log('sacar foto');
@@ -15,30 +20,10 @@ export const tookPicture = () => {
   );
 };
 
-export function b64toBlob(
-  b64Data: string,
-  contentType: string,
-  sliceSize?: number,
-) {
-  contentType = contentType || '';
-  sliceSize = sliceSize || 512;
-
-  var byteCharacters = atob(b64Data);
-  var byteArrays = [];
-
-  for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-    var slice = byteCharacters.slice(offset, offset + sliceSize);
-
-    var byteNumbers = new Array(slice.length);
-    for (var i = 0; i < slice.length; i++) {
-      byteNumbers[i] = slice.charCodeAt(i);
-    }
-
-    var byteArray = new Uint8Array(byteNumbers);
-
-    byteArrays.push(byteArray);
-  }
-
-  var blob = new Blob(byteArrays, { type: contentType });
-  return blob;
+export function convertFile(file: ImagePickerResponse) {
+  const b64Data = file.assets[0].base64;
+  //console.log('blob generated', binaryData);
+  const contentType = 'image/png';
+  uploadImage(b64toBlob(b64Data, contentType));
+  //Upload image
 }
