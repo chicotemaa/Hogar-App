@@ -3,7 +3,7 @@ import { View, StyleSheet, Image } from 'react-native';
 import { Button } from 'react-native-paper';
 import { launchCamera } from 'react-native-image-picker';
 import { ModuloContext } from '~/context/modulo/ModuloContext';
-import { b64toBlob } from '~/services/cameraService';
+import { b64toBlob, convertFile } from '~/services/cameraService';
 import { PropiedadItem } from '~/api/types';
 
 interface Props {
@@ -34,17 +34,14 @@ export const Foto = ({ propiedadItem }: Props) => {
 
         setTempUri(resp.assets[0].uri || '');
 
-        setResultado(propiedadItem, {
-          valor: [resp.assets[0].uri],
-          imageSize: 4411,
-          imageName: resp.assets[0].uri,
-        });
+        // setResultado(propiedadItem, {
+        //   valor: [''],
+        //   imageSize: 4411,
+        //   imageName: resp.assets[0].uri,
+        // });
 
-        let contentType = 'image/png';
-        let b64Data = resp.assets[0].base64;
-        let blob = b64toBlob(b64Data, contentType);
+        convertFile(resp)
 
-        console.log(blob);
       },
     );
   };

@@ -1,5 +1,7 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import ReactNativeBlobUtil from 'react-native-blob-util';
+import { ImagePickerResponse } from 'react-native-image-picker';
 global.Buffer = global.Buffer || require('buffer').Buffer;
 const clientId = '1_4ta05vfoy58ggoggwo08kck000kocckwgcckk8wgkck440cgcw';
 const clientSecret = '176y7wqisfvkcwk8oswowksks0cocsoc00ko4k4oosc0ocwck4';
@@ -89,6 +91,29 @@ export const getImage = async (imagen: string | null) => {
     imagen: Buffer.from(response.data, 'binary').toString('base64'),
     token,
   };
+};
+
+export const uploadImage = async fileBlob => {
+  const form = new FormData();
+
+  const fileToSend = {
+    ...fileBlob._data,
+    lastModified: 1629743702329,
+    lastModifiedDate: Date.now(),
+  };
+
+  form.append('file', fileToSend);
+
+  const config = {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  };
+
+  console.log(form);
+
+  const response = await api.post('/media_objects', form, config);
+  console.log(response);
 };
 
 export const getServicioAPI = async (id: string) => {
