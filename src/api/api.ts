@@ -98,7 +98,7 @@ export const uploadImage = async fileBlob => {
 
   const fileToSend = {
     ...fileBlob._data,
-    lastModified: 1629743702329,
+    lastModified:  Date.now(),
     lastModifiedDate: Date.now(),
   };
 
