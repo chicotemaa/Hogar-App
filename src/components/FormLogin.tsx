@@ -100,14 +100,14 @@ export const FormLogin = ({ pageToGo }: Props) => {
 const styles = StyleSheet.create({
   input: {
     alignSelf: 'center',
-    width: 360,
+    width: '90%',
     marginBottom: 10,
   },
   button: {
     alignSelf: 'center',
     justifyContent: 'center',
     height: 50,
-    width: 200,
+    width: '90%',
     borderRadius: 10,
     marginTop: '5%',
     paddingHorizontal: 10,
