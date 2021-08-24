@@ -3,7 +3,7 @@ import { View, StyleSheet, Image } from 'react-native';
 import { Button } from 'react-native-paper';
 import { launchCamera } from 'react-native-image-picker';
 import { ModuloContext } from '~/context/modulo/ModuloContext';
-import { b64toBlob, convertFile } from '~/services/cameraService';
+import { b64toBlob, convertFile, uploadPhoto } from '~/services/cameraService';
 import { PropiedadItem } from '~/api/types';
 
 interface Props {
@@ -22,7 +22,7 @@ export const Foto = ({ propiedadItem }: Props) => {
         includeBase64: true,
         mediaType: 'photo',
         saveToPhotos: true,
-        quality: 0.1,
+        quality: 1,
       },
       resp => {
         if (resp.didCancel) {
@@ -34,14 +34,14 @@ export const Foto = ({ propiedadItem }: Props) => {
 
         setTempUri(resp.assets[0].uri || '');
 
-        // setResultado(propiedadItem, {
-        //   valor: [''],
-        //   imageSize: 4411,
-        //   imageName: resp.assets[0].uri,
-        // });
-
-        convertFile(resp)
-
+        uploadPhoto(resp).then(({ data }) => {
+          console.log('response data', data);
+          setResultado(propiedadItem, {
+            valor: [''],
+            imageSize: 4411,
+            imageName: data.filePath,
+          });
+        });
       },
     );
   };
