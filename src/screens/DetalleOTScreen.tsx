@@ -1,10 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FlexStyle, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { OrdenTrabajo } from '~/api/types';
 import { Header } from '~/components/Header';
 import { Estado } from '~/components/OT/Detalle/Estado';
 import { Formulario } from '~/components/OT/Detalle/Formulario';
+import { getOtById } from '../api/apiTecnicos';
+import { StackScreenProps } from '@react-navigation/stack';
+import { StackNavigator } from '../navigator/StackNavigator';
 
-export const DetalleOTScreen = (OT: any) => {
+interface Props extends StackScreenProps<any, any> {}
+
+
+export const DetalleOTScreen = ({ navigation, route }: Props) => {
+  
+  const OT: OrdenTrabajo = route.params.OT;
+
+  //const [orden, setOrden] = useState(ordenTrabajo);
+  
   return (
     <>
       <Header pageName="Informe de Trabajo" />
@@ -13,18 +25,18 @@ export const DetalleOTScreen = (OT: any) => {
           <Text style={styles.tituloText}>Información General</Text>
 
           <Text style={styles.subtitulo}>Cliente</Text>
-          <Text style={styles.contenido}>Pedidos ya</Text>
+          <Text style={styles.contenido}>{OT.cliente.razonSocial}</Text>
           <Text style={[styles.contenido, { fontWeight: 'bold' }]}>
             Direccion
           </Text>
-          <Text style={styles.contenido}>Sarmiento 123</Text>
+          <Text style={styles.contenido}>{OT.direccionSucursalCliente}</Text>
 
           <View>
-            <Estado horaInicio="9:30" horaFin="10.30" />
+            <Estado horaInicio={OT.horaInicio} horaFin={OT.horaFin} />
           </View>
 
           <Text style={styles.tituloText}>Descripción de trabajo</Text>
-          <Formulario />
+          <Formulario OrdenTrabajo={OT.formulario} />
         </ScrollView>
       </View>
     </>
