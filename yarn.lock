@@ -1744,6 +1744,11 @@ axios@^0.21.1:
   dependencies:
     follow-redirects "^1.10.0"
 
+b64-to-blob@^1.2.19:
+  version "1.2.19"
+  resolved "https://registry.yarnpkg.com/b64-to-blob/-/b64-to-blob-1.2.19.tgz#157d85fdc8811665b9a35d29ffbc6a522ba28fbe"
+  integrity sha512-L3nSu8GgF4iEyNYakCQSfL2F5GI5aCXcot9mNTf+4N0/BMhpxqqHyOb6jIR24iq2xLjQZLG8FOt3gnUcV+9NVg==
+
 babel-core@^7.0.0-bridge.0:
   version "7.0.0-bridge.0"
   resolved "https://registry.yarnpkg.com/babel-core/-/babel-core-7.0.0-bridge.0.tgz#95a492ddd90f9b4e9a4a1da14eb335b87b634ece"
@@ -1906,6 +1911,11 @@ balanced-match@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.2.tgz#e83e3a7e3f300b34cb9d87f615fa0cbf357690ee"
   integrity sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==
+
+base-64@0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/base-64/-/base-64-0.1.0.tgz#780a99c84e7d600260361511c4877613bf24f6bb"
+  integrity sha1-eAqZyE59YAJgNhURxId2E78k9rs=
 
 base64-js@^1.1.2, base64-js@^1.3.1, base64-js@^1.5.1:
   version "1.5.1"
@@ -5600,14 +5610,23 @@ react-native-animatable@^1.3.3:
   dependencies:
     prop-types "^15.7.2"
 
+react-native-blob-util@^0.13.12:
+  version "0.13.12"
+  resolved "https://registry.yarnpkg.com/react-native-blob-util/-/react-native-blob-util-0.13.12.tgz#7fa8924eefb6a7440cbb1a79bd213c8c29db3673"
+  integrity sha512-dW3ArdArcKY1066u4KV5x7bl+qgIwLmLPXppeonMwhzhi0o5H6A2r2rflLeZeYI3FC66Ot/hp0TOqo9FEv7I4w==
+  dependencies:
+    base-64 "0.1.0"
+    glob "^7.1.6"
+
 react-native-camera-hooks@^0.5.1:
   version "0.5.1"
   resolved "https://registry.yarnpkg.com/react-native-camera-hooks/-/react-native-camera-hooks-0.5.1.tgz#0112611fb4fe3fd2c30832aa33bcb5a8cf735da2"
   integrity sha512-+Jr2PBKa9MVbKRroiJop89hAxq/j+IG5Lui4W5k54EuGfvjFQ8GxMz5mAq6TaPQCZYqZCBtUy6mApPAfM8An/Q==
 
-"react-native-camera@git+https://git@github.com/react-native-community/react-native-camera.git":
-  version "4.0.0"
-  resolved "git+https://git@github.com/react-native-community/react-native-camera.git#215b5643ba7f8c5e291958a51f92be310589a2f1"
+react-native-camera@^4.0.3:
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/react-native-camera/-/react-native-camera-4.0.3.tgz#a75ab913db96604a2b4c62d392e0537e5f71f4bf"
+  integrity sha512-5mGZDuzo7X3MbH3Z9vdkvz8tOAc1JqL3k0ldm9afCmwzN6JBMXYhMomnki6E8OrF+OE45sDpQURsozg2qO/k9A==
   dependencies:
     prop-types "^15.6.2"
 
@@ -5654,6 +5673,11 @@ react-native-gesture-handler@^1.10.3:
     hoist-non-react-statics "^3.3.0"
     invariant "^2.2.4"
     prop-types "^15.7.2"
+
+react-native-image-picker@^4.0.6:
+  version "4.0.6"
+  resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-4.0.6.tgz#0dfa5bb83bcf6ff58635ebb9201a185c2271e8cc"
+  integrity sha512-Pp3UWKUADuMG1mz12m6dSO/R2KnvXVEd77bldrfTMFpz4PFc4iVKo+bHeS79It0mUBezfzDMgfesg/OPLSugvQ==
 
 react-native-input-outline@^1.5.1:
   version "1.5.1"

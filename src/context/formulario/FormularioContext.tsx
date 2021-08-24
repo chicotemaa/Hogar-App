@@ -6,15 +6,19 @@ import React, {
   useCallback,
   ReactNode,
 } from 'react';
-import { FormularioResultado, Resultado } from '~/api/types';
-import {
-  setStorageFormularioResultado,
-  getStorageFormularioResultado,
-} from '~/storage';
+import { Resultado, PropiedadItem } from '~/api/types';
+import { setStorageResultados, getStorageResultados } from '~/storage';
 
 export interface FormContext {
-  getResultado: (propiedadItemId: number) => Resultado | undefined;
-  setResultado: (propiedadItemId: number, resultado: Resultado) => void;
+  getResultado: (
+    moduloId: number,
+    propiedadItemId: number,
+  ) => Resultado | undefined;
+  setResultado: (
+    moduloId: number,
+    propiedadItem: PropiedadItem,
+    resultado: Resultado,
+  ) => void;
 }
 
 export const FormContext = createContext<FormContext>({} as any);
@@ -27,56 +31,49 @@ export const FormProvider = ({
   children: ReactNode;
   otID: number;
 }) => {
-  const [formularioResultado, setFormularioResultado] =
-    useState<FormularioResultado>();
+  const [resultados, setResultados] = useState<Resultado[]>();
   const getResultado = useCallback(
-    (propiedadItemId: number) => {
-      return formularioResultado?.resultados.find(
-        res => res.idPropiedadItem === propiedadItemId,
+    (moduloId: number, propiedadItemId: number) => {
+      return resultados?.find(
+        res =>
+          res.idModulo === moduloId && res.idPropiedadItem === propiedadItemId,
       );
     },
-    [formularioResultado],
+    [resultados],
   );
 
   const setResultado = useCallback(
-    async (propiedadItemId: number, resultado: Resultado) => {
-      if (!formularioResultado) {
-        throw new Error('formularioResultado debe existir');
+    async (
+      moduloId: number,
+      propiedadItem: PropiedadItem,
+      resultado: Resultado,
+    ) => {
+      if (!resultados) {
+        throw new Error('resultados debe existir');
       }
-      let itemResIndex = formularioResultado.resultados.findIndex(
-        res => res.idPropiedadItem === propiedadItemId,
+      console.log('resultados del set', resultados);
+      let itemResIndex = resultados.findIndex(
+        res =>
+          res.idModulo === moduloId && res.idPropiedadItem === propiedadItem.id,
       );
-      const newResultados = [...formularioResultado.resultados];
+      const newResultados = [...resultados];
       if (itemResIndex === -1) {
         newResultados.push(resultado);
       } else {
         newResultados[itemResIndex] = resultado;
       }
-      const newFormularioResultado: FormularioResultado = {
-        ...formularioResultado,
-        resultados: newResultados,
-      };
-      setFormularioResultado(newFormularioResultado);
-      await setStorageFormularioResultado(newFormularioResultado, otID);
+      setResultados(newResultados);
+      await setStorageResultados(newResultados, otID);
     },
-    [formularioResultado, otID],
+    [resultados, otID],
   );
 
   useEffect(() => {
     (async () => {
-      let result = await getStorageFormularioResultado(otID);
-      if (!result) {
-        result = {
-          resultados: [],
-          latitud: '',
-          longitud: '',
-          minutosReales: 0,
-          minutosTrabajado: 0,
-        };
-      }
-      setFormularioResultado(result);
+      const result = (await getStorageResultados(otID)) ?? [];
+      setResultados(result);
     })();
-  }, []);
+  }, [otID]);
 
   const value = useMemo(
     () => ({ getResultado, setResultado }),

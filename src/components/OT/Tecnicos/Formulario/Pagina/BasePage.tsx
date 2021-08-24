@@ -27,16 +27,11 @@ export const BasePage = ({ OrdenTrabajo, hasResultado }: Props) => {
 
   const navigator = useNavigation();
 
-  hasResultado
-    ? console.log('tiene resultado ', OrdenTrabajo)
-    : console.log('no tiene resultado');
-
   const finalizadoHandler = () => {
     hideDialog();
 
     changeStateFinalizado(OrdenTrabajo).then(resolved => {
       navigator.navigate('SuccessScreen', { success: resolved, isOt: true });
-      //TODO: setear como finalizado en la lista la ot correspondiente
     });
   };
 
@@ -55,7 +50,7 @@ export const BasePage = ({ OrdenTrabajo, hasResultado }: Props) => {
       setFormulario(response);
       setLoading(false);
     });
-  }, []);
+  }, [OrdenTrabajo.formulario.id]);
 
   return (
     <>
@@ -103,12 +98,12 @@ export const BasePage = ({ OrdenTrabajo, hasResultado }: Props) => {
               onPress={showDialog}>
               Firmar
             </Button>
-            <Button
+            {/* <Button
               mode="text"
               labelStyle={{ color: 'green' }}
               onPress={guardarHandler}>
               Guardar
-            </Button>
+            </Button> */}
           </View>
         </View>
       )}
@@ -128,7 +123,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     borderColor: 'red',
-    marginTop: 10,
+    marginTop: 5,
     marginBottom: Platform.OS === 'android' ? 20 : 0,
   },
 });

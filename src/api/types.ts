@@ -115,23 +115,29 @@ export interface MediaObject {
 }
 
 export interface OrdenTrabajo {
-  '@id'?: string;
+  SucursalDeCliente: string;
+  direccionSucursalCliente: string;
+  cliente: Cliente;
+  comentario: string;
+  estado: number;
+  fecha: string;
+  horaDesde: string;
+  horaHasta: string;
+  id: number;
+  latitud: string;
+  latitudCierre: string;
+  longitud: string;
+  longitudCierre: string;
+  formulario: Formulario;
+  formularioResultado?: FormularioResultado;
+
   estados?: any;
   estadosGestion?: any;
-  estado?: number;
   servicio?: string;
   horaInicio?: Date;
   orden?: number;
   horaFin?: Date;
-  formulario?: string;
   user?: string;
-  formularioResultado?: string;
-  latitud?: string;
-  longitud?: string;
-  cliente?: string;
-  horaDesde?: Date;
-  horaHasta?: Date;
-  fecha?: Date;
   motivo?: string;
   sucursal?: string;
   imageName?: string;
@@ -139,11 +145,7 @@ export interface OrdenTrabajo {
   solicitud?: string;
   responsableFirma?: string;
   estadoGestion?: number;
-  comentario?: string;
-  latitudCierre?: string;
-  longitudCierre?: string;
   Facility?: string;
-  SucursalDeCliente?: string;
   firma?: string;
   createdAt?: Date;
   updatedAt?: Date;
@@ -167,7 +169,7 @@ export interface PropiedadItem {
 }
 
 export interface Resultado {
-  valor: string | string[];
+  valor: string[];
   imageName?: string;
   imageSize?: number;
   latitud: string;
@@ -177,6 +179,7 @@ export interface Resultado {
   idModulo: number;
   isColeccionable: boolean;
   idPropiedadItem: number;
+  propiedadItem: string;
 }
 
 export interface Servicio {
@@ -191,11 +194,11 @@ export interface Solicitudes {
   estados?: any;
   imageFile?: any;
   cliente?: string;
-  servicio?:  undefined  | string;
+  servicio?: undefined | string;
   estado?: any;
   imageSize?: number;
   updatedImageAt?: Date;
-  imagen?: string | null  ;
+  imagen?: string | null;
   ordenTrabajo?: string;
   numeroSucursal?: string;
   direccionSucursal?: string;

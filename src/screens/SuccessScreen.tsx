@@ -14,12 +14,12 @@ interface Props extends StackScreenProps<any, any> {
 
 export const SuccessScreen = ({ navigation, route }: Props) => {
   const [success, setSuccess] = useState(route.params?.success || false);
-  const [isOt, setIsOt] = useState(route.params?.isOt || false)
+  const [isOt, setIsOt] = useState(route.params?.isOt || false);
 
   useEffect(() => {
     goToWelcomeScreen();
   }, []);
-  
+
   console.log('es ot ', isOt);
 
   const goToWelcomeScreen = () => {
@@ -34,7 +34,7 @@ export const SuccessScreen = ({ navigation, route }: Props) => {
         <Title success={success} isOt={isOt} />
         <View style={{ flex: 5 }}>{lottieAnimation(success)}</View>
         <View style={{ flex: 2 }}>
-          <Text style={styles.subtitulo}>{message(success)}</Text>
+          <Text style={styles.subtitulo}>{message(success, isOt)}</Text>
         </View>
       </View>
     </SafeAreaView>
@@ -63,13 +63,15 @@ const Title = ({ success, isOt }: { success: boolean; isOt?: boolean }) => {
   );
 };
 
-const message = (success: boolean) => {
+const message = (success: boolean, isOt: boolean) => {
+  if (isOt) {
+    return success
+      ? 'Información enviada correctamente.'
+      : 'Existió un error al enviar la información de la orden de trabajo.';
+  }
   return success
-    ? 'Información enviada satisfactoriamente.'
-    : 'Existió un error al enviar la información de la orden de trabajo.';
-  // return success
-  //   ? 'Su solicitud será procesada en la brevedad'
-  //   : 'Su solicitud no pudo ser generada';
+    ? 'Su solicitud será procesada en la brevedad'
+    : 'Su solicitud no pudo ser generada';
 };
 
 const lottieAnimation = (success: boolean) => {

@@ -5,12 +5,13 @@ import { windowWidth } from '~/dimensions';
 import { PropiedadItem } from '~/api/types';
 import { Casilla } from './Casilla';
 import { Desplegable } from './Desplegable';
-import { SeleccionGroup } from './Seleccion';
+import { Seleccion } from './Seleccion';
 import { Texto } from './Texto';
 import { DateInput } from './Date';
 import { useContext } from 'react';
 import { Numero } from './Numero';
-import { FormContext } from '~/context/formulario/FormularioContext';
+import { ModuloContext } from '~/context/modulo/ModuloContext';
+import { Foto } from './Foto';
 
 interface Props {
   propiedadItem: PropiedadItem;
@@ -23,7 +24,7 @@ function isRenderedField({
   parentItem,
 }: {
   propiedadItem: PropiedadItem;
-  getResultado: FormContext['getResultado'];
+  getResultado: ModuloContext['getResultado'];
   parentItem?: PropiedadItem;
 }) {
   if (!propiedadItem.opcionDepende) {
@@ -40,7 +41,7 @@ function isRenderedField({
 }
 
 export const BaseCampo = ({ propiedadItem, parentItem }: Props) => {
-  const { getResultado } = useContext(FormContext);
+  const { getResultado } = useContext(ModuloContext);
 
   if (!isRenderedField({ propiedadItem, getResultado, parentItem })) {
     return null;
@@ -114,42 +115,21 @@ const styles = StyleSheet.create({
   },
 });
 
-const Campo = (propiedadItem: PropiedadItem) => {
-  let campo = null;
-  switch (propiedadItem.item.tipo) {
-    case 'texto':
-      campo = <Texto propiedadItem={propiedadItem} />;
-      break;
-    case 'foto':
-      campo = <Text>Es foto</Text>;
-      break;
-    case 'seleccion_multiple':
-      campo = <Casilla propiedadItem={propiedadItem} />;
-      break;
-    case 'desplegable':
-      campo = <Desplegable item={propiedadItem} />;
-      break;
-    case 'casilla_de_verificacion':
-      campo = <SeleccionGroup propiedadItem={propiedadItem} />;
-      break;
-    case 'titulo':
-      campo = <Texto propiedadItem={propiedadItem} />;
-      break;
-    case 'date_time':
-      campo = <DateInput modo={'completo'} />;
-      break;
-    case 'date':
-      campo = <DateInput modo={'date'} />;
-      break;
-    case 'time':
-      campo = <DateInput modo={'time'} />;
-      break;
-    case 'numero':
-      campo = <Numero />;
-      break;
-    default:
-      null;
-  }
+//TODO: crear wrapper para campos
+const CampoTypes = {
+  texto: Texto,
+  foto: Foto,
+  seleccion_multiple: Casilla,
+  desplegable: Desplegable,
+  casilla_de_verificacion: Seleccion,
+  titulo: Texto,
+  date_time: DateInput,
+  date: DateInput,
+  time: DateInput,
+  numero: Numero,
+};
 
-  return campo;
+const Campo = (propiedadItem: PropiedadItem) => {
+  const Item = CampoTypes[propiedadItem.item.tipo];
+  return <Item propiedadItem={propiedadItem} />;
 };

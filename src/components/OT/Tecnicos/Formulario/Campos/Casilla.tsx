@@ -10,26 +10,18 @@ interface Props {
 }
 
 export const Casilla = ({ propiedadItem }: Props) => {
-  const { getResultado, setResultado } = useContext(FormContext);
-  const { modulo, moduloIndice, getIndiceItem } = useContext(ModuloContext);
+  const { getResultado, setResultado } = useContext(ModuloContext);
 
-  const value = getResultado(propiedadItem.id)?.valor ?? '';
+  const value = getResultado(propiedadItem.id)?.valor ?? [''];
 
   const handleValueChange = (changedValue: string) => {
-    setResultado(propiedadItem.id, {
-      idModulo: modulo.id,
-      idPropiedadItem: propiedadItem.id,
-      indiceItem: getIndiceItem(propiedadItem.id),
-      indiceModulo: moduloIndice,
-      isColeccionable: false,
-      latitud: '',
-      longitud: '',
-      valor: changedValue,
+    setResultado(propiedadItem, {
+      valor: [changedValue],
     });
   };
 
   return (
-    <RadioButton.Group onValueChange={handleValueChange} value={value}>
+    <RadioButton.Group onValueChange={handleValueChange} value={value[0]}>
       {propiedadItem.item.opciones.map(opcion => (
         <RadioButton.Item
           key={opcion.id}
