@@ -86,5 +86,16 @@ export const otStyle ={
         textAlignVertical:'center',
         fontFamily:'Sans',
         alignItems:'center'
+    },
+    rightText : {
+      marginVertical: 5,
+      paddingLeft: 20,
+      fontWeight: 'bold',
+      fontSize: 15,
+    },
+    leftText : {
+      marginVertical: 5,
+      fontSize: 15,
+      textAlign: 'center',
     }
 }

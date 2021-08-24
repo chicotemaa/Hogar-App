@@ -6,6 +6,8 @@ export interface OrdenTrabajo {
   estado: number;
   fecha: string;
   horaDesde: string;
+  HoraInicio:string;
+  HoraFin:string;
   horaHasta: string;
   id: number;
   latitud: string;

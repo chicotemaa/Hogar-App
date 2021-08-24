@@ -11,6 +11,7 @@ import { DateInput } from './Date';
 import { useContext } from 'react';
 import { Numero } from './Numero';
 import { ModuloContext } from '~/context/modulo/ModuloContext';
+import { Foto } from './Foto';
 
 interface Props {
   propiedadItem: PropiedadItem;
@@ -114,42 +115,21 @@ const styles = StyleSheet.create({
   },
 });
 
-const Campo = (propiedadItem: PropiedadItem) => {
-  let campo = null;
-  switch (propiedadItem.item.tipo) {
-    case 'texto':
-      campo = <Texto propiedadItem={propiedadItem} />;
-      break;
-    case 'foto':
-      campo = <Text>Es foto</Text>;
-      break;
-    case 'seleccion_multiple':
-      campo = <Casilla propiedadItem={propiedadItem} />;
-      break;
-    case 'desplegable':
-      campo = <Desplegable propiedadItem={propiedadItem} />;
-      break;
-    case 'casilla_de_verificacion':
-      campo = <Seleccion propiedadItem={propiedadItem} />;
-      break;
-    case 'titulo':
-      campo = <Texto propiedadItem={propiedadItem} />;
-      break;
-    case 'date_time':
-      campo = <DateInput modo={'completo'} />;
-      break;
-    case 'date':
-      campo = <DateInput modo={'date'} />;
-      break;
-    case 'time':
-      campo = <DateInput modo={'time'} />;
-      break;
-    case 'numero':
-      campo = <Numero />;
-      break;
-    default:
-      null;
-  }
+//TODO: crear wrapper para campos
+const CampoTypes = {
+  texto: Texto,
+  foto: Foto,
+  seleccion_multiple: Casilla,
+  desplegable: Desplegable,
+  casilla_de_verificacion: Seleccion,
+  titulo: Texto,
+  date_time: DateInput,
+  date: DateInput,
+  time: DateInput,
+  numero: Numero,
+};
 
-  return campo;
+const Campo = (propiedadItem: PropiedadItem) => {
+  const Item = CampoTypes[propiedadItem.item.tipo];
+  return <Item propiedadItem={propiedadItem} />;
 };

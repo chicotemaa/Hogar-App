@@ -65,7 +65,7 @@ export const BodyOT = ({ Formulario, otID }: Props) => {
             Siguiente
           </Button>
         </View>
-        <View style={{ flex: 9 }}>{!loading && showPages(paginator)}</View>
+        <View style={{ flex: 9 }}>{!loading && ShowPages(paginator)}</View>
       </View>
     </FormProvider>
   );
@@ -101,7 +101,7 @@ const crearPaginador = (Modulos: Modulo[]) => {
   return paginador;
 };
 
-const showPages = (Paginas: { pagina: number; modulos: Modulo[] }[]) => {
+const ShowPages = (Paginas: { pagina: number; modulos: Modulo[] }[]) => {
   const {
     changePage,
     formState: { page },

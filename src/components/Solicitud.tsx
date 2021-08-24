@@ -11,7 +11,6 @@ interface Solicitud {
   servicio: string | undefined;
   SucursalDeCliente: string | undefined;
   pisoSector: string | undefined;
-  necesitasAyuda: string | undefined;
   imagen: string | null | undefined ;
   consulta: string | undefined;
 }
