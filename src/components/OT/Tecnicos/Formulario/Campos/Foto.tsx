@@ -1,9 +1,9 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { View, StyleSheet, Image } from 'react-native';
 import { Button } from 'react-native-paper';
 import { launchCamera } from 'react-native-image-picker';
 import { ModuloContext } from '~/context/modulo/ModuloContext';
-import { b64toBlob, convertFile, uploadPhoto } from '~/services/cameraService';
+import { uploadPhoto } from '~/services/cameraService';
 import { PropiedadItem } from '~/api/types';
 
 interface Props {
@@ -17,12 +17,14 @@ export const Foto = ({ propiedadItem }: Props) => {
   const value = getResultado(propiedadItem.id)?.valor ?? [''];
 
   const handlePress = () => {
+    console.log('value', value);
     launchCamera(
       {
         includeBase64: true,
         mediaType: 'photo',
         saveToPhotos: true,
-        quality: 1,
+        quality: 0.5,
+        
       },
       resp => {
         if (resp.didCancel) {
@@ -37,7 +39,7 @@ export const Foto = ({ propiedadItem }: Props) => {
         uploadPhoto(resp).then(({ data }) => {
           console.log('response data', data);
           setResultado(propiedadItem, {
-            valor: [''],
+            valor: [resp.assets[0].uri],
             imageSize: 4411,
             imageName: data.filePath,
           });
@@ -53,7 +55,9 @@ export const Foto = ({ propiedadItem }: Props) => {
           <Image
             style={styles.fotoTomada}
             resizeMode={'cover'}
-            source={{ uri: tempUri ?? value[0] }}
+            source={{
+              uri: tempUri ?? getResultado(propiedadItem.id)?.valor[0],
+            }}
           />
         )}
       </View>
