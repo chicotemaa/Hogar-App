@@ -14,7 +14,6 @@ export const TecnicosOTListRealizadas = () => {
     getOrdenesTrabajoRealizadasInfo,
   );
   const stackNavigator = useNavigation();
-
   return (
     <View style={{ flex: 1 }}>
       <ScrollView
@@ -56,7 +55,7 @@ const ListItem = ({ OT, stackNavigator }) => {
             
             stackNavigator.navigate('OTScreen', { OT });
           } else if ((estado = 'detalleOTRealizada')) {
-            stackNavigator.navigate('DetalleOTScreen');
+            stackNavigator.navigate('DetalleOTScreen', { OT });
           }
         }}
       />
