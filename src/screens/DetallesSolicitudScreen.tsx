@@ -6,7 +6,7 @@ import { RootStackParams } from '~/navigator/StackNavigator';
 import { getImage, getServicioAPI } from '~/api/api';
 import { Solicitud } from '~/components/Solicitud';
 import { Header } from '~/components/Header';
-import { Solicitudes } from '~/api/interfaces/types';
+import { Solicitudes } from '~/api/types';
 
 interface Props
   extends StackScreenProps<RootStackParams, 'DetalleSolicitudScreen'> {}
@@ -23,7 +23,7 @@ export const DetallesSolicitudScreen = ({ navigation, route }: Props) => {
   };
 
   const [solicitud, setSolicitud] = useState(infoSolicitud);
-
+  console.log(route)
   const id = route.params.codigo;
   const estados = ['Pendiente', 'Generada OT', 'Derivada'];
 
@@ -64,8 +64,7 @@ export const DetallesSolicitudScreen = ({ navigation, route }: Props) => {
             SucursalDeCliente={solicitud.SucursalDeCliente}
             pisoSector={solicitud.pisoSector}
             estado={solicitud.estado}
-            imagen={solicitud.imagen}
-          />
+            imagen={solicitud.imagen} />
         </View>
       </View>
     </View>
