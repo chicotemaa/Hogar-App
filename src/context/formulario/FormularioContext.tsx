@@ -6,7 +6,7 @@ import React, {
   useCallback,
   ReactNode,
 } from 'react';
-import { Resultado, PropiedadItem } from '~/api/types';
+import { Resultado, PropiedadItem, Formulario } from '~/api/types';
 import { setStorageResultados, getStorageResultados } from '~/storage';
 
 export interface FormContext {
@@ -19,6 +19,7 @@ export interface FormContext {
     propiedadItem: PropiedadItem,
     resultado: Resultado,
   ) => void;
+  isValid: boolean;
 }
 
 export const FormContext = createContext<FormContext>({} as any);
@@ -27,9 +28,11 @@ export const FormContext = createContext<FormContext>({} as any);
 export const FormProvider = ({
   children,
   otID,
+  formulario,
 }: {
   children: ReactNode;
   otID: number;
+  formulario: Formulario;
 }) => {
   const [resultados, setResultados] = useState<Resultado[]>();
   const getResultado = useCallback(
@@ -74,9 +77,17 @@ export const FormProvider = ({
     })();
   }, [otID]);
 
+  const isValid = useMemo(() => {
+    // return formulario.propiedadModulos.every(modulo => {
+    //   return modulo.propiedadItems.every(item => {
+    //     return !item.requerido || getResultado(modulo.id, item.id)?.valor[0];
+    //   });
+    // });
+  }, []);
+
   const value = useMemo(
-    () => ({ getResultado, setResultado }),
-    [getResultado, setResultado],
+    () => ({ getResultado, setResultado, isValid }),
+    [getResultado, setResultado, isValid],
   );
 
   return <FormContext.Provider value={value}>{children}</FormContext.Provider>;
