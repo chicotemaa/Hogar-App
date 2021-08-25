@@ -2,7 +2,7 @@ import * as React from 'react';
 import { ScrollView } from 'react-native';
 import { StyleSheet, View } from 'react-native';
 import { Button } from 'react-native-paper';
-import { Formulario, Modulo } from '~/services/interfaces';
+import { Formulario, Modulo } from '~/api/types';
 import { Pagina } from './Pagina';
 import Swiper from 'react-native-swiper';
 import { FormContext } from '~/context/fomulario/FormularioContext';
@@ -10,11 +10,11 @@ import { useContext } from 'react';
 import { FormProvider } from '~/context/formulario/FormularioContext';
 
 interface Props {
-  Formulario: Formulario;
+  formulario: Formulario;
   otID: number;
 }
 
-export const BodyOT = ({ Formulario, otID }: Props) => {
+export const BodyOT = ({ formulario, otID }: Props) => {
   const [pagesCount, setPagesCount] = React.useState<number>(0);
   const [loading, setLoading] = React.useState(true);
   const [paginator, setPaginator] = React.useState(undefined);
@@ -25,11 +25,11 @@ export const BodyOT = ({ Formulario, otID }: Props) => {
   } = useContext(FormContext);
 
   React.useEffect(() => {
-    const lastItemIndex = Formulario.propiedadModulos.length - 1;
-    const lastPage = Formulario.propiedadModulos[lastItemIndex];
+    const lastItemIndex = formulario.propiedadModulos.length - 1;
+    const lastPage = formulario.propiedadModulos[lastItemIndex];
     setPagesCount(lastPage.pagina);
     changePage(page);
-    setPaginator(crearPaginador(Formulario.propiedadModulos));
+    setPaginator(crearPaginador(formulario.propiedadModulos));
     setLoading(false);
   }, []);
 
@@ -41,7 +41,7 @@ export const BodyOT = ({ Formulario, otID }: Props) => {
   };
 
   return (
-    <FormProvider otID={otID}>
+    <FormProvider otID={otID} formulario={formulario}>
       <View style={{ flex: 1 }}>
         <View
           style={{
