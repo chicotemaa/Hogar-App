@@ -51,7 +51,6 @@ export const FormProvider = ({
       if (!resultados) {
         throw new Error('resultados debe existir');
       }
-      console.log('resultados del set', resultados);
       let itemResIndex = resultados.findIndex(
         res =>
           res.idModulo === moduloId && res.idPropiedadItem === propiedadItem.id,

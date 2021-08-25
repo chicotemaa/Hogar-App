@@ -14,17 +14,17 @@ export const Foto = ({ propiedadItem }: Props) => {
   const [tempUri, setTempUri] = useState<string>();
   const { getResultado, setResultado } = useContext(ModuloContext);
 
-  const value = getResultado(propiedadItem.id)?.valor ?? [''];
+  useEffect(() => {
+    setTempUri(getResultado(propiedadItem.id)?.valor[0] ?? undefined);
+  }, []);
 
   const handlePress = () => {
-    console.log('value', value);
     launchCamera(
       {
         includeBase64: true,
         mediaType: 'photo',
         saveToPhotos: true,
         quality: 0.5,
-        
       },
       resp => {
         if (resp.didCancel) {
@@ -48,6 +48,7 @@ export const Foto = ({ propiedadItem }: Props) => {
     );
   };
 
+
   return (
     <View style={styles.container}>
       <View style={styles.fotoTomada}>
@@ -56,7 +57,7 @@ export const Foto = ({ propiedadItem }: Props) => {
             style={styles.fotoTomada}
             resizeMode={'cover'}
             source={{
-              uri: tempUri ?? getResultado(propiedadItem.id)?.valor[0],
+              uri: tempUri,
             }}
           />
         )}
