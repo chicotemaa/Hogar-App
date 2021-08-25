@@ -1,5 +1,6 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { MediaObject } from './types';
 global.Buffer = global.Buffer || require('buffer').Buffer;
 const clientId = '1_4ta05vfoy58ggoggwo08kck000kocckwgcckk8wgkck440cgcw';
 const clientSecret = '176y7wqisfvkcwk8oswowksks0cocsoc00ko4k4oosc0ocwck4';
@@ -108,12 +109,12 @@ export const uploadImage = async ({
   const form = new FormData();
   form.append('file', fileToUpload);
 
-  try {
-    const response = await api.post('/media_objects', form);
-    return response;
-  } catch (err) {
-    console.log({ err });
-  }
+  const response = await api.post<MediaObject>('/media_objects', form);
+  return response;
+};
+
+export const getImageUrl = (imagePath: string) => {
+  return `${baseUrl}/uploads/imagenes/resultado/${imagePath}`;
 };
 
 export const getServicioAPI = async (id: string) => {
