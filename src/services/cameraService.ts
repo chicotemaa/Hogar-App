@@ -1,9 +1,29 @@
-import { ImagePickerResponse } from 'react-native-image-picker';
+import { Asset, CameraOptions } from 'react-native-image-picker';
 import { uploadImage } from '~/api/api';
 
-export async function uploadPhoto(cameraResponse: ImagePickerResponse) {
-  const fileToUpload = cameraResponse.assets[0];
-  const fileData = await uploadImage(fileToUpload);
+import { launchCamera as nativeLaunchCamera } from 'react-native-image-picker';
+
+export async function uploadPhoto(asset: Asset) {
+  const fileData = await uploadImage({
+    uri: asset.uri!,
+    type: asset.type!,
+    fileName: asset.fileName!,
+  });
   //Upload image
   return fileData;
+}
+
+export function launchCamera(options: CameraOptions): Promise<Asset[] | null> {
+  return new Promise((resolve, reject) => {
+    nativeLaunchCamera(options, resp => {
+      if (resp.errorCode) {
+        const error = new Error(resp.errorMessage);
+        reject(error);
+      } else if (resp.didCancel) {
+        resolve(null);
+      } else {
+        resolve(resp.assets);
+      }
+    });
+  });
 }
