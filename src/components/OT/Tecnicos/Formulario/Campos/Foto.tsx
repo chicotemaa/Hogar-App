@@ -1,63 +1,50 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { View, StyleSheet, Image } from 'react-native';
 import { Button } from 'react-native-paper';
-import { launchCamera } from 'react-native-image-picker';
 import { ModuloContext } from '~/context/modulo/ModuloContext';
-import { uploadPhoto } from '~/services/cameraService';
+import { uploadPhoto, launchCamera } from '~/services/cameraService';
 import { PropiedadItem } from '~/api/types';
+import { getImageUrl } from '~/api/api';
 
 interface Props {
   propiedadItem: PropiedadItem;
 }
 
 export const Foto = ({ propiedadItem }: Props) => {
-  const [tempUri, setTempUri] = useState<string>();
   const { getResultado, setResultado } = useContext(ModuloContext);
+  
+  const imagePath = getResultado(propiedadItem.id)?.imageName;
 
-  useEffect(() => {
-    setTempUri(getResultado(propiedadItem.id)?.valor[0] ?? undefined);
-  }, []);
-
-  const handlePress = () => {
-    launchCamera(
-      {
+  const handlePress = async () => {
+    try {
+      const assets = await launchCamera({
         includeBase64: true,
         mediaType: 'photo',
         saveToPhotos: true,
         quality: 0.5,
-      },
-      resp => {
-        if (resp.didCancel) {
-          return null;
-        }
-        if (resp.errorCode) {
-          return null;
-        }
-
-        setTempUri(resp.assets[0].uri || '');
-
-        uploadPhoto(resp).then(({ data }) => {
-          console.log('response data', data);
-          setResultado(propiedadItem, {
-            valor: [resp.assets[0].uri],
-            imageSize: 4411,
-            imageName: data.filePath,
-          });
+      });
+      if (assets) {
+        const response = await uploadPhoto(assets[0]);
+        setResultado(propiedadItem, {
+          valor: [''],
+          imageSize: 4411,
+          imageName: response.data.filePath,
         });
-      },
-    );
+      }
+    } catch {
+      //noop
+    }
   };
-
 
   return (
     <View style={styles.container}>
       <View style={styles.fotoTomada}>
-        {tempUri && (
+        {imagePath && (
           <Image
             style={styles.fotoTomada}
             resizeMode={'cover'}
             source={{
-              uri: tempUri,
+              uri: getImageUrl(imagePath),
             }}
           />
         )}
