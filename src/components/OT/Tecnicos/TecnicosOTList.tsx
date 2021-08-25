@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { ScrollView, View, RefreshControl, Text } from 'react-native';
 import { useQuery } from 'react-query';
-import { OrdenTrabajo } from '~/services/interfaces';
+import { OrdenTrabajo } from '~/api/types';
 import { getOrdenesTrabajoInfo } from '~/services/tecnicosServices';
 import { ItemOT } from '~/components/ItemOT';
 import { TransitionView } from '~/components/TransitionView';

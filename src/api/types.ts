@@ -130,7 +130,6 @@ export interface OrdenTrabajo {
   longitudCierre: string;
   formulario: Formulario;
   formularioResultado?: FormularioResultado;
-
   estados?: any;
   estadosGestion?: any;
   servicio?: string;
