@@ -35,10 +35,10 @@ function isRenderedField({
     return false;
   }
 
-  const parentValue = getResultado(parentItem.id)?.valor;
+  const parentValue = getResultado(parentItem.id)?.valor[0];
 
   if (parentValue) {
-    return String(propiedadItem.opcionDepende.id) === parentValue[0];
+    return String(propiedadItem.opcionDepende.id) === parentValue;
   }
   return false;
 }
