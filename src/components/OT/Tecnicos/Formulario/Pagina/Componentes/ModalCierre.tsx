@@ -8,7 +8,7 @@ import { windowHeight } from '~/dimensions';
 interface Props {
   visible: boolean;
   hideDialog: () => void;
-  finalizadoHandler: (firma: string) => void;
+  finalizadoHandler: (firma: string, aclaracion: string) => void;
 }
 
 export const ModalCierre = ({
@@ -28,6 +28,7 @@ export const ModalCierre = ({
 
   const pressFinalizar = () => {
     if (validate(firma, aclaracion)) {
+      console.log('valid');      
       finalizadoHandler(firma, aclaracion);
     } else {
       console.log('is not valid');
