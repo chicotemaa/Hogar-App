@@ -40,8 +40,7 @@ export const Foto = ({ propiedadItem }: Props) => {
         //   imageName: resp.assets[0].uri,
         // });
 
-        convertFile(resp)
-
+        convertFile(resp);
       },
     );
   };

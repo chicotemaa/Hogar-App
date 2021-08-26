@@ -1,4 +1,4 @@
-import { api, baseApi } from './api';
+import { api, base, baseApi } from './api';
 import { FormularioResultado, Resultado, OrdenTrabajo } from './types';
 
 export const getOtByEstadoAPI = async (isPendientes = true) => {
@@ -31,6 +31,12 @@ export const getOtById = async (id: number) => {
       console.log(err);
       return err;
     });
+};
+export const getFormularioResultadoById = async (id: string) => {
+  return base.get(id).then(formularioResultado => {
+    console.log('Formulario Resultado', formularioResultado.data);
+    return formularioResultado.data;
+  });
 };
 
 export const changeStateOrdenTrabajo = async (

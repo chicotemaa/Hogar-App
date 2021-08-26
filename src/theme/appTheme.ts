@@ -77,25 +77,25 @@ export const secondIndicatorStyles = {
   stepIndicatorLabelUnFinishedColor: '#aaaaaa',
   currentStepLabelColor: '#00BA0C',
 };
-export const otStyle ={
-    TextCargando:{
-      marginTop:'20%',
-        textAlign:'center',
-        color:'orange',
-        fontSize:25,
-        textAlignVertical:'center',
-        fontFamily:'Sans',
-        alignItems:'center'
-    },
-    rightText : {
-      marginVertical: 5,
-      paddingLeft: 20,
-      fontWeight: 'bold',
-      fontSize: 15,
-    },
-    leftText : {
-      marginVertical: 5,
-      fontSize: 15,
-      textAlign: 'center',
-    }
-}
+export const otStyle = {
+  TextCargando: {
+    marginTop: '20%',
+    textAlign: 'center',
+    color: 'orange',
+    fontSize: 25,
+    textAlignVertical: 'center',
+    fontFamily: 'Sans',
+    alignItems: 'center',
+  },
+  rightText: {
+    marginVertical: 5,
+    paddingLeft: 20,
+    fontWeight: 'bold',
+    fontSize: 15,
+  },
+  leftText: {
+    marginVertical: 5,
+    fontSize: 15,
+    textAlign: 'center',
+  },
+};

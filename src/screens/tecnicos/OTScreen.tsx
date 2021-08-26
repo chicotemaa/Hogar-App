@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { Header } from '../../components/Header';
 import { StackScreenProps } from '@react-navigation/stack';
 import { BasePage } from '../../components/OT/Tecnicos/Formulario/Pagina/BasePage';
-import { OrdenTrabajo } from '../../services/interfaces';
+import { OrdenTrabajo } from '~/api/types';
 
 interface Props extends StackScreenProps<any, any> {}
 

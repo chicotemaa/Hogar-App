@@ -32,6 +32,7 @@ const createApi = (config: AxiosRequestConfig) => {
 export const baseApi = createApi({ baseURL: baseUrl });
 
 export const api = createApi({ baseURL: `${baseUrl}/api` });
+export const base = createApi({ baseURL: `${baseUrl}` });
 
 export const apiFetch: typeof fetch = async (input, init) => {
   const token = await getAccessToken();

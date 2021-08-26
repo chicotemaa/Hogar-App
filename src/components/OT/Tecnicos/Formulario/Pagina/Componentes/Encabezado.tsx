@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Divider } from 'react-native-paper';
 import { windowWidth, windowHeight } from '~/dimensions';
-import { OrdenTrabajo } from '~/services/interfaces';
+import { OrdenTrabajo } from '~/api/types';
 
 interface Props {
   OrdenTrabajo: OrdenTrabajo;

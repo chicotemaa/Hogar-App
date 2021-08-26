@@ -1,5 +1,7 @@
+/* eslint-disable no-shadow */
 import {
   changeStateOrdenTrabajo as changeStateOTAPI,
+  getFormularioResultadoById,
   getOtByEstadoAPI,
   getOtById,
 } from '../api/apiTecnicos';
@@ -11,7 +13,7 @@ import {
   request,
 } from 'react-native-permissions';
 import { getSucursalCliente } from '../api/apiClientes';
-import { OrdenTrabajo } from '../api/types';
+import { OrdenTrabajo, FormularioResultado } from '../api/types';
 import { getStorageResultados } from '~/storage';
 import { postResultado } from '~/api/apiTecnicos';
 
@@ -173,4 +175,14 @@ const getDiffMinutes = (startTime: string) => {
   const diffMins = currentTime.getTime() - start.getTime();
 
   return Math.floor(diffMins / 60000);
+};
+
+export const FormularioRealizado = async (OT: number) => {
+  const OrdenTrabajo: OrdenTrabajo = await getOtById(OT);
+
+  const TipoFormulario = OrdenTrabajo.formulario;
+  const FormularioResultado = await getFormularioResultadoById(
+    OrdenTrabajo.formularioResultado,
+  );
+  return TipoFormulario;
 };

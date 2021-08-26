@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 /* TODO: ver tipos de campos
     -Texto
@@ -31,21 +31,20 @@ export const Modulo = () => {
 const Subtitulo = () => {
   return (
     <View>
-      <Text style={{ fontSize: 20, paddingVertical: 10 }}>Subtitulo</Text>
+      <Text style={styles.Subtitulo}>Subtitulo</Text>
     </View>
   );
 };
 
 const Divisor = () => {
-  return <View style={{ borderWidth: 1, borderColor: '#DFDFDF', flex: 1 }} />;
+  return <View style={styles.Divisor} />;
 };
 
 const Campo = () => {
-  const textStyle = { fontSize: 15, flex: 1, paddingVertical: 10 };
   return (
-    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-      <Text style={textStyle}>Campo</Text>
-      <Text style={[textStyle, { textAlign: 'center' }]}>Si</Text>
+    <View style={styles.Campo}>
+      <Text style={styles.textStyle}>Campo</Text>
+      <Text style={styles.textStyleCenter}>Si</Text>
     </View>
   );
 };
@@ -53,26 +52,37 @@ const Campo = () => {
 const CampoFoto = () => {
   const textStyle = { fontSize: 15, flex: 1, paddingVertical: 10 };
   const Imagen = () => {
-    return (
-      <View
-        style={{
-          height: 200,
-          width: '30%',
-          backgroundColor: 'grey',
-          marginVertical: 10,
-          marginLeft: 5,
-        }}
-      />
-    );
+    return <View style={styles.Imagen} />;
   };
   return (
     <View>
       <Text style={textStyle}>Fotografia</Text>
       <Divisor />
-      <View style={{ flexDirection: 'row' }}>
+      <View style={styles.RowImagen}>
         <Imagen />
         <Imagen />
       </View>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  Subtitulo: { fontSize: 20, paddingVertical: 10 },
+  Divisor: { borderWidth: 1, borderColor: '#DFDFDF', flex: 1 },
+  Campo: { flexDirection: 'row', justifyContent: 'space-between' },
+  textStyle: { fontSize: 15, flex: 1, paddingVertical: 10 },
+  textStyleCenter: {
+    fontSize: 15,
+    flex: 1,
+    paddingVertical: 10,
+    textAlign: 'center',
+  },
+  Imagen: {
+    height: 200,
+    width: '30%',
+    backgroundColor: 'grey',
+    marginVertical: 10,
+    marginLeft: 5,
+  },
+  RowImagen: { flexDirection: 'row' },
+});

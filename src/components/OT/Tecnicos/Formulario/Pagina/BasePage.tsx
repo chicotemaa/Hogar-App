@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { windowHeight, windowWidth } from '~/dimensions';
 import { Encabezado } from './Componentes/Encabezado';
 import { BodyOT } from './Componentes/BodyOT';
-import { Formulario, OrdenTrabajo } from '~/services/interfaces';
+import { Formulario, OrdenTrabajo } from '~/api/types';
 import { getFormularioAPI } from '~/api/api';
 import { FormProvider } from '~/context/fomulario/FormularioContext';
 import { Button, Dialog, Portal } from 'react-native-paper';

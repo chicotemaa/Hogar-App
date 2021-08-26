@@ -11,16 +11,13 @@ export const TecnicosWelcomeScreen = ({ navigation }) => {
       tabBarOptions={{
         activeTintColor: 'black',
         labelStyle: { fontSize: 15 },
-        pressColor:'#ef4920',
-        indicatorStyle:{
-          backgroundColor:'#ef4920'
-        }
-
+        pressColor: '#ef4920',
+        indicatorStyle: {
+          backgroundColor: '#ef4920',
+        },
       }}>
       <Tab.Screen name="Pendientes" component={TecnicosOTList} />
-      <Tab.Screen name="Realizadas" component={TecnicosOTListRealizadas} 
-       />
+      <Tab.Screen name="Realizadas" component={TecnicosOTListRealizadas} />
     </Tab.Navigator>
   );
 };
-
