@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     marginVertical: 4,
     borderLeftWidth: 3,
     borderLeftColor: '#F76656',
-    backgroundColor: 'white',
+    backgroundColor: '#F0F0F0',
     paddingHorizontal: 5,
     paddingBottom: 10,
     paddingTop: 8,
@@ -104,8 +104,6 @@ const styles = StyleSheet.create({
   childContainer: {
     marginHorizontal: 10,
     borderLeftColor: '#3DF56B',
-    borderTopWidth: 1,
-    borderTopColor: '#3DF56B',
   },
   titleItem: {
     fontSize: 0.05 * windowWidth,
