@@ -25,16 +25,20 @@ export const BasePage = ({ OrdenTrabajo, hasResultado }: Props) => {
   const [visible, setVisible] = useState(false);
   const showDialog = () => setVisible(true);
   const hideDialog = () => setVisible(false);
+  //Para loading
+  const [textLoading, setTextLoading] = useState('Cargando formulario...');
 
   const navigator = useNavigation();
 
   const finalizadoHandler = (firma, aclaracion) => {
-    console.log('aca finalizando');
-    console.log(firma, aclaracion);
     hideDialog();
-    // changeStateFinalizado(OrdenTrabajo).then(resolved => {
-    //   navigator.navigate('SuccessScreen', { success: resolved, isOt: true });
-    // });
+    setTextLoading('Enviando informacion...');
+    setLoading(!loading);
+
+    changeStateFinalizado(OrdenTrabajo).then(resolved => {
+      setLoading(!loading);
+      navigator.navigate('SuccessScreen', { success: resolved, isOt: true });
+    });
   };
 
   const postergarHandler = () => {
@@ -60,7 +64,7 @@ export const BasePage = ({ OrdenTrabajo, hasResultado }: Props) => {
         <View>
           <Spinner
             visible={loading}
-            textContent={'Cargando formulario...'}
+            textContent={textLoading}
             textStyle={{ color: '#FFF' }}
           />
         </View>
