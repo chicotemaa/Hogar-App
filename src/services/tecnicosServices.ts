@@ -11,7 +11,7 @@ import {
   request,
 } from 'react-native-permissions';
 import { getSucursalCliente } from '../api/apiClientes';
-import { OrdenTrabajo } from '../api/types';
+import { OrdenTrabajo, MediaObject } from '../api/types';
 import { getStorageResultados } from '~/storage';
 import { postResultado } from '~/api/apiTecnicos';
 
@@ -110,8 +110,25 @@ export const changeStateMeRecibio = async (ordenTrabajo: OrdenTrabajo) => {
   }
 };
 
-export const changeStateNoMeRecibio = (ordenTrabajo: OrdenTrabajo) => {
-  changeStateOTAPI(ordenTrabajo, { estado: 3 });
+export const changeStateNoMeRecibio = async (ordenTrabajo: OrdenTrabajo) => {
+  if (await checkLocationPermission()) {
+    const position = await getCurrentPosition({
+      enableHighAccuracy: true,
+      timeout: 14000,
+      maximumAge: 100,
+    });
+    const {
+      coords: { latitude, longitude },
+    } = position;
+    const data = {
+      estado: 3,
+      latitud: String(latitude),
+      longitud: String(longitude),
+      horaFin: getISODate(),
+    };
+
+    changeStateOTAPI(ordenTrabajo, data);
+  }
   //TODO: tomar ubicacion donde marco que no me recibió
 };
 
@@ -141,8 +158,8 @@ export const changeStateFinalizado = async (
     });
     const data = {
       estado: 4,
-      latitudCierre: latitude.toString(),
-      longitudCierre: longitude.toString(),
+      latitudCierre: String(latitude),
+      longitudCierre: String(longitude),
       horaFin: getISODate(),
       imageName: 'string',
       imageSize: 4411,
