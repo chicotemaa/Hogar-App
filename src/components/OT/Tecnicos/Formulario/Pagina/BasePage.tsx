@@ -11,6 +11,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import { useNavigation } from '@react-navigation/native';
 import { changeStateFinalizado } from '~/services/tecnicosServices';
 import { Platform } from 'react-native';
+import { ModalCierre } from './Componentes/ModalCierre';
 
 interface Props {
   OrdenTrabajo: OrdenTrabajo;
@@ -27,12 +28,13 @@ export const BasePage = ({ OrdenTrabajo, hasResultado }: Props) => {
 
   const navigator = useNavigation();
 
-  const finalizadoHandler = () => {
+  const finalizadoHandler = (firma, aclaracion) => {
+    console.log('aca finalizando');
+    console.log(firma, aclaracion);
     hideDialog();
-
-    changeStateFinalizado(OrdenTrabajo).then(resolved => {
-      navigator.navigate('SuccessScreen', { success: resolved, isOt: true });
-    });
+    // changeStateFinalizado(OrdenTrabajo).then(resolved => {
+    //   navigator.navigate('SuccessScreen', { success: resolved, isOt: true });
+    // });
   };
 
   const postergarHandler = () => {
@@ -67,15 +69,11 @@ export const BasePage = ({ OrdenTrabajo, hasResultado }: Props) => {
           <Encabezado OrdenTrabajo={OrdenTrabajo} />
           <View style={{ flex: 1 }}>
             <Portal>
-              <Dialog visible={visible} onDismiss={hideDialog}>
-                <Dialog.Title>Alert</Dialog.Title>
-                <Dialog.Content>
-                  <Text>Firma</Text>
-                </Dialog.Content>
-                <Dialog.Actions>
-                  <Button onPress={finalizadoHandler}>Done</Button>
-                </Dialog.Actions>
-              </Dialog>
+              <ModalCierre
+                finalizadoHandler={finalizadoHandler}
+                visible={visible}
+                hideDialog={hideDialog}
+              />
             </Portal>
             <FormState>
               {formulario ? (
