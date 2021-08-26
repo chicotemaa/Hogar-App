@@ -1,5 +1,5 @@
-import { api, baseApi } from './api';
-import { FormularioResultado, Resultado, OrdenTrabajo } from './types';
+import { api } from './api';
+import { FormularioResultado, OrdenTrabajo } from './types';
 
 export const getOtByEstadoAPI = async (isPendientes = true) => {
   const estados = isPendientes ? [0, 1, 2] : [3, 4, 5];
@@ -43,6 +43,9 @@ export const changeStateOrdenTrabajo = async (
 };
 
 export const postResultado = async (resultado: FormularioResultado) => {
-  const response = await api.post('/formulario_resultados', resultado);
-  console.log('respuesta de resultado', response);
+  const response = await api.post<FormularioResultado>(
+    '/formulario_resultados',
+    resultado,
+  );
+  return response;
 };

@@ -30,12 +30,12 @@ export const BasePage = ({ OrdenTrabajo, hasResultado }: Props) => {
 
   const navigator = useNavigation();
 
-  const finalizadoHandler = (firma, aclaracion) => {
+  const finalizadoHandler = (firma: string, aclaracion: string) => {
     hideDialog();
     setTextLoading('Enviando informacion...');
     setLoading(!loading);
 
-    changeStateFinalizado(OrdenTrabajo).then(resolved => {
+    changeStateFinalizado(OrdenTrabajo, firma, aclaracion).then(resolved => {
       setLoading(!loading);
       navigator.navigate('SuccessScreen', { success: resolved, isOt: true });
     });

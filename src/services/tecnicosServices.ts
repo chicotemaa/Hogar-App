@@ -115,7 +115,11 @@ export const changeStateNoMeRecibio = (ordenTrabajo: OrdenTrabajo) => {
   //TODO: tomar ubicacion donde marco que no me recibió
 };
 
-export const changeStateFinalizado = async (ordenTrabajo: OrdenTrabajo) => {
+export const changeStateFinalizado = async (
+  ordenTrabajo: OrdenTrabajo,
+  firma: string,
+  aclaracion: string,
+) => {
   if (await checkLocationPermission()) {
     const position = await getCurrentPosition({
       enableHighAccuracy: true,
@@ -127,7 +131,7 @@ export const changeStateFinalizado = async (ordenTrabajo: OrdenTrabajo) => {
     const diffMinutes = getDiffMinutes(horaInicio);
     const resultados = await getStorageResultados(ordenTrabajo.id);
 
-    await postResultado({
+    const resultadoResponse = await postResultado({
       resultados,
       ordenTrabajo: `/api/orden_trabajos/${ordenTrabajo.id}`,
       latitud: '1',
@@ -135,12 +139,15 @@ export const changeStateFinalizado = async (ordenTrabajo: OrdenTrabajo) => {
       minutosTrabajado: diffMinutes,
       minutosReales: diffMinutes,
     });
-
     const data = {
       estado: 4,
       latitudCierre: latitude.toString(),
       longitudCierre: longitude.toString(),
       horaFin: getISODate(),
+      imageName: 'string',
+      imageSize: 4411,
+      responsableFirma: aclaracion,
+      formularioResultado: resultadoResponse.data.id,
     };
 
     //crear formulario resultado con los minutos trabajados
