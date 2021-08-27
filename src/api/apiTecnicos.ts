@@ -1,5 +1,5 @@
 import { api } from './api';
-import { FormularioResultado, OrdenTrabajo } from './types';
+import { FormularioResultado, OrdenTrabajo, FormularioResultadoExpress } from './types';
 
 export const getOtByEstadoAPI = async (isPendientes = true) => {
   const estados = isPendientes ? [0, 1, 2] : [3, 4, 5];
@@ -34,7 +34,11 @@ export const getOtById = async (id: number) => {
 };
 
 export const getFormulariosExpressList = async () => {
-  return await api.get('/formularios/by/express');
+  return await api.get<FormularioResultadoExpress>('/formularios/by/express');
+};
+
+export const sendFormularioExpressResultado = async data => {
+  return await api.post('/formulario_resultado_expresses', data);
 };
 
 export const changeStateOrdenTrabajo = async (

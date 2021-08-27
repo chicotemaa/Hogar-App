@@ -9,17 +9,21 @@ import { FormProvider } from '~/context/fomulario/FormularioContext';
 import { Button, Dialog, Portal } from 'react-native-paper';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { useNavigation } from '@react-navigation/native';
-import { changeStateFinalizado } from '~/services/tecnicosServices';
+import {
+  changeStateFinalizado,
+  convertb64ToFile,
+} from '~/services/tecnicosServices';
 import { Platform } from 'react-native';
 import { ModalCierre } from './Componentes/ModalCierre';
 import { useOrdenesTrabajoInfo } from '~/api/hooks';
 
 interface Props {
-  OrdenTrabajo: OrdenTrabajo;
-  hasResultado: boolean;
+  ordenTrabajo?: OrdenTrabajo;
+  hasResultado?: boolean;
+  formularioExpress?: Formulario;
 }
 
-export const BasePage = ({ OrdenTrabajo, hasResultado }: Props) => {
+export const BasePage = ({ ordenTrabajo, formularioExpress }: Props) => {
   const [formulario, setFormulario] = useState<Formulario>();
   const [loading, setLoading] = useState(true);
   //Para firma
@@ -58,11 +62,16 @@ export const BasePage = ({ OrdenTrabajo, hasResultado }: Props) => {
   };
 
   useEffect(() => {
-    getFormularioAPI(OrdenTrabajo.formulario.id).then(response => {
-      setFormulario(response);
+    if (ordenTrabajo) {
+      getFormularioAPI(ordenTrabajo.formulario.id).then(response => {
+        setFormulario(response);
+        setLoading(false);
+      });
+    } else {
+      setFormulario(formularioExpress);
       setLoading(false);
-    });
-  }, [OrdenTrabajo.formulario.id]);
+    }
+  }, []);
 
   return (
     <>
@@ -76,7 +85,7 @@ export const BasePage = ({ OrdenTrabajo, hasResultado }: Props) => {
         </View>
       ) : (
         <View style={styles.page}>
-          <Encabezado OrdenTrabajo={OrdenTrabajo} />
+          {ordenTrabajo && <Encabezado OrdenTrabajo={ordenTrabajo} />}
           <View style={{ flex: 1 }}>
             <Portal>
               <ModalCierre
@@ -87,7 +96,11 @@ export const BasePage = ({ OrdenTrabajo, hasResultado }: Props) => {
             </Portal>
             <FormState>
               {formulario ? (
-                <BodyOT formulario={formulario} otID={OrdenTrabajo.id} />
+                formulario.express ? (
+                  <BodyOT formulario={formulario} otID={0} />
+                ) : (
+                  <BodyOT formulario={formulario} otID={ordenTrabajo.id} />
+                )
               ) : null}
             </FormState>
           </View>

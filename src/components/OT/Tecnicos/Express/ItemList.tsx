@@ -1,21 +1,32 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
-import { windowHeight } from '~/dimensions';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { windowHeight, windowWidth } from '~/dimensions';
 import { Formulario } from '~/api/types';
 import { Button } from 'react-native-paper';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
+import { RootStackParams } from '~/navigator/StackNavigator';
+import { postResultadoExpress } from '~/services/tecnicosServices';
 
 interface Props {
   formulario: Formulario;
 }
 
 export const ItemList = ({ formulario }: Props) => {
+  const stackNavigator = useNavigation<NavigationProp<RootStackParams>>();
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{formulario.titulo}</Text>
       <View style={styles.divisor} />
-      <Button style={styles.button} onPress={() => {}}>
-        Realizar
-      </Button>
+      <TouchableOpacity
+        onPress={() => {
+          stackNavigator.navigate('OTScreen', {
+            formularioExpress: formulario,
+          });
+        }}
+        style={styles.button}>
+        <Text style={styles.textButton}>Realizar</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -50,5 +61,17 @@ const styles = StyleSheet.create({
   },
   button: {
     alignSelf: 'flex-end',
+    borderRadius: 8,
+    width: 0.35 * windowWidth,
+    backgroundColor: '#345191',
+    elevation:10,
+    paddingVertical: 9,
+    marginTop: 10,
+  },
+  textButton: {
+    color: 'white',
+    fontSize: 20,
+    fontWeight: 'normal',
+    alignSelf: 'center',
   },
 });

@@ -3,6 +3,7 @@ import {
   getOtByEstadoAPI,
   getOtById,
   getFormulariosExpressList,
+  sendFormularioExpressResultado,
 } from '../api/apiTecnicos';
 import Geolocation from 'react-native-geolocation-service';
 import { Platform } from 'react-native';
@@ -15,6 +16,8 @@ import { getSucursalCliente } from '../api/apiClientes';
 import { OrdenTrabajo, MediaObject, Formulario } from '../api/types';
 import { getStorageResultados } from '~/storage';
 import { postResultado } from '~/api/apiTecnicos';
+import { AxiosResponse } from 'axios';
+import { api } from '~/api/api';
 
 // 'Pendiente': 0
 // 'Estoy en camino': 1
@@ -37,6 +40,14 @@ const getCurrentPosition = (
   });
 };
 
+export const convertb64ToFile = (b64string: string) => {
+  console.log(b64string);
+
+  const imgDatab64 = b64string.replace('data:image/png;base64,', '');
+  const binary = new Blob([imgDatab64], { type: 'image/png' });
+  console.log(binary);
+};
+
 export const getSucursalStreet = async (sucursalId: string) => {
   const sucursal = await getSucursalCliente(sucursalId);
   return sucursal.direccion;
@@ -46,6 +57,21 @@ export const getExpressList = async (): Promise<Formulario[]> => {
   const response = await getFormulariosExpressList();
   return response.data['hydra:member'];
 };
+
+export const postResultadoExpress = async () => {
+  const formulario = {
+    resultados: [],
+    latitud: '1',
+    longitud: '1',
+    compraMateriales: true,
+    minutosTrabajado: 0,
+    formulario: '/api/formularios/' + 98,
+  };
+
+  const response = await sendFormularioExpressResultado(formulario);
+  console.log(response);
+};
+
 export const getOrdenesTrabajoInfo = async (
   isPendientes?: boolean,
 ): Promise<OrdenTrabajo[]> => {
@@ -138,14 +164,15 @@ export const changeStateFinalizado = async (
     const diffMinutes = getDiffMinutes(horaInicio);
     const resultados = await getStorageResultados(ordenTrabajo.id);
 
-    const resultadoResponse = await postResultado({
-      resultados,
-      ordenTrabajo: `/api/orden_trabajos/${ordenTrabajo.id}`,
-      latitud: '1',
-      longitud: '1',
-      minutosTrabajado: diffMinutes,
-      minutosReales: diffMinutes,
-    });
+    // const resultadoResponse = await postResultado({
+    //   resultados,
+    //   ordenTrabajo: `/api/orden_trabajos/${ordenTrabajo.id}`,
+    //   latitud: '1',
+    //   longitud: '1',
+    //   minutosTrabajado: diffMinutes,
+    //   minutosReales: diffMinutes,
+    // });
+    // console.log(resultadoResponse);
     const data = {
       estado: 4,
       latitudCierre: String(latitude),
@@ -154,7 +181,7 @@ export const changeStateFinalizado = async (
       imageName: 'string',
       imageSize: 4411,
       responsableFirma: aclaracion,
-      formularioResultado: resultadoResponse.data.id,
+      // formularioResultado: resultadoResponse.data.id,
     };
 
     //crear formulario resultado con los minutos trabajados

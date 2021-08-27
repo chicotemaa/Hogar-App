@@ -12,11 +12,16 @@ export const OTScreen = ({ route }: Props) => {
   const formularioExpress: Formulario | undefined =
     route.params?.formularioExpress;
 
+  console.log(route.params);
+
   return (
     <>
       <Header pageName="Orden de Trabajo" roleUser={'tecnico'} />
       <View style={[{ flex: 1, paddingHorizontal: 0 }]}>
-        <BasePage ordenTrabajo={OT} formularioExpress={formularioExpress} />
+        {OT && <BasePage ordenTrabajo={OT} />}
+        {formularioExpress && (
+          <BasePage formularioExpress={formularioExpress} />
+        )}
       </View>
     </>
   );
