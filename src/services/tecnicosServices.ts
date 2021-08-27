@@ -1,5 +1,7 @@
+/* eslint-disable no-shadow */
 import {
   changeStateOrdenTrabajo as changeStateOTAPI,
+  getFormularioResultadoById,
   getOtByEstadoAPI,
   getOtById,
 } from '../api/apiTecnicos';
@@ -190,4 +192,14 @@ const getDiffMinutes = (startTime: string) => {
   const diffMins = currentTime.getTime() - start.getTime();
 
   return Math.floor(diffMins / 60000);
+};
+
+export const FormularioRealizado = async (OT: number) => {
+  const OrdenTrabajo: OrdenTrabajo = await getOtById(OT);
+
+  const TipoFormulario = OrdenTrabajo.formulario;
+  const FormularioResultado = await getFormularioResultadoById(
+    OrdenTrabajo.formularioResultado,
+  );
+  return TipoFormulario;
 };

@@ -9,9 +9,9 @@ import { Header } from '~/components/Header';
 import { Solicitudes } from '~/api/types';
 
 interface Props
-  extends StackScreenProps<RootStackParams, 'DetalleSolicitudScreen'> {}
+  extends StackScreenProps<RootStackParams, 'DetalleSolicitudScreen'> { }
 
-export const DetallesSolicitudScreen = ({ navigation, route }: Props) => {
+export const DetallesSolicitudScreen = ({ route }: Props) => {
   const infoSolicitud: Solicitudes = {
     consulta: '',
     createdAt: '',
@@ -23,7 +23,7 @@ export const DetallesSolicitudScreen = ({ navigation, route }: Props) => {
   };
 
   const [solicitud, setSolicitud] = useState(infoSolicitud);
-  console.log(route)
+  console.log(route);
   const id = route.params.codigo;
   const estados = ['Pendiente', 'Generada OT', 'Derivada'];
 
@@ -64,7 +64,8 @@ export const DetallesSolicitudScreen = ({ navigation, route }: Props) => {
             SucursalDeCliente={solicitud.SucursalDeCliente}
             pisoSector={solicitud.pisoSector}
             estado={solicitud.estado}
-            imagen={solicitud.imagen} />
+            imagen={solicitud.imagen}
+          />
         </View>
       </View>
     </View>

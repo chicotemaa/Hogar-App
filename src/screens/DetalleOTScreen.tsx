@@ -1,32 +1,30 @@
-import React, { useState } from 'react';
-import { FlexStyle, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { OrdenTrabajo } from '~/api/types';
 import { Header } from '~/components/Header';
 import { Estado } from '~/components/OT/Detalle/Estado';
 import { Formulario } from '~/components/OT/Detalle/Formulario';
-import { getOtById } from '../api/apiTecnicos';
 import { StackScreenProps } from '@react-navigation/stack';
-import { StackNavigator } from '../navigator/StackNavigator';
+import React from 'react';
+import { FormularioRealizado } from '~/services/tecnicosServices';
 
-interface Props extends StackScreenProps<any, any> {}
+interface Props extends StackScreenProps<any, any> { }
 
+export const DetalleOTScreen = ({ route }: Props) => {
+  const OT: OrdenTrabajo = route.params.OTR;
+  FormularioRealizado(OT.id).then(formularioR => {
+    console.log(formularioR);
+  });
 
-export const DetalleOTScreen = ({ navigation, route }: Props) => {
-  
-  const OT: OrdenTrabajo = route.params.OT;
-
-  //const [orden, setOrden] = useState(ordenTrabajo);
-  
   return (
     <>
       <Header pageName="Informe de Trabajo" />
-      <View style={{ flex: 10, backgroundColor: '#FFFFFF' }}>
+      <View style={styles.Header}>
         <ScrollView>
           <Text style={styles.tituloText}>Información General</Text>
 
           <Text style={styles.subtitulo}>Cliente</Text>
           <Text style={styles.contenido}>{OT.cliente.razonSocial}</Text>
-          <Text style={[styles.contenido, { fontWeight: 'bold' }]}>
+          <Text style={{ ...styles.contenido, fontWeight: 'bold' }}>
             Direccion
           </Text>
           <Text style={styles.contenido}>{OT.direccionSucursalCliente}</Text>
@@ -44,6 +42,7 @@ export const DetalleOTScreen = ({ navigation, route }: Props) => {
 };
 
 const styles = StyleSheet.create({
+  Header: { flex: 10, backgroundColor: '#FFFFFF' },
   tituloText: {
     fontSize: 23,
     fontWeight: 'bold',

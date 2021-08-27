@@ -17,7 +17,7 @@ import logo from '~/assets/images/util/logo.png';
 import { StyleSheet } from 'react-native';
 import { Button } from '~/components/Button';
 
-interface Props extends DrawerScreenProps<any, any> {}
+interface Props extends DrawerScreenProps<any, any> { }
 
 export const HomeScreen = ({ navigation }: Props) => {
   useEffect(() => {
@@ -55,7 +55,7 @@ const Header = ({ navigation }) => {
           paddingBottom: 20,
         }}
         imageStyle={{ opacity: 0.3 }}
-        resizeMode="repeat"
+        resizeMode="cover"
         source={fondo}>
         <View
           style={{
@@ -119,7 +119,7 @@ const Clientes = () => {
   return (
     <View style={{ flex: 1 }}>
       <Title text="Clientes" />
-      <View style={{ padding: 10 }}>
+      <View style={{ alignItems: 'center' }}>
         <View style={{ flex: 1, flexDirection: 'row' }}>
           <Image style={styles.logoCliente} source={santander} />
           <Image style={styles.logoCliente} source={apex} />
@@ -154,9 +154,9 @@ const ContactoSection = () => {
           Oficina Principal
         </Text>
         <Text style={styles.contactoText}>RN 16, Km 17.5 3500</Text>
-        <Text style={styles.contactoText}>Resistencia Chaco Argentina.</Text>
-        <Text style={styles.contactoText}>info@hogarmantenimiento.com</Text>
+        <Text style={styles.contactoText}>Resistencia Chaco Argentina</Text>
         <Text style={styles.contactoText}>Teléfono: +54 9 362 519 5548</Text>
+        <Text style={styles.contactoText}>info@hogarmantenimiento.com</Text>
       </View>
     </View>
   );
@@ -187,5 +187,6 @@ const styles = StyleSheet.create({
     fontSize: 0.025 * windowHeight,
     paddingVertical: 10,
     fontWeight: '200',
+    textAlign: 'center',
   },
 });

@@ -12,7 +12,7 @@ interface Props {
 
 export const Foto = ({ propiedadItem }: Props) => {
   const { getResultado, setResultado } = useContext(ModuloContext);
-  
+
   const imagePath = getResultado(propiedadItem.id)?.imageName;
 
   const handlePress = async () => {
