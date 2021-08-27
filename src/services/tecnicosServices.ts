@@ -12,7 +12,7 @@ import {
   request,
 } from 'react-native-permissions';
 import { getSucursalCliente } from '../api/apiClientes';
-import { OrdenTrabajo, MediaObject } from '../api/types';
+import { OrdenTrabajo, MediaObject, Formulario } from '../api/types';
 import { getStorageResultados } from '~/storage';
 import { postResultado } from '~/api/apiTecnicos';
 
@@ -42,7 +42,7 @@ export const getSucursalStreet = async (sucursalId: string) => {
   return sucursal.direccion;
 };
 
-export const getExpressList = async () => {
+export const getExpressList = async (): Promise<Formulario[]> => {
   const response = await getFormulariosExpressList();
   return response.data['hydra:member'];
 };
