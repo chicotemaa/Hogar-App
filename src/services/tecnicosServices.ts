@@ -46,16 +46,7 @@ export const getExpressList = async (): Promise<Formulario[]> => {
   const response = await getFormulariosExpressList();
   return response.data['hydra:member'];
 };
-
-export const otRealizadasList = () => {
-  return getOrdenesTrabajoInfo(false);
-};
-
-export const otPendientesList = () => {
-  return getOrdenesTrabajoInfo(true);
-};
-
-const getOrdenesTrabajoInfo = async (
+export const getOrdenesTrabajoInfo = async (
   isPendientes?: boolean,
 ): Promise<OrdenTrabajo[]> => {
   const ordenesTrabajo: OrdenTrabajo[] = await getOtByEstadoAPI(isPendientes);

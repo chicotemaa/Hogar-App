@@ -12,6 +12,7 @@ import { useNavigation } from '@react-navigation/native';
 import { changeStateFinalizado } from '~/services/tecnicosServices';
 import { Platform } from 'react-native';
 import { ModalCierre } from './Componentes/ModalCierre';
+import { useOrdenesTrabajoInfo } from '~/api/hooks';
 
 interface Props {
   OrdenTrabajo: OrdenTrabajo;
@@ -27,18 +28,23 @@ export const BasePage = ({ OrdenTrabajo, hasResultado }: Props) => {
   const hideDialog = () => setVisible(false);
   //Para loading
   const [textLoading, setTextLoading] = useState('Cargando formulario...');
+  const { refetch } = useOrdenesTrabajoInfo();
 
   const navigator = useNavigation();
 
-  const finalizadoHandler = (firma: string, aclaracion: string) => {
+  const finalizadoHandler = async (firma: string, aclaracion: string) => {
     hideDialog();
     setTextLoading('Enviando informacion...');
     setLoading(!loading);
 
-    changeStateFinalizado(OrdenTrabajo, firma, aclaracion).then(resolved => {
-      setLoading(!loading);
-      navigator.navigate('SuccessScreen', { success: resolved, isOt: true });
-    });
+    const resolved = await changeStateFinalizado(
+      OrdenTrabajo,
+      firma,
+      aclaracion,
+    );
+    setLoading(!loading);
+    refetch();
+    navigator.navigate('SuccessScreen', { success: resolved, isOt: true });
   };
 
   const postergarHandler = () => {
