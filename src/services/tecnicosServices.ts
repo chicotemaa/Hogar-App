@@ -41,27 +41,20 @@ export const getSucursalStreet = async (sucursalId: string) => {
   return sucursal.direccion;
 };
 
-export const getOrdenesTrabajoInfo = async (): Promise<OrdenTrabajo[]> => {
-  const ordenesTrabajo: OrdenTrabajo[] = await getOtByEstadoAPI();
+export const otRealizadasList = () => {
+  return getOrdenesTrabajoInfo(false);
+};
+
+export const otPendientesList = () => {
+  return getOrdenesTrabajoInfo(true);
+};
+
+const getOrdenesTrabajoInfo = async (
+  isPendientes?: boolean,
+): Promise<OrdenTrabajo[]> => {
+  const ordenesTrabajo: OrdenTrabajo[] = await getOtByEstadoAPI(isPendientes);
   return await Promise.all(
     ordenesTrabajo.map(async (ordenTrabajo: OrdenTrabajo) => {
-      return {
-        ...ordenTrabajo,
-        direccionSucursalCliente: await getSucursalStreet(
-          ordenTrabajo.SucursalDeCliente,
-        ),
-      };
-    }),
-  );
-};
-export const getOrdenesTrabajoRealizadasInfo = async (): Promise<
-  OrdenTrabajo[]
-> => {
-  const ordenesTrabajoRealizadas: OrdenTrabajo[] = await getOtByEstadoAPI(
-    false,
-  );
-  return await Promise.all(
-    ordenesTrabajoRealizadas.map(async (ordenTrabajo: OrdenTrabajo) => {
       return {
         ...ordenTrabajo,
         direccionSucursalCliente: await getSucursalStreet(

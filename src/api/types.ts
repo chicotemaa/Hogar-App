@@ -31,6 +31,7 @@ export interface Facility {
 }
 
 export interface Formulario {
+  id: number;
   '@id': string;
   readonly titulo?: string;
   readonly descripcion?: string;

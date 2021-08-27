@@ -3,18 +3,24 @@ import React from 'react';
 import { ScrollView, View, RefreshControl, Text } from 'react-native';
 import { useQuery } from 'react-query';
 import { OrdenTrabajo } from '~/api/types';
-import { getOrdenesTrabajoInfo } from '~/services/tecnicosServices';
+import {
+  otPendientesList,
+  otRealizadasList,
+} from '~/services/tecnicosServices';
 import { ItemOT } from '~/components/ItemOT';
 import { TransitionView } from '~/components/TransitionView';
 import { otStyle } from '~/theme/appTheme';
 
-export const TecnicosOTList = () => {
+export const TecnicosOTList = ({
+  isPendientes,
+}: {
+  isPendientes?: boolean;
+}) => {
   const { data, error, isFetching, refetch } = useQuery(
-    'OTList',
-    getOrdenesTrabajoInfo,
+    isPendientes ? 'OTList' : 'OTListRealizadas',
+    isPendientes ? otPendientesList : otRealizadasList,
   );
   const stackNavigator = useNavigation();
-
   return (
     <View style={{ flex: 1 }}>
       <ScrollView
