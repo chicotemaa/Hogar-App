@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, StyleSheetProperties } from 'react-native';
 import { Text, View } from 'react-native';
 import { windowWidth } from '~/dimensions';
 import { PropiedadItem } from '~/api/types';
@@ -35,13 +35,19 @@ function isRenderedField({
     return false;
   }
 
-  const parentValue = getResultado(parentItem.id)?.valor;
+  const parentValue = getResultado(parentItem.id)?.valor[0];
 
-  return propiedadItem.opcionDepende.id === parentValue;
+  if (parentValue) {
+    return String(propiedadItem.opcionDepende.id) === parentValue;
+  }
+  return false;
 }
 
 export const BaseCampo = ({ propiedadItem, parentItem }: Props) => {
   const { getResultado } = useContext(ModuloContext);
+  let styleChildren: StyleSheetProperties = parentItem
+    ? styles.childContainer
+    : undefined;
 
   if (!isRenderedField({ propiedadItem, getResultado, parentItem })) {
     return null;
@@ -50,7 +56,7 @@ export const BaseCampo = ({ propiedadItem, parentItem }: Props) => {
   return (
     <>
       <View>
-        <View style={styles.containerItem}>
+        <View style={[styles.containerItem, styleChildren]}>
           <View
             style={{ borderBottomWidth: 1, padding: 1, borderColor: 'grey' }}>
             <Text style={styles.titleItem}>{propiedadItem.item.titulo}</Text>
@@ -80,7 +86,7 @@ const styles = StyleSheet.create({
     marginVertical: 4,
     borderLeftWidth: 3,
     borderLeftColor: '#F76656',
-    backgroundColor: 'white',
+    backgroundColor: '#F0F0F0',
     paddingHorizontal: 5,
     paddingBottom: 10,
     paddingTop: 8,
@@ -94,6 +100,10 @@ const styles = StyleSheet.create({
     paddingLeft: 0.03 * windowWidth,
     elevation: 4,
     borderRadius: 3,
+  },
+  childContainer: {
+    marginHorizontal: 10,
+    borderLeftColor: '#3DF56B',
   },
   titleItem: {
     fontSize: 0.05 * windowWidth,

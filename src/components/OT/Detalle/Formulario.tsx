@@ -1,13 +1,12 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { Firma } from './Firma';
 import { Modulo } from './Modulo';
-import { OrdenTrabajo } from '../../../services/interfaces';
 
-export const Formulario = ({OrdenTrabajo}:any) => {
-  const OT = OrdenTrabajo;console.log(OT)
+export const Formulario = ({ OrdenTrabajo }: any) => {
+  const OT = OrdenTrabajo;
   return (
-    <View style={{ paddingHorizontal: 20 }}>
+    <View style={styles.TituloFormulario}>
       <TituloFormulario OrdenTrabajo={OT} />
       <Modulo />
       <Firma />
@@ -15,16 +14,18 @@ export const Formulario = ({OrdenTrabajo}:any) => {
   );
 };
 
-const TituloFormulario = ({OrdenTrabajo}:any) => {
+const TituloFormulario = ({ OrdenTrabajo }: any) => {
   const OT = OrdenTrabajo;
   return (
-    <View style={{ marginVertical: 25,  }}>
-      <Text style={{ fontSize: 20, fontWeight: 'bold' }}>
-        Formulario : {OT.nombre}
-      </Text>
-      <Text style={{ fontSize: 16, fontWeight: 'bold' }}>
-        Descripcion : {OT.descripcion}
-      </Text>
+    <View style={styles.viewTitulo}>
+      <Text style={styles.TextTitulo}>Formulario : {OT.titulo}</Text>
+      <Text style={styles.TextTitulo}>Descripcion : {OT.descripcion}</Text>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  TituloFormulario: { paddingHorizontal: 20 },
+  viewTitulo: { marginVertical: 25 },
+  TextTitulo: { fontSize: 20, fontWeight: 'bold' },
+});

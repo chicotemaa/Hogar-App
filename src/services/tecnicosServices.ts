@@ -1,5 +1,7 @@
+/* eslint-disable no-shadow */
 import {
   changeStateOrdenTrabajo as changeStateOTAPI,
+  getFormularioResultadoById,
   getOtByEstadoAPI,
   getOtById,
 } from '../api/apiTecnicos';
@@ -11,7 +13,7 @@ import {
   request,
 } from 'react-native-permissions';
 import { getSucursalCliente } from '../api/apiClientes';
-import { OrdenTrabajo } from '../api/types';
+import { OrdenTrabajo, MediaObject } from '../api/types';
 import { getStorageResultados } from '~/storage';
 import { postResultado } from '~/api/apiTecnicos';
 
@@ -41,27 +43,20 @@ export const getSucursalStreet = async (sucursalId: string) => {
   return sucursal.direccion;
 };
 
-export const getOrdenesTrabajoInfo = async (): Promise<OrdenTrabajo[]> => {
-  const ordenesTrabajo: OrdenTrabajo[] = await getOtByEstadoAPI();
+export const otRealizadasList = () => {
+  return getOrdenesTrabajoInfo(false);
+};
+
+export const otPendientesList = () => {
+  return getOrdenesTrabajoInfo(true);
+};
+
+const getOrdenesTrabajoInfo = async (
+  isPendientes?: boolean,
+): Promise<OrdenTrabajo[]> => {
+  const ordenesTrabajo: OrdenTrabajo[] = await getOtByEstadoAPI(isPendientes);
   return await Promise.all(
     ordenesTrabajo.map(async (ordenTrabajo: OrdenTrabajo) => {
-      return {
-        ...ordenTrabajo,
-        direccionSucursalCliente: await getSucursalStreet(
-          ordenTrabajo.SucursalDeCliente,
-        ),
-      };
-    }),
-  );
-};
-export const getOrdenesTrabajoRealizadasInfo = async (): Promise<
-  OrdenTrabajo[]
-> => {
-  const ordenesTrabajoRealizadas: OrdenTrabajo[] = await getOtByEstadoAPI(
-    false,
-  );
-  return await Promise.all(
-    ordenesTrabajoRealizadas.map(async (ordenTrabajo: OrdenTrabajo) => {
       return {
         ...ordenTrabajo,
         direccionSucursalCliente: await getSucursalStreet(
@@ -110,12 +105,33 @@ export const changeStateMeRecibio = async (ordenTrabajo: OrdenTrabajo) => {
   }
 };
 
-export const changeStateNoMeRecibio = (ordenTrabajo: OrdenTrabajo) => {
-  changeStateOTAPI(ordenTrabajo, { estado: 3 });
+export const changeStateNoMeRecibio = async (ordenTrabajo: OrdenTrabajo) => {
+  if (await checkLocationPermission()) {
+    const position = await getCurrentPosition({
+      enableHighAccuracy: true,
+      timeout: 14000,
+      maximumAge: 100,
+    });
+    const {
+      coords: { latitude, longitude },
+    } = position;
+    const data = {
+      estado: 3,
+      latitud: String(latitude),
+      longitud: String(longitude),
+      horaFin: getISODate(),
+    };
+
+    changeStateOTAPI(ordenTrabajo, data);
+  }
   //TODO: tomar ubicacion donde marco que no me recibió
 };
 
-export const changeStateFinalizado = async (ordenTrabajo: OrdenTrabajo) => {
+export const changeStateFinalizado = async (
+  ordenTrabajo: OrdenTrabajo,
+  firma: string,
+  aclaracion: string,
+) => {
   if (await checkLocationPermission()) {
     const position = await getCurrentPosition({
       enableHighAccuracy: true,
@@ -127,7 +143,7 @@ export const changeStateFinalizado = async (ordenTrabajo: OrdenTrabajo) => {
     const diffMinutes = getDiffMinutes(horaInicio);
     const resultados = await getStorageResultados(ordenTrabajo.id);
 
-    await postResultado({
+    const resultadoResponse = await postResultado({
       resultados,
       ordenTrabajo: `/api/orden_trabajos/${ordenTrabajo.id}`,
       latitud: '1',
@@ -135,12 +151,15 @@ export const changeStateFinalizado = async (ordenTrabajo: OrdenTrabajo) => {
       minutosTrabajado: diffMinutes,
       minutosReales: diffMinutes,
     });
-
     const data = {
       estado: 4,
-      latitudCierre: latitude.toString(),
-      longitudCierre: longitude.toString(),
+      latitudCierre: String(latitude),
+      longitudCierre: String(longitude),
       horaFin: getISODate(),
+      imageName: 'string',
+      imageSize: 4411,
+      responsableFirma: aclaracion,
+      formularioResultado: resultadoResponse.data.id,
     };
 
     //crear formulario resultado con los minutos trabajados
@@ -173,4 +192,14 @@ const getDiffMinutes = (startTime: string) => {
   const diffMins = currentTime.getTime() - start.getTime();
 
   return Math.floor(diffMins / 60000);
+};
+
+export const FormularioRealizado = async (OT: number) => {
+  const OrdenTrabajo: OrdenTrabajo = await getOtById(OT);
+
+  const TipoFormulario = OrdenTrabajo.formulario;
+  const FormularioResultado = await getFormularioResultadoById(
+    OrdenTrabajo.formularioResultado,
+  );
+  return TipoFormulario;
 };

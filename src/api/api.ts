@@ -1,7 +1,6 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import ReactNativeBlobUtil from 'react-native-blob-util';
-import { ImagePickerResponse } from 'react-native-image-picker';
+import { MediaObject } from './types';
 global.Buffer = global.Buffer || require('buffer').Buffer;
 const clientId = '1_4ta05vfoy58ggoggwo08kck000kocckwgcckk8wgkck440cgcw';
 const clientSecret = '176y7wqisfvkcwk8oswowksks0cocsoc00ko4k4oosc0ocwck4';
@@ -32,6 +31,7 @@ const createApi = (config: AxiosRequestConfig) => {
 export const baseApi = createApi({ baseURL: baseUrl });
 
 export const api = createApi({ baseURL: `${baseUrl}/api` });
+export const base = createApi({ baseURL: `${baseUrl}` });
 
 export const apiFetch: typeof fetch = async (input, init) => {
   const token = await getAccessToken();
@@ -93,27 +93,29 @@ export const getImage = async (imagen: string | null) => {
   };
 };
 
-export const uploadImage = async fileBlob => {
+export const uploadImage = async ({
+  uri,
+  type,
+  fileName,
+}: {
+  uri: string;
+  type: string;
+  fileName: string;
+}) => {
+  const fileToUpload = {
+    uri: uri,
+    type: type,
+    name: fileName,
+  };
   const form = new FormData();
+  form.append('file', fileToUpload);
 
-  const fileToSend = {
-    ...fileBlob._data,
-    lastModified:  Date.now(),
-    lastModifiedDate: Date.now(),
-  };
+  const response = await api.post<MediaObject>('/media_objects', form);
+  return response;
+};
 
-  form.append('file', fileToSend);
-
-  const config = {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-  };
-
-  console.log(form);
-
-  const response = await api.post('/media_objects', form, config);
-  console.log(response);
+export const getImageUrl = (imagePath: string) => {
+  return `${baseUrl}/uploads/imagenes/resultado/${imagePath}`;
 };
 
 export const getServicioAPI = async (id: string) => {
