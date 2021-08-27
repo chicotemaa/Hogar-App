@@ -12,7 +12,7 @@ interface Props {
 
 export const Foto = ({ propiedadItem }: Props) => {
   const { getResultado, setResultado } = useContext(ModuloContext);
-  
+
   const imagePath = getResultado(propiedadItem.id)?.imageName;
 
   const handlePress = async () => {
@@ -66,6 +66,7 @@ const styles = StyleSheet.create({
   },
   fotoTomada: {
     flex: 1,
+    borderWidth: 1,
     height: 150,
   },
   boton: {
