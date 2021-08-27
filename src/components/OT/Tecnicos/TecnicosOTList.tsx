@@ -3,23 +3,17 @@ import React from 'react';
 import { ScrollView, View, RefreshControl, Text } from 'react-native';
 import { useQuery } from 'react-query';
 import { OrdenTrabajo } from '~/api/types';
-import {
-  otPendientesList,
-  otRealizadasList,
-} from '~/services/tecnicosServices';
 import { ItemOT } from '~/components/ItemOT';
 import { TransitionView } from '~/components/TransitionView';
 import { otStyle } from '~/theme/appTheme';
+import { useOrdenesTrabajoInfo } from '~/api/hooks';
 
 export const TecnicosOTList = ({
   isPendientes,
 }: {
   isPendientes?: boolean;
 }) => {
-  const { data, error, isFetching, refetch } = useQuery(
-    isPendientes ? 'OTList' : 'OTListRealizadas',
-    isPendientes ? otPendientesList : otRealizadasList,
-  );
+  const { data, isFetching, refetch } = useOrdenesTrabajoInfo(isPendientes);
   const stackNavigator = useNavigation();
   return (
     <View style={{ flex: 1 }}>
@@ -85,7 +79,7 @@ const ErrorMessage = () => {
   return (
     <View>
       <Text style={otStyle.TextCargando}>
-        Error al obtener el listado de las ot { }
+        Error al obtener el listado de las ot {}
       </Text>
     </View>
   );
