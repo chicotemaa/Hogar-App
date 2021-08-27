@@ -66,6 +66,7 @@ const styles = StyleSheet.create({
   },
   fotoTomada: {
     flex: 1,
+    borderWidth: 1,
     height: 150,
   },
   boton: {
