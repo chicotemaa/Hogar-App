@@ -31,10 +31,11 @@ export interface Facility {
 }
 
 export interface Formulario {
-  '@id'?: string;
+  id: number;
+  '@id': string;
   readonly titulo?: string;
   readonly descripcion?: string;
-  readonly propiedadModulos?: any;
+  readonly propiedadModulos: Modulo[];
   readonly updatedAt?: Date;
   readonly version?: string;
   readonly express?: boolean;
@@ -109,9 +110,9 @@ export interface ItemOpcion {
 }
 
 export interface MediaObject {
-  '@id'?: string;
-  contentUrl?: string;
-  filePath?: string;
+  '@id': string;
+  contentUrl: string;
+  filePath: string;
 }
 
 export interface OrdenTrabajo {
@@ -130,7 +131,6 @@ export interface OrdenTrabajo {
   longitudCierre: string;
   formulario: Formulario;
   formularioResultado?: FormularioResultado;
-
   estados?: any;
   estadosGestion?: any;
   servicio?: string;

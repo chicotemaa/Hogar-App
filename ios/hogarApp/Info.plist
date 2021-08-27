@@ -45,11 +45,11 @@
 		</dict>
 	</dict>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-  		<string>Ubicacion necesaria para control de tareas</string>
-  	<key>NSLocationAlwaysUsageDescription</key>
-  		<string>Ubicacion necesaria para control de tareas</string>
+	<string>Ubicacion necesaria para control de tareas</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Ubicacion necesaria para control de tareas</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-  		<string>Ubicacion necesaria para control de tareas</string>
+	<string>Ubicacion necesaria para control de tareas</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>

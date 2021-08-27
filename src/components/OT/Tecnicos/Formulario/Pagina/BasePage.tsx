@@ -11,6 +11,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import { useNavigation } from '@react-navigation/native';
 import { changeStateFinalizado } from '~/services/tecnicosServices';
 import { Platform } from 'react-native';
+import { ModalCierre } from './Componentes/ModalCierre';
 
 interface Props {
   OrdenTrabajo: OrdenTrabajo;
@@ -24,13 +25,18 @@ export const BasePage = ({ OrdenTrabajo, hasResultado }: Props) => {
   const [visible, setVisible] = useState(false);
   const showDialog = () => setVisible(true);
   const hideDialog = () => setVisible(false);
+  //Para loading
+  const [textLoading, setTextLoading] = useState('Cargando formulario...');
 
   const navigator = useNavigation();
 
-  const finalizadoHandler = () => {
+  const finalizadoHandler = (firma: string, aclaracion: string) => {
     hideDialog();
+    setTextLoading('Enviando informacion...');
+    setLoading(!loading);
 
-    changeStateFinalizado(OrdenTrabajo).then(resolved => {
+    changeStateFinalizado(OrdenTrabajo, firma, aclaracion).then(resolved => {
+      setLoading(!loading);
       navigator.navigate('SuccessScreen', { success: resolved, isOt: true });
     });
   };
@@ -58,7 +64,7 @@ export const BasePage = ({ OrdenTrabajo, hasResultado }: Props) => {
         <View>
           <Spinner
             visible={loading}
-            textContent={'Cargando formulario...'}
+            textContent={textLoading}
             textStyle={{ color: '#FFF' }}
           />
         </View>
@@ -67,19 +73,15 @@ export const BasePage = ({ OrdenTrabajo, hasResultado }: Props) => {
           <Encabezado OrdenTrabajo={OrdenTrabajo} />
           <View style={{ flex: 1 }}>
             <Portal>
-              <Dialog visible={visible} onDismiss={hideDialog}>
-                <Dialog.Title>Alert</Dialog.Title>
-                <Dialog.Content>
-                  <Text>Firma</Text>
-                </Dialog.Content>
-                <Dialog.Actions>
-                  <Button onPress={finalizadoHandler}>Done</Button>
-                </Dialog.Actions>
-              </Dialog>
+              <ModalCierre
+                finalizadoHandler={finalizadoHandler}
+                visible={visible}
+                hideDialog={hideDialog}
+              />
             </Portal>
             <FormState>
               {formulario ? (
-                <BodyOT Formulario={formulario} otID={OrdenTrabajo.id} />
+                <BodyOT formulario={formulario} otID={OrdenTrabajo.id} />
               ) : null}
             </FormState>
           </View>

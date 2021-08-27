@@ -21,7 +21,13 @@ export const Texto = ({ propiedadItem }: Props) => {
   return (
     <View>
       <TextInput
-        style={{ backgroundColor: '#FFFFFF', padding: 10 }}
+        style={{
+          borderWidth: 2,
+          borderColor: 'lightgray',
+          borderRadius: 5,
+          padding: 10,
+          marginRight: 15,
+        }}
         onChangeText={handleValueChange}
         placeholder=""
         value={value[0]}

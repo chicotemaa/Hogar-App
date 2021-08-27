@@ -1,29 +1,29 @@
-import { launchCamera, ImagePickerResponse } from 'react-native-image-picker';
+import { Asset, CameraOptions } from 'react-native-image-picker';
 import { uploadImage } from '~/api/api';
-const b64toBlob = require('b64-to-blob');
 
-import { PermissionsAndroid } from 'react-native';
-import ReactNativeBlobUtil from 'react-native-blob-util';
+import { launchCamera as nativeLaunchCamera } from 'react-native-image-picker';
 
-export const tookPicture = () => {
-  console.log('sacar foto');
-  launchCamera(
-    {
-      includeBase64: true,
-      mediaType: 'photo',
-      saveToPhotos: true,
-      quality: 0.5,
-    },
-    (resp: ImagePickerResponse) => {
-      console.log(resp);
-    },
-  );
-};
-
-export function convertFile(file: ImagePickerResponse) {
-  const b64Data = file.assets[0].base64;
-  //console.log('blob generated', binaryData);
-  const contentType = 'image/png';
-  uploadImage(b64toBlob(b64Data, contentType));
+export async function uploadPhoto(asset: Asset) {
+  const fileData = await uploadImage({
+    uri: asset.uri!,
+    type: asset.type!,
+    fileName: asset.fileName!,
+  });
   //Upload image
+  return fileData;
+}
+
+export function launchCamera(options: CameraOptions): Promise<Asset[] | null> {
+  return new Promise((resolve, reject) => {
+    nativeLaunchCamera(options, resp => {
+      if (resp.errorCode) {
+        const error = new Error(resp.errorMessage);
+        reject(error);
+      } else if (resp.didCancel) {
+        resolve(null);
+      } else {
+        resolve(resp.assets);
+      }
+    });
+  });
 }
