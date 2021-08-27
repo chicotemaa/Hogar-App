@@ -73,7 +73,7 @@ export const postResultadoExpress = async () => {
 };
 
 export const getOrdenesTrabajoInfo = async (
-  isPendientes?: boolean,
+  isPendientes: boolean,
 ): Promise<OrdenTrabajo[]> => {
   const ordenesTrabajo: OrdenTrabajo[] = await getOtByEstadoAPI(isPendientes);
   return await Promise.all(

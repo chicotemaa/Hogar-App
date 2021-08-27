@@ -32,8 +32,8 @@ export const BasePage = ({ ordenTrabajo, formularioExpress }: Props) => {
   const hideDialog = () => setVisible(false);
   //Para loading
   const [textLoading, setTextLoading] = useState('Cargando formulario...');
-  const { refetch } = useOrdenesTrabajoInfo();
-
+  const { refetch: refetchPendientes } = useOrdenesTrabajoInfo(true);
+  const { refetch: refetchRealizadas } = useOrdenesTrabajoInfo(false);
   const navigator = useNavigation();
 
   const finalizadoHandler = async (firma: string, aclaracion: string) => {
@@ -41,14 +41,20 @@ export const BasePage = ({ ordenTrabajo, formularioExpress }: Props) => {
     setTextLoading('Enviando informacion...');
     setLoading(!loading);
 
-    const resolved = await changeStateFinalizado(
-      OrdenTrabajo,
-      firma,
-      aclaracion,
-    );
-    setLoading(!loading);
-    refetch();
-    navigator.navigate('SuccessScreen', { success: resolved, isOt: true });
+    try {
+      const resolved = await changeStateFinalizado(
+        ordenTrabajo,
+        firma,
+        aclaracion,
+      );
+
+      setLoading(!loading);
+      refetchPendientes();
+      refetchRealizadas();
+      navigator.navigate('SuccessScreen', { success: resolved, isOt: true });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const postergarHandler = () => {

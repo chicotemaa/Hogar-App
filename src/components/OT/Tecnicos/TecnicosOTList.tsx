@@ -9,14 +9,14 @@ import { otStyle } from '~/theme/appTheme';
 import { useOrdenesTrabajoInfo } from '~/api/hooks';
 
 export const TecnicosOTList = ({
-  isPendientes,
+  isPendientes = false,
 }: {
-  isPendientes?: boolean;
+  isPendientes: boolean;
 }) => {
   const { data, isFetching, refetch } = useOrdenesTrabajoInfo(isPendientes);
   const stackNavigator = useNavigation();
   useEffect(() => {
-    console.log('render otra vez ');
+    console.log('render otra vez ', isPendientes);
   }, []);
 
   return (
