@@ -13,7 +13,7 @@ import {
   request,
 } from 'react-native-permissions';
 import { getSucursalCliente } from '../api/apiClientes';
-import { OrdenTrabajo, MediaObject } from '../api/types';
+import { OrdenTrabajo } from '../api/types';
 import { getStorageResultados } from '~/storage';
 import { postResultado } from '~/api/apiTecnicos';
 
@@ -201,5 +201,5 @@ export const FormularioRealizado = async (OT: number) => {
   const FormularioResultado = await getFormularioResultadoById(
     OrdenTrabajo.formularioResultado,
   );
-  return TipoFormulario;
+  return { ...TipoFormulario, FormularioResultado };
 };

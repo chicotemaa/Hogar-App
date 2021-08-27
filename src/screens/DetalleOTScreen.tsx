@@ -11,9 +11,6 @@ interface Props extends StackScreenProps<any, any> { }
 
 export const DetalleOTScreen = ({ route }: Props) => {
   const OT: OrdenTrabajo = route.params.OT;
-  FormularioRealizado(OT.id).then(formularioR => {
-    console.log(formularioR);
-  });
 
   return (
     <>
@@ -34,7 +31,7 @@ export const DetalleOTScreen = ({ route }: Props) => {
           </View>
 
           <Text style={styles.tituloText}>Descripción de trabajo</Text>
-          <Formulario OrdenTrabajo={OT.formulario} />
+          <Formulario ID={OT.id} />
         </ScrollView>
       </View>
     </>
