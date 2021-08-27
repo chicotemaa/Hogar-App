@@ -65,7 +65,7 @@ const ListItem = ({ OT, stackNavigator }) => {
             //TODO: controlar ubicacion
             stackNavigator.navigate('OTScreen', { OT });
           } else if ((estado = 'detalleOTRealizada')) {
-            stackNavigator.navigate('DetalleOTScreen');
+            stackNavigator.navigate('DetalleOTScreen', { OT });
           }
         }}
       />

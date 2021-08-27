@@ -10,7 +10,7 @@ import { FormularioRealizado } from '~/services/tecnicosServices';
 interface Props extends StackScreenProps<any, any> { }
 
 export const DetalleOTScreen = ({ route }: Props) => {
-  const OT: OrdenTrabajo = route.params.OTR;
+  const OT: OrdenTrabajo = route.params.OT;
   FormularioRealizado(OT.id).then(formularioR => {
     console.log(formularioR);
   });

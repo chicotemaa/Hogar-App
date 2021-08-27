@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { TecnicosOTList } from '../OT/Tecnicos/TecnicosOTList';
-import { TecnicosOTListRealizadas } from '../OT/Tecnicos/TecnicosOTListRealizadas';
 import { ExpressList } from '../OT/Tecnicos/ExpressList';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
