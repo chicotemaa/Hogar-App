@@ -30,7 +30,9 @@ export const TecnicosOTList = ({
         {data && !isFetching ? (
           data.length > 0 ? (
             data.map((OT: OrdenTrabajo) => {
-              return <ListItem OT={OT} stackNavigator={stackNavigator} />;
+              return (
+                <ListItem key={OT.id} OT={OT} stackNavigator={stackNavigator} />
+              );
             })
           ) : (
             <EmptyList />
