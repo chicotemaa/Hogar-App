@@ -2,6 +2,7 @@ import {
   changeStateOrdenTrabajo as changeStateOTAPI,
   getOtByEstadoAPI,
   getOtById,
+  getFormulariosExpressList,
 } from '../api/apiTecnicos';
 import Geolocation from 'react-native-geolocation-service';
 import { Platform } from 'react-native';
@@ -39,6 +40,11 @@ const getCurrentPosition = (
 export const getSucursalStreet = async (sucursalId: string) => {
   const sucursal = await getSucursalCliente(sucursalId);
   return sucursal.direccion;
+};
+
+export const getExpressList = async () => {
+  const response = await getFormulariosExpressList();
+  return response.data['hydra:member'];
 };
 
 export const otRealizadasList = () => {

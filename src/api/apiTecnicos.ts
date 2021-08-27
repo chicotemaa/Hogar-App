@@ -33,6 +33,10 @@ export const getOtById = async (id: number) => {
     });
 };
 
+export const getFormulariosExpressList = async () => {
+  return await api.get('/formularios/by/express');
+};
+
 export const changeStateOrdenTrabajo = async (
   ordenTrabajo: OrdenTrabajo,
   data: any,
