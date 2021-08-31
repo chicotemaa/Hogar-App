@@ -56,10 +56,10 @@ export const sendFormularioExpressResultado = async data => {
 
 export const modifyFormularioExpressResultado = async data => {
   return await api.put<FormularioResultadoExpress>(
-    '/formulario_resultado_expresses',
+    `/formulario_resultado_expresses/${data.id}`,
     data,
   );
-}
+};
 
 export const changeStateOrdenTrabajo = async (
   ordenTrabajo: OrdenTrabajo,
