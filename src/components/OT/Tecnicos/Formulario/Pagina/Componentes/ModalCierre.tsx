@@ -28,7 +28,6 @@ export const ModalCierre = ({
 
   const pressFinalizar = () => {
     if (validate(firma, aclaracion)) {
-      console.log('valid');      
       finalizadoHandler(firma, aclaracion);
     } else {
       console.log('is not valid');

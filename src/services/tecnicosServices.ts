@@ -4,6 +4,8 @@ import {
   getFormularioResultadoById,
   getOtByEstadoAPI,
   getOtById,
+  getFormulariosExpressList,
+  sendFormularioExpressResultado,
 } from '../api/apiTecnicos';
 import Geolocation from 'react-native-geolocation-service';
 import { Platform } from 'react-native';
@@ -13,9 +15,12 @@ import {
   request,
 } from 'react-native-permissions';
 import { getSucursalCliente } from '../api/apiClientes';
-import { OrdenTrabajo, MediaObject } from '../api/types';
+import { OrdenTrabajo, MediaObject, Formulario } from '../api/types';
 import { getStorageResultados } from '~/storage';
 import { postResultado } from '~/api/apiTecnicos';
+import { AxiosResponse } from 'axios';
+import { api, uploadImage } from '~/api/api';
+import * as FileSystem from 'react-native-fs';
 
 // 'Pendiente': 0
 // 'Estoy en camino': 1
@@ -38,13 +43,42 @@ const getCurrentPosition = (
   });
 };
 
+export const convertb64ToFile = (b64string: string) => {
+  console.log(b64string);
+
+  const imgDatab64 = b64string.replace('data:image/png;base64,', '');
+  const binary = new Blob([imgDatab64], { type: 'image/png' });
+  console.log(binary);
+};
+
 export const getSucursalStreet = async (sucursalId: string) => {
   const sucursal = await getSucursalCliente(sucursalId);
   return sucursal.direccion;
 };
 
+
+export const getExpressList = async (): Promise<Formulario[]> => {
+  const response = await getFormulariosExpressList();
+  return response.data['hydra:member'];
+};
+
+export const postResultadoExpress = async () => {
+  const formulario = {
+    resultados: [],
+    latitud: '1',
+    longitud: '1',
+    compraMateriales: true,
+    minutosTrabajado: 0,
+    formulario: '/api/formularios/' + 98,
+  };
+
+  const response = await sendFormularioExpressResultado(formulario);
+  console.log(response);
+};
+
 export const getOrdenesTrabajoInfo = async (
-  isPendientes?: boolean,
+  isPendientes: boolean,
+
 ): Promise<OrdenTrabajo[]> => {
   const ordenesTrabajo: OrdenTrabajo[] = await getOtByEstadoAPI(isPendientes);
   return await Promise.all(
@@ -135,23 +169,27 @@ export const changeStateFinalizado = async (
     const diffMinutes = getDiffMinutes(horaInicio);
     const resultados = await getStorageResultados(ordenTrabajo.id);
 
-    const resultadoResponse = await postResultado({
-      resultados,
-      ordenTrabajo: `/api/orden_trabajos/${ordenTrabajo.id}`,
-      latitud: '1',
-      longitud: '1',
-      minutosTrabajado: diffMinutes,
-      minutosReales: diffMinutes,
-    });
+    // const resultadoResponse = await postResultado({
+    //   resultados,
+    //   ordenTrabajo: `/api/orden_trabajos/${ordenTrabajo.id}`,
+    //   latitud: '1',
+    //   longitud: '1',
+    //   minutosTrabajado: diffMinutes,
+    //   minutosReales: diffMinutes,
+    // });
+    // console.log(resultadoResponse);
+    await saveSignFile(firma);
+    const signName = await uploadSign();
+
     const data = {
       estado: 4,
       latitudCierre: String(latitude),
       longitudCierre: String(longitude),
       horaFin: getISODate(),
-      imageName: 'string',
+      imageName: signName,
       imageSize: 4411,
       responsableFirma: aclaracion,
-      formularioResultado: resultadoResponse.data.id,
+      // formularioResultado: resultadoResponse.data.id,
     };
 
     //crear formulario resultado con los minutos trabajados
@@ -186,6 +224,26 @@ const getDiffMinutes = (startTime: string) => {
   return Math.floor(diffMins / 60000);
 };
 
+const saveSignFile = async (b64String: string) => {
+  const path = FileSystem.CachesDirectoryPath + '/sign.png';
+  FileSystem.writeFile(
+    path,
+    b64String.replace('data:image/png;base64,', ''),
+    'base64',
+  ).catch(console.error);
+};
+
+const uploadSign = async () => {
+  const arrayOfFiles = await FileSystem.readDir(FileSystem.CachesDirectoryPath);
+  const signFile = arrayOfFiles.find(element => element.name === 'sign.png');
+  const currentDate = Date.now().toString();
+  const singUploaded = await uploadImage({
+    uri: 'file:///' + signFile.path!,
+    type: 'image/png',
+    fileName: `firma-${currentDate}.png`,
+  });
+  return singUploaded.data.filePath;
+
 export const FormularioRealizado = async (OT: number) => {
   const OrdenTrabajo: OrdenTrabajo = await getOtById(OT);
 
@@ -194,4 +252,5 @@ export const FormularioRealizado = async (OT: number) => {
     OrdenTrabajo.formularioResultado,
   );
   return TipoFormulario;
+
 };

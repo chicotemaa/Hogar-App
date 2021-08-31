@@ -102,6 +102,7 @@ export const uploadImage = async ({
   type: string;
   fileName: string;
 }) => {
+  console.log('uri', uri);
   const fileToUpload = {
     uri: uri,
     type: type,
@@ -146,6 +147,8 @@ export const getAllServiciosAPI = async () => {
 };
 
 export const getFormularioAPI = async (id: number): Promise<Formulario> => {
+
   const response = await api.get<Formulario>(`/formularios/${id}`);
+
   return response.data;
 };

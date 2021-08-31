@@ -1,7 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ScrollView, View, RefreshControl, Text } from 'react-native';
-import { useQuery } from 'react-query';
 import { OrdenTrabajo } from '~/api/types';
 import { ItemOT } from '~/components/ItemOT';
 import { TransitionView } from '~/components/TransitionView';
@@ -9,12 +8,13 @@ import { otStyle } from '~/theme/appTheme';
 import { useOrdenesTrabajoInfo } from '~/api/hooks';
 
 export const TecnicosOTList = ({
-  isPendientes,
+  isPendientes = false,
 }: {
-  isPendientes?: boolean;
+  isPendientes: boolean;
 }) => {
   const { data, isFetching, refetch } = useOrdenesTrabajoInfo(isPendientes);
   const stackNavigator = useNavigation();
+
   return (
     <View style={{ flex: 1 }}>
       <ScrollView
@@ -24,7 +24,9 @@ export const TecnicosOTList = ({
         {data && !isFetching ? (
           data.length > 0 ? (
             data.map((OT: OrdenTrabajo) => {
-              return <ListItem OT={OT} stackNavigator={stackNavigator} />;
+              return (
+                <ListItem key={OT.id} OT={OT} stackNavigator={stackNavigator} />
+              );
             })
           ) : (
             <EmptyList />
