@@ -48,8 +48,18 @@ export const getFormulariosExpressList = async () => {
 };
 
 export const sendFormularioExpressResultado = async data => {
-  return await api.post('/formulario_resultado_expresses', data);
+  return await api.post<FormularioResultadoExpress>(
+    '/formulario_resultado_expresses',
+    data,
+  );
 };
+
+export const modifyFormularioExpressResultado = async data => {
+  return await api.put<FormularioResultadoExpress>(
+    '/formulario_resultado_expresses',
+    data,
+  );
+}
 
 export const changeStateOrdenTrabajo = async (
   ordenTrabajo: OrdenTrabajo,

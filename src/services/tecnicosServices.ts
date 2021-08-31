@@ -15,7 +15,12 @@ import {
   request,
 } from 'react-native-permissions';
 import { getSucursalCliente } from '../api/apiClientes';
-import { OrdenTrabajo, MediaObject, Formulario } from '../api/types';
+import {
+  OrdenTrabajo,
+  MediaObject,
+  Formulario,
+  FormularioResultadoExpress,
+} from '../api/types';
 import { getStorageResultados } from '~/storage';
 import { postResultado } from '~/api/apiTecnicos';
 import { AxiosResponse } from 'axios';
@@ -61,18 +66,66 @@ export const getExpressList = async (): Promise<Formulario[]> => {
   return response.data['hydra:member'];
 };
 
-export const postResultadoExpress = async () => {
-  const formulario = {
+export const postResultadoExpress = async ({
+  formulario,
+  isCompra,
+  idFormCompra,
+}: {
+  formulario?: FormularioResultadoExpress;
+  isCompra?: boolean;
+  idFormCompra?: string;
+}) => {
+  let formularioToSend: FormularioResultadoExpress = {
     resultados: [],
     latitud: '1',
     longitud: '1',
-    compraMateriales: true,
+    estado: 2,
+    horaInicio: getISODate(),
+    fecha: getISODate(),
     minutosTrabajado: 0,
-    formulario: '/api/formularios/' + 98,
   };
 
-  const response = await sendFormularioExpressResultado(formulario);
-  console.log(response);
+  if (isCompra) {
+    formularioToSend = {
+      ...formularioToSend,
+      formulario: idFormCompra,
+      compraMateriales: true,
+    };
+  } else {
+    formularioToSend = {
+      ...formularioToSend,
+      formulario: formulario['@id'],
+    };
+  }
+
+  return await sendFormularioExpressResultado(formularioToSend);
+};
+
+export const putResultadoExpress = async (ordenTrabajo, firma, aclaracion) => {
+  if (await checkLocationPermission()) {
+    const position = await getCurrentPosition({
+      enableHighAccuracy: true,
+      timeout: 14000,
+      maximumAge: 100,
+    });
+    const { latitude, longitude } = position.coords;
+    const { horaInicio } = await getOtById(ordenTrabajo.id);
+    const diffMinutes = getDiffMinutes(horaInicio);
+    const resultados = await getStorageResultados(ordenTrabajo.id);
+
+    await saveSignFile(firma);
+    const signName = await uploadSign();
+
+    const expressResultado = {
+      ...ordenTrabajo,
+      responsableFirma: aclaracion,
+      imageName: signName,
+      imageSize: 4411,
+      resultados: resultados,
+    };
+    console.log('from put', ordenTrabajo);
+    return true;
+  }
 };
 
 export const getOrdenesTrabajoInfo = async (
@@ -167,7 +220,7 @@ export const changeStateFinalizado = async (
     const diffMinutes = getDiffMinutes(horaInicio);
     const resultados = await getStorageResultados(ordenTrabajo.id);
 
-    const resultadoResponse = await postResultado({
+    await postResultado({
       resultados,
       ordenTrabajo: `/api/orden_trabajos/${ordenTrabajo.id}`,
       latitud: '1',
@@ -186,10 +239,7 @@ export const changeStateFinalizado = async (
       imageName: signName,
       imageSize: 4411,
       responsableFirma: aclaracion,
-      // formularioResultado: resultadoResponse.data.id,
     };
-
-    //crear formulario resultado con los minutos trabajados
     changeStateOTAPI(ordenTrabajo, data);
 
     return true;
