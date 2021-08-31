@@ -17,12 +17,10 @@ export const ExpressList = () => {
         {data &&
           data.map(formularioExpress => {
             return (
-              <>
-                <ItemList
-                  key={formularioExpress.id}
-                  formulario={formularioExpress}
-                />
-              </>
+              <ItemList
+                key={formularioExpress.id}
+                formulario={formularioExpress}
+              />
             );
           })}
       </ScrollView>
@@ -45,4 +43,3 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
 });
-
