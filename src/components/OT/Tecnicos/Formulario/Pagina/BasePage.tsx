@@ -5,7 +5,6 @@ import { Encabezado } from './Componentes/Encabezado';
 import { BodyOT } from './Componentes/BodyOT';
 import { Formulario, OrdenTrabajo } from '~/api/types';
 import { getFormularioAPI } from '~/api/api';
-import { FormProvider } from '~/context/fomulario/FormularioContext';
 import { Button, Dialog, Portal } from 'react-native-paper';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { useNavigation } from '@react-navigation/native';
@@ -13,6 +12,7 @@ import { changeStateFinalizado } from '~/services/tecnicosServices';
 import { Platform } from 'react-native';
 import { ModalCierre } from './Componentes/ModalCierre';
 import { useOrdenesTrabajoInfo } from '~/api/hooks';
+import { FormProvider } from '~/context/formulario/FormularioContext';
 
 interface Props {
   OrdenTrabajo: OrdenTrabajo;
@@ -85,11 +85,11 @@ export const BasePage = ({ OrdenTrabajo, hasResultado }: Props) => {
                 hideDialog={hideDialog}
               />
             </Portal>
-            <FormState>
-              {formulario ? (
+            {formulario ? (
+              <FormProvider otID={OrdenTrabajo.id} formulario={formulario}>
                 <BodyOT formulario={formulario} otID={OrdenTrabajo.id} />
-              ) : null}
-            </FormState>
+              </FormProvider>
+            ) : null}
           </View>
           <View style={styles.footer}>
             <Button
@@ -135,7 +135,3 @@ const styles = StyleSheet.create({
     marginBottom: Platform.OS === 'android' ? 20 : 0,
   },
 });
-
-const FormState = ({ children }: any) => {
-  return <FormProvider>{children}</FormProvider>;
-};

@@ -1,12 +1,12 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import { windowHeight } from '~/dimensions';
-import { PaginaModulo } from '~/api/types';
+import { PropiedadModulo } from '~/api/types';
 import { Modulo as ModulosItem } from './Modulo';
 import { ModuloProvider } from '~/context/modulo/ModuloContext';
 
 interface Props {
-  modulos: PaginaModulo[];
+  modulos: PropiedadModulo[];
 }
 
 export const Pagina = ({ modulos }: Props) => {
