@@ -1,5 +1,7 @@
+/* eslint-disable no-shadow */
 import {
   changeStateOrdenTrabajo as changeStateOTAPI,
+  getFormularioResultadoById,
   getOtByEstadoAPI,
   getOtById,
   getFormulariosExpressList,
@@ -54,6 +56,7 @@ export const getSucursalStreet = async (sucursalId: string) => {
   return sucursal.direccion;
 };
 
+
 export const getExpressList = async (): Promise<Formulario[]> => {
   const response = await getFormulariosExpressList();
   return response.data['hydra:member'];
@@ -75,6 +78,7 @@ export const postResultadoExpress = async () => {
 
 export const getOrdenesTrabajoInfo = async (
   isPendientes: boolean,
+
 ): Promise<OrdenTrabajo[]> => {
   const ordenesTrabajo: OrdenTrabajo[] = await getOtByEstadoAPI(isPendientes);
   return await Promise.all(
@@ -239,4 +243,14 @@ const uploadSign = async () => {
     fileName: `firma-${currentDate}.png`,
   });
   return singUploaded.data.filePath;
+
+export const FormularioRealizado = async (OT: number) => {
+  const OrdenTrabajo: OrdenTrabajo = await getOtById(OT);
+
+  const TipoFormulario = OrdenTrabajo.formulario;
+  const FormularioResultado = await getFormularioResultadoById(
+    OrdenTrabajo.formularioResultado,
+  );
+  return TipoFormulario;
+
 };

@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { View, StyleSheet } from 'react-native';
 import { getExpressList } from '~/services/tecnicosServices';
 import { useQuery } from 'react-query';
@@ -44,3 +45,4 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
 });
+

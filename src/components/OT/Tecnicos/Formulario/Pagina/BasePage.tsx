@@ -5,7 +5,6 @@ import { Encabezado } from './Componentes/Encabezado';
 import { BodyOT } from './Componentes/BodyOT';
 import { Formulario, OrdenTrabajo } from '~/api/types';
 import { getFormularioAPI } from '~/api/api';
-import { FormProvider } from '~/context/fomulario/FormularioContext';
 import { Button, Dialog, Portal } from 'react-native-paper';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { useNavigation } from '@react-navigation/native';
@@ -16,6 +15,9 @@ import {
 import { Platform } from 'react-native';
 import { ModalCierre } from './Componentes/ModalCierre';
 import { useOrdenesTrabajoInfo } from '~/api/hooks';
+
+import { FormProvider } from '~/context/formulario/FormularioContext';
+
 
 interface Props {
   ordenTrabajo?: OrdenTrabajo;
@@ -32,8 +34,10 @@ export const BasePage = ({ ordenTrabajo, formularioExpress }: Props) => {
   const hideDialog = () => setVisible(false);
   //Para loading
   const [textLoading, setTextLoading] = useState('Cargando formulario...');
+
   const { refetch: refetchPendientes } = useOrdenesTrabajoInfo(true);
   const { refetch: refetchRealizadas } = useOrdenesTrabajoInfo(false);
+
   const navigator = useNavigation();
 
   const finalizadoHandler = async (firma: string, aclaracion: string) => {
@@ -41,20 +45,17 @@ export const BasePage = ({ ordenTrabajo, formularioExpress }: Props) => {
     setTextLoading('Enviando informacion...');
     setLoading(!loading);
 
-    try {
-      const resolved = await changeStateFinalizado(
-        ordenTrabajo,
-        firma,
-        aclaracion,
-      );
 
-      setLoading(!loading);
-      refetchPendientes();
-      refetchRealizadas();
-      navigator.navigate('SuccessScreen', { success: resolved, isOt: true });
-    } catch (error) {
-      console.log(error);
-    }
+    const resolved = await changeStateFinalizado(
+      OrdenTrabajo,
+      firma,
+      aclaracion,
+    );
+    setLoading(!loading);
+    refetchPendientes();
+    refetchRealizadas();
+    navigator.navigate('SuccessScreen', { success: resolved, isOt: true });
+
   };
 
   const postergarHandler = () => {
@@ -100,15 +101,13 @@ export const BasePage = ({ ordenTrabajo, formularioExpress }: Props) => {
                 hideDialog={hideDialog}
               />
             </Portal>
-            <FormState>
-              {formulario ? (
-                formulario.express ? (
-                  <BodyOT formulario={formulario} otID={0} />
-                ) : (
-                  <BodyOT formulario={formulario} otID={ordenTrabajo.id} />
-                )
-              ) : null}
-            </FormState>
+
+            {formulario ? (
+              <FormProvider otID={OrdenTrabajo.id} formulario={formulario}>
+                <BodyOT formulario={formulario} otID={OrdenTrabajo.id} />
+              </FormProvider>
+            ) : null}
+
           </View>
           <View style={styles.footer}>
             <Button
@@ -154,7 +153,3 @@ const styles = StyleSheet.create({
     marginBottom: Platform.OS === 'android' ? 20 : 0,
   },
 });
-
-const FormState = ({ children }: any) => {
-  return <FormProvider>{children}</FormProvider>;
-};

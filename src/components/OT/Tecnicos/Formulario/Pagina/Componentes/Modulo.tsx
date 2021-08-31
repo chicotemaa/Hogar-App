@@ -3,10 +3,10 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { windowHeight, windowWidth } from '~/dimensions';
 import { BaseCampo } from '../../Campos/BaseCampo';
-import { PaginaModulo } from '~/api/types';
+import { PropiedadModulo } from '~/api/types';
 
 interface Props {
-  modulo: PaginaModulo;
+  modulo: PropiedadModulo;
 }
 
 export const Modulo = ({ modulo }: Props) => {

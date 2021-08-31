@@ -42,7 +42,11 @@ export const TecnicosOTList = ({
 };
 
 const EmptyList = () => {
-  return <View style={{ flex: 1 }}>{<Text>No hay ot pendientes</Text>}</View>;
+  return (
+    <View style={{ flex: 1 }}>
+      {<Text style={otStyle.TextCargando}>No hay ot pendientes</Text>}
+    </View>
+  );
 };
 
 const ListItem = ({ OT, stackNavigator }) => {

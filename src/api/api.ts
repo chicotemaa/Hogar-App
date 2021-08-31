@@ -31,6 +31,7 @@ const createApi = (config: AxiosRequestConfig) => {
 export const baseApi = createApi({ baseURL: baseUrl });
 
 export const api = createApi({ baseURL: `${baseUrl}/api` });
+export const base = createApi({ baseURL: `${baseUrl}` });
 
 export const apiFetch: typeof fetch = async (input, init) => {
   const token = await getAccessToken();
@@ -146,6 +147,8 @@ export const getAllServiciosAPI = async () => {
 };
 
 export const getFormularioAPI = async (id: number): Promise<Formulario> => {
-  const response = await api.get(`/formularios/${id}`);
+
+  const response = await api.get<Formulario>(`/formularios/${id}`);
+
   return response.data;
 };

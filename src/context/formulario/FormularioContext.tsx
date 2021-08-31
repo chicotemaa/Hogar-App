@@ -6,7 +6,12 @@ import React, {
   useCallback,
   ReactNode,
 } from 'react';
-import { Resultado, PropiedadItem, Formulario } from '~/api/types';
+import {
+  Resultado,
+  PropiedadItem,
+  PropiedadModulo,
+  Formulario,
+} from '~/api/types';
 import { setStorageResultados, getStorageResultados } from '~/storage';
 
 export interface FormContext {
@@ -19,7 +24,27 @@ export interface FormContext {
     propiedadItem: PropiedadItem,
     resultado: Resultado,
   ) => void;
+  goToNextPage: () => void;
+  goToPreviousPage: () => void;
+  setCurrentPage: (page: number) => void;
   isValid: boolean;
+  currentPage: number;
+  moduloPages: PropiedadModulo[][];
+}
+
+function useModuloPages(formulario: Formulario): PropiedadModulo[][] {
+  const pages = new Map<number, PropiedadModulo[]>();
+  formulario.propiedadModulos.forEach(modulo => {
+    const modulos = pages.get(modulo.pagina) ?? [];
+    pages.set(modulo.pagina, [...modulos, modulo]);
+  });
+  const values = [...pages.entries()]
+    .sort((a, b) => a[0] - b[0])
+    .map(([, modulos]) => modulos);
+  values.forEach(modulo => {
+    modulo.sort((a, b) => a.orden - b.orden);
+  });
+  return values;
 }
 
 export const FormContext = createContext<FormContext>({} as any);
@@ -35,6 +60,9 @@ export const FormProvider = ({
   formulario: Formulario;
 }) => {
   const [resultados, setResultados] = useState<Resultado[]>();
+  const moduloPages = useModuloPages(formulario);
+  const [currentPage, setCurrentPage] = useState<number>(0);
+
   const getResultado = useCallback(
     (moduloId: number, propiedadItemId: number) => {
       return resultados?.find(
@@ -78,16 +106,44 @@ export const FormProvider = ({
   }, [otID]);
 
   const isValid = useMemo(() => {
-    // return formulario.propiedadModulos.every(modulo => {
-    //   return modulo.propiedadItems.every(item => {
-    //     return !item.requerido || getResultado(modulo.id, item.id)?.valor[0];
-    //   });
-    // });
+    return formulario.propiedadModulos.every(mod => {
+      return mod.modulo.propiedadItems.every(item => {
+        return (
+          !item.requerido || getResultado(mod.modulo.id, item.id)?.valor[0]
+        );
+      });
+    });
+  }, [formulario, getResultado]);
+
+  const goToNextPage = useCallback(() => {
+    setCurrentPage(v => v + 1);
+  }, []);
+
+  const goToPreviousPage = useCallback(() => {
+    setCurrentPage(v => v - 1);
   }, []);
 
   const value = useMemo(
-    () => ({ getResultado, setResultado, isValid }),
-    [getResultado, setResultado, isValid],
+    () => ({
+      getResultado,
+      setResultado,
+      goToNextPage,
+      goToPreviousPage,
+      setCurrentPage,
+      isValid,
+      currentPage,
+      moduloPages,
+    }),
+    [
+      getResultado,
+      setResultado,
+      goToNextPage,
+      goToPreviousPage,
+      setCurrentPage,
+      isValid,
+      currentPage,
+      moduloPages,
+    ],
   );
 
   return <FormContext.Provider value={value}>{children}</FormContext.Provider>;

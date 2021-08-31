@@ -13,7 +13,7 @@ export interface Cliente {
 export interface Equipo {
   codigo: string;
   descripcion: string;
-  propiedadModulos: any;
+  propiedadModulos: PropiedadModulo[];
   cliente: string;
   createdAt: Date;
   updatedAt: Date;
@@ -35,11 +35,21 @@ export interface Formulario {
   '@id': string;
   readonly titulo?: string;
   readonly descripcion?: string;
-  readonly propiedadModulos: Modulo[];
+  readonly propiedadModulos: PropiedadModulo[];
   readonly updatedAt?: Date;
   readonly version?: string;
   readonly express?: boolean;
   readonly compraMateriales?: boolean;
+}
+
+export interface PropiedadModulo {
+  id: string;
+  orden: number;
+  modulo: Modulo;
+  pagina: number;
+  isCollection: boolean;
+  paginaNombre: string;
+  equipo: Equipo | null;
 }
 
 export interface FormularioResultado {
@@ -74,16 +84,6 @@ export interface FormularioResultadoExpress {
   readonly numero?: number;
   readonly updatedAt?: Date;
   readonly indetificacion?: string;
-}
-
-export interface PaginaModulo {
-  equipo: Equipo;
-  id: number;
-  isCollection: boolean;
-  modulo: Modulo;
-  orden: number;
-  pagina: number;
-  paginaNombre: string;
 }
 
 export interface Modulo {
