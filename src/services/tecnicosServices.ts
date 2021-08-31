@@ -17,7 +17,8 @@ import { OrdenTrabajo, MediaObject, Formulario } from '../api/types';
 import { getStorageResultados } from '~/storage';
 import { postResultado } from '~/api/apiTecnicos';
 import { AxiosResponse } from 'axios';
-import { api } from '~/api/api';
+import { api, uploadImage } from '~/api/api';
+import * as FileSystem from 'react-native-fs';
 
 // 'Pendiente': 0
 // 'Estoy en camino': 1
@@ -173,12 +174,15 @@ export const changeStateFinalizado = async (
     //   minutosReales: diffMinutes,
     // });
     // console.log(resultadoResponse);
+    await saveSignFile(firma);
+    const signName = await uploadSign();
+
     const data = {
       estado: 4,
       latitudCierre: String(latitude),
       longitudCierre: String(longitude),
       horaFin: getISODate(),
-      imageName: 'string',
+      imageName: signName,
       imageSize: 4411,
       responsableFirma: aclaracion,
       // formularioResultado: resultadoResponse.data.id,
@@ -214,4 +218,25 @@ const getDiffMinutes = (startTime: string) => {
   const diffMins = currentTime.getTime() - start.getTime();
 
   return Math.floor(diffMins / 60000);
+};
+
+const saveSignFile = async (b64String: string) => {
+  const path = FileSystem.CachesDirectoryPath + '/sign.png';
+  FileSystem.writeFile(
+    path,
+    b64String.replace('data:image/png;base64,', ''),
+    'base64',
+  ).catch(console.error);
+};
+
+const uploadSign = async () => {
+  const arrayOfFiles = await FileSystem.readDir(FileSystem.CachesDirectoryPath);
+  const signFile = arrayOfFiles.find(element => element.name === 'sign.png');
+  const currentDate = Date.now().toString();
+  const singUploaded = await uploadImage({
+    uri: 'file:///' + signFile.path!,
+    type: 'image/png',
+    fileName: `firma-${currentDate}.png`,
+  });
+  return singUploaded.data.filePath;
 };

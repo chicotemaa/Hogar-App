@@ -1,7 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect } from 'react';
 import { ScrollView, View, RefreshControl, Text } from 'react-native';
-import { useQuery } from 'react-query';
 import { OrdenTrabajo } from '~/api/types';
 import { ItemOT } from '~/components/ItemOT';
 import { TransitionView } from '~/components/TransitionView';
@@ -15,9 +14,6 @@ export const TecnicosOTList = ({
 }) => {
   const { data, isFetching, refetch } = useOrdenesTrabajoInfo(isPendientes);
   const stackNavigator = useNavigation();
-  useEffect(() => {
-    console.log('render otra vez ', isPendientes);
-  }, []);
 
   return (
     <View style={{ flex: 1 }}>
