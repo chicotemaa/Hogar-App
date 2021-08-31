@@ -6,6 +6,7 @@ import {
   getOtById,
   getFormulariosExpressList,
   sendFormularioExpressResultado,
+  modifyFormularioExpressResultado,
 } from '../api/apiTecnicos';
 import Geolocation from 'react-native-geolocation-service';
 import { Platform } from 'react-native';
@@ -101,7 +102,11 @@ export const postResultadoExpress = async ({
   return await sendFormularioExpressResultado(formularioToSend);
 };
 
-export const putResultadoExpress = async (ordenTrabajo, firma, aclaracion) => {
+export const putResultadoExpress = async (
+  ordenTrabajo: OrdenTrabajo,
+  firma: string,
+  aclaracion: string,
+) => {
   if (await checkLocationPermission()) {
     const position = await getCurrentPosition({
       enableHighAccuracy: true,
@@ -109,23 +114,31 @@ export const putResultadoExpress = async (ordenTrabajo, firma, aclaracion) => {
       maximumAge: 100,
     });
     const { latitude, longitude } = position.coords;
-    const { horaInicio } = await getOtById(ordenTrabajo.id);
-    const diffMinutes = getDiffMinutes(horaInicio);
+    const diffMinutes = getDiffMinutes(ordenTrabajo.horaInicio);
     const resultados = await getStorageResultados(ordenTrabajo.id);
+
+    console.log('resultados', resultados);
 
     await saveSignFile(firma);
     const signName = await uploadSign();
 
     const expressResultado = {
       ...ordenTrabajo,
+      formulario: ordenTrabajo.formulario['@id'],
       responsableFirma: aclaracion,
       imageName: signName,
       imageSize: 4411,
-      resultados: resultados,
+      latitud: String(latitude),
+      longitud: String(longitude),
+      minutosTrabajado: diffMinutes,
+      horaFin: getISODate(),
+      resultados,
+      estado: 4,
     };
-    console.log('from put', ordenTrabajo);
+    modifyFormularioExpressResultado(expressResultado);
     return true;
   }
+  return false;
 };
 
 export const getOrdenesTrabajoInfo = async (

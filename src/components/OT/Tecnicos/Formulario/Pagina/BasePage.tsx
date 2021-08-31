@@ -8,7 +8,10 @@ import { getFormularioAPI } from '~/api/api';
 import { Button, Portal } from 'react-native-paper';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { useNavigation } from '@react-navigation/native';
-import { changeStateFinalizado } from '~/services/tecnicosServices';
+import {
+  changeStateFinalizado,
+  putResultadoExpress,
+} from '~/services/tecnicosServices';
 import { Platform } from 'react-native';
 import { ModalCierre } from './Componentes/ModalCierre';
 import { useOrdenesTrabajoInfo } from '~/api/hooks';
@@ -16,7 +19,7 @@ import { useOrdenesTrabajoInfo } from '~/api/hooks';
 import { FormProvider } from '~/context/formulario/FormularioContext';
 
 interface Props {
-  ordenTrabajo?: OrdenTrabajo;
+  ordenTrabajo: OrdenTrabajo;
   hasResultado?: boolean;
   formularioExpress?: Formulario;
 }
@@ -40,12 +43,15 @@ export const BasePage = ({ ordenTrabajo, formularioExpress }: Props) => {
     hideDialog();
     setTextLoading('Enviando informacion...');
     setLoading(!loading);
-
-    const resolved = await changeStateFinalizado(
-      ordenTrabajo,
-      firma,
-      aclaracion,
-    );
+    let resolved = false;
+    if (
+      ordenTrabajo?.formulario.compraMateriales ||
+      ordenTrabajo?.formulario.express
+    ) {
+      resolved = await putResultadoExpress(ordenTrabajo, firma, aclaracion);
+    } else {
+      resolved = await changeStateFinalizado(ordenTrabajo, firma, aclaracion);
+    }
     setLoading(!loading);
     refetchPendientes();
     refetchRealizadas();
@@ -63,13 +69,16 @@ export const BasePage = ({ ordenTrabajo, formularioExpress }: Props) => {
   };
 
   useEffect(() => {
-    if (ordenTrabajo) {
+    const isExpressOrCM =
+      ordenTrabajo?.formulario.express ||
+      ordenTrabajo?.formulario.compraMateriales;
+    if (!isExpressOrCM) {
       getFormularioAPI(ordenTrabajo.formulario.id).then(response => {
         setFormulario(response);
         setLoading(false);
       });
     } else {
-      setFormulario(formularioExpress);
+      setFormulario(ordenTrabajo.formulario);
       setLoading(false);
     }
   }, []);
@@ -98,7 +107,7 @@ export const BasePage = ({ ordenTrabajo, formularioExpress }: Props) => {
 
             {formulario ? (
               <FormProvider otID={ordenTrabajo.id} formulario={formulario}>
-                <BodyOT formulario={formulario} otID={ordenTrabajo.id} />
+                <BodyOT />
               </FormProvider>
             ) : null}
           </View>
