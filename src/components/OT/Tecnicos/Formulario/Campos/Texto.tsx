@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { TextInput, View } from 'react-native';
 import { ModuloContext } from '~/context/modulo/ModuloContext';
 import { PropiedadItem } from '~/api/types';
+import { windowHeight } from '~/dimensions';
 
 interface Props {
   propiedadItem: PropiedadItem;
@@ -27,6 +28,8 @@ export const Texto = ({ propiedadItem }: Props) => {
           borderRadius: 5,
           padding: 10,
           marginRight: 15,
+          color: 'black',
+          fontSize: windowHeight * 0.02,
         }}
         onChangeText={handleValueChange}
         placeholder=""
