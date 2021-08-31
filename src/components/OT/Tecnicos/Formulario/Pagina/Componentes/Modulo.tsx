@@ -29,7 +29,7 @@ export const Modulo = ({ modulo }: Props) => {
       </View>
       <View style={styles.container}>
         {modulo.modulo.propiedadItems.map(item => {
-          return <BaseCampo propiedadItem={item} />;
+          return <BaseCampo key={item.id} propiedadItem={item} />;
         })}
       </View>
     </View>
