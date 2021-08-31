@@ -2,29 +2,22 @@ import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { windowHeight, windowWidth } from '~/dimensions';
 import { Formulario } from '~/api/types';
-import { Button } from 'react-native-paper';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { RootStackParams } from '~/navigator/StackNavigator';
-import { postResultadoExpress } from '~/services/tecnicosServices';
 
 interface Props {
   formulario: Formulario;
+  expressHandler: () => void;
 }
 
-export const ItemList = ({ formulario }: Props) => {
+export const ItemList = ({ formulario, expressHandler }: Props) => {
   const stackNavigator = useNavigation<NavigationProp<RootStackParams>>();
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{formulario.titulo}</Text>
       <View style={styles.divisor} />
-      <TouchableOpacity
-        onPress={() => {
-          stackNavigator.navigate('OTScreen', {
-            formularioExpress: formulario,
-          });
-        }}
-        style={styles.button}>
+      <TouchableOpacity onPress={expressHandler} style={styles.button}>
         <Text style={styles.textButton}>Realizar</Text>
       </TouchableOpacity>
     </View>
@@ -64,7 +57,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     width: 0.35 * windowWidth,
     backgroundColor: '#345191',
-    elevation:10,
+    elevation: 10,
     paddingVertical: 9,
     marginTop: 10,
   },

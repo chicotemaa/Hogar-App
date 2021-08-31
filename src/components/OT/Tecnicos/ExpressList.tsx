@@ -1,16 +1,44 @@
 import React from 'react';
 
 import { View, StyleSheet } from 'react-native';
-import { getExpressList } from '~/services/tecnicosServices';
+import {
+  getExpressList,
+  postResultadoExpress,
+} from '~/services/tecnicosServices';
 import { useQuery } from 'react-query';
 import { ItemList } from './Express/ItemList';
 import { FAB } from 'react-native-paper';
 import { ScrollView } from 'react-native-gesture-handler';
+import { Formulario } from '~/api/types';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
+import { RootStackParams } from '~/navigator/StackNavigator';
 
 export const ExpressList = () => {
   const { data } = useQuery('ExpressList', getExpressList);
 
-  console.log('info query', data);
+  const stackNavigator = useNavigation<NavigationProp<RootStackParams>>();
+
+  const expressHandler = async (formularioExpress: Formulario) => {
+    const express = await postResultadoExpress({
+      formulario: formularioExpress,
+    });
+    realizarExpress(express.data);
+  };
+
+  const compraHandler = async () => {
+    const express = await postResultadoExpress({
+      idFormCompra: '/api/formularios/98',
+      isCompra: true,
+    });
+    realizarExpress(express.data);
+  };
+
+  const realizarExpress = formularioExpress => {
+    stackNavigator.navigate('OTScreen', {
+      OT: formularioExpress,
+    });
+  };
+
   return (
     <View style={{ flex: 1 }}>
       <ScrollView>
@@ -20,6 +48,7 @@ export const ExpressList = () => {
               <ItemList
                 key={formularioExpress.id}
                 formulario={formularioExpress}
+                expressHandler={() => expressHandler(formularioExpress)}
               />
             );
           })}
@@ -28,7 +57,7 @@ export const ExpressList = () => {
         style={styles.fab}
         icon="cart"
         label="Comprar Materiales"
-        onPress={() => console.log('Pressed')}
+        onPress={compraHandler}
       />
     </View>
   );
@@ -40,6 +69,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     margin: 16,
     right: 0,
-    bottom: 0,
+    bottom: 10,
   },
 });
