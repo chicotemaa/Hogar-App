@@ -102,7 +102,6 @@ export const uploadImage = async ({
   type: string;
   fileName: string;
 }) => {
-  console.log('uri', uri);
   const fileToUpload = {
     uri: uri,
     type: type,

@@ -20,7 +20,6 @@ export const SuccessScreen = ({ navigation, route }: Props) => {
     goToWelcomeScreen();
   }, []);
 
-  console.log('es ot ', isOt);
 
   const goToWelcomeScreen = () => {
     setTimeout(() => {

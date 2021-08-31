@@ -56,7 +56,6 @@ export const getSucursalStreet = async (sucursalId: string) => {
   return sucursal.direccion;
 };
 
-
 export const getExpressList = async (): Promise<Formulario[]> => {
   const response = await getFormulariosExpressList();
   return response.data['hydra:member'];
@@ -78,7 +77,6 @@ export const postResultadoExpress = async () => {
 
 export const getOrdenesTrabajoInfo = async (
   isPendientes: boolean,
-
 ): Promise<OrdenTrabajo[]> => {
   const ordenesTrabajo: OrdenTrabajo[] = await getOtByEstadoAPI(isPendientes);
   return await Promise.all(
@@ -169,15 +167,14 @@ export const changeStateFinalizado = async (
     const diffMinutes = getDiffMinutes(horaInicio);
     const resultados = await getStorageResultados(ordenTrabajo.id);
 
-    // const resultadoResponse = await postResultado({
-    //   resultados,
-    //   ordenTrabajo: `/api/orden_trabajos/${ordenTrabajo.id}`,
-    //   latitud: '1',
-    //   longitud: '1',
-    //   minutosTrabajado: diffMinutes,
-    //   minutosReales: diffMinutes,
-    // });
-    // console.log(resultadoResponse);
+    const resultadoResponse = await postResultado({
+      resultados,
+      ordenTrabajo: `/api/orden_trabajos/${ordenTrabajo.id}`,
+      latitud: '1',
+      longitud: '1',
+      minutosTrabajado: diffMinutes,
+      minutosReales: diffMinutes,
+    });
     await saveSignFile(firma);
     const signName = await uploadSign();
 
@@ -243,6 +240,7 @@ const uploadSign = async () => {
     fileName: `firma-${currentDate}.png`,
   });
   return singUploaded.data.filePath;
+};
 
 export const FormularioRealizado = async (OT: number) => {
   const OrdenTrabajo: OrdenTrabajo = await getOtById(OT);
@@ -252,5 +250,4 @@ export const FormularioRealizado = async (OT: number) => {
     OrdenTrabajo.formularioResultado,
   );
   return TipoFormulario;
-
 };

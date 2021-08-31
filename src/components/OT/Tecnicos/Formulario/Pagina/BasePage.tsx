@@ -1,23 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { windowHeight, windowWidth } from '~/dimensions';
 import { Encabezado } from './Componentes/Encabezado';
 import { BodyOT } from './Componentes/BodyOT';
 import { Formulario, OrdenTrabajo } from '~/api/types';
 import { getFormularioAPI } from '~/api/api';
-import { Button, Dialog, Portal } from 'react-native-paper';
+import { Button, Portal } from 'react-native-paper';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { useNavigation } from '@react-navigation/native';
-import {
-  changeStateFinalizado,
-  convertb64ToFile,
-} from '~/services/tecnicosServices';
+import { changeStateFinalizado } from '~/services/tecnicosServices';
 import { Platform } from 'react-native';
 import { ModalCierre } from './Componentes/ModalCierre';
 import { useOrdenesTrabajoInfo } from '~/api/hooks';
 
 import { FormProvider } from '~/context/formulario/FormularioContext';
-
 
 interface Props {
   ordenTrabajo?: OrdenTrabajo;
@@ -45,9 +41,8 @@ export const BasePage = ({ ordenTrabajo, formularioExpress }: Props) => {
     setTextLoading('Enviando informacion...');
     setLoading(!loading);
 
-
     const resolved = await changeStateFinalizado(
-      OrdenTrabajo,
+      ordenTrabajo,
       firma,
       aclaracion,
     );
@@ -55,7 +50,6 @@ export const BasePage = ({ ordenTrabajo, formularioExpress }: Props) => {
     refetchPendientes();
     refetchRealizadas();
     navigator.navigate('SuccessScreen', { success: resolved, isOt: true });
-
   };
 
   const postergarHandler = () => {
@@ -103,11 +97,10 @@ export const BasePage = ({ ordenTrabajo, formularioExpress }: Props) => {
             </Portal>
 
             {formulario ? (
-              <FormProvider otID={OrdenTrabajo.id} formulario={formulario}>
-                <BodyOT formulario={formulario} otID={OrdenTrabajo.id} />
+              <FormProvider otID={ordenTrabajo.id} formulario={formulario}>
+                <BodyOT formulario={formulario} otID={ordenTrabajo.id} />
               </FormProvider>
             ) : null}
-
           </View>
           <View style={styles.footer}>
             <Button
