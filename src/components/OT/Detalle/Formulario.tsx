@@ -5,17 +5,16 @@ import { Firma } from './Firma';
 import { Modulo } from './Modulo';
 import { OrdenTrabajo } from '~/api/types';
 import { ListItem } from 'react-native-elements/dist/list/ListItem';
+import { useQuery } from 'react-query';
 
-export const Formulario = ({ ID }) => {
+export const Formulario = ({ ID }: number) => {
   const [OT, setOT] = useState();
-
+  const { data } = useQuery(['Formulario Detalle', ID], () =>
+    FormularioRealizado(ID),
+  );
   useEffect(() => {
-    FormularioRealizado(ID).then(data => {
-      console.log('data ', data);
-      setOT(data);
-    });
+    setOT(data);
   }, []);
-
   return (
     <View style={styles.TituloFormulario}>
       <TituloFormulario OT={OT} />
@@ -25,12 +24,12 @@ export const Formulario = ({ ID }) => {
 };
 
 const TituloFormulario = ({ OT }: any) => {
-  const [OTF, setOTF] = useState('Cargando');
-  useEffect(() => {
-    setOTF(OT);
-  }, [OT]);
-  console.log('ot titulo prueba', OTF);
-  return <View style={styles.viewTitulo} />;
+  console.log('ot titulo prueba', OT);
+  return (
+    <View style={styles.viewTitulo}>
+      <Text>Pruebas{OT.titulo}</Text>
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
@@ -38,3 +37,6 @@ const styles = StyleSheet.create({
   viewTitulo: { marginVertical: 25 },
   TextTitulo: { fontSize: 20, fontWeight: 'bold' },
 });
+function data(data: any) {
+  throw new Error('Function not implemented.');
+}
