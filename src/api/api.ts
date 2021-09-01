@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { MediaObject } from './types';
+import { MediaObject, Formulario } from './types';
 global.Buffer = global.Buffer || require('buffer').Buffer;
 const clientId = '1_4ta05vfoy58ggoggwo08kck000kocckwgcckk8wgkck440cgcw';
 const clientSecret = '176y7wqisfvkcwk8oswowksks0cocsoc00ko4k4oosc0ocwck4';
@@ -145,7 +145,9 @@ export const getAllServiciosAPI = async () => {
     });
 };
 
-export const getFormularioAPI = async (id: number) => {
-  const response = await api.get(`/formularios/${id}`);
+export const getFormularioAPI = async (id: number): Promise<Formulario> => {
+
+  const response = await api.get<Formulario>(`/formularios/${id}`);
+
   return response.data;
 };

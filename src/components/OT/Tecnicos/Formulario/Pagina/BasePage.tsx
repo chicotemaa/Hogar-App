@@ -1,24 +1,30 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { windowHeight, windowWidth } from '~/dimensions';
 import { Encabezado } from './Componentes/Encabezado';
 import { BodyOT } from './Componentes/BodyOT';
 import { Formulario, OrdenTrabajo } from '~/api/types';
 import { getFormularioAPI } from '~/api/api';
-import { FormProvider } from '~/context/fomulario/FormularioContext';
-import { Button, Dialog, Portal } from 'react-native-paper';
+import { Button, Portal } from 'react-native-paper';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { useNavigation } from '@react-navigation/native';
-import { changeStateFinalizado } from '~/services/tecnicosServices';
+import {
+  changeStateFinalizado,
+  putResultadoExpress,
+} from '~/services/tecnicosServices';
 import { Platform } from 'react-native';
 import { ModalCierre } from './Componentes/ModalCierre';
+import { useOrdenesTrabajoInfo } from '~/api/hooks';
+
+import { FormProvider } from '~/context/formulario/FormularioContext';
 
 interface Props {
-  OrdenTrabajo: OrdenTrabajo;
-  hasResultado: boolean;
+  ordenTrabajo: OrdenTrabajo;
+  hasResultado?: boolean;
+  formularioExpress?: Formulario;
 }
 
-export const BasePage = ({ OrdenTrabajo, hasResultado }: Props) => {
+export const BasePage = ({ ordenTrabajo, formularioExpress }: Props) => {
   const [formulario, setFormulario] = useState<Formulario>();
   const [loading, setLoading] = useState(true);
   //Para firma
@@ -28,17 +34,28 @@ export const BasePage = ({ OrdenTrabajo, hasResultado }: Props) => {
   //Para loading
   const [textLoading, setTextLoading] = useState('Cargando formulario...');
 
+  const { refetch: refetchPendientes } = useOrdenesTrabajoInfo(true);
+  const { refetch: refetchRealizadas } = useOrdenesTrabajoInfo(false);
+
   const navigator = useNavigation();
 
-  const finalizadoHandler = (firma: string, aclaracion: string) => {
+  const finalizadoHandler = async (firma: string, aclaracion: string) => {
     hideDialog();
     setTextLoading('Enviando informacion...');
     setLoading(!loading);
-
-    changeStateFinalizado(OrdenTrabajo, firma, aclaracion).then(resolved => {
-      setLoading(!loading);
-      navigator.navigate('SuccessScreen', { success: resolved, isOt: true });
-    });
+    let resolved = false;
+    if (
+      ordenTrabajo?.formulario.compraMateriales ||
+      ordenTrabajo?.formulario.express
+    ) {
+      resolved = await putResultadoExpress(ordenTrabajo, firma, aclaracion);
+    } else {
+      resolved = await changeStateFinalizado(ordenTrabajo, firma, aclaracion);
+    }
+    setLoading(!loading);
+    refetchPendientes();
+    refetchRealizadas();
+    navigator.navigate('SuccessScreen', { success: resolved, isOt: true });
   };
 
   const postergarHandler = () => {
@@ -52,11 +69,19 @@ export const BasePage = ({ OrdenTrabajo, hasResultado }: Props) => {
   };
 
   useEffect(() => {
-    getFormularioAPI(OrdenTrabajo.formulario.id).then(response => {
-      setFormulario(response);
+    const isExpressOrCM =
+      ordenTrabajo?.formulario.express ||
+      ordenTrabajo?.formulario.compraMateriales;
+    if (!isExpressOrCM) {
+      getFormularioAPI(ordenTrabajo.formulario.id).then(response => {
+        setFormulario(response);
+        setLoading(false);
+      });
+    } else {
+      setFormulario(ordenTrabajo.formulario);
       setLoading(false);
-    });
-  }, [OrdenTrabajo.formulario.id]);
+    }
+  }, []);
 
   return (
     <>
@@ -70,7 +95,7 @@ export const BasePage = ({ OrdenTrabajo, hasResultado }: Props) => {
         </View>
       ) : (
         <View style={styles.page}>
-          <Encabezado OrdenTrabajo={OrdenTrabajo} />
+          {ordenTrabajo && <Encabezado OrdenTrabajo={ordenTrabajo} />}
           <View style={{ flex: 1 }}>
             <Portal>
               <ModalCierre
@@ -79,11 +104,12 @@ export const BasePage = ({ OrdenTrabajo, hasResultado }: Props) => {
                 hideDialog={hideDialog}
               />
             </Portal>
-            <FormState>
-              {formulario ? (
-                <BodyOT formulario={formulario} otID={OrdenTrabajo.id} />
-              ) : null}
-            </FormState>
+
+            {formulario ? (
+              <FormProvider otID={ordenTrabajo.id} formulario={formulario}>
+                <BodyOT />
+              </FormProvider>
+            ) : null}
           </View>
           <View style={styles.footer}>
             <Button
@@ -129,7 +155,3 @@ const styles = StyleSheet.create({
     marginBottom: Platform.OS === 'android' ? 20 : 0,
   },
 });
-
-const FormState = ({ children }: any) => {
-  return <FormProvider>{children}</FormProvider>;
-};

@@ -5,7 +5,7 @@ import React, {
   useCallback,
   useContext,
 } from 'react';
-import { PaginaModulo, Resultado, PropiedadItem } from '~/api/types';
+import { PropiedadModulo, Resultado, PropiedadItem } from '~/api/types';
 import { FormContext } from '../formulario/FormularioContext';
 
 export type PartialResultado = Pick<
@@ -14,7 +14,7 @@ export type PartialResultado = Pick<
 >;
 
 export interface ModuloContext {
-  modulo: PaginaModulo;
+  modulo: PropiedadModulo;
   moduloIndice: number;
   getResultado: (propiedadItemId: number) => Resultado | undefined;
   setResultado: (
@@ -25,7 +25,7 @@ export interface ModuloContext {
 
 interface ProviderProps {
   children: ReactNode;
-  modulo: PaginaModulo;
+  modulo: PropiedadModulo;
   moduloIndice: number;
 }
 
