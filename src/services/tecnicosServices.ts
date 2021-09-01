@@ -34,6 +34,13 @@ import * as FileSystem from 'react-native-fs';
 // 'No me atendió': 3
 // 'Finalizado': 4
 // 'Postergado': 5
+
+const geoOptions: Geolocation.GeoOptions = {
+  enableHighAccuracy: true,
+  timeout: 14000,
+  maximumAge: 100,
+};
+
 const getISODate = () => {
   const date = new Date();
   return new Date(
@@ -167,27 +174,17 @@ export const changeStateEnCamino = (ordenTrabajo: OrdenTrabajo) => {
 export const changeStateMeRecibio = async (ordenTrabajo: OrdenTrabajo) => {
   //TODO: controlar ubicacion antes de cambiar estado
   if (await checkLocationPermission()) {
-    Geolocation.getCurrentPosition(
-      position => {
-        const { latitude, longitude } = position.coords;
+    const position = await getCurrentPosition(geoOptions);
+    const { latitude, longitude } = position.coords;
 
-        const data = {
-          estado: 2,
-          latitud: latitude.toString(),
-          longitud: longitude.toString(),
-          horaInicio: getISODate(),
-        };
-        changeStateOTAPI(ordenTrabajo, data);
-      },
-      error => {
-        console.log(error.code, error.message);
-      },
-      {
-        enableHighAccuracy: true,
-        timeout: 14000,
-        maximumAge: 100,
-      },
-    );
+    const data = {
+      estado: 2,
+      latitud: latitude.toString(),
+      longitud: longitude.toString(),
+      horaInicio: getISODate(),
+    };
+    changeStateOTAPI(ordenTrabajo, data);
+
     return true;
   } else {
     console.log('Permiso de ubicación denegado');
@@ -197,14 +194,8 @@ export const changeStateMeRecibio = async (ordenTrabajo: OrdenTrabajo) => {
 
 export const changeStateNoMeRecibio = async (ordenTrabajo: OrdenTrabajo) => {
   if (await checkLocationPermission()) {
-    const position = await getCurrentPosition({
-      enableHighAccuracy: true,
-      timeout: 14000,
-      maximumAge: 100,
-    });
-    const {
-      coords: { latitude, longitude },
-    } = position;
+    const position = await getCurrentPosition(geoOptions);
+    const { latitude, longitude } = position.coords;
     const data = {
       estado: 3,
       latitud: String(latitude),
@@ -223,11 +214,7 @@ export const changeStateFinalizado = async (
   aclaracion: string,
 ) => {
   if (await checkLocationPermission()) {
-    const position = await getCurrentPosition({
-      enableHighAccuracy: true,
-      timeout: 14000,
-      maximumAge: 100,
-    });
+    const position = await getCurrentPosition(geoOptions);
     const { latitude, longitude } = position.coords;
     const { horaInicio } = await getOtById(ordenTrabajo.id);
     const diffMinutes = getDiffMinutes(horaInicio);
