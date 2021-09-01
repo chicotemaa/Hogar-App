@@ -15,22 +15,33 @@ import { Button } from '~/components/Button';
 import { Header } from '~/components/Header';
 import { RootStackParams } from '~/navigator/StackNavigator';
 import Spinner from 'react-native-loading-spinner-overlay';
-import * as Animatable from 'react-native-animatable';
 import { styles } from '~/theme/appTheme';
 import { TransitionView } from '~/components/TransitionView';
+import { Servicio } from '~/api/types';
 
 interface Props
   extends StackScreenProps<RootStackParams, 'FormSolicitudScreen'> {}
 
-interface Servicio {
-  ['id']: string;
-  descripcion: string;
-  titulo: string;
+const iconosServicio = {
+  Electricidad: 'flash',
+  ['Plomería']: 'pipe',
+  Carpintero: 'hand-saw',
+  ['Jardinería']: 'watering-can-outline',
+  ['Aires Acondicionados']: 'air-conditioner',
+  Pintura: 'format-paint',
+  Otro: 'hammer-wrench',
+} as const;
+
+function getIconoServicio(nombreServicio: string): string {
+  return (
+    iconosServicio[nombreServicio as keyof typeof iconosServicio] ??
+    iconosServicio.Otro
+  );
 }
 
-export const FormSolicitudScreen = ({ navigation, route }: Props) => {
+export const FormSolicitudScreen = ({ navigation }: Props) => {
   const [expanded, setExpanded] = React.useState(false);
-  const [servicios, setServicios] = useState([]);
+  const [servicios, setServicios] = useState<Servicio[]>([]);
   const [sucursal, setSucursal] = useState('');
   const [valido, setValido] = useState(true);
 
@@ -48,7 +59,7 @@ export const FormSolicitudScreen = ({ navigation, route }: Props) => {
 
   const validateInputs = () => {
     const { causa, descripcion } = solicitud;
-    if (causa == '' || descripcion == '') {
+    if (causa === '' || descripcion === '') {
       showDialog();
       setValido(false);
     } else {
@@ -62,15 +73,6 @@ export const FormSolicitudScreen = ({ navigation, route }: Props) => {
     });
   }
 
-  const iconosServicio = {
-    Electricidad: 'flash',
-    ['Plomería']: 'pipe',
-    Carpintero: 'hand-saw',
-    ['Jardinería']: 'watering-can-outline',
-    ['Aires Acondicionados']: 'air-conditioner',
-    Pintura: 'format-paint',
-    Otro: 'hammer-wrench',
-  };
   //TODO: Cambiar empty array x elemento texto que indique cargando
   const [spinner, setSpinner] = useState(true);
   useEffect(() => {
@@ -80,11 +82,11 @@ export const FormSolicitudScreen = ({ navigation, route }: Props) => {
     getAllServiciosAPI().then(arrayServicios => {
       console.log(arrayServicios);
       setServicios(arrayServicios);
-      setSpinner(!spinner);
+      setSpinner(v => !v);
     });
   }, []);
 
-  const handlePress = () => setExpanded(!expanded);
+  const handlePress = () => setExpanded(v => !v);
   return (
     <>
       <Header pageName="Crear Solicitud" />
@@ -99,7 +101,7 @@ export const FormSolicitudScreen = ({ navigation, route }: Props) => {
       ) : (
         <View style={[styles.container, { paddingTop: 10, flex: 8 }]}>
           <Alerta
-            campo={solicitud.causa == '' ? 'causa' : 'descripción'}
+            campo={solicitud.causa === '' ? 'causa' : 'descripción'}
             hideDialog={hideDialog}
             visible={visible}
           />
@@ -111,17 +113,15 @@ export const FormSolicitudScreen = ({ navigation, route }: Props) => {
                 {labelInput({ text: 'Tipo Solicitud' })}
                 <List.Accordion
                   title={
-                    solicitud.nombreServicio == ''
-                      ? 'Seleccione tipo de servicio'
-                      : solicitud.nombreServicio
+                    solicitud.nombreServicio || 'Seleccione tipo de servicio'
                   }
                   left={props => (
                     <List.Icon
                       {...props}
                       icon={
-                        solicitud.tipoServicio == ''
-                          ? 'hammer-wrench'
-                          : iconosServicio[solicitud.nombreServicio]
+                        solicitud.tipoServicio === ''
+                          ? iconosServicio.Otro
+                          : getIconoServicio(solicitud.nombreServicio)
                       }
                     />
                   )}
@@ -129,11 +129,10 @@ export const FormSolicitudScreen = ({ navigation, route }: Props) => {
                   theme={{ roundness: 20 }}
                   expanded={expanded}
                   onPress={handlePress}>
-                  {servicios.map((servicio: Servicio) => {
-                    const servicioKey: string = servicio['@id'];
+                  {servicios.map(servicio => {
                     return (
                       <List.Item
-                        key={servicioKey}
+                        key={servicio['@id']}
                         title={servicio.titulo}
                         style={{
                           backgroundColor: 'white',
@@ -144,11 +143,11 @@ export const FormSolicitudScreen = ({ navigation, route }: Props) => {
                         left={props => (
                           <List.Icon
                             {...props}
-                            icon={iconosServicio[servicio.titulo]}
+                            icon={getIconoServicio(servicio.titulo)}
                           />
                         )}
                         onPress={() => {
-                          setExpanded(!expanded);
+                          setExpanded(v => !v);
                           setSolicitud({
                             ...solicitud,
                             tipoServicio: servicio['@id'],
@@ -228,7 +227,7 @@ export const FormSolicitudScreen = ({ navigation, route }: Props) => {
   );
 };
 
-const labelInput = ({ text }) => {
+const labelInput = ({ text }: { text: string }) => {
   return (
     <View style={{ marginVertical: 5 }}>
       <Text style={{ fontSize: 23, color: '#111111' }}>{text}</Text>

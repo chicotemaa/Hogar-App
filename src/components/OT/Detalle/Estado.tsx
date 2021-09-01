@@ -1,10 +1,10 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { otStyle, styles } from '~/theme/appTheme';
+import { otStyle } from '~/theme/appTheme';
 
 interface PropsEstado {
-  horaInicio: Date | string;
-  horaFin: Date | string;
+  horaInicio: string;
+  horaFin: string;
 }
 
 export const Estado = ({ horaInicio, horaFin }: PropsEstado) => {
@@ -43,7 +43,7 @@ export const Estado = ({ horaInicio, horaFin }: PropsEstado) => {
     </View>
   );
 };
-function formatDate(date: string | Date, position: number) {
+function formatDate(date: string, position: number) {
   const d = date.split('T', 2)[position];
   if (position === 1) {
     return d.slice(0, 5);

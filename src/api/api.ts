@@ -1,7 +1,8 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { MediaObject, Formulario } from './types';
-global.Buffer = global.Buffer || require('buffer').Buffer;
+import { MediaObject, Formulario, Servicio, Hydra, User } from './types';
+import { Buffer } from 'buffer';
+
 const clientId = '1_4ta05vfoy58ggoggwo08kck000kocckwgcckk8wgkck440cgcw';
 const clientSecret = '176y7wqisfvkcwk8oswowksks0cocsoc00ko4k4oosc0ocwck4';
 
@@ -28,10 +29,8 @@ const createApi = (config: AxiosRequestConfig) => {
   return instance;
 };
 
-export const baseApi = createApi({ baseURL: baseUrl });
-
 export const api = createApi({ baseURL: `${baseUrl}/api` });
-export const base = createApi({ baseURL: `${baseUrl}` });
+export const baseApi = createApi({ baseURL: baseUrl });
 
 export const apiFetch: typeof fetch = async (input, init) => {
   const token = await getAccessToken();
@@ -79,7 +78,7 @@ export const logout = async () => {
   await AsyncStorage.removeItem('access_token');
 };
 
-export const getUserInfo = () => api.get('/user/info');
+export const getUserInfo = () => api.get<User>('/user/info');
 
 export const getImage = async (imagen: string | null) => {
   const response = await baseApi.get(`/uploads/imagenes/solicitud/${imagen}`, {
@@ -133,7 +132,7 @@ export const getServicioAPI = async (id: string) => {
 
 export const getAllServiciosAPI = async () => {
   return api
-    .get('/servicios')
+    .get<Hydra<Servicio>>('/servicios')
     .then(response => {
       console.log('from api servicios ', response.data);
       return response.data['hydra:member'];
@@ -146,7 +145,6 @@ export const getAllServiciosAPI = async () => {
 };
 
 export const getFormularioAPI = async (id: number): Promise<Formulario> => {
-
   const response = await api.get<Formulario>(`/formularios/${id}`);
 
   return response.data;

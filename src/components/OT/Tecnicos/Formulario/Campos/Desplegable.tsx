@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react';
 import { List } from 'react-native-paper';
-import { FormContext } from '~/context/formulario/FormularioContext';
 import { ModuloContext } from '~/context/modulo/ModuloContext';
 import { PropiedadItem } from '~/api/types';
 

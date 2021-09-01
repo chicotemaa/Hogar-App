@@ -7,7 +7,7 @@ import { Formulario, OrdenTrabajo } from '~/api/types';
 import { getFormularioAPI } from '~/api/api';
 import { Button, Portal } from 'react-native-paper';
 import Spinner from 'react-native-loading-spinner-overlay';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
 import {
   changeStateFinalizado,
   putResultadoExpress,
@@ -17,14 +17,14 @@ import { ModalCierre } from './Componentes/ModalCierre';
 import { useOrdenesTrabajoInfo } from '~/api/hooks';
 
 import { FormProvider } from '~/context/formulario/FormularioContext';
+import { RootStackParams } from '~/navigator/StackNavigator';
 
 interface Props {
   ordenTrabajo: OrdenTrabajo;
   hasResultado?: boolean;
-  formularioExpress?: Formulario;
 }
 
-export const BasePage = ({ ordenTrabajo, formularioExpress }: Props) => {
+export const BasePage = ({ ordenTrabajo }: Props) => {
   const [formulario, setFormulario] = useState<Formulario>();
   const [loading, setLoading] = useState(true);
   //Para firma
@@ -37,7 +37,7 @@ export const BasePage = ({ ordenTrabajo, formularioExpress }: Props) => {
   const { refetch: refetchPendientes } = useOrdenesTrabajoInfo(true);
   const { refetch: refetchRealizadas } = useOrdenesTrabajoInfo(false);
 
-  const navigator = useNavigation();
+  const navigator = useNavigation<NavigationProp<RootStackParams>>();
 
   const finalizadoHandler = async (firma: string, aclaracion: string) => {
     hideDialog();
@@ -63,10 +63,10 @@ export const BasePage = ({ ordenTrabajo, formularioExpress }: Props) => {
     console.log('postergar');
   };
 
-  const guardarHandler = () => {
-    console.log('guardando');
-    navigator.goBack();
-  };
+  // const guardarHandler = () => {
+  //   console.log('guardando');
+  //   navigator.goBack();
+  // };
 
   useEffect(() => {
     const isExpressOrCM =
@@ -81,7 +81,7 @@ export const BasePage = ({ ordenTrabajo, formularioExpress }: Props) => {
       setFormulario(ordenTrabajo.formulario);
       setLoading(false);
     }
-  }, []);
+  }, [ordenTrabajo.formulario]);
 
   return (
     <>
@@ -95,7 +95,7 @@ export const BasePage = ({ ordenTrabajo, formularioExpress }: Props) => {
         </View>
       ) : (
         <View style={styles.page}>
-          {ordenTrabajo && <Encabezado OrdenTrabajo={ordenTrabajo} />}
+          {ordenTrabajo && <Encabezado ordenTrabajo={ordenTrabajo} />}
           <View style={{ flex: 1 }}>
             <Portal>
               <ModalCierre

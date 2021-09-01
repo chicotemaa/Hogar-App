@@ -1,14 +1,15 @@
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
 import React from 'react';
 import { Text, View, Platform } from 'react-native';
 import { Appbar } from 'react-native-paper';
 import { windowWidth, windowHeight } from '~/dimensions';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
+import { RootStackParams } from '~/navigator/StackNavigator';
 
 interface Props {
   pageName?: string;
   userName?: string;
-  clienteName?: string | Promise<string>;
+  clienteName?: string;
   ProgressCircle?: any;
   roleUser?: string;
   id?: number | string;
@@ -22,13 +23,13 @@ export const Header = ({
 }: Props) => {
   const isWelcomePage = pageName === 'Bienvenido';
   const isFormSolicitud = pageName === 'Nueva Solicitud';
-  pageName = pageName == 'Solicitud' ? 'Informe de solicitud' : pageName;
-  const isTecnico = roleUser == 'tecnico';
+  pageName = pageName === 'Solicitud' ? 'Informe de solicitud' : pageName;
+  const isTecnico = roleUser === 'tecnico';
   const paddingHeader = isWelcomePage ? (isTecnico ? 0 : 10) : 0;
   const flexDHeader = isWelcomePage ? 'column' : 'row';
   const heightPage = isTecnico ? '12%' : '30%';
 
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp<RootStackParams>>();
   const drawer: DrawerNavigationProp<any, any> = navigation.getParent();
 
   const _goBack = () => navigation.goBack();
@@ -117,9 +118,9 @@ const getCurrentDate = () => {
 };
 
 const WelcomeHeader = (
-  username: string,
+  username: string | undefined,
   isTecnico: boolean,
-  clienteName: string,
+  clienteName: string | undefined,
 ) => {
   return (
     <View

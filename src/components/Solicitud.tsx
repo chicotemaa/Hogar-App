@@ -1,56 +1,56 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Divider } from 'react-native-paper';
+import {
+  Solicitudes,
+  solicitudEstadoLabel,
+  SucursalDeCliente,
+} from '~/api/types';
 
-interface Solicitud {
-  id: string;
-  createdAt: string | Date;
-  title: string;
-  estado: string;
-  servicio: string | undefined;
-  SucursalDeCliente: string | undefined;
-  pisoSector: string | undefined;
-  imagen: string | null | undefined ;
-  consulta: string | undefined;
+interface Props {
+  solicitud?: Solicitudes;
+  sucursal?: SucursalDeCliente;
 }
 
-export const Solicitud = ({
-  id,
-  createdAt,
-  title,
-  estado,
-  servicio,
-  SucursalDeCliente,
-  pisoSector,
-  consulta,
-
-}: Solicitud) => { 
-  console.log(id);
+export const Solicitud = ({ solicitud, sucursal }: Props) => {
   return (
     <ScrollView>
       <View>
         <View style={styleSolicitud.body}>
           <View style={{ marginBottom: 20 }}>
-            <Elemento title={'Incidencia'} body={title} />
-            <Elemento title={'Código incidencia'} body={id} />
+            <Elemento title={'Incidencia'} body={solicitud?.necesitasAyuda} />
+            <Elemento
+              title={'Código incidencia'}
+              body={solicitud?.id.toString()}
+            />
           </View>
           <View style={{ marginBottom: 20 }}>
-            <Elemento title={'Fecha'} body={formatDate(createdAt)} />
-            <Elemento title={'Hora'} body={formatHour(createdAt)} />
+            <Elemento title={'Fecha'} body={formatDate(solicitud?.createdAt)} />
+            <Elemento title={'Hora'} body={formatHour(solicitud?.createdAt)} />
           </View>
           <View style={{ marginBottom: 20 }}>
-            <Elemento title={'Sucursal'} body={SucursalDeCliente} />
-            <Elemento title={'Sector'} body={pisoSector} />
+            <Elemento title={'Sucursal'} body={sucursal?.direccion} />
+            <Elemento title={'Sector'} body={solicitud?.pisoSector} />
           </View>
           <View style={{ marginBottom: 20 }}>
-            <Elemento title={'Estado'} body={estado} />
-            <Elemento title={'Tipo de Servicio'} body={servicio} />
+            <Elemento
+              title={'Estado'}
+              body={
+                solicitud?.estado !== undefined
+                  ? solicitudEstadoLabel[solicitud?.estado]
+                  : ''
+              }
+            />
+            <Elemento
+              title={'Tipo de Servicio'}
+              body={solicitud?.servicio?.titulo}
+            />
           </View>
 
-          <Elemento title={'Descripción'} body={consulta} />
+          <Elemento title={'Descripción'} body={solicitud?.consulta} />
           <Elemento title={'Fotos'} body={''} />
-          {Image === null ? noImagen() : mostrarImagen(Image)}
+          {solicitud?.imagen ? mostrarImagen(solicitud.imagen, '') : noImagen()}
         </View>
       </View>
     </ScrollView>
@@ -99,12 +99,12 @@ function mostrarImagen(imagen: string, token: string) {
   );
 }
 const Elemento = ({ title, body }: PropsElement) => {
-  const flexD = title == 'Descripción' ? 'column' : 'row';
+  const flexD = title === 'Descripción' ? 'column' : 'row';
   return (
     <View style={styleSolicitud.containerElement}>
       <View style={{ flexDirection: flexD, paddingHorizontal: 20 }}>
         <Text style={styleSolicitud.titleElement}>{title}</Text>
-        {title == 'Descripción' ? (
+        {title === 'Descripción' ? (
           <>
             <Divider
               style={{
@@ -161,7 +161,10 @@ const styleSolicitud = StyleSheet.create({
   },
 });
 
-function formatHour(fecha: string) {
+function formatHour(fecha: string | undefined) {
+  if (!fecha) {
+    return '';
+  }
   const date = new Date(fecha);
   return (
     date.getHours() +
@@ -170,7 +173,10 @@ function formatHour(fecha: string) {
   );
 }
 
-function formatDate(fecha: string) {
+function formatDate(fecha: string | undefined) {
+  if (!fecha) {
+    return '';
+  }
   const date = new Date(fecha);
   const days = [
     'Domingo',

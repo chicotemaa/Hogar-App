@@ -5,9 +5,9 @@ export const buildResult = (formulario: Formulario) => {
 
   return {
     id,
-    modulos: propiedadModulos.map(({ id, modulo }) => {
+    modulos: propiedadModulos.map(({ id: moduloId, modulo }) => {
       return {
-        moduloId: id,
+        moduloId,
         moduloItems: getModulo(modulo),
       };
     }),
@@ -30,22 +30,14 @@ const getItems = (Items: Item[]) => {
   });
 };
 
-const getItemProps = Item => {
+const getItemProps = (item: Item) => {
   //console.log('esto tiene item', Item)
   return {
-    id: Item.id,
-    tipo: Item.item.tipo,
-    requerido: Item.requerido,
-    opciones: Item.item.opciones,
-    cantidadMinima: Item.cantidadMinima,
+    id: item.id,
+    tipo: item.item.tipo,
+    requerido: item.requerido,
+    opciones: item.item.opciones,
+    cantidadMinima: item.cantidadMinima,
     value: null,
   };
 };
-
-export const getResults = values => {
-  console.log(values);
-};
-
-// export const postResultado = () => {
-
-// };

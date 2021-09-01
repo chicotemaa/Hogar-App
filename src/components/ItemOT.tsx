@@ -23,9 +23,9 @@ export const ItemOT = ({ titulo, goToScreen, rol, OT }: Props) => {
   const estadoOT = OT.estado;
   const cliente = OT.cliente.razonSocial;
 
-  const isVistaTecnico = rol == 'tecnico';
+  const isVistaTecnico = rol === 'tecnico';
   const [estado, setEstado] = useState(estadoOT);
-  const handleState = async (estado: number, newState: number) => {
+  const handleState = async (newState: number) => {
     switch (newState) {
       case 1:
         setEstado(newState);
@@ -118,7 +118,7 @@ export const ItemOT = ({ titulo, goToScreen, rol, OT }: Props) => {
         {isVistaTecnico ? (
           <DetalleBtnTecnico
             estado={estado}
-            changeState={(state: number) => handleState(estado, state)}
+            changeState={(state: number) => handleState(state)}
             goToScreen={goToScreen}
           />
         ) : (
@@ -146,7 +146,7 @@ interface PropEstado {
 }
 
 const Estado = ({ estado }: PropEstado) => {
-  const Estado = [
+  const estados = [
     { name: 'Pendiente', color: '#F13C20' },
     { name: 'Estoy en camino', color: '#D79922' },
     { name: 'Me recibió', color: '#4056A1' },
@@ -160,11 +160,11 @@ const Estado = ({ estado }: PropEstado) => {
       style={{
         fontSize: 21,
         fontWeight: 'bold',
-        color: Estado[estado].color,
+        color: estados[estado].color,
         textAlign: 'right',
         alignSelf: 'center',
       }}>
-      {Estado[estado].name}
+      {estados[estado].name}
     </Text>
   );
 };
@@ -176,11 +176,11 @@ interface PropBtn {
 }
 
 const DetalleBtn = ({ estado, goToScreen }: PropBtn) => {
-  const colorBtn = estado == 4 ? 'green' : '#5E5E5E';
+  const colorBtn = estado === 4 ? 'green' : '#5E5E5E';
   return (
     <View style={{ marginVertical: 5 }}>
       <TouchableOpacity
-        disabled={estado != 4}
+        disabled={estado !== 4}
         onPress={() => {
           goToScreen();
         }}>
@@ -210,10 +210,10 @@ const DetalleBtnTecnico = ({
     <View style={{ marginVertical: 5 }}>
       <View
         style={{
-          flexDirection: estadoActual == 1 ? 'row' : 'column',
+          flexDirection: estadoActual === 1 ? 'row' : 'column',
           justifyContent: 'space-between',
         }}>
-        {estadoActual == 1 ? (
+        {estadoActual === 1 ? (
           <TouchableOpacity
             onPress={() => {
               changeState(3);
@@ -258,7 +258,7 @@ const DetalleBtnTecnico = ({
             borderRadius: 8,
             alignSelf: 'flex-end',
             width: 0.35 * windowWidth,
-            backgroundColor: estadoActual == 0 ? '#32367A' : '#178C54',
+            backgroundColor: estadoActual === 0 ? '#32367A' : '#178C54',
             elevation: 10,
             paddingVertical: 9,
           }}>

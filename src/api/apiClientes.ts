@@ -1,64 +1,36 @@
 import { api, apiFetch, baseApi, getUserInfo } from './api';
+import {
+  Hydra,
+  Solicitudes,
+  SolicitudesPostBody,
+  SucursalDeCliente,
+  SucursalDeClienteApiPath,
+} from './types';
 
 //consulta -> descripcion
 //necesitasAyuda -> titulo
-
-interface Solicitud {
-  id: number;
-  necesitasAyuda: string;
-  consulta: string;
-  cliente: Cliente;
-  createdAt: string;
-  estado: number;
-  SucursalDeCliente: string;
-}
-
-interface Cliente {
-  street: string;
-}
 
 interface SolicitudPost {
   tipoServicio: string;
   nombreServicio: string;
   causa: string;
   descripcion: string;
-  foto: string;
 }
 
-export const getNombreCliente = async (id: string): Promise<string> => {
+export const getNombreCliente = async (
+  id: string | number,
+): Promise<string> => {
   const response = await api.get(`/clientes/${id}`);
   return response.data.razonSocial;
 };
 
-const getSolicitudesRequest = async () => {
-  const response = await api.get('/solicitud/by/user');
+export const getSolicitudesAPI = async () => {
+  const response = await api.get<Hydra<Solicitudes>>('/solicitud/by/user');
   return response.data['hydra:member'];
 };
 
-export const getSolicitudesAPI = async () => {
-  const array = await getSolicitudesRequest();
-  const elements = array.map(
-    ({
-      id,
-      createdAt,
-      SucursalDeCliente,
-      necesitasAyuda,
-      estado,
-    }: Solicitud) => {
-      return {
-        number: id,
-        location: SucursalDeCliente,
-        date: createdAt,
-        title: necesitasAyuda,
-        estado,
-      };
-    },
-  );
-  return elements.reverse();
-};
-
 export const getSolicitudById = async (id: string) => {
-  const response = await api.get(`/solicituds/${id}`);
+  const response = await api.get<Solicitudes>(`/solicituds/${id}`);
   return response.data;
 };
 
@@ -66,16 +38,16 @@ export const sendSolicitud = async ({
   tipoServicio,
   causa,
   descripcion,
-  foto,
 }: SolicitudPost): Promise<boolean> => {
   const userInfo = await getUserInfo();
 
-  const cliente = userInfo.data.cliente['@id'];
-  const { Facility, SucursalDeCliente } = userInfo.data;
+  const cliente = userInfo.data.cliente?.['@id'];
+  const { Facility, SucursalDeCliente: sucursalDeClienteApiPath } =
+    userInfo.data;
   const sucursalHogar = userInfo.data.sucursal;
 
-  const data = {
-    cliente: cliente,
+  const data: SolicitudesPostBody = {
+    cliente,
     servicio: tipoServicio === '' ? '/api/servicios/8' : tipoServicio,
     estado: 0,
     necesitasAyuda: causa,
@@ -88,7 +60,7 @@ export const sendSolicitud = async ({
     consulta: descripcion,
     sucursal: sucursalHogar,
     Facility,
-    SucursalDeCliente,
+    SucursalDeCliente: sucursalDeClienteApiPath,
   };
 
   return apiFetch('/solicituds', {
@@ -109,12 +81,15 @@ export const sendSolicitud = async ({
 
 export const getSucursalesAPI = async () => {
   const user = await getUserInfo();
-  const sucursalCliente = user.data.SucursalDeCliente;
-  const response = await baseApi.get(sucursalCliente);
+  // TODO corroborar que pasa si SucursalDeCliente es null
+  const sucursalCliente = user.data.SucursalDeCliente!;
+  const response = await baseApi.get<SucursalDeCliente>(sucursalCliente);
   return response.data.direccion;
 };
 
-export const getSucursalCliente = async (sucursal: string) => {
-  const response = await baseApi.get(sucursal);
+export const getSucursalCliente = async (
+  sucursal: SucursalDeClienteApiPath,
+) => {
+  const response = await baseApi.get<SucursalDeCliente>(sucursal);
   return response.data;
 };

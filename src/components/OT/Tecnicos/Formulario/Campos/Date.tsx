@@ -1,26 +1,31 @@
-import React, { useState } from 'react';
-import { View,  Platform, Text, StyleSheet } from 'react-native';
+import React, { ComponentProps, useState } from 'react';
+import { View, Platform, Text } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { IconButton } from 'react-native-paper';
 import { windowHeight } from '~/dimensions';
 
+type AndroidMode = 'date' | 'time';
+
 interface DatePickerProps {
-  modo: 'date' | 'time' | 'completo';
+  modo: AndroidMode | 'completo';
 }
 
 export const DateInput = ({ modo }: DatePickerProps) => {
   const [date, setDate] = useState(new Date(1598051730000));
-  const [mode, setMode] = useState('date');
+  const [mode, setMode] = useState<AndroidMode>('date');
   const [show, setShow] = useState(false);
 
-  const onChange = (event, selectedDate) => {
+  const onChange: ComponentProps<typeof DateTimePicker>['onChange'] = (
+    event: Event,
+    selectedDate?: Date,
+  ) => {
     const currentDate = selectedDate || date;
     setShow(Platform.OS === 'ios');
     setDate(currentDate);
     console.log(currentDate);
   };
 
-  const showMode = currentMode => {
+  const showMode = (currentMode: AndroidMode) => {
     setShow(true);
     setMode(currentMode);
   };
@@ -114,10 +119,3 @@ export const DateInput = ({ modo }: DatePickerProps) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  button: {
-    backgroundColor: 'grey',
-    padding: 10,
-  },
-});

@@ -2,13 +2,6 @@ import React from 'react';
 import { Text, View } from 'react-native';
 
 export const ServicioStep = () => {
-  const servicios = [
-    'Electricidad',
-    'Plomeria',
-    'Carpinteria',
-    'Aires Acondicionados',
-  ];
-
   return (
     <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
       <ButtonServicio />

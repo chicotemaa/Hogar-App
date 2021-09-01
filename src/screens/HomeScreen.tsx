@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react';
 
-import { DrawerScreenProps } from '@react-navigation/drawer';
+import {
+  DrawerNavigationProp,
+  DrawerScreenProps,
+} from '@react-navigation/drawer';
 import { Text, View, Image, ScrollView, ImageBackground } from 'react-native';
 import { windowHeight, windowWidth } from '~/dimensions';
 
@@ -17,14 +20,14 @@ import logo from '~/assets/images/util/logo.png';
 import { StyleSheet } from 'react-native';
 import { Button } from '~/components/Button';
 
-interface Props extends DrawerScreenProps<any, any> { }
+interface Props extends DrawerScreenProps<any, any> {}
 
 export const HomeScreen = ({ navigation }: Props) => {
   useEffect(() => {
     navigation.setOptions({
       headerShown: false,
     });
-  }, []);
+  }, [navigation]);
 
   return (
     <View style={{ flex: 1 }}>
@@ -44,7 +47,7 @@ export const HomeScreen = ({ navigation }: Props) => {
   );
 };
 
-const Header = ({ navigation }) => {
+const Header = ({ navigation }: { navigation: DrawerNavigationProp<any> }) => {
   return (
     <View style={{ flex: 1 }}>
       <ImageBackground
@@ -100,7 +103,7 @@ const Info = () => {
   );
 };
 
-const Title = ({ text }) => {
+const Title = ({ text }: { text: string }) => {
   return (
     <View
       style={{
