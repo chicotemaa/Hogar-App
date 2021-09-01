@@ -191,7 +191,7 @@ export interface OrdenTrabajo {
   longitud: string;
   longitudCierre: string;
   formulario: Formulario;
-  formularioResultado: FormularioResultado;
+  formularioResultado?: FormularioResultado;
   estados?: any;
   estadosGestion?: any;
   servicio?: string;
