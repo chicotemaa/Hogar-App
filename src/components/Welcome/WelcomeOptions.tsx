@@ -1,11 +1,16 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import { Title } from '~/components/Title';
 import { Button } from '~/components/Button';
 import { styles } from '~/theme/appTheme';
+import { DrawerNavigationProp } from '@react-navigation/drawer';
 
-export const WelcomeOptions = ({ navigation }) => {
+interface Props {
+  navigation: DrawerNavigationProp<any>;
+}
+
+export const WelcomeOptions = ({ navigation }: Props) => {
   const handleSolicitud = () => {
     navigation.navigate('FormSolicitudScreen');
   };

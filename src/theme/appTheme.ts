@@ -98,4 +98,4 @@ export const otStyle = {
     fontSize: 15,
     textAlign: 'center',
   },
-};
+} as const;

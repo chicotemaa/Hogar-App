@@ -4,11 +4,12 @@ import { StyleSheet, View, ScrollView } from 'react-native';
 
 import { FormLogin } from '~/components/FormLogin';
 import { Logo } from '~/components/Logo';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { windowWidth } from '~/dimensions';
+import { RootStackParams } from '~/navigator/StackNavigator';
 
 export const LoginScreen = () => {
-  const stackNavigator = useNavigation();
+  const stackNavigator = useNavigation<NavigationProp<RootStackParams>>();
 
   return (
     <ScrollView centerContent={true} contentContainerStyle={styles.body}>
@@ -22,7 +23,8 @@ export const LoginScreen = () => {
       <View style={styles.form}>
         <FormLogin
           pageToGo={() => {
-            stackNavigator.navigate('WelcomeScreen');
+            // TODO verificar que mandar en email y token
+            stackNavigator.navigate('WelcomeScreen', { email: '', token: '' });
           }}
         />
       </View>

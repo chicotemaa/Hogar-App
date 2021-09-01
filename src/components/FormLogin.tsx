@@ -26,7 +26,7 @@ export const FormLogin = ({ pageToGo }: Props) => {
   const onToggleSnackBar = () => setVisibleAlert(!visibleAlert);
   const onDismissSnackBar = () => setVisibleAlert(false);
 
-  const checkAuth = (state: User) => {
+  const checkAuth = () => {
     const { email, password } = state;
 
     setIsLoading(true);
@@ -89,7 +89,7 @@ export const FormLogin = ({ pageToGo }: Props) => {
         loading={isLoading ? true : false}
         color="#ef4920"
         style={styles.button}
-        onPress={() => checkAuth(state)}
+        onPress={checkAuth}
         theme={{ colors: { background: 'transparent' } }}>
         {isLoading ? 'Iniciando Sesión' : 'Iniciar Sesión'}
       </Button>

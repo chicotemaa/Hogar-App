@@ -1,16 +1,19 @@
 import React from 'react';
 import { Text, View } from 'react-native';
+import { SolicitudEstado, solicitudEstadoLabel } from '~/api/types';
 
 interface Props {
-  estado: 'Pendiente' | 'Generada OT' | 'Derivada';
+  estado: SolicitudEstado;
 }
+
+const colorByEstado = {
+  [SolicitudEstado.PENDIENTE]: 'red',
+  [SolicitudEstado.GENERADA_OT]: 'orange',
+  [SolicitudEstado.DERIVADA]: 'green',
+} as const;
+
 export const Estado = ({ estado }: Props) => {
-  const color =
-    estado === 'Pendiente'
-      ? 'red'
-      : estado === 'Generada OT'
-      ? 'orange'
-      : 'green';
+  const color = colorByEstado[estado];
   return (
     <View
       style={{ flexDirection: 'row', marginBottom: 3, alignSelf: 'flex-end' }}>
@@ -22,7 +25,7 @@ export const Estado = ({ estado }: Props) => {
           fontSize: 23,
           paddingLeft: 1,
         }}>
-        {estado}
+        {solicitudEstadoLabel[estado]}
       </Text>
     </View>
   );

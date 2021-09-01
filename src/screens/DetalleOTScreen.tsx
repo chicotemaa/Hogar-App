@@ -5,15 +5,15 @@ import { Estado } from '~/components/OT/Detalle/Estado';
 import { Formulario } from '~/components/OT/Detalle/Formulario';
 import { StackScreenProps } from '@react-navigation/stack';
 import React from 'react';
-import { FormularioRealizado } from '~/services/tecnicosServices';
+import { RootStackParams } from '~/navigator/StackNavigator';
 
-interface Props extends StackScreenProps<any, any> { }
+interface Props extends StackScreenProps<RootStackParams, 'DetalleOTScreen'> {}
 
 export const DetalleOTScreen = ({ route }: Props) => {
   const OT: OrdenTrabajo = route.params.OT;
-  FormularioRealizado(OT.id).then(formularioR => {
-    console.log(formularioR);
-  });
+  // formularioRealizado(OT.id).then(formularioR => {
+  //   console.log(formularioR);
+  // });
 
   return (
     <>

@@ -1,4 +1,4 @@
-import { StackScreenProps } from '@react-navigation/stack';
+import { StackNavigationProp } from '@react-navigation/stack';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-elements';
@@ -8,41 +8,31 @@ import { Estado } from './Historial/Estado';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { getSucursalCliente } from '~/api/apiClientes';
 import { TransitionView } from './TransitionView';
+import { Solicitudes, SucursalDeClienteApiPath } from '~/api/types';
 
-interface Props
-  extends StackScreenProps<RootStackParams, 'HistorialSolicitudesScreen'> {
+interface Props {
   index: number;
-  number: string;
-  title: string;
-  location: string;
-  date: string;
-  estado: 'Pendiente' | 'Generada OT' | 'Derivada';
+  solicitud: Solicitudes;
+  navigation: StackNavigationProp<
+    RootStackParams,
+    'HistorialSolicitudesScreen'
+  >;
 }
 
-export const ItemHistorial = ({
-  index,
-  number,
-  title,
-  location,
-  date,
-  estado,
-  navigation,
-}: Props) => {
-  const [street, setStreet] = useState(location);
-  useEffect(() => {
-    formatDate(date);
-    getStreetSucursal(location);
-  }, []);
+export const ItemHistorial = ({ index, solicitud, navigation }: Props) => {
+  const [street, setStreet] = useState('');
 
-  async function getStreetSucursal(sucursal: string) {
-    const street = await getSucursalCliente(sucursal).then(sucursal => {
-      return sucursal.direccion;
-    });
-    setStreet(street);
+  useEffect(() => {
+    getStreetSucursal(solicitud.SucursalDeCliente);
+  }, [solicitud.SucursalDeCliente]);
+
+  async function getStreetSucursal(sucursalName: SucursalDeClienteApiPath) {
+    const sucursal = await getSucursalCliente(sucursalName);
+    setStreet(sucursal.direccion);
   }
 
   return (
-    <TransitionView style={styles.container} index={index}>
+    <TransitionView index={index}>
       <View
         style={{
           flexDirection: 'row',
@@ -58,9 +48,9 @@ export const ItemHistorial = ({
               flex: 1,
               borderColor: '#D1D1D1',
             }}>
-            <Text style={styles.number}>#{number}</Text>
+            <Text style={styles.number}>#{solicitud.id}</Text>
           </View>
-          <Text style={styles.title}>{title}</Text>
+          <Text style={styles.title}>{solicitud.necesitasAyuda}</Text>
 
           <View style={{ flexDirection: 'row', marginBottom: 20 }}>
             <Icon
@@ -80,7 +70,7 @@ export const ItemHistorial = ({
               style={{ marginRight: 10 }}
             />
             <Text style={[styles.info, { textAlignVertical: 'top' }]}>
-              {formatDate(date)}
+              {formatDate(solicitud.createdAt)}
             </Text>
           </View>
         </View>
@@ -92,9 +82,12 @@ export const ItemHistorial = ({
               borderBottomWidth: 1,
               borderColor: '#D1D1D1',
             }}>
-            <Estado estado={estado} />
+            <Estado estado={solicitud.estado} />
           </View>
-          <DetalleButton codigo={number} navigation={navigation} />
+          <DetalleButton
+            codigo={solicitud.id.toString()}
+            navigation={navigation}
+          />
         </View>
       </View>
     </TransitionView>

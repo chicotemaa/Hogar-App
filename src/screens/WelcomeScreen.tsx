@@ -14,17 +14,18 @@ interface Props extends DrawerScreenProps<any, any> {}
 export const WelcomeScreen = ({ navigation }: Props) => {
   const [loading, setLoading] = useState(true);
   const [userName, setUserName] = useState('');
-  const [clienteName, setClienteName] = useState<string>();
+  const [clienteName, setClienteName] = useState<string>('');
   const [roleUser, setRoleUser] = useState('');
 
   useEffect(() => {
     getUserInfo().then(response => {
-      const { username, roles } = response.data;
+      const { cliente, username, roles } = response.data;
       setUserName(capitalizeFirstLetter(username));
-      if (getRoleUser(roles, 'ROLE_EMPLEADO') != -1) {
+      if (getRoleUser(roles, 'ROLE_EMPLEADO') !== -1) {
         setRoleUser('tecnico');
       } else {
-        getNombreCliente(response.data.cliente.id).then(nombreCliente => {
+        // TODO verificar que pasa si user no tiene cliente
+        getNombreCliente(cliente!.id).then(nombreCliente => {
           setClienteName(nombreCliente);
         });
         setRoleUser('user');
@@ -37,7 +38,7 @@ export const WelcomeScreen = ({ navigation }: Props) => {
     navigation.setOptions({
       gestureEnabled: false,
     });
-  }, []);
+  }, [navigation]);
 
   return (
     <>
@@ -58,7 +59,7 @@ export const WelcomeScreen = ({ navigation }: Props) => {
             roleUser={roleUser}
           />
           {roleUser === 'tecnico' ? (
-            <TecnicosWelcomeScreen navigation={navigation} />
+            <TecnicosWelcomeScreen />
           ) : (
             <>
               <WelcomeOptions navigation={navigation} />

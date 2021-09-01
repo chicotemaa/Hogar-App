@@ -1,73 +1,58 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { styles, theme } from '~/theme/appTheme';
+import { styles } from '~/theme/appTheme';
 import { ItemHistorial } from '~/components/ItemHistorial';
 import { ScrollView } from 'react-native-gesture-handler';
 import { getSolicitudesAPI } from '~/api/apiClientes';
 import { RootStackParams } from '~/navigator/StackNavigator';
 import { StackScreenProps } from '@react-navigation/stack';
-import { getData } from '~/api/api';
 import { Header } from '~/components/Header';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { TransitionView } from '~/components/TransitionView';
+import { Solicitudes } from '~/api/types';
 
 interface Props
-  extends StackScreenProps<RootStackParams, 'HistorialSolicitudesScreen'> { }
-
-interface Solicitud {
-  title: string;
-  number: string;
-  estado: 'Pendiente' | 'Generada OT' | 'Derivada';
-  date: string;
-  location: string;
-}
+  extends StackScreenProps<RootStackParams, 'HistorialSolicitudesScreen'> {}
 
 export const HistorialSolicitudesScreen = ({ navigation }: Props) => {
-  const empty = (
-    <View>
-      <Text style={stylesHistorial.message}>No hay solicitudes</Text>
-    </View>
-  );
-  const [Items, setItems] = useState(empty);
+  const [items, setItems] = useState(empty);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    mostrarSolicitudes();
-  }, []);
-
-  const mostrarSolicitudes = async () => {
-    try {
-      const array = await getSolicitudesAPI();
-      setItems(getItems(array));
-      setTimeout(() => {
-        setLoading(false);
-      }, 900);
-    } catch {
-      setItems(empty);
-    }
-
-    function getItems(array) {
-      if (array.length === 0) {
-        return empty;
-      } else {
-        let index: number = 0;
-        return array.map((element: Solicitud) => {
-          return (
-            <ItemHistorial
-              index={index++}
-              key={element.number.toString()}
-              date={element.date}
-              location={element.location}
-              number={element.number}
-              title={element.title}
-              estado={getEstado(element.estado)}
-              navigation={navigation}
-            />
-          );
-        });
+    (async () => {
+      try {
+        const array = await getSolicitudesAPI();
+        setItems(getItems(array));
+        setTimeout(() => {
+          setLoading(false);
+        }, 900);
+      } catch {
+        setItems(empty);
       }
-    }
-  };
+
+      function getItems(array: Solicitudes[]): JSX.Element {
+        if (array.length === 0) {
+          return empty;
+        } else {
+          return (
+            <>
+              {array
+                .slice()
+                .reverse()
+                .map((element, index) => (
+                  <ItemHistorial
+                    key={element.id}
+                    index={index}
+                    solicitud={element}
+                    navigation={navigation}
+                  />
+                ))}
+            </>
+          );
+        }
+      }
+    })();
+  }, [navigation]);
 
   return (
     <>
@@ -84,7 +69,7 @@ export const HistorialSolicitudesScreen = ({ navigation }: Props) => {
             </View>
           ) : (
             <ScrollView>
-              <TransitionView animation="slideInUp">{Items}</TransitionView>
+              <TransitionView>{items}</TransitionView>
             </ScrollView>
           )}
         </View>
@@ -108,13 +93,8 @@ const stylesHistorial = StyleSheet.create({
   },
 });
 
-function getEstado(estado: number): 'Pendiente' | 'Generada OT' | 'Derivada' {
-  switch (estado) {
-    case 0:
-      return 'Pendiente';
-    case 1:
-      return 'Generada OT';
-    default:
-      return 'Derivada';
-  }
-}
+const empty = (
+  <View>
+    <Text style={stylesHistorial.message}>No hay solicitudes</Text>
+  </View>
+);

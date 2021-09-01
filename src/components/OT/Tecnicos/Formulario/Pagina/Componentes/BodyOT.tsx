@@ -38,9 +38,7 @@ export const BodyOT = () => {
             index={currentPage}
             showsPagination={false}
             loop={false}
-            onIndexChanged={index => {
-              setCurrentPage(index);
-            }}>
+            onIndexChanged={setCurrentPage}>
             {moduloPages.map((modulosDePagina, index) => {
               return (
                 <ScrollView key={index}>

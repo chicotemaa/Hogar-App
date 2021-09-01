@@ -14,7 +14,7 @@ interface Props
   isWelcome: boolean;
 }
 
-export const ItemsSideBar = ({ navigation, isWelcome }: Props) => {
+export const ItemsSideBar = ({ navigation }: Props) => {
   return (
     <DrawerContentScrollView
       contentContainerStyle={{
