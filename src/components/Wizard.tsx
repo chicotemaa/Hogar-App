@@ -1,17 +1,17 @@
-import React, { PureComponent } from 'react';
+import React, { ComponentProps, PureComponent } from 'react';
 import { View } from 'react-native';
 
 import Step from './Solicitud/Step';
 
-class Wizard extends PureComponent {
-  static Step = props => <Step {...props} />;
+class Wizard extends PureComponent<{}, { index: number }> {
+  static Step = (props: ComponentProps<typeof Step>) => <Step {...props} />;
 
   state = {
     index: 0,
   };
 
   _nextStep = () => {
-    if (this.state.index !== this.props.children.lenght - 1) {
+    if (this.state.index !== React.Children.count(this.props.children) - 1) {
       this.setState(prevState => ({
         index: prevState.index + 1,
       }));
@@ -35,7 +35,9 @@ class Wizard extends PureComponent {
               currentIndex: this.state.index,
               nextStep: this._nextStep,
               prevStep: this._prevStep,
-              isLast: this.state.index === this.props.children.length - 1,
+              isLast:
+                this.state.index ===
+                React.Children.count(this.props.children) - 1,
             });
           }
           return null;

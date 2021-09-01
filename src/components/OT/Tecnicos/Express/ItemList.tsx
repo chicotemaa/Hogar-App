@@ -2,8 +2,6 @@ import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { windowHeight, windowWidth } from '~/dimensions';
 import { Formulario } from '~/api/types';
-import { useNavigation, NavigationProp } from '@react-navigation/native';
-import { RootStackParams } from '~/navigator/StackNavigator';
 
 interface Props {
   formulario: Formulario;
@@ -11,8 +9,6 @@ interface Props {
 }
 
 export const ItemList = ({ formulario, expressHandler }: Props) => {
-  const stackNavigator = useNavigation<NavigationProp<RootStackParams>>();
-
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{formulario.titulo}</Text>

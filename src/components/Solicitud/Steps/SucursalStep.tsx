@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { RadioButton } from 'react-native-paper';
 import { styleStep } from './styleStep';
 
@@ -23,9 +17,7 @@ export const SucursalStep = () => {
   return (
     <View style={styleStep.container}>
       <ScrollView>
-        <RadioButton.Group
-          onValueChange={value => setValue(value)}
-          value={value}>
+        <RadioButton.Group onValueChange={setValue} value={value}>
           {sucursales.map(sucursal => {
             return (
               <View style={style.item}>

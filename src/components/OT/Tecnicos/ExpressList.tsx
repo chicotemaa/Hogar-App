@@ -9,7 +9,7 @@ import { useQuery } from 'react-query';
 import { ItemList } from './Express/ItemList';
 import { FAB } from 'react-native-paper';
 import { ScrollView } from 'react-native-gesture-handler';
-import { Formulario } from '~/api/types';
+import { Formulario, FormularioResultadoExpress } from '~/api/types';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { RootStackParams } from '~/navigator/StackNavigator';
 
@@ -28,12 +28,11 @@ export const ExpressList = () => {
   const compraHandler = async () => {
     const express = await postResultadoExpress({
       idFormCompra: '/api/formularios/98',
-      isCompra: true,
     });
     realizarExpress(express.data);
   };
 
-  const realizarExpress = formularioExpress => {
+  const realizarExpress = (formularioExpress: FormularioResultadoExpress) => {
     stackNavigator.navigate('OTScreen', {
       OT: formularioExpress,
     });

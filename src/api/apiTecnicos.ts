@@ -11,7 +11,7 @@ export const getOtByEstadoAPI = async (isPendientes: boolean) => {
   }
 
   return api
-    .get('/ordentrabajo/by/user/without-form?' + estadosOrdenes)
+    .get<Hydra<unknown>>('/ordentrabajo/by/user/without-form?' + estadosOrdenes)
     .then(response => {
       return response.data['hydra:member'];
     })
@@ -33,23 +33,32 @@ export const getOtById = async (id: number) => {
     });
 };
 export const getFormularioResultadoById = async (id: string) => {
+<<<<<<< HEAD
   return base.get(id).then(formularioResultado => {
+=======
+  return baseApi.get(id).then(formularioResultado => {
+    console.log('Formulario Resultado', formularioResultado.data);
+>>>>>>> 2d83ccf8208dbb5d1b04761fbc98a15fbb9be801
     return formularioResultado.data;
   });
 };
 
 export const getFormulariosExpressList = async () => {
-  return await api.get<FormularioResultadoExpress>('/formularios/by/express');
+  return await api.get<Hydra<Formulario>>('/formularios/by/express');
 };
 
-export const sendFormularioExpressResultado = async data => {
+export const sendFormularioExpressResultado = async (
+  data: FormularioResultadoExpressPostBody,
+) => {
   return await api.post<FormularioResultadoExpress>(
     '/formulario_resultado_expresses',
     data,
   );
 };
 
-export const modifyFormularioExpressResultado = async data => {
+export const modifyFormularioExpressResultado = async (
+  data: FormularioResultadoExpress,
+) => {
   return await api.put<FormularioResultadoExpress>(
     `/formulario_resultado_expresses/${data.id}`,
     data,

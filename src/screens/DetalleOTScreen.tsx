@@ -6,7 +6,7 @@ import { Formulario } from '~/components/OT/Detalle/Formulario';
 import { StackScreenProps } from '@react-navigation/stack';
 import React from 'react';
 
-interface Props extends StackScreenProps<any, any> { }
+interface Props extends StackScreenProps<RootStackParams, 'DetalleOTScreen'> { }
 
 export const DetalleOTScreen = ({ route }: Props) => {
   const OT: OrdenTrabajo = route.params.OT;

@@ -1,5 +1,59 @@
+export type SucursalDeClienteApiPath = `/api/sucursal_de_clientes/${number}`;
+
+// eslint-disable-next-line no-shadow
+export enum SolicitudEstado {
+  PENDIENTE = 0,
+  GENERADA_OT = 1,
+  DERIVADA = 2,
+}
+
+export const solicitudEstadoLabel = {
+  [SolicitudEstado.PENDIENTE]: 'Pendiente',
+  [SolicitudEstado.GENERADA_OT]: 'Generada OT',
+  [SolicitudEstado.DERIVADA]: 'Derivada',
+} as const;
+
+export interface Hydra<T> {
+  '@context': string;
+  '@id': string;
+  '@type': string;
+  'hydra:member': T[];
+  'hydra:totalItems': string;
+}
+
+export interface HydraWithSearch<T> extends Hydra<T> {
+  'hydra:search': HydraSearch;
+}
+
+export interface HydraWithView<T> extends Hydra<T> {
+  'hydra:view': HydraView;
+}
+
+export interface HydraSearch {
+  '@type': string;
+  'hydra:template': string;
+  'hydra:variableRepresentation': string;
+  'hydra:mapping': HydraMapping[];
+}
+
+export interface HydraMapping {
+  '@type': string;
+  variable: string;
+  property: string;
+  required: boolean;
+}
+
+export interface HydraView {
+  '@id': string;
+  '@type': string;
+  'hydra:first': string;
+  'hydra:last': string;
+  'hydra:next': string;
+}
+
 export interface Cliente {
   '@id'?: string;
+  id: number;
   condicionIVA?: string;
   readonly apellido?: string;
   readonly nombre?: string;
@@ -33,17 +87,18 @@ export interface Facility {
 export interface Formulario {
   id: number;
   '@id': string;
-  readonly titulo?: string;
-  readonly descripcion?: string;
-  readonly propiedadModulos: PropiedadModulo[];
-  readonly updatedAt?: Date;
-  readonly version?: string;
-  readonly express?: boolean;
-  readonly compraMateriales?: boolean;
+  '@type': string;
+  titulo: string;
+  descripcion: string;
+  propiedadModulos: PropiedadModulo[];
+  updatedAt: Date;
+  version: string;
+  express: boolean;
+  compraMateriales: boolean;
 }
 
 export interface PropiedadModulo {
-  id: string;
+  id: number;
   orden: number;
   modulo: Modulo;
   pagina: number;
@@ -67,14 +122,15 @@ export interface FormularioResultado {
 
 export interface FormularioResultadoExpress {
   '@id'?: string;
+  id: number;
   resultados?: any;
   latitud?: string;
   longitud?: string;
   minutosTrabajado?: number;
   estado?: number;
-  horaInicio?: Date;
+  horaInicio: string;
   cliente?: string;
-  fecha?: Date;
+  fecha: string;
   motivo?: string;
   formulario?: any;
   imageName?: string;
@@ -85,6 +141,11 @@ export interface FormularioResultadoExpress {
   readonly updatedAt?: Date;
   readonly indetificacion?: string;
 }
+
+export type FormularioResultadoExpressPostBody = Omit<
+  FormularioResultadoExpress,
+  'id'
+>;
 
 export interface Modulo {
   id: number;
@@ -116,7 +177,7 @@ export interface MediaObject {
 }
 
 export interface OrdenTrabajo {
-  SucursalDeCliente: string;
+  SucursalDeCliente: SucursalDeClienteApiPath;
   direccionSucursalCliente: string;
   cliente: Cliente;
   comentario: string;
@@ -134,9 +195,9 @@ export interface OrdenTrabajo {
   estados?: any;
   estadosGestion?: any;
   servicio?: string;
-  horaInicio?: Date;
+  horaInicio: string;
   orden?: number;
-  horaFin?: Date;
+  horaFin: string;
   user?: string;
   motivo?: string;
   sucursal?: string;
@@ -183,37 +244,56 @@ export interface Resultado {
 }
 
 export interface Servicio {
-  '@id'?: string;
-  titulo?: string;
-  descripcion?: string;
-  image?: string;
+  '@id': string;
+  id: number;
+  titulo: string;
+  descripcion: string;
+  image: string;
+}
+
+export interface SolicitudesPostBody {
+  cliente?: string;
+  servicio: string;
+  estado: SolicitudEstado;
+  necesitasAyuda: string;
+  imageSize: number;
+  updatedImageAt: string;
+  imagen: string;
+  createdAt: string;
+  numeroSucursal: null;
+  pisoSector: string;
+  consulta: string;
+  sucursal: string;
+  Facility?: string;
+  SucursalDeCliente?: SucursalDeClienteApiPath;
 }
 
 export interface Solicitudes {
   '@id'?: string;
+  id: number;
   estados?: any;
   imageFile?: any;
-  cliente?: string;
-  servicio?: undefined | string;
-  estado?: any;
+  cliente?: Cliente;
+  servicio?: Servicio;
+  estado: SolicitudEstado;
   imageSize?: number;
-  updatedImageAt?: Date;
+  updatedImageAt?: string;
   imagen?: string | null;
   ordenTrabajo?: string;
   numeroSucursal?: string;
   direccionSucursal?: string;
-  pisoSector?: string;
-  fechaCompromiso?: Date;
+  pisoSector: string;
+  fechaCompromiso?: string;
   nroIncidencia?: string;
   consulta?: string | undefined;
   sucursal?: string;
-  necesitasAyuda?: string;
+  necesitasAyuda: string;
   leido?: boolean;
   Facility?: string;
-  SucursalDeCliente?: string;
-  createdAt: string | Date;
-  updatedAt?: Date;
-  deletedAt?: Date;
+  SucursalDeCliente: SucursalDeClienteApiPath;
+  createdAt: string;
+  updatedAt?: string;
+  deletedAt?: string;
   readonly deleted?: boolean;
 }
 export interface Sucursal {
@@ -227,26 +307,28 @@ export interface Sucursal {
   textoCabecera?: string;
   textoPie?: string;
   updatedAt?: Date;
-  sucursalDeClientes?: string[];
+  sucursalDeClientes?: SucursalDeClienteApiPath[];
   deletedAt?: Date;
   readonly deleted?: boolean;
 }
 
 export interface SucursalDeCliente {
-  '@id'?: string;
-  readonly codigo?: string;
-  readonly Cliente?: any;
-  readonly direccion?: string;
+  '@id': string;
+  id: number;
+  readonly codigo: string;
+  readonly Cliente: any;
+  readonly direccion: string;
 }
 
 export interface User {
-  '@id'?: string;
-  sucursal?: string;
-  cliente?: any;
-  email?: string;
-  username?: string;
-  plainPassword?: any;
-  SucursalDeCliente?: any;
+  '@context': '/api/contexts/User';
+  '@id': `/api/users/${number}`;
+  '@type': 'User';
+  sucursal: `/api/sucursals/${number}`;
+  cliente?: Cliente;
+  email: string;
+  username: string;
+  SucursalDeCliente?: SucursalDeClienteApiPath;
   Facility?: string;
-  readonly roles?: any;
+  roles: string[];
 }

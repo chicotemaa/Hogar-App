@@ -19,15 +19,8 @@ export const ModalCierre = ({
   const [firma, setFirma] = useState<string | undefined>();
   const [aclaracion, setAclaracion] = useState<string | undefined>();
 
-  const validate = (
-    firmaValue: string | undefined,
-    aclaracionValue: string | undefined,
-  ) => {
-    return firmaValue && aclaracionValue;
-  };
-
   const pressFinalizar = () => {
-    if (validate(firma, aclaracion)) {
+    if (firma && aclaracion) {
       finalizadoHandler(firma, aclaracion);
     } else {
       console.log('is not valid');
