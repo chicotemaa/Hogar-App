@@ -5,7 +5,6 @@ import { Estado } from '~/components/OT/Detalle/Estado';
 import { Formulario } from '~/components/OT/Detalle/Formulario';
 import { StackScreenProps } from '@react-navigation/stack';
 import React from 'react';
-import { FormularioRealizado } from '~/services/tecnicosServices';
 
 interface Props extends StackScreenProps<any, any> { }
 
