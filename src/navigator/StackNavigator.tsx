@@ -29,7 +29,7 @@ export type RootStackParams = {
   FormSolicitudScreen: undefined;
   SuccessScreen: { success: boolean; isOT?: boolean };
   ListadoOTScreen: undefined;
-  DetalleOTScreen: undefined;
+  DetalleOTScreen: { OT: OrdenTrabajo };
   NewSolicitudScreen: undefined;
   TecnicosOTList: undefined;
   OTScreen: { OT?: OrdenTrabajo; formularioExpress?: Formulario };

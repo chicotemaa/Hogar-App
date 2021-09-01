@@ -1,11 +1,12 @@
-import { useNavigation } from '@react-navigation/native';
-import React, { useEffect } from 'react';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
+import React from 'react';
 import { ScrollView, View, RefreshControl, Text } from 'react-native';
 import { OrdenTrabajo } from '~/api/types';
 import { ItemOT } from '~/components/ItemOT';
 import { TransitionView } from '~/components/TransitionView';
 import { otStyle } from '~/theme/appTheme';
 import { useOrdenesTrabajoInfo } from '~/api/hooks';
+import { RootStackParams } from '~/navigator/StackNavigator';
 
 export const TecnicosOTList = ({
   isPendientes = false,
@@ -13,7 +14,7 @@ export const TecnicosOTList = ({
   isPendientes: boolean;
 }) => {
   const { data, isFetching, refetch } = useOrdenesTrabajoInfo(isPendientes);
-  const stackNavigator = useNavigation();
+  const stackNavigator = useNavigation<NavigationProp<RootStackParams>>();
 
   return (
     <View style={{ flex: 1 }}>

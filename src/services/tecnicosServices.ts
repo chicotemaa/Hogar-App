@@ -1,7 +1,5 @@
-/* eslint-disable no-shadow */
 import {
   changeStateOrdenTrabajo as changeStateOTAPI,
-  getFormularioResultadoById,
   getOtByEstadoAPI,
   getOtById,
   getFormulariosExpressList,
@@ -18,14 +16,13 @@ import {
 import { getSucursalCliente } from '../api/apiClientes';
 import {
   OrdenTrabajo,
-  MediaObject,
   Formulario,
-  FormularioResultadoExpress,
+  SucursalDeClienteApiPath,
+  FormularioResultadoExpressPostBody,
 } from '../api/types';
 import { getStorageResultados } from '~/storage';
 import { postResultado } from '~/api/apiTecnicos';
-import { AxiosResponse } from 'axios';
-import { api, uploadImage } from '~/api/api';
+import { uploadImage } from '~/api/api';
 import * as FileSystem from 'react-native-fs';
 
 // 'Pendiente': 0
@@ -60,30 +57,40 @@ export const convertb64ToFile = (b64string: string) => {
   console.log(b64string);
 
   const imgDatab64 = b64string.replace('data:image/png;base64,', '');
-  const binary = new Blob([imgDatab64], { type: 'image/png' });
+  const binary = new Blob([imgDatab64], {
+    type: 'image/png',
+    lastModified: Date.now(),
+  });
   console.log(binary);
 };
 
-export const getSucursalStreet = async (sucursalId: string) => {
+export const getSucursalStreet = async (
+  sucursalId: SucursalDeClienteApiPath,
+) => {
   const sucursal = await getSucursalCliente(sucursalId);
   return sucursal.direccion;
 };
 
-export const getExpressList = async (): Promise<Formulario[]> => {
+export const getExpressList = async () => {
   const response = await getFormulariosExpressList();
   return response.data['hydra:member'];
 };
 
+export type PostResultadExpressParam =
+  | {
+      formulario: Formulario;
+      idFormCompra?: undefined;
+    }
+  | {
+      formulario?: undefined;
+      idFormCompra: string;
+    };
+
 export const postResultadoExpress = async ({
   formulario,
-  isCompra,
   idFormCompra,
-}: {
-  formulario?: FormularioResultadoExpress;
-  isCompra?: boolean;
-  idFormCompra?: string;
-}) => {
-  let formularioToSend: FormularioResultadoExpress = {
+}: PostResultadExpressParam) => {
+  let formularioToSend: FormularioResultadoExpressPostBody = {
     resultados: [],
     latitud: '1',
     longitud: '1',
@@ -93,16 +100,16 @@ export const postResultadoExpress = async ({
     minutosTrabajado: 0,
   };
 
-  if (isCompra) {
+  if (formulario) {
     formularioToSend = {
       ...formularioToSend,
-      formulario: idFormCompra,
-      compraMateriales: true,
+      formulario: formulario['@id'],
     };
   } else {
     formularioToSend = {
       ...formularioToSend,
-      formulario: formulario['@id'],
+      formulario: idFormCompra,
+      compraMateriales: true,
     };
   }
 
@@ -282,22 +289,21 @@ const saveSignFile = async (b64String: string) => {
 
 const uploadSign = async () => {
   const arrayOfFiles = await FileSystem.readDir(FileSystem.CachesDirectoryPath);
-  const signFile = arrayOfFiles.find(element => element.name === 'sign.png');
+  // sign.png siempre existe
+  const signFile = arrayOfFiles.find(element => element.name === 'sign.png')!;
   const currentDate = Date.now().toString();
   const singUploaded = await uploadImage({
-    uri: 'file:///' + signFile.path!,
+    uri: 'file:///' + signFile.path,
     type: 'image/png',
     fileName: `firma-${currentDate}.png`,
   });
   return singUploaded.data.filePath;
 };
 
-export const FormularioRealizado = async (OT: number) => {
-  const OrdenTrabajo: OrdenTrabajo = await getOtById(OT);
+// export const formularioRealizado = async (OT: number) => {
+//   const ordenTrabajo: OrdenTrabajo = await getOtById(OT);
 
-  const TipoFormulario = OrdenTrabajo.formulario;
-  const FormularioResultado = await getFormularioResultadoById(
-    OrdenTrabajo.formularioResultado,
-  );
-  return TipoFormulario;
-};
+//   const tipoFormulario = ordenTrabajo.formulario;
+//   await getFormularioResultadoById(ordenTrabajo.formularioResultado);
+//   return tipoFormulario;
+// };

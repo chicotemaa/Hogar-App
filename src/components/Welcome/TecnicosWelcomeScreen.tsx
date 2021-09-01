@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { TecnicosOTList } from '../OT/Tecnicos/TecnicosOTList';
 import { ExpressList } from '../OT/Tecnicos/ExpressList';
@@ -6,7 +6,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const Tab = createMaterialTopTabNavigator();
 
-export const TecnicosWelcomeScreen = ({ navigation }) => {
+export const TecnicosWelcomeScreen = () => {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -46,5 +46,5 @@ const PendientesList = () => {
 };
 
 const RealizadasList = () => {
-  return <TecnicosOTList />;
+  return <TecnicosOTList isPendientes={false} />;
 };

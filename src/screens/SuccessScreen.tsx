@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { View, Text } from 'react-native';
 import LottieView from 'lottie-react-native';
 import { StackScreenProps } from '@react-navigation/stack';
@@ -13,19 +13,14 @@ interface Props extends StackScreenProps<any, any> {
 }
 
 export const SuccessScreen = ({ navigation, route }: Props) => {
-  const [success, setSuccess] = useState(route.params?.success || false);
-  const [isOt, setIsOt] = useState(route.params?.isOt || false);
+  const success = route.params?.success || false;
+  const isOt = route.params?.isOt || false;
 
   useEffect(() => {
-    goToWelcomeScreen();
-  }, []);
-
-
-  const goToWelcomeScreen = () => {
     setTimeout(() => {
       success ? navigation.navigate('WelcomeScreen') : navigation.goBack();
     }, 3000);
-  };
+  }, [navigation, success]);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>

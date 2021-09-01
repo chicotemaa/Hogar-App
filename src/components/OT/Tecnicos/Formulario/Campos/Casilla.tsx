@@ -2,7 +2,6 @@ import * as React from 'react';
 import { useContext } from 'react';
 import { RadioButton } from 'react-native-paper';
 import { PropiedadItem } from '~/api/types';
-import { FormContext } from '~/context/formulario/FormularioContext';
 import { ModuloContext } from '~/context/modulo/ModuloContext';
 
 interface Props {

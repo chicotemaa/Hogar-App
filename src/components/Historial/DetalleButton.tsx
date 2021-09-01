@@ -1,12 +1,17 @@
+import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
-import {Text, TouchableOpacity, View} from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
+import { RootStackParams } from '~/navigator/StackNavigator';
 
 interface Props {
-  navigation: any;
+  navigation: StackNavigationProp<
+    RootStackParams,
+    'HistorialSolicitudesScreen'
+  >;
   codigo: string;
 }
 
-export const DetalleButton = ({codigo, navigation}: Props) => {
+export const DetalleButton = ({ codigo, navigation }: Props) => {
   return (
     <View>
       <TouchableOpacity

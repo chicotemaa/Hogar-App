@@ -5,17 +5,17 @@ import { windowWidth, windowHeight } from '~/dimensions';
 import { OrdenTrabajo } from '~/api/types';
 
 interface Props {
-  OrdenTrabajo: OrdenTrabajo;
+  ordenTrabajo: OrdenTrabajo;
 }
 
-export const Encabezado = ({ OrdenTrabajo }: Props) => {
+export const Encabezado = ({ ordenTrabajo }: Props) => {
   return (
     <View>
       <View style={styles.container}>
-        <Text style={styles.id}>#{OrdenTrabajo.id}</Text>
-        <Text style={styles.title}>{OrdenTrabajo.formulario.titulo}</Text>
+        <Text style={styles.id}>#{ordenTrabajo.id}</Text>
+        <Text style={styles.title}>{ordenTrabajo.formulario.titulo}</Text>
         <Text style={styles.subtitle}>
-          {OrdenTrabajo.formulario.descripcion}
+          {ordenTrabajo.formulario.descripcion}
         </Text>
       </View>
       <Divider />

@@ -1,10 +1,8 @@
 import React from 'react';
 
-import { createDrawerNavigator, DrawerContent } from '@react-navigation/drawer';
-import { SettingsScreen } from '~/screens/SettingsScreen';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import { StackNavigator } from './StackNavigator';
 import { HomeScreen } from '~/screens/HomeScreen';
-import { WelcomeScreen } from '~/screens/WelcomeScreen';
 
 const Drawer = createDrawerNavigator();
 

@@ -6,8 +6,8 @@ export interface OrdenTrabajo {
   estado: number;
   fecha: string;
   horaDesde: string;
-  HoraInicio:string;
-  HoraFin:string;
+  HoraInicio: string;
+  HoraFin: string;
   horaHasta: string;
   id: number;
   latitud: string;
@@ -96,6 +96,7 @@ interface OpcionesItem {
   nombre: string;
 }
 
+// eslint-disable-next-line no-shadow
 export enum EstadosOT {
   Pendiente = 0,
   EstoyEnCamino = 1,
