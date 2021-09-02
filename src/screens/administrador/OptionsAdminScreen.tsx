@@ -38,7 +38,7 @@ export const OptionsAdmin = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#4920EF',
+    backgroundColor: '#211FB5',
     justifyContent: 'space-evenly',
     alignItems: 'center',
   },
