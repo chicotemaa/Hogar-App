@@ -7,6 +7,10 @@ export enum SolicitudEstado {
   DERIVADA = 2,
 }
 
+export type userRol =
+  'administrador' | 'tecnico' | 'cliente' | 'hogar'
+
+
 export const adminROLES = [
   'ROLE_ENCARGADO','ROLE_SUCURSAL','ROLE_ADMIN','ROLE_LIDER'
 ]
