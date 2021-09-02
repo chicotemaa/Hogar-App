@@ -10,7 +10,9 @@ export const HogarOptions = () => {
 
   const handleSolicitud = () => {};
 
-  const handleNewOt = () => {};
+  const handleNewOt = () => {
+    navigation.navigate('NewOTScreen');
+  };
 
   const handleListadoOt = () => {
     navigation.navigate('ListadoOTScreen');
