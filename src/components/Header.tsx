@@ -24,7 +24,7 @@ export const Header = ({
   const isWelcomePage = pageName === 'Bienvenido';
   const isFormSolicitud = pageName === 'Nueva Solicitud';
   pageName = pageName === 'Solicitud' ? 'Informe de solicitud' : pageName;
-  const isTecnico = roleUser === 'tecnico';
+  const isTecnico = roleUser === 'tecnico' || 'hogar';
   const paddingHeader = isWelcomePage ? (isTecnico ? 0 : 10) : 0;
   const flexDHeader = isWelcomePage ? 'column' : 'row';
   const heightPage = isTecnico ? '12%' : '30%';
