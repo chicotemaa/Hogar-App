@@ -1,4 +1,5 @@
-import { api, base } from './api';
+import { AxiosResponse } from 'axios';
+import { api } from './api';
 import { FormularioResultado, OrdenTrabajo } from './types';
 
 export const getOtByEstadoAPI = async (isPendientes: boolean) => {
@@ -33,14 +34,8 @@ export const getOtById = async (id: number) => {
     });
 };
 export const getFormularioResultadoById = async (id: string) => {
-<<<<<<< HEAD
-  return base.get(id).then(formularioResultado => {
-=======
-  return baseApi.get(id).then(formularioResultado => {
-    console.log('Formulario Resultado', formularioResultado.data);
->>>>>>> 2d83ccf8208dbb5d1b04761fbc98a15fbb9be801
-    return formularioResultado.data;
-  });
+  const formRes = id.replace('/api/', '');
+  return await api.get<FormularioResultado>(formRes);
 };
 
 export const getFormulariosExpressList = async () => {

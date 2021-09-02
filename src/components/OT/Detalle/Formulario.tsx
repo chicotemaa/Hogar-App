@@ -1,42 +1,44 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { FormularioRealizado } from '~/services/tecnicosServices';
+import { formulariosStyleheet, Text, View } from 'react-native';
+import { formularioRealizado } from '~/services/tecnicosServices';
 import { Firma } from './Firma';
 import { Modulo } from './Modulo';
 import { OrdenTrabajo } from '~/api/types';
 import { ListItem } from 'react-native-elements/dist/list/ListItem';
 import { useQuery } from 'react-query';
+import { formulariosStyle } from '~/theme/appTheme';
 
-export const Formulario = ({ ID }: number) => {
-  const [OT, setOT] = useState();
-  const { data } = useQuery(['Formulario Detalle', ID], () =>
-    FormularioRealizado(ID),
+export const Formulario = ({
+  idFormulario,
+  idResultado,
+}: {
+  idFormulario: string;
+  idResultado: string;
+}) => {
+  const { data } = useQuery(['Resultados', idFormulario, idResultado], () =>
+    formularioRealizado(idFormulario, idResultado),
   );
-  useEffect(() => {
-    setOT(data);
-  }, []);
+  console.log('data', data);
   return (
-    <View style={styles.TituloFormulario}>
-      <TituloFormulario OT={OT} />
+    <View style={formulariosStyle.TituloFormulario}>
+      {data && (
+        <TituloFormulario
+          titulo={data?.titulo}
+          descripcion={data?.descripcion}
+        />
+      )}
       <Firma />
     </View>
   );
 };
 
-const TituloFormulario = ({ OT }: any) => {
-  console.log('ot titulo prueba', OT);
+const TituloFormulario = ({ titulo, descripcion }: string) => {
   return (
-    <View style={styles.viewTitulo}>
-      <Text>Pruebas{OT.titulo}</Text>
+    <View style={formulariosStyle.viewTitulo}>
+      <Text style={formulariosStyle.TextTitulo}>Formulario: {titulo}</Text>
+      <Text style={formulariosStyle.viewTitulo}>
+        Descripcion: {descripcion}
+      </Text>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  TituloFormulario: { paddingHorizontal: 20 },
-  viewTitulo: { marginVertical: 25 },
-  TextTitulo: { fontSize: 20, fontWeight: 'bold' },
-});
-function data(data: any) {
-  throw new Error('Function not implemented.');
-}

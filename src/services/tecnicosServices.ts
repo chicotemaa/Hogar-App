@@ -5,7 +5,8 @@ import {
   getFormulariosExpressList,
   sendFormularioExpressResultado,
   modifyFormularioExpressResultado,
-} from '../api/apiTecnicos';
+  getFormularioResultadoById,
+} from '~/api/apiTecnicos';
 import Geolocation from 'react-native-geolocation-service';
 import { Platform } from 'react-native';
 import {
@@ -14,10 +15,10 @@ import {
   request,
 } from 'react-native-permissions';
 import { getSucursalCliente } from '../api/apiClientes';
-import { OrdenTrabajo } from '../api/types';
+import { OrdenTrabajo, FormularioResultado } from '../api/types';
 import { getStorageResultados } from '~/storage';
 import { postResultado } from '~/api/apiTecnicos';
-import { uploadImage } from '~/api/api';
+import { getFormularioAPI, uploadImage } from '~/api/api';
 import * as FileSystem from 'react-native-fs';
 
 // 'Pendiente': 0
@@ -295,12 +296,12 @@ const uploadSign = async () => {
   return singUploaded.data.filePath;
 };
 
-// export const formularioRealizado = async (OT: number) => {
-//   const ordenTrabajo: OrdenTrabajo = await getOtById(OT);
+export const formularioRealizado = async (
+  idFormulario: number,
+  idResultado: string,
+) => {
+  const formulario = await getFormularioAPI(idFormulario);
+  const { data: resultado } = await getFormularioResultadoById(idResultado);
 
-const TipoFormulario = OrdenTrabajo.formulario;
-const FormularioResultado = await getFormularioResultadoById(
-  OrdenTrabajo.formularioResultado,
-);
-return { ...TipoFormulario, FormularioResultado };
+  return { ...formulario, resultado };
 };

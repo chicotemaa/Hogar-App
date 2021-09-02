@@ -99,3 +99,41 @@ export const otStyle = {
     textAlign: 'center',
   },
 } as const;
+
+export const formulariosStyle = StyleSheet.create({
+  Header: { flex: 10, backgroundColor: '#FFFFFF' },
+  tituloText: {
+    fontSize: 23,
+    fontWeight: 'bold',
+    paddingHorizontal: 20,
+    borderBottomWidth: 1,
+    paddingVertical: 10,
+    borderColor: '#DFDFDF',
+  },
+  subtitulo: {
+    paddingHorizontal: 20,
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginTop: 10,
+    borderBottomWidth: 1,
+    paddingVertical: 10,
+    borderColor: '#DFDFDF',
+  },
+  contenido: {
+    paddingHorizontal: 20,
+    fontSize: 15,
+    borderBottomWidth: 1,
+    paddingVertical: 5,
+    borderColor: '#DFDFDF',
+  },
+  estado: {
+    fontSize: 20,
+    borderBottomWidth: 1,
+    paddingVertical: 5,
+    borderColor: '#DFDFDF',
+    flex: 1,
+  },
+  TituloFormulario: { paddingHorizontal: 20 },
+  viewTitulo: { marginVertical: 25 },
+  TextTitulo: { fontSize: 20, fontWeight: 'bold' },
+});
