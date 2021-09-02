@@ -8,6 +8,7 @@ import { WelcomeOptions } from '~/components/Welcome/WelcomeOptions';
 import { View } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { getNombreCliente } from '~/api/apiClientes';
+import { adminROLES } from '~/api/types';
 
 interface Props extends DrawerScreenProps<any, any> {}
 
@@ -19,16 +20,23 @@ export const WelcomeScreen = ({ navigation }: Props) => {
 
   useEffect(() => {
     getUserInfo().then(response => {
-      const { cliente, username, roles } = response.data;
-      setUserName(capitalizeFirstLetter(username));
-      if (getRoleUser(roles, 'ROLE_EMPLEADO') !== -1) {
+      setUserName(capitalizeFirstLetter(response.data.username));
+
+      if (getRoleUser(response.data.roles)) {
+        setRoleUser('user');
+      }
+      if (getRoleUser(response.data.roles)) {
         setRoleUser('tecnico');
       } else {
         // TODO verificar que pasa si user no tiene cliente
-        getNombreCliente(cliente!.id).then(nombreCliente => {
-          setClienteName(nombreCliente);
-        });
-        setRoleUser('user');
+        try {
+          getNombreCliente(response.data.cliente.id).then(nombreCliente => {
+            setClienteName(nombreCliente);
+          });
+          setRoleUser('user');
+        } catch (err) {
+          console.log(err);
+        }
       }
       setTimeout(() => {
         setLoading(false);
@@ -75,7 +83,8 @@ function capitalizeFirstLetter(string: string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-function getRoleUser(roles: string[], rolBuscado: string) {
-  const isRolBuscado = (rol: string) => rol === rolBuscado;
-  return roles.findIndex(isRolBuscado);
+function getRoleUser(rolesUser: string[]) {
+  const isTecnico = rolesUser.some((rol: string) => rol === 'ROLE_EMPLEADO');
+  const isAdministrador = rolesUser.some(v => adminROLES.indexOf(v) >= 0);
+  return isAdministrador ? 'tecnico' : isTecnico ? 'tecnico' : 'cliente';
 }
