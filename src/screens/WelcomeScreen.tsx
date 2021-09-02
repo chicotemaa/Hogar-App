@@ -10,8 +10,8 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import { getNombreCliente } from '~/api/apiClientes';
 import { adminROLES, userRol } from '~/api/types';
 import { useQuery } from 'react-query';
-import { OptionsAdmin } from './administrador/OptionsAdmin';
-import { HogarOptions } from './administrador/HogarOptions';
+import { OptionsAdmin } from '~/screens/administrador/OptionsAdminScreen';
+import { HogarOptions } from '~/components/Welcome/HogarOptions';
 
 interface Props extends DrawerScreenProps<any, any> {}
 
