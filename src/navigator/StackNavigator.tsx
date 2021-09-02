@@ -15,7 +15,6 @@ import { DetalleOTScreen } from '~/screens/DetalleOTScreen';
 import { NewSolicitudScreen } from '~/screens/NewSolicitudScreen';
 import { TecnicosOTList } from '~/components/OT/Tecnicos/TecnicosOTList';
 import { OTScreen } from '~/screens/tecnicos/OTScreen';
-import { Camera } from '~/screens/Camera';
 import { OrdenTrabajo, Formulario } from '~/api/types';
 
 /* Params in pages */
@@ -26,7 +25,7 @@ export type RootStackParams = {
   CrearSolicitudScreen: { navigation: any };
   DetalleSolicitudScreen: { codigo: string; navigation: any };
   HistorialSolicitudesScreen: undefined;
-  FormSolicitudScreen: undefined;
+  FormSolicitudScreen: unknown;
   SuccessScreen: { success: boolean; isOT?: boolean };
   ListadoOTScreen: undefined;
   DetalleOTScreen: { OT: OrdenTrabajo };
@@ -94,7 +93,6 @@ export const StackNavigator = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen name="OTScreen" component={OTScreen} />
-      <Stack.Screen name="Camera" component={Camera} />
     </Stack.Navigator>
   );
 };
