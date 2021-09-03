@@ -2,7 +2,15 @@ import React, { useState } from 'react';
 import { View } from 'react-native';
 import { List } from 'react-native-paper';
 
-export const Picker = ({ title, items }: { title: string; items: any }) => {
+export const Picker = ({
+  title,
+  items,
+  handleValue,
+}: {
+  title: string;
+  items: any;
+  handleValue: (value) => void;
+}) => {
   const [expanded, setExpanded] = useState(false);
   const [listTitle, setTitle] = useState(title);
 
@@ -10,6 +18,7 @@ export const Picker = ({ title, items }: { title: string; items: any }) => {
     console.log(item);
     setTitle(item.nombre);
     setExpanded(v => !v);
+    handleValue(item);
   };
   //Remain item tiene que tener campo nombre
   return (

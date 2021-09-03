@@ -1,23 +1,49 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text, TextInput, View, StyleSheet } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { Button } from 'react-native-paper';
-import { Picker } from '~/components/Picker';
 import { DateInput } from '~/components/OT/Tecnicos/Formulario/Campos/Date';
 import { Header } from '~/components/Header';
 import { ScrollView } from 'react-native-gesture-handler';
 import { windowWidth } from '~/dimensions';
 import { useQuery } from 'react-query';
-import { getAllInfoOT } from '~/services/AdministradorServices';
+import {
+  filtrarSucClienteBySector,
+  getAllInfoOT,
+} from '~/services/AdministradorServices';
+import { Picker } from '~/components/Picker';
+import Spinner from 'react-native-loading-spinner-overlay';
+import { Sucursal } from '~/api/types';
 
 export const FormNewOTScreen = () => {
   const { data, isFetching } = useQuery('infoOt', getAllInfoOT);
-
-  const tecnicos = [];
+  const [sector, setSector] = useState<number>();
+  const [sucursalCliente, setSucurscalCliente] = useState<string>();
 
   useEffect(() => {
     console.log('data del query', data);
   }, [data]);
+
+  const handleValueSector = (sector: Sucursal) => {
+    setSector(sector.id);
+    filtrarSucClienteBySector(sector.sucursalDeClientes);
+  };
+
+  const handleValueSucursalCliente = (id: number) => {
+    console.log(id);
+  };
+
+  if (isFetching) {
+    return (
+      <View>
+        <Spinner
+          visible={isFetching}
+          textContent={'Cargando...'}
+          textStyle={{ color: '#FFF' }}
+        />
+      </View>
+    );
+  }
 
   return (
     <>
@@ -28,13 +54,29 @@ export const FormNewOTScreen = () => {
             <Text style={styles.title}>Información</Text>
             <ScrollView contentContainerStyle={styles.containerItems}>
               <Title text={'Sector de Hogar'} />
-              <Picker title={'Seleccione región'} items={data[1]} />
+              <Picker
+                handleValue={handleValueSector}
+                title={'Seleccione región'}
+                items={data[1]}
+              />
               <Title text={'Sucursal de cliente'} />
-              <Picker title={'Seleccione una sucursal'} items={tecnicos} />
+              <Picker
+                handleValue={handleValueSector}
+                title={'Seleccione una sucursal'}
+                items={data[1]}
+              />
               <Title text={'Técnico asignado'} />
-              <Picker title={'Seleccione un técnico'} items={tecnicos} />
+              <Picker
+                handleValue={handleValueSector}
+                title={'Seleccione un técnico'}
+                items={data[0]}
+              />
               <Title text={'Formulario'} />
-              <Picker title={'Seleccione formulario'} items={tecnicos} />
+              <Picker
+                handleValue={handleValueSector}
+                title={'Seleccione formulario'}
+                items={data[1]}
+              />
               <Title text={'Comentario'} />
               <TextInput placeholder="Ingrese un comentario para el técnico" />
               <Title text={'Fecha'} />

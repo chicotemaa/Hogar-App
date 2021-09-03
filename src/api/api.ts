@@ -181,7 +181,11 @@ interface UserList {
   nombre: string;
 }
 
+interface ListUsersResponse {
+  results: UserList[];
+}
+
 export const getTecnicosAPI = async () => {
-  const response = await api.get<UserList[]>('/user/list');
-  return response.data;
+  const response = await api.get<ListUsersResponse>('/user/list');
+  return response.data.results;
 };
