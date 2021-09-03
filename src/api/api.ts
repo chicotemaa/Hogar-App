@@ -175,3 +175,13 @@ export const getSucursalesDeClienteAPI = async () => {
   );
   return response.data['hydra:member'];
 };
+
+interface UserList {
+  id: number;
+  nombre: string;
+}
+
+export const getTecnicosAPI = async () => {
+  const response = await api.get<UserList[]>('/user/list');
+  return response.data;
+};
