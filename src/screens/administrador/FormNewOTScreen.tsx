@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Text, TextInput, View, StyleSheet } from 'react-native';
+import { Text, TextInput, View, StyleSheet, Alert } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { Button } from 'react-native-paper';
 import { DateInput } from '~/components/OT/Tecnicos/Formulario/Campos/Date';
@@ -44,6 +44,11 @@ export const FormNewOTScreen = () => {
       </View>
     );
   }
+
+  const createTwoButtonAlert = () =>
+    Alert.alert('Alert Title', 'My Alert Msg', [
+      { text: 'OK', onPress: () => console.log('OK Pressed') },
+    ]);
 
   return (
     <>
@@ -92,7 +97,10 @@ export const FormNewOTScreen = () => {
                   <DateInput modo={'time'} />
                 </View>
               </View>
-              <Button color={'#ee5020'} mode={'contained'} onPress={() => {}}>
+              <Button
+                color={'#ee5020'}
+                mode={'contained'}
+                onPress={createTwoButtonAlert}>
                 Crear Orden de Trabajo
               </Button>
             </ScrollView>

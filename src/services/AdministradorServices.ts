@@ -1,22 +1,22 @@
-import { getSectoresHogar, getSucursalesDeClienteAPI } from '~/api/api';
+import {
+  getSectoresHogarAPI,
+  getSucursalesDeClienteAPI,
+  getTecnicosAPI,
+} from '~/api/api';
 import { Sucursal } from '~/api/types';
 
 export const getAllInfoOT = async () => {
-  let info = await Promise.all([
-    getTecnicos(),
-    getSectores(),
-    getSucursalesCliente(),
-  ]);
+  let info = await Promise.all([getTecnicos(), getSectores()]);
   info[1] = filtrarSectores(info[1]);
   return info;
 };
 
 const getTecnicos = async () => {
-  return 'Tecnico';
+  return await getTecnicosAPI();
 };
 
 const getSectores = async () => {
-  const sectores = await getSectoresHogar();
+  const sectores = await getSectoresHogarAPI();
   return sectores;
 };
 
@@ -34,8 +34,20 @@ const findSector = (sectores: Sucursal[], nombreBuscado: string) => {
 };
 
 const getSucursalesCliente = async () => {
-  const sucursales = getSucursalesDeClienteAPI();
+  const sucursales = await getSucursalesDeClienteAPI();
   return sucursales;
+};
+
+export const filtrarSucClienteBySector = async (sectores: string[]) => {
+  const sucursalesCliente = await getSucursalesCliente();
+  let sucursalesFiltradas = [];
+
+  sucursalesCliente.forEach(sucursalAPI => {
+    console.log(sucursalAPI.direccion);
+  });
+
+  console.log(sucursalesCliente);
+  console.log(sectores);
 };
 
 const getFormularios = async => {};
