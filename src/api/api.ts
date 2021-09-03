@@ -7,6 +7,8 @@ import {
   Hydra,
   User,
   OrdenTrabajo,
+  Sucursal,
+  SucursalDeCliente,
 } from './types';
 import { Buffer } from 'buffer';
 
@@ -160,4 +162,16 @@ export const getOtByUserAPI = async () => {
   return await api.get<Hydra<OrdenTrabajo[]>>(
     '/ordentrabajo/by/user/without-form?',
   );
+};
+
+export const getSectoresHogarAPI = async () => {
+  const response = await api.get<Hydra<Sucursal>>('/sucursals');
+  return response.data['hydra:member'];
+};
+
+export const getSucursalesDeClienteAPI = async () => {
+  const response = await api.get<Hydra<SucursalDeCliente>>(
+    '/sucursal_de_clientes',
+  );
+  return response.data['hydra:member'];
 };
