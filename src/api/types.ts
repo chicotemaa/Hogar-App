@@ -7,13 +7,15 @@ export enum SolicitudEstado {
   DERIVADA = 2,
 }
 
-export type userRol =
-  'administrador' | 'tecnico' | 'cliente' | 'hogar'
-
+export type userRol = 'administrador' | 'tecnico' | 'cliente' | 'hogar';
 
 export const adminROLES = [
-  'ROLE_ENCARGADO','ROLE_SUCURSAL','ROLE_ADMIN','ROLE_LIDER'
-]
+  'ROLE_ENCARGADO',
+  'ROLE_SUCURSAL',
+  'ROLE_ADMIN',
+  'ROLE_LIDER',
+  ,
+];
 
 export const solicitudEstadoLabel = {
   [SolicitudEstado.PENDIENTE]: 'Pendiente',
@@ -311,6 +313,7 @@ export interface Sucursal {
   imagePieFile?: any;
   imagePie?: string;
   nombre?: string;
+  name?: string;
   pais?: any;
   textoCabecera?: string;
   textoPie?: string;
