@@ -136,4 +136,5 @@ export const formulariosStyle = StyleSheet.create({
   TituloFormulario: { paddingHorizontal: 20 },
   viewTitulo: { marginVertical: 25 },
   TextTitulo: { fontSize: 20, fontWeight: 'bold' },
+  Resaltado: { fontWeight: 'bold' },
 });
