@@ -2,21 +2,23 @@ import React from 'react';
 import { View, ScrollView } from 'react-native';
 import { Header } from '~/components/Header';
 import { ItemOT } from '~/components/ItemOT';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
+import { RootStackParams } from '~/navigator/StackNavigator';
+import { OrdenTrabajo } from '~/api/types';
 
 export const ListadoOTScreen = () => {
   const OT = {
     id: 3,
-    location: 'Sarmiento 123',
     cliente: {
+      id: 4,
       razonSocial: 'Santander',
     },
     fecha: '12 agosto 2020',
     estado: 4,
     horaDesde: '2021-03-31T15:30',
     horaHasta: '2021-03-31T15:30',
-  };
-  const navigation = useNavigation();
+  } as OrdenTrabajo;
+  const navigation = useNavigation<NavigationProp<RootStackParams>>();
 
   return (
     <>
@@ -28,7 +30,7 @@ export const ListadoOTScreen = () => {
             titulo="Vidrio roto"
             goToScreen={() => {
               //TODO: pasar por params la OT correspondiente
-              navigation.navigate('DetalleOTScreen');
+              navigation.navigate('DetalleOTScreen', { OT });
             }}
           />
         </ScrollView>

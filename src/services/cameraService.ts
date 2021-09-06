@@ -22,7 +22,7 @@ export function launchCamera(options: CameraOptions): Promise<Asset[] | null> {
       } else if (resp.didCancel) {
         resolve(null);
       } else {
-        resolve(resp.assets);
+        resolve(resp.assets ?? null);
       }
     });
   });

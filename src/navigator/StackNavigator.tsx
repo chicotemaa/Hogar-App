@@ -16,13 +16,13 @@ import { NewSolicitudScreen } from '~/screens/NewSolicitudScreen';
 import { TecnicosOTList } from '~/components/OT/Tecnicos/TecnicosOTList';
 import { OTScreen } from '~/screens/tecnicos/OTScreen';
 import { Camera } from '~/screens/Camera';
-import { OrdenTrabajo, Formulario } from '~/api/types';
+import { OrdenTrabajo, FormularioResultadoExpress } from '~/api/types';
 
 /* Params in pages */
 export type RootStackParams = {
   HomeScreen: undefined;
   LoginScreen: undefined;
-  WelcomeScreen: { email: string; token: string };
+  WelcomeScreen: { email: string; token: string } | undefined;
   CrearSolicitudScreen: { navigation: any };
   DetalleSolicitudScreen: { codigo: string; navigation: any };
   HistorialSolicitudesScreen: undefined;
@@ -32,7 +32,9 @@ export type RootStackParams = {
   DetalleOTScreen: { OT: OrdenTrabajo };
   NewSolicitudScreen: undefined;
   TecnicosOTList: undefined;
-  OTScreen: { OT?: OrdenTrabajo; formularioExpress?: Formulario };
+  OTScreen: {
+    OT?: OrdenTrabajo | FormularioResultadoExpress;
+  };
   Camera: undefined;
 };
 

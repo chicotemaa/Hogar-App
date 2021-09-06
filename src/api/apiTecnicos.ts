@@ -5,7 +5,8 @@ import {
   FormularioResultadoExpress,
   Hydra,
   Formulario,
-  FormularioResultadoExpressPostBody,
+  PostBody,
+  FormularioResultadoExpressPutBody,
 } from './types';
 
 export const getOtByEstadoAPI = async (isPendientes: boolean) => {
@@ -51,7 +52,7 @@ export const getFormulariosExpressList = async () => {
 };
 
 export const sendFormularioExpressResultado = async (
-  data: FormularioResultadoExpressPostBody,
+  data: PostBody<FormularioResultadoExpress>,
 ) => {
   return await api.post<FormularioResultadoExpress>(
     '/formulario_resultado_expresses',
@@ -60,7 +61,7 @@ export const sendFormularioExpressResultado = async (
 };
 
 export const modifyFormularioExpressResultado = async (
-  data: FormularioResultadoExpress,
+  data: FormularioResultadoExpressPutBody,
 ) => {
   return await api.put<FormularioResultadoExpress>(
     `/formulario_resultado_expresses/${data.id}`,
@@ -69,7 +70,7 @@ export const modifyFormularioExpressResultado = async (
 };
 
 export const changeStateOrdenTrabajo = async (
-  ordenTrabajo: OrdenTrabajo,
+  ordenTrabajo: OrdenTrabajo | FormularioResultadoExpress,
   data: any,
 ) => {
   const response = await api.put(`/orden_trabajos/${ordenTrabajo.id}`, data);

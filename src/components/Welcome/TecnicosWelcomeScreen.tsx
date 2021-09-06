@@ -10,8 +10,8 @@ export const TecnicosWelcomeScreen = () => {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
-          let iconName;
+        tabBarIcon: ({ focused, color }) => {
+          let iconName = 'ios-help-circle';
           if (route.name === 'Pendientes') {
             iconName = focused
               ? 'ios-information-circle'
@@ -21,7 +21,7 @@ export const TecnicosWelcomeScreen = () => {
           }
 
           // You can return any component that you like here!
-          return <Ionicons name={iconName} size={size} color={color} />;
+          return <Ionicons name={iconName} color={color} />;
         },
         tabBarActiveTintColor: 'tomato',
         tabBarInactiveTintColor: 'gray',
