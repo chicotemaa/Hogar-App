@@ -308,6 +308,7 @@ export interface Solicitudes {
 }
 export interface Sucursal {
   '@id'?: string;
+  id: number;
   imageCabeceraFile?: any;
   imageCabecera?: string;
   imagePieFile?: any;
