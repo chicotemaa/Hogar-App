@@ -4,17 +4,16 @@ import LottieView from 'lottie-react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { styles } from '~/theme/appTheme';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { RootStackParams } from '~/navigator/StackNavigator';
 
 const errorAnimation = require('~/assets/lottie/error');
 const successAnimation = require('~/assets/lottie/success');
 
-interface Props extends StackScreenProps<any, any> {
-  isOt?: boolean;
-}
+interface Props extends StackScreenProps<RootStackParams, 'SuccessScreen'> {}
 
 export const SuccessScreen = ({ navigation, route }: Props) => {
   const success = route.params?.success || false;
-  const isOt = route.params?.isOt || false;
+  const isOt = route.params?.isOT || false;
 
   useEffect(() => {
     setTimeout(() => {

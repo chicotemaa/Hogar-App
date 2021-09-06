@@ -7,7 +7,7 @@ export const Firma = () => {
     flex: 1,
     paddingVertical: 10,
     textAlign: 'center',
-  };
+  } as const;
 
   return (
     <View>

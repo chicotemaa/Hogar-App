@@ -1,8 +1,8 @@
 import React from 'react';
-import { StyleSheet, StyleSheetProperties } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { Text, View } from 'react-native';
 import { windowWidth } from '~/dimensions';
-import { PropiedadItem } from '~/api/types';
+import { ItemTipo, PropiedadItem } from '~/api/types';
 import { Casilla } from './Casilla';
 import { Desplegable } from './Desplegable';
 import { Seleccion } from './Seleccion';
@@ -45,9 +45,7 @@ function isRenderedField({
 
 export const BaseCampo = ({ propiedadItem, parentItem }: Props) => {
   const { getResultado } = useContext(ModuloContext);
-  let styleChildren: StyleSheetProperties = parentItem
-    ? styles.childContainer
-    : undefined;
+  let styleChildren = parentItem ? styles.childContainer : undefined;
 
   if (!isRenderedField({ propiedadItem, getResultado, parentItem })) {
     return null;
@@ -127,16 +125,16 @@ const styles = StyleSheet.create({
 
 //TODO: crear wrapper para campos
 const CampoTypes = {
-  texto: Texto,
-  foto: Foto,
-  seleccion_multiple: Casilla,
-  desplegable: Desplegable,
-  casilla_de_verificacion: Seleccion,
-  titulo: Texto,
-  date_time: DateInput,
-  date: DateInput,
-  time: DateInput,
-  numero: Numero,
+  [ItemTipo.TEXTO]: Texto,
+  [ItemTipo.FOTO]: Foto,
+  [ItemTipo.SELECCION_MULTIPLE]: Casilla,
+  [ItemTipo.DESPLEGABLE]: Desplegable,
+  [ItemTipo.CASILLA_DE_VERIFICACION]: Seleccion,
+  [ItemTipo.TITULO]: Texto,
+  [ItemTipo.DATE_TIME]: DateInput,
+  [ItemTipo.DATE]: DateInput,
+  [ItemTipo.TIME]: DateInput,
+  [ItemTipo.NUMERO]: Numero,
 };
 
 const Campo = (propiedadItem: PropiedadItem) => {

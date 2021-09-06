@@ -3,13 +3,12 @@ import { View } from 'react-native';
 import { Header } from '../../components/Header';
 import { StackScreenProps } from '@react-navigation/stack';
 import { BasePage } from '../../components/OT/Tecnicos/Formulario/Pagina/BasePage';
+import { RootStackParams } from '~/navigator/StackNavigator';
 
-import { OrdenTrabajo } from '~/api/types';
-
-interface Props extends StackScreenProps<any, any> {}
+interface Props extends StackScreenProps<RootStackParams, 'OTScreen'> {}
 
 export const OTScreen = ({ route }: Props) => {
-  const OT: OrdenTrabajo | undefined = route.params?.OT;
+  const OT = route.params?.OT;
   console.log(route.params);
 
   return (

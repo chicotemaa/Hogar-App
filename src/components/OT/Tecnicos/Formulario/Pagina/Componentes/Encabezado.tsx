@@ -2,10 +2,10 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Divider } from 'react-native-paper';
 import { windowWidth, windowHeight } from '~/dimensions';
-import { OrdenTrabajo } from '~/api/types';
+import { FormularioResultadoExpress, OrdenTrabajo } from '~/api/types';
 
 interface Props {
-  ordenTrabajo: OrdenTrabajo;
+  ordenTrabajo: OrdenTrabajo | FormularioResultadoExpress;
 }
 
 export const Encabezado = ({ ordenTrabajo }: Props) => {

@@ -3,7 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { windowHeight, windowWidth } from '~/dimensions';
 import { HeaderWithSteps } from './HeaderWithSteps';
 
-class Step extends PureComponent {
+class Step extends PureComponent<any> {
   state = {};
 
   render() {
