@@ -1,4 +1,5 @@
 import {
+  getFormulariosListadoAPI,
   getSectoresHogarAPI,
   getSucursalesDeClienteAPI,
   getTecnicosAPI,
@@ -6,8 +7,13 @@ import {
 import { Sucursal } from '~/api/types';
 
 export const getAllInfoOT = async () => {
-  let info = await Promise.all([getTecnicos(), getSectores()]);
-  info[1] = filtrarSectores(info[1]);
+  let info = await Promise.all([
+    getSectores(),
+    getSucursalesCliente(),
+    getTecnicos(),
+    getFormularios(),
+  ]);
+  info[0] = filtrarSectores(info[0]);
   return info;
 };
 
@@ -35,6 +41,7 @@ const findSector = (sectores: Sucursal[], nombreBuscado: string) => {
 
 const getSucursalesCliente = async () => {
   const sucursales = await getSucursalesDeClienteAPI();
+  console.log(sucursales);
   return sucursales;
 };
 
@@ -50,4 +57,12 @@ export const filtrarSucClienteBySector = async (sectores: string[]) => {
   console.log(sectores);
 };
 
-const getFormularios = async => {};
+const getFormularios = async () => {
+  const formulariosListado = await getFormulariosListadoAPI();
+  return formulariosListado;
+};
+
+const createNewOrdenTrabajo = async (data): Promise<boolean> => {
+  console.log(data);
+  return true;
+};

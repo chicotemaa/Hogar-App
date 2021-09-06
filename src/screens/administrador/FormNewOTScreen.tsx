@@ -13,24 +13,31 @@ import {
 } from '~/services/AdministradorServices';
 import { Picker } from '~/components/Picker';
 import Spinner from 'react-native-loading-spinner-overlay';
-import { Sucursal } from '~/api/types';
+import { Formulario, Sucursal, User } from '~/api/types';
 
 export const FormNewOTScreen = () => {
   const { data, isFetching } = useQuery('infoOt', getAllInfoOT);
   const [sector, setSector] = useState<number>();
   const [sucursalCliente, setSucurscalCliente] = useState<string>();
+  const [formulario, setFormulario] = useState<Formulario>();
 
-  useEffect(() => {
-    console.log('data del query', data);
-  }, [data]);
-
-  const handleValueSector = (sector: Sucursal) => {
-    setSector(sector.id);
-    filtrarSucClienteBySector(sector.sucursalDeClientes);
+  const handleValueSector = (sectorSelected: Sucursal) => {
+    console.log('sector', sectorSelected);
+    setSector(sectorSelected.id);
+    //filtrarSucClienteBySector(sectorSelected.sucursalDeClientes);
   };
 
-  const handleValueSucursalCliente = (id: number) => {
-    console.log(id);
+  const handleValueSucursalCliente = (sucursalSelected: Sucursal) => {
+    console.log('sucursal', sucursalSelected);
+  };
+
+  const handleValueTecnico = (tecnicoSelected: User) => {
+    console.log('tecnico', tecnicoSelected);
+  };
+
+  const handleValueFormulario = (formularioSelected: Formulario) => {
+    console.log('formulario', formularioSelected);
+    setFormulario(formularioSelected);
   };
 
   if (isFetching) {
@@ -62,25 +69,25 @@ export const FormNewOTScreen = () => {
               <Picker
                 handleValue={handleValueSector}
                 title={'Seleccione región'}
-                items={data[1]}
+                items={data[0]}
               />
               <Title text={'Sucursal de cliente'} />
               <Picker
-                handleValue={handleValueSector}
+                handleValue={handleValueSucursalCliente}
                 title={'Seleccione una sucursal'}
                 items={data[1]}
               />
               <Title text={'Técnico asignado'} />
               <Picker
-                handleValue={handleValueSector}
+                handleValue={handleValueTecnico}
                 title={'Seleccione un técnico'}
-                items={data[0]}
+                items={data[2]}
               />
               <Title text={'Formulario'} />
               <Picker
-                handleValue={handleValueSector}
+                handleValue={handleValueFormulario}
                 title={'Seleccione formulario'}
-                items={data[1]}
+                items={data[3]}
               />
               <Title text={'Comentario'} />
               <TextInput placeholder="Ingrese un comentario para el técnico" />
@@ -97,12 +104,14 @@ export const FormNewOTScreen = () => {
                   <DateInput modo={'time'} />
                 </View>
               </View>
-              <Button
-                color={'#ee5020'}
-                mode={'contained'}
-                onPress={createTwoButtonAlert}>
-                Crear Orden de Trabajo
-              </Button>
+              <View style={{ marginTop: 30 }}>
+                <Button
+                  color={'#ee5020'}
+                  mode={'contained'}
+                  onPress={createTwoButtonAlert}>
+                  Crear Orden de Trabajo
+                </Button>
+              </View>
             </ScrollView>
           </View>
         </>

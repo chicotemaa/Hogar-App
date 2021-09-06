@@ -2,21 +2,31 @@ import React, { useState } from 'react';
 import { View } from 'react-native';
 import { List } from 'react-native-paper';
 
+interface Item {
+  nombre?: string;
+  titulo?: string;
+  codigo?: string;
+  direccion?: string;
+}
+
 export const Picker = ({
   title,
   items,
   handleValue,
 }: {
   title: string;
-  items: any;
+  items: Item[];
   handleValue: (value) => void;
 }) => {
   const [expanded, setExpanded] = useState(false);
-  const [listTitle, setTitle] = useState(title);
+  const [listTitle, setTitle] = useState<undefined | string>(title);
 
-  const handlePress = item => {
-    console.log(item);
-    setTitle(item.nombre);
+  const handlePress = (item: Item) => {
+    setTitle(
+      item.nombre ||
+        item.titulo ||
+        (item.codigo && `${item.codigo} - ${item.direccion}`),
+    );
     setExpanded(v => !v);
     handleValue(item);
   };
@@ -33,7 +43,11 @@ export const Picker = ({
           return (
             <List.Item
               key={index}
-              title={item.nombre}
+              title={
+                item.nombre ||
+                item.titulo ||
+                (item.codigo && `${item.codigo} | ${item.direccion}`)
+              }
               onPress={() => handlePress(item)}
             />
           );

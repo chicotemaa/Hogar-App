@@ -189,3 +189,8 @@ export const getTecnicosAPI = async () => {
   const response = await api.get<ListUsersResponse>('/user/list');
   return response.data.results;
 };
+
+export const getFormulariosListadoAPI = async () => {
+  const response = await api.get<Hydra<Formulario>>('/formularios/listado');
+  return response.data['hydra:member'];
+};
