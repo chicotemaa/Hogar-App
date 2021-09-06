@@ -24,7 +24,7 @@ import {
 } from '../api/types';
 import { getStorageResultados } from '~/storage';
 import { postResultado } from '~/api/apiTecnicos';
-import { uploadImage } from '~/api/api';
+import { uploadImage, getOtByUserAPI } from '~/api/api';
 import * as FileSystem from 'react-native-fs';
 
 // 'Pendiente': 0
@@ -172,6 +172,12 @@ export const getOrdenesTrabajoInfo = async (
       };
     }),
   );
+};
+
+export const getOtByUser = async () => {
+  const response = await getOtByUserAPI();
+  console.log(response.data);
+  return response.data['hydra:member'];
 };
 
 export const changeStateEnCamino = (ordenTrabajo: OrdenTrabajo) => {

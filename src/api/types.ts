@@ -19,6 +19,16 @@ export enum SolicitudEstado {
   DERIVADA = 2,
 }
 
+export type userRol = 'administrador' | 'tecnico' | 'cliente' | 'hogar';
+
+export const adminROLES = [
+  'ROLE_ENCARGADO',
+  'ROLE_SUCURSAL',
+  'ROLE_ADMIN',
+  'ROLE_LIDER',
+  ,
+];
+
 export const solicitudEstadoLabel = {
   [SolicitudEstado.PENDIENTE]: 'Pendiente',
   [SolicitudEstado.GENERADA_OT]: 'Generada OT',
@@ -324,11 +334,13 @@ export interface Solicitudes {
 }
 export interface Sucursal {
   '@id'?: string;
+  id: number;
   imageCabeceraFile?: any;
   imageCabecera?: string;
   imagePieFile?: any;
   imagePie?: string;
   nombre?: string;
+  name?: string;
   pais?: any;
   textoCabecera?: string;
   textoPie?: string;
@@ -346,11 +358,11 @@ export interface SucursalDeCliente {
   readonly direccion: string;
 }
 
+//TODO: `/api/sucursals/${number}` fixear number toma como valor
+
 export interface User {
-  '@context': '/api/contexts/User';
-  '@id': `/api/users/${number}`;
-  '@type': 'User';
-  sucursal: `/api/sucursals/${number}`;
+  '@id': string;
+  sucursal: string;
   cliente?: Cliente;
   email: string;
   username: string;

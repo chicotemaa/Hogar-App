@@ -1,6 +1,15 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { MediaObject, Formulario, Servicio, Hydra, User } from './types';
+import {
+  MediaObject,
+  Formulario,
+  Servicio,
+  Hydra,
+  User,
+  OrdenTrabajo,
+  Sucursal,
+  SucursalDeCliente,
+} from './types';
 import { Buffer } from 'buffer';
 
 const clientId = '1_4ta05vfoy58ggoggwo08kck000kocckwgcckk8wgkck440cgcw';
@@ -146,6 +155,42 @@ export const getAllServiciosAPI = async () => {
 
 export const getFormularioAPI = async (id: number): Promise<Formulario> => {
   const response = await api.get<Formulario>(`/formularios/${id}`);
-
   return response.data;
+};
+
+export const getOtByUserAPI = async () => {
+  return await api.get<Hydra<OrdenTrabajo[]>>(
+    '/ordentrabajo/by/user/without-form?',
+  );
+};
+
+export const getSectoresHogarAPI = async () => {
+  const response = await api.get<Hydra<Sucursal>>('/sucursals');
+  return response.data['hydra:member'];
+};
+
+export const getSucursalesDeClienteAPI = async () => {
+  const response = await api.get<Hydra<SucursalDeCliente>>(
+    '/sucursal_de_clientes',
+  );
+  return response.data['hydra:member'];
+};
+
+interface UserList {
+  id: number;
+  nombre: string;
+}
+
+interface ListUsersResponse {
+  results: UserList[];
+}
+
+export const getTecnicosAPI = async () => {
+  const response = await api.get<ListUsersResponse>('/user/list');
+  return response.data.results;
+};
+
+export const getFormulariosListadoAPI = async () => {
+  const response = await api.get<Hydra<Formulario>>('/formularios/listado');
+  return response.data['hydra:member'];
 };

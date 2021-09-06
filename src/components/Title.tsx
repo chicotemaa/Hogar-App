@@ -2,7 +2,7 @@ import React from 'react';
 import { Text } from 'react-native-elements';
 
 interface Props {
-  text: string;
+  text?: string;
   color: string;
   size: number;
   bold?: boolean;
@@ -10,6 +10,8 @@ interface Props {
 
 export const Title = ({ text, color, size }: Props) => {
   return (
-    <Text style={[{ color, fontSize: size, textAlign: 'center' }]}>{text}</Text>
+    <Text style={[{ color, fontSize: size, textAlign: 'center' }]}>
+      {text || ''}
+    </Text>
   );
 };
