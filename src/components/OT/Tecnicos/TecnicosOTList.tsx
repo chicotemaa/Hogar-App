@@ -50,9 +50,15 @@ const EmptyList = () => {
   );
 };
 
-const ListItem = ({ OT, stackNavigator }) => {
+const ListItem = ({
+  OT,
+  stackNavigator,
+}: {
+  OT: OrdenTrabajo;
+  stackNavigator: NavigationProp<RootStackParams>;
+}) => {
   return (
-    <TransitionView key={OT.id} animation="slideInUp" index={0} isOT>
+    <TransitionView key={OT.id} index={0}>
       <ItemOT
         OT={OT}
         titulo={OT.formulario.titulo}

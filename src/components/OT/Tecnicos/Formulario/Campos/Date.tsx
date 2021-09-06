@@ -3,14 +3,15 @@ import { View, Platform, Text } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { IconButton } from 'react-native-paper';
 import { windowHeight } from '~/dimensions';
+import { ItemTipo, PropiedadItem } from '~/api/types';
 
 type AndroidMode = 'date' | 'time';
 
-interface DatePickerProps {
-  modo: AndroidMode | 'completo';
+interface Props {
+  propiedadItem: PropiedadItem;
 }
 
-export const DateInput = ({ modo }: DatePickerProps) => {
+export const DateInput = ({ propiedadItem }: Props) => {
   const [date, setDate] = useState(new Date(1598051730000));
   const [mode, setMode] = useState<AndroidMode>('date');
   const [show, setShow] = useState(false);
@@ -65,7 +66,7 @@ export const DateInput = ({ modo }: DatePickerProps) => {
   return (
     <View>
       <View style={{ backgroundColor: '#f2f2f2' }}>
-        {modo === 'date' ? (
+        {propiedadItem.item.tipo === ItemTipo.DATE ? (
           <View style={{ flexDirection: 'row' }}>
             <IconButton
               icon="calendar"
@@ -75,7 +76,7 @@ export const DateInput = ({ modo }: DatePickerProps) => {
             />
             <FechaString />
           </View>
-        ) : modo === 'time' ? (
+        ) : propiedadItem.item.tipo === ItemTipo.TIME ? (
           <View style={{ flexDirection: 'row' }}>
             <IconButton
               icon="clock"

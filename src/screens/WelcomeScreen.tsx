@@ -8,74 +8,98 @@ import { WelcomeOptions } from '~/components/Welcome/WelcomeOptions';
 import { View } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { getNombreCliente } from '~/api/apiClientes';
+import { adminROLES, userRol } from '~/api/types';
+import { useQuery } from 'react-query';
+import { OptionsAdmin } from '~/screens/administrador/OptionsAdminScreen';
+import { HogarOptions } from '~/components/Welcome/HogarOptions';
 
 interface Props extends DrawerScreenProps<any, any> {}
 
 export const WelcomeScreen = ({ navigation }: Props) => {
-  const [loading, setLoading] = useState(true);
   const [userName, setUserName] = useState('');
   const [clienteName, setClienteName] = useState<string>('');
-  const [roleUser, setRoleUser] = useState('');
+  const [roleUser, setRoleUser] = useState<userRol>();
+  const { data, isFetching } = useQuery('userData', getUserInfo);
+
+  navigation.setOptions({
+    gestureEnabled: false,
+  });
+
+  const elegirRol = (rol: userRol) => {
+    setRoleUser(rol);
+  };
 
   useEffect(() => {
-    getUserInfo().then(response => {
-      const { cliente, username, roles } = response.data;
-      setUserName(capitalizeFirstLetter(username));
-      if (getRoleUser(roles, 'ROLE_EMPLEADO') !== -1) {
-        setRoleUser('tecnico');
-      } else {
-        // TODO verificar que pasa si user no tiene cliente
-        getNombreCliente(cliente!.id).then(nombreCliente => {
+    if (data) {
+      const { username, roles, cliente } = data.data;
+      setUserName(username);
+      setRoleUser(getRoleUser(roles));
+      // TODO verificar que pasa si user no tiene cliente
+      try {
+        getNombreCliente(cliente.id).then(nombreCliente => {
           setClienteName(nombreCliente);
         });
-        setRoleUser('user');
+      } catch (err) {
+        console.log(err);
       }
-      setTimeout(() => {
-        setLoading(false);
-      }, 500);
-    });
+    }
+  }, [data, setRoleUser]);
 
-    navigation.setOptions({
-      gestureEnabled: false,
-    });
-  }, [navigation]);
+  if (isFetching) {
+    return (
+      <View>
+        <Spinner
+          visible={isFetching}
+          textContent={'Cargando...'}
+          textStyle={{ color: '#FFF' }}
+        />
+      </View>
+    );
+  }
+
+  if (roleUser === 'administrador') {
+    return <OptionsAdmin handlerOptions={elegirRol} />;
+  }
 
   return (
+    <ScreenContainer
+      roleUser={roleUser}
+      userName={userName}
+      clienteName={clienteName}
+    />
+  );
+};
+
+const ScreenContainer = ({
+  roleUser,
+  userName,
+  clienteName,
+}: {
+  roleUser: userRol;
+  userName: string;
+  clienteName?: string;
+}) => {
+  return (
     <>
-      {loading ? (
-        <View>
-          <Spinner
-            visible={loading}
-            textContent={'Cargando...'}
-            textStyle={{ color: '#FFF' }}
-          />
-        </View>
+      <Header
+        pageName="Bienvenido"
+        userName={userName}
+        clienteName={clienteName}
+        roleUser={roleUser}
+      />
+      {roleUser === 'tecnico' ? (
+        <TecnicosWelcomeScreen />
+      ) : roleUser === 'hogar' ? (
+        <HogarOptions />
       ) : (
-        <>
-          <Header
-            pageName="Bienvenido"
-            userName={userName}
-            clienteName={clienteName}
-            roleUser={roleUser}
-          />
-          {roleUser === 'tecnico' ? (
-            <TecnicosWelcomeScreen />
-          ) : (
-            <>
-              <WelcomeOptions navigation={navigation} />
-            </>
-          )}
-        </>
+        <WelcomeOptions />
       )}
     </>
   );
 };
 
-function capitalizeFirstLetter(string: string) {
-  return string.charAt(0).toUpperCase() + string.slice(1);
-}
-
-function getRoleUser(roles: string[], rolBuscado: string) {
-  const isRolBuscado = (rol: string) => rol === rolBuscado;
-  return roles.findIndex(isRolBuscado);
+function getRoleUser(rolesUser: string[]) {
+  const isTecnico = rolesUser.some((rol: string) => rol === 'ROLE_EMPLEADO');
+  const isAdministrador = rolesUser.some(v => adminROLES.indexOf(v) >= 0);
+  return isAdministrador ? 'administrador' : isTecnico ? 'tecnico' : 'cliente';
 }

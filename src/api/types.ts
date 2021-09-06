@@ -1,11 +1,33 @@
 export type SucursalDeClienteApiPath = `/api/sucursal_de_clientes/${number}`;
 
+export type PutBody<T> = {
+  [K in Exclude<keyof T, '@id'>]?: T[K] extends
+    | string
+    | number
+    | boolean
+    | undefined
+    ? T[K]
+    : string | T[K];
+} & { id: string | number };
+
+export type PostBody<T> = Omit<PutBody<T>, 'id'>;
+
 // eslint-disable-next-line no-shadow
 export enum SolicitudEstado {
   PENDIENTE = 0,
   GENERADA_OT = 1,
   DERIVADA = 2,
 }
+
+export type userRol = 'administrador' | 'tecnico' | 'cliente' | 'hogar';
+
+export const adminROLES = [
+  'ROLE_ENCARGADO',
+  'ROLE_SUCURSAL',
+  'ROLE_ADMIN',
+  'ROLE_LIDER',
+  ,
+];
 
 export const solicitudEstadoLabel = {
   [SolicitudEstado.PENDIENTE]: 'Pendiente',
@@ -121,7 +143,7 @@ export interface FormularioResultado {
 }
 
 export interface FormularioResultadoExpress {
-  '@id'?: string;
+  '@id': string;
   id: number;
   resultados?: any;
   latitud?: string;
@@ -132,7 +154,7 @@ export interface FormularioResultadoExpress {
   cliente?: string;
   fecha: string;
   motivo?: string;
-  formulario?: any;
+  formulario: Formulario;
   imageName?: string;
   imageSize?: number;
   responsableFirma?: string;
@@ -142,15 +164,29 @@ export interface FormularioResultadoExpress {
   readonly indetificacion?: string;
 }
 
-export type FormularioResultadoExpressPostBody = Omit<
-  FormularioResultadoExpress,
-  'id'
->;
+export interface FormularioResultadoExpressPutBody
+  extends Omit<PutBody<FormularioResultadoExpress>, 'cliente'> {
+  cliente?: string | Cliente;
+}
 
 export interface Modulo {
   id: number;
   propiedadItems: PropiedadItem[];
   titulo: string;
+}
+
+// eslint-disable-next-line no-shadow
+export enum ItemTipo {
+  TEXTO = 'texto',
+  FOTO = 'foto',
+  SELECCION_MULTIPLE = 'seleccion_multiple',
+  DESPLEGABLE = 'desplegable',
+  CASILLA_DE_VERIFICACION = 'casilla_de_verificacion',
+  TITULO = 'titulo',
+  DATE_TIME = 'date_time',
+  DATE = 'date',
+  TIME = 'time',
+  NUMERO = 'numero',
 }
 
 export interface Item {
@@ -159,7 +195,7 @@ export interface Item {
   nombre: string;
   titulo: string;
   descripcion: string;
-  tipo: string;
+  tipo: ItemTipo;
   opciones: ItemOpcion[];
 }
 
@@ -298,11 +334,13 @@ export interface Solicitudes {
 }
 export interface Sucursal {
   '@id'?: string;
+  id: number;
   imageCabeceraFile?: any;
   imageCabecera?: string;
   imagePieFile?: any;
   imagePie?: string;
   nombre?: string;
+  name?: string;
   pais?: any;
   textoCabecera?: string;
   textoPie?: string;
@@ -320,11 +358,11 @@ export interface SucursalDeCliente {
   readonly direccion: string;
 }
 
+//TODO: `/api/sucursals/${number}` fixear number toma como valor
+
 export interface User {
-  '@context': '/api/contexts/User';
-  '@id': `/api/users/${number}`;
-  '@type': 'User';
-  sucursal: `/api/sucursals/${number}`;
+  '@id': string;
+  sucursal: string;
   cliente?: Cliente;
   email: string;
   username: string;

@@ -1,9 +1,12 @@
-import React, { ComponentProps, PureComponent } from 'react';
+import React, { ComponentProps, PureComponent, ReactElement } from 'react';
 import { View } from 'react-native';
 
 import Step from './Solicitud/Step';
 
-class Wizard extends PureComponent<{}, { index: number }> {
+class Wizard extends PureComponent<
+  { children: ReactElement[] },
+  { index: number }
+> {
   static Step = (props: ComponentProps<typeof Step>) => <Step {...props} />;
 
   state = {
@@ -29,19 +32,22 @@ class Wizard extends PureComponent<{}, { index: number }> {
   render() {
     return (
       <View style={{ flex: 1, justifyContent: 'center' }}>
-        {React.Children.map(this.props.children, (element, index) => {
-          if (index === this.state.index) {
-            return React.cloneElement(element, {
-              currentIndex: this.state.index,
-              nextStep: this._nextStep,
-              prevStep: this._prevStep,
-              isLast:
-                this.state.index ===
-                React.Children.count(this.props.children) - 1,
-            });
-          }
-          return null;
-        })}
+        {React.Children.map(
+          this.props.children,
+          (element: ReactElement, index) => {
+            if (index === this.state.index) {
+              return React.cloneElement(element, {
+                currentIndex: this.state.index,
+                nextStep: this._nextStep,
+                prevStep: this._prevStep,
+                isLast:
+                  this.state.index ===
+                  React.Children.count(this.props.children) - 1,
+              });
+            }
+            return null;
+          },
+        )}
       </View>
     );
   }

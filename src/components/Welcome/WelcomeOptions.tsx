@@ -4,16 +4,14 @@ import { StyleSheet, View } from 'react-native';
 import { Title } from '~/components/Title';
 import { Button } from '~/components/Button';
 import { styles } from '~/theme/appTheme';
-import { DrawerNavigationProp } from '@react-navigation/drawer';
+import { useNavigation } from '@react-navigation/native';
 
-interface Props {
-  navigation: DrawerNavigationProp<any>;
-}
-
-export const WelcomeOptions = ({ navigation }: Props) => {
+export const WelcomeOptions = () => {
+  const navigation = useNavigation();
   const handleSolicitud = () => {
     navigation.navigate('FormSolicitudScreen');
   };
+
   return (
     <View
       style={[

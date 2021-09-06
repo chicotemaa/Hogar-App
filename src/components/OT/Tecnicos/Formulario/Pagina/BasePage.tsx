@@ -3,7 +3,11 @@ import { StyleSheet, View } from 'react-native';
 import { windowHeight, windowWidth } from '~/dimensions';
 import { Encabezado } from './Componentes/Encabezado';
 import { BodyOT } from './Componentes/BodyOT';
-import { Formulario, OrdenTrabajo } from '~/api/types';
+import {
+  Formulario,
+  FormularioResultadoExpress,
+  OrdenTrabajo,
+} from '~/api/types';
 import { getFormularioAPI } from '~/api/api';
 import { Button, Portal } from 'react-native-paper';
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -20,8 +24,7 @@ import { FormProvider } from '~/context/formulario/FormularioContext';
 import { RootStackParams } from '~/navigator/StackNavigator';
 
 interface Props {
-  ordenTrabajo: OrdenTrabajo;
-  hasResultado?: boolean;
+  ordenTrabajo: OrdenTrabajo | FormularioResultadoExpress;
 }
 
 export const BasePage = ({ ordenTrabajo }: Props) => {
@@ -45,8 +48,8 @@ export const BasePage = ({ ordenTrabajo }: Props) => {
     setLoading(!loading);
     let resolved = false;
     if (
-      ordenTrabajo?.formulario.compraMateriales ||
-      ordenTrabajo?.formulario.express
+      ordenTrabajo.formulario.compraMateriales ||
+      ordenTrabajo.formulario.express
     ) {
       resolved = await putResultadoExpress(ordenTrabajo, firma, aclaracion);
     } else {
@@ -55,7 +58,7 @@ export const BasePage = ({ ordenTrabajo }: Props) => {
     setLoading(!loading);
     refetchPendientes();
     refetchRealizadas();
-    navigator.navigate('SuccessScreen', { success: resolved, isOt: true });
+    navigator.navigate('SuccessScreen', { success: resolved, isOT: true });
   };
 
   const postergarHandler = () => {
@@ -70,8 +73,8 @@ export const BasePage = ({ ordenTrabajo }: Props) => {
 
   useEffect(() => {
     const isExpressOrCM =
-      ordenTrabajo?.formulario.express ||
-      ordenTrabajo?.formulario.compraMateriales;
+      ordenTrabajo.formulario.express ||
+      ordenTrabajo.formulario.compraMateriales;
     if (!isExpressOrCM) {
       getFormularioAPI(ordenTrabajo.formulario.id).then(response => {
         setFormulario(response);

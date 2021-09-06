@@ -86,7 +86,7 @@ export const postResultadoExpress = async ({
   formulario,
   idFormCompra,
 }: PostResultadExpressParam) => {
-  let formularioToSend: FormularioResultadoExpressPostBody = {
+  let formularioToSend: PostBody<FormularioResultadoExpress> = {
     resultados: [],
     latitud: '1',
     longitud: '1',
@@ -94,6 +94,8 @@ export const postResultadoExpress = async ({
     horaInicio: getISODate(),
     fecha: getISODate(),
     minutosTrabajado: 0,
+    formulario: formulario ? formulario['@id'] : idFormCompra,
+    compraMateriales: formulario ? undefined : true,
   };
 
   if (formulario) {
@@ -113,7 +115,7 @@ export const postResultadoExpress = async ({
 };
 
 export const putResultadoExpress = async (
-  ordenTrabajo: OrdenTrabajo,
+  ordenTrabajo: OrdenTrabajo | FormularioResultadoExpress,
   firma: string,
   aclaracion: string,
 ) => {
@@ -132,7 +134,7 @@ export const putResultadoExpress = async (
     await saveSignFile(firma);
     const signName = await uploadSign();
 
-    const expressResultado = {
+    const expressResultado: FormularioResultadoExpressPutBody = {
       ...ordenTrabajo,
       formulario: ordenTrabajo.formulario['@id'],
       responsableFirma: aclaracion,
@@ -141,7 +143,6 @@ export const putResultadoExpress = async (
       latitud: String(latitude),
       longitud: String(longitude),
       minutosTrabajado: diffMinutes,
-      horaFin: getISODate(),
       resultados,
       estado: 4,
     };
@@ -165,6 +166,12 @@ export const getOrdenesTrabajoInfo = async (
       };
     }),
   );
+};
+
+export const getOtByUser = async () => {
+  const response = await getOtByUserAPI();
+  console.log(response.data);
+  return response.data['hydra:member'];
 };
 
 export const changeStateEnCamino = (ordenTrabajo: OrdenTrabajo) => {
@@ -212,7 +219,7 @@ export const changeStateNoMeRecibio = async (ordenTrabajo: OrdenTrabajo) => {
 };
 
 export const changeStateFinalizado = async (
-  ordenTrabajo: OrdenTrabajo,
+  ordenTrabajo: OrdenTrabajo | FormularioResultadoExpress,
   firma: string,
   aclaracion: string,
 ) => {
