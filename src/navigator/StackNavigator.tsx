@@ -16,9 +16,8 @@ import { DetalleOTScreen } from '~/screens/DetalleOTScreen';
 import { NewSolicitudScreen } from '~/screens/NewSolicitudScreen';
 import { TecnicosOTList } from '~/components/OT/Tecnicos/TecnicosOTList';
 import { OTScreen } from '~/screens/tecnicos/OTScreen';
-import { OrdenTrabajo, FormularioResultadoExpress } from '~/api/types';
+import { FormularioResultadoExpress } from '~/api/types';
 import { FormNewOTScreen } from '~/screens/administrador/FormNewOTScreen';
-
 
 /* Params in pages */
 export type RootStackParams = {
@@ -38,7 +37,6 @@ export type RootStackParams = {
     OT?: OrdenTrabajo | FormularioResultadoExpress;
   };
   NewOTScreen: undefined;
-
 };
 
 const Stack = createStackNavigator<RootStackParams>();

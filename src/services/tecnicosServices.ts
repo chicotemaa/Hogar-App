@@ -15,7 +15,11 @@ import {
   request,
 } from 'react-native-permissions';
 import { getSucursalCliente } from '../api/apiClientes';
-import { OrdenTrabajo, FormularioResultado } from '../api/types';
+import {
+  OrdenTrabajo,
+  FormularioResultado,
+  FormularioResultadoExpress,
+} from '../api/types';
 import { getStorageResultados } from '~/storage';
 import { postResultado } from '~/api/apiTecnicos';
 import { getFormularioAPI, uploadImage } from '~/api/api';
