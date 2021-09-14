@@ -24,6 +24,7 @@ import { getStorageResultados } from '~/storage';
 import { postResultado } from '~/api/apiTecnicos';
 import { getFormularioAPI, uploadImage } from '~/api/api';
 import * as FileSystem from 'react-native-fs';
+import { PropiedadModulo } from '~/api/types';
 
 // 'Pendiente': 0
 // 'Estoy en camino': 1
@@ -319,21 +320,19 @@ export const formularioRealizado = async (
   const resultadoListArray = resultadosList.map(resultado => {
     return resultado.idPropiedadItem;
   });
-  console.log(resultadoListArray);
-
-  const propiedadModulos = formulario.propiedadModulos.filter(
-    formularioResultado => {
-      const formularioFinal = formularioResultado.modulo.propiedadItems.filter(
-        form => {
-          if (resultadoListArray.includes(form.id)) {
-            console.log('campo', form);
-            return form;
-          }
-        },
+  const propiedadModulos = formulario.propiedadModulos
+    .map((propiedadModulo): PropiedadModulo => {
+      const propiedadItems = propiedadModulo.modulo.propiedadItems.filter(
+        item => resultadoListArray.includes(item.id),
       );
-      console.log('formularioFinal', formularioFinal);
-      return formularioFinal.length > 0;
-    },
-  );
-  console.log('response', propiedadModulos);
+      return {
+        ...propiedadModulo,
+        modulo: {
+          ...propiedadModulo.modulo,
+          propiedadItems,
+        },
+      };
+    })
+    .filter(mod => mod.modulo.propiedadItems.length > 0);
+  console.log(formulario);
 };
