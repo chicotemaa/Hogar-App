@@ -312,7 +312,28 @@ export const formularioRealizado = async (
   idResultado: string,
 ) => {
   const formulario = await getFormularioAPI(idFormulario);
-  const { data: resultado } = await getFormularioResultadoById(idResultado);
+  const { data: resultados } = await getFormularioResultadoById(idResultado);
+  const resultadosList = resultados.resultados.filter(list => {
+    return list.valor[0] !== '' || list.imageName !== null;
+  });
+  const resultadoListArray = resultadosList.map(resultado => {
+    return resultado.idPropiedadItem;
+  });
+  console.log(resultadoListArray);
 
-  return { ...formulario, resultado };
+  const propiedadModulos = formulario.propiedadModulos.filter(
+    formularioResultado => {
+      const formularioFinal = formularioResultado.modulo.propiedadItems.filter(
+        form => {
+          if (resultadoListArray.includes(form.id)) {
+            console.log('campo', form);
+            return form;
+          }
+        },
+      );
+      console.log('formularioFinal', formularioFinal);
+      return formularioFinal.length > 0;
+    },
+  );
+  console.log('response', propiedadModulos);
 };
