@@ -4,6 +4,7 @@ import { formularioRealizado } from '~/services/tecnicosServices';
 import { Firma } from './Firma';
 import { useQuery } from 'react-query';
 import { formulariosStyle } from '~/theme/appTheme';
+import { PropiedadModulo } from '~/api/types';
 
 export const Formulario = ({
   idFormulario,
@@ -16,19 +17,27 @@ export const Formulario = ({
     ['Resultados', idFormulario, idResultado],
     () => formularioRealizado(idFormulario, idResultado),
   );
-  const ArrayFormulario = formulario?.propiedadModulos;
-  const Arrayresultados = formulario?.resultados.resultados;
-  const items = FormularioRes(ArrayFormulario, Arrayresultados);
-
+  console.log(formulario?.resultadoListArray);
   return (
     <View style={formulariosStyle.TituloFormulario}>
-      {formulario && ArrayFormulario && items && (
+      {formulario && (
         <>
           <TituloFormulario
             titulo={formulario?.titulo}
             descripcion={formulario?.descripcion}
           />
           <Text style={formulariosStyle.TextTitulo}>FORMULARIOS</Text>
+          {formulario.propiedadModulos.map(item => {
+            let array = 0;
+            return (
+              <Modulos
+                propiedadModulo={item}
+                formulario={formulario}
+                i={array}
+              />
+            );
+          })}
+
           <View />
         </>
       )}
@@ -54,44 +63,42 @@ const TituloFormulario = ({
   );
 };
 
-const Modulos = ({ item }: any) => {
+const Modulos = ({
+  propiedadModulo,
+  formulario,
+  i,
+}: {
+  propiedadModulo: PropiedadModulo;
+  formulario: any;
+  i: number;
+}) => {
+  console.log({ propiedadModulo });
   return (
     <>
-      <Text style={formulariosStyle.Resaltado}>{item.paginaNombre}</Text>
-      <Text style={formulariosStyle.contenido}>{item.modulo.titulo} </Text>
-      {item.modulo.propiedadItems.map((item: { item: any }) => {
-        return (
-          <Text>
-            {item.id} {item.item.id}
-          </Text>
-        );
-      })}
+      <Text style={formulariosStyle.Resaltado}>
+        {propiedadModulo.paginaNombre}
+      </Text>
+      <Text style={formulariosStyle.Resaltado}>
+        {propiedadModulo.modulo.titulo},
+        {formulario &&
+          propiedadModulo.modulo.propiedadItems.map(item => {
+            if (item.id === formulario.resultadoListArray[i]) {
+              i++;
+              return <Campos Item={item} />;
+            }
+          })}
+        ,
+      </Text>
     </>
   );
 };
 
-const Campos = ({ Item }: any) => {
+const Campos = ({ Item }: { Item: any }) => {
   return (
     <>
-      <Text style={formulariosStyle.contenido}>ID {Item.id}</Text>
-      <Text style={formulariosStyle.contenido}>{Item.titulo}</Text>
+      {console.log('Item', Item)}
+      <Text style={formulariosStyle.contenido}> ID {Item.id} </Text>
+      <Text style={formulariosStyle.contenido}>{Item.item.titulo}</Text>
     </>
   );
 };
-
-async function FormularioRes(ArrayFormulario: any, Arrayresultados: any) {
-  let items = [];
-  let count = 0;
-  if (ArrayFormulario && Arrayresultados) {
-    ArrayFormulario.map(item => {
-      item.modulo.propiedadItems.map(campo => {
-        Arrayresultados.map(resultado => {
-          if (resultado.propiedadItem === campo['@id']) {
-            items.push(item);
-            count++;
-          }
-        });
-      });
-    });
-  }
-}

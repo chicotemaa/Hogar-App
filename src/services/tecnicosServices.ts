@@ -320,6 +320,8 @@ export const formularioRealizado = async (
   const resultadoListArray = resultadosList.map(resultado => {
     return resultado.idPropiedadItem;
   });
+  const titulo = formulario.titulo;
+  const descripcion = formulario.descripcion;
   const propiedadModulos = formulario.propiedadModulos
     .map((propiedadModulo): PropiedadModulo => {
       const propiedadItems = propiedadModulo.modulo.propiedadItems.filter(
@@ -334,5 +336,12 @@ export const formularioRealizado = async (
       };
     })
     .filter(mod => mod.modulo.propiedadItems.length > 0);
-  console.log(formulario);
+
+  return {
+    propiedadModulos: propiedadModulos,
+    titulo: titulo,
+    descripcion: descripcion,
+    resultadosList: resultadosList,
+    resultadoListArray,
+  };
 };
