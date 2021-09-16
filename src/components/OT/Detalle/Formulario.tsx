@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Text, View } from 'react-native';
 import { formularioRealizado } from '~/services/tecnicosServices';
 import { Firma } from './Firma';
@@ -17,7 +17,22 @@ export const Formulario = ({
     ['Resultados', idFormulario, idResultado],
     () => formularioRealizado(idFormulario, idResultado),
   );
-  console.log(formulario?.resultadoListArray);
+  console.log(formulario?.resultadosList);
+  let array = -1;
+  const modulo = formulario?.propiedadModulos.map(modulos => {
+    const propiedadModulos = modulos.modulo.propiedadItems
+      .map(propiedadItems => {
+        return propiedadItems;
+      })
+      .filter(
+        campos => formulario.resultadoListArray.includes(campos?.id),
+        array++,
+      );
+
+    return propiedadModulos;
+  });
+  console.log('modulo', modulo);
+
   return (
     <View style={formulariosStyle.TituloFormulario}>
       {formulario && (
@@ -27,13 +42,12 @@ export const Formulario = ({
             descripcion={formulario?.descripcion}
           />
           <Text style={formulariosStyle.TextTitulo}>FORMULARIOS</Text>
-          {formulario.propiedadModulos.map(item => {
-            let array = 0;
+
+          {formulario.propiedadModulos.map(propiedadModulo => {
             return (
               <Modulos
-                propiedadModulo={item}
+                propiedadModulo={propiedadModulo}
                 formulario={formulario}
-                i={array}
               />
             );
           })}
@@ -66,13 +80,10 @@ const TituloFormulario = ({
 const Modulos = ({
   propiedadModulo,
   formulario,
-  i,
 }: {
   propiedadModulo: PropiedadModulo;
   formulario: any;
-  i: number;
 }) => {
-  console.log({ propiedadModulo });
   return (
     <>
       <Text style={formulariosStyle.Resaltado}>
@@ -81,24 +92,13 @@ const Modulos = ({
       <Text style={formulariosStyle.Resaltado}>
         {propiedadModulo.modulo.titulo},
         {formulario &&
-          propiedadModulo.modulo.propiedadItems.map(item => {
-            if (item.id === formulario.resultadoListArray[i]) {
-              i++;
-              return <Campos Item={item} />;
-            }
+          propiedadModulo.modulo.propiedadItems.map(propiedadItems => {
+            //if (formulario.resultadoListArray[array] === propiedadItems.id) {
+            //array++;
+            //return <Campos Item={propiedadItems} />;
+            //}
           })}
-        ,
       </Text>
-    </>
-  );
-};
-
-const Campos = ({ Item }: { Item: any }) => {
-  return (
-    <>
-      {console.log('Item', Item)}
-      <Text style={formulariosStyle.contenido}> ID {Item.id} </Text>
-      <Text style={formulariosStyle.contenido}>{Item.item.titulo}</Text>
     </>
   );
 };
