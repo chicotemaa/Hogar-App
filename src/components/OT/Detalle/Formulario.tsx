@@ -5,6 +5,7 @@ import { Firma } from './Firma';
 import { useQuery } from 'react-query';
 import { formulariosStyle } from '~/theme/appTheme';
 import { PropiedadModulo } from '~/api/types';
+import { styles } from '../../../theme/appTheme';
 
 export const Formulario = ({
   idFormulario,
@@ -17,7 +18,7 @@ export const Formulario = ({
     ['Resultados', idFormulario, idResultado],
     () => formularioRealizado(idFormulario, idResultado),
   );
-  console.log(formulario?.resultadosList);
+  //console.log(formulario?.resultadosList);
   let array = -1;
   const modulo = formulario?.propiedadModulos.map(modulos => {
     const propiedadModulos = modulos.modulo.propiedadItems
@@ -31,11 +32,10 @@ export const Formulario = ({
 
     return propiedadModulos;
   });
-  console.log('modulo', modulo);
-
+  let arrayModulo = -1;
   return (
     <View style={formulariosStyle.TituloFormulario}>
-      {formulario && (
+      {formulario && modulo && (
         <>
           <TituloFormulario
             titulo={formulario?.titulo}
@@ -44,10 +44,12 @@ export const Formulario = ({
           <Text style={formulariosStyle.TextTitulo}>FORMULARIOS</Text>
 
           {formulario.propiedadModulos.map(propiedadModulo => {
+            arrayModulo++;
             return (
               <Modulos
                 propiedadModulo={propiedadModulo}
                 formulario={formulario}
+                modulo={modulo[arrayModulo]}
               />
             );
           })}
@@ -62,7 +64,6 @@ export const Formulario = ({
 
 const TituloFormulario = ({
   titulo,
-  descripcion,
 }: {
   titulo: string;
   descripcion: string;
@@ -70,9 +71,6 @@ const TituloFormulario = ({
   return (
     <View style={formulariosStyle.viewTitulo}>
       <Text style={formulariosStyle.TextTitulo}>Titulo: {titulo}</Text>
-      <Text style={formulariosStyle.viewTitulo}>
-        Descripcion: {descripcion}
-      </Text>
     </View>
   );
 };
@@ -80,25 +78,58 @@ const TituloFormulario = ({
 const Modulos = ({
   propiedadModulo,
   formulario,
+  modulo,
 }: {
   propiedadModulo: PropiedadModulo;
   formulario: any;
+  modulo: any;
 }) => {
   return (
     <>
       <Text style={formulariosStyle.Resaltado}>
-        {propiedadModulo.paginaNombre}
+        {propiedadModulo.paginaNombre}:
       </Text>
-      <Text style={formulariosStyle.Resaltado}>
-        {propiedadModulo.modulo.titulo},
-        {formulario &&
-          propiedadModulo.modulo.propiedadItems.map(propiedadItems => {
-            //if (formulario.resultadoListArray[array] === propiedadItems.id) {
-            //array++;
-            //return <Campos Item={propiedadItems} />;
-            //}
-          })}
-      </Text>
+      <View>
+        <Text style={formulariosStyle.Resaltado}>
+          <View>
+            {formulario &&
+              modulo.map(campos => {
+                return (
+                  <View>
+                    <Campos
+                      style={formulariosStyle.contenido}
+                      items={campos}
+                      resultados={formulario.resultadosList}
+                    />
+                  </View>
+                );
+              })}
+          </View>
+        </Text>
+      </View>
     </>
+  );
+};
+const Campos = ({ items, resultados }: { items: any; resultados: any }) => {
+  return (
+    <View>
+      <Text style={formulariosStyle.contenido}>
+        {items.item.titulo}:{' '}
+        {resultados.map(resultado => {
+          if (items.item.tipo === 'texto' || items.item.tipo === 'numero') {
+            if (items.id === resultado.idPropiedadItem) {
+              return <Text>{resultado.valor} </Text>;
+            }
+          } else if (items.item.tipo === 'seleccion_multiple') {
+            const opciones = items.item.opciones.filter(
+              opcion => opcion.id === parseInt(resultado.valor),
+            );
+            if (opciones.length > 0) {
+              return <Text>{opciones[0].nombre} |</Text>;
+            }
+          }
+        })}
+      </Text>
+    </View>
   );
 };
