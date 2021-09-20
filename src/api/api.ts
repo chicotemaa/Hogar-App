@@ -15,9 +15,9 @@ import { Buffer } from 'buffer';
 const clientId = '1_4ta05vfoy58ggoggwo08kck000kocckwgcckk8wgkck440cgcw';
 const clientSecret = '176y7wqisfvkcwk8oswowksks0cocsoc00ko4k4oosc0ocwck4';
 
-//const baseUrl = 'https://sistemas.hogarmantenimiento.com';
+const baseUrl = 'https://sistemas.hogarmantenimiento.com';
 //const baseUrl = 'http://10.0.2.2:8000';
-const baseUrl = 'http://hogardev.tk';
+// const baseUrl = 'http://hogardev.tk';
 
 export const getData = (key: string) => AsyncStorage.getItem(key);
 

@@ -336,6 +336,9 @@ export const formularioRealizado = async (
       };
     })
     .filter(mod => mod.modulo.propiedadItems.length > 0);
+  const listModulos = formulario.propiedadModulos.map(ppiedadModulo => {
+    return ppiedadModulo.modulo.id;
+  });
 
   return {
     propiedadModulos: propiedadModulos,
@@ -343,5 +346,6 @@ export const formularioRealizado = async (
     descripcion: descripcion,
     resultadosList: resultadosList,
     resultadoListArray,
+    listModulos,
   };
 };

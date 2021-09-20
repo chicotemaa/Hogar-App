@@ -18,21 +18,18 @@ export const Formulario = ({
     ['Resultados', idFormulario, idResultado],
     () => formularioRealizado(idFormulario, idResultado),
   );
-  //console.log(formulario?.resultadosList);
-  let array = -1;
+
   const modulo = formulario?.propiedadModulos.map(modulos => {
     const propiedadModulos = modulos.modulo.propiedadItems
       .map(propiedadItems => {
         return propiedadItems;
       })
-      .filter(
-        campos => formulario.resultadoListArray.includes(campos?.id),
-        array++,
-      );
+      .filter(campos => formulario.resultadoListArray.includes(campos?.id));
 
     return propiedadModulos;
   });
   let arrayModulo = -1;
+
   return (
     <View style={formulariosStyle.TituloFormulario}>
       {formulario && modulo && (
@@ -45,11 +42,23 @@ export const Formulario = ({
 
           {formulario.propiedadModulos.map(propiedadModulo => {
             arrayModulo++;
+            let pagina = -1;
+            let array = formulario.listModulos.slice(0, arrayModulo + 1);
+
+            for (let i = 0; i < array.length; i++) {
+              if (array[i] === propiedadModulo.modulo.id) {
+                pagina++;
+              } else if (pagina === 0) {
+                pagina = 0;
+              }
+            }
+
             return (
               <Modulos
                 propiedadModulo={propiedadModulo}
                 formulario={formulario}
                 modulo={modulo[arrayModulo]}
+                arrayModulo={pagina}
               />
             );
           })}
@@ -79,6 +88,7 @@ const Modulos = ({
   propiedadModulo,
   formulario,
   modulo,
+  arrayModulo,
 }: {
   propiedadModulo: PropiedadModulo;
   formulario: any;
@@ -86,50 +96,83 @@ const Modulos = ({
 }) => {
   return (
     <>
-      <Text style={formulariosStyle.Resaltado}>
-        {propiedadModulo.paginaNombre}:
-      </Text>
       <View>
         <Text style={formulariosStyle.Resaltado}>
-          <View>
-            {formulario &&
-              modulo.map(campos => {
-                return (
-                  <View>
-                    <Campos
-                      style={formulariosStyle.contenido}
-                      items={campos}
-                      resultados={formulario.resultadosList}
-                    />
-                  </View>
-                );
-              })}
-          </View>
+          {propiedadModulo.paginaNombre}
         </Text>
+        <View style={{ flex: 1, borderWidth: 1 }}>
+          {formulario &&
+            modulo.map(campos => {
+              console.log(campos);
+
+              return (
+                <View>
+                  <Campos
+                    style={formulariosStyle.contenido}
+                    items={campos}
+                    resultados={formulario.resultadosList}
+                    moduloID={arrayModulo}
+                  />
+                </View>
+              );
+            })}
+        </View>
       </View>
     </>
   );
 };
-const Campos = ({ items, resultados }: { items: any; resultados: any }) => {
+const Campos = ({
+  items,
+  resultados,
+  moduloID,
+}: {
+  items: any;
+  resultados: any;
+  moduloID: number;
+}) => {
   return (
     <View>
-      <Text style={formulariosStyle.contenido}>
-        {items.item.titulo}:{' '}
-        {resultados.map(resultado => {
+      {resultados.map(resultado => {
+        if (moduloID === resultado.indiceModulo) {
           if (items.item.tipo === 'texto' || items.item.tipo === 'numero') {
             if (items.id === resultado.idPropiedadItem) {
-              return <Text>{resultado.valor} </Text>;
+              return (
+                <View>
+                  <Text style={formulariosStyle.contenidoTitulo}>
+                    {items.item.titulo}: {resultado.valor}
+                  </Text>
+                </View>
+              );
             }
-          } else if (items.item.tipo === 'seleccion_multiple') {
+          }
+          if (items.item.tipo === 'seleccion_multiple') {
             const opciones = items.item.opciones.filter(
               opcion => opcion.id === parseInt(resultado.valor),
             );
-            if (opciones.length > 0) {
-              return <Text>{opciones[0].nombre} |</Text>;
+            for (let i = 0; i < opciones.length; i++) {
+              return (
+                <View>
+                  <Text style={formulariosStyle.contenidoTitulo}>
+                    {items.item.titulo}: {opciones[i].nombre}
+                  </Text>
+                </View>
+              );
             }
           }
-        })}
-      </Text>
+          if (items.item.tipo === 'foto' && resultado.imageName) {
+            return (
+              <View>
+                <Text style={formulariosStyle.contenidoTitulo}>
+                  {items.item.titulo}:
+                </Text>
+                <Text style={formulariosStyle.contenido}>
+                  {resultado.imageName}
+                </Text>
+              </View>
+            );
+          }
+        }
+      })}
     </View>
   );
 };
