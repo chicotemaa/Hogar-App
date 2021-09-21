@@ -5,6 +5,7 @@ import { Firma } from './Firma';
 import { useQuery } from 'react-query';
 import { formulariosStyle } from '~/theme/appTheme';
 import { PropiedadModulo, FormularioResultado, Resultado } from '~/api/types';
+import { TransitionView } from '~/components/TransitionView';
 
 export const Formulario = ({
   idFormulario,
@@ -36,36 +37,36 @@ export const Formulario = ({
     <View style={formulariosStyle.TituloFormulario}>
       {formulario && modulo && (
         <>
-          <TituloFormulario
-            titulo={formulario?.titulo}
-            descripcion={formulario?.descripcion}
-          />
-          <Text style={formulariosStyle.TextTitulo}>FORMULARIOS</Text>
+          <TransitionView key={formulario.resultadosList} index={0}>
+            <TituloFormulario
+              titulo={formulario?.titulo}
+              descripcion={formulario?.descripcion}
+            />
+            <Text style={formulariosStyle.TextTitulo}>FORMULARIOS</Text>
 
-          {formulario.propiedadModulos.map(propiedadModulo => {
-            arrayModulo++;
-            let pagina = -1;
-            let array = formulario.listModulos.slice(0, arrayModulo + 1);
+            {formulario.propiedadModulos.map(propiedadModulo => {
+              arrayModulo++;
+              let pagina = -1;
+              let array = formulario.listModulos.slice(0, arrayModulo + 1);
 
-            for (let i = 0; i < array.length; i++) {
-              if (array[i] === propiedadModulo.modulo.id) {
-                pagina++;
-              } else if (pagina === 0) {
-                pagina = 0;
+              for (let i = 0; i < array.length; i++) {
+                if (array[i] === propiedadModulo.modulo.id) {
+                  pagina++;
+                } else if (pagina === 0) {
+                  pagina = 0;
+                }
               }
-            }
 
-            return (
-              <Modulos
-                propiedadModulo={propiedadModulo}
-                formulario={formulario}
-                modulo={modulo[arrayModulo]}
-                arrayModulo={pagina}
-              />
-            );
-          })}
-
-          <View />
+              return (
+                <Modulos
+                  propiedadModulo={propiedadModulo}
+                  formulario={formulario}
+                  modulo={modulo[arrayModulo]}
+                  arrayModulo={pagina}
+                />
+              );
+            })}
+          </TransitionView>
         </>
       )}
       <Firma firma={firma} aclaracion={aclaracion} />
