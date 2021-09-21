@@ -1,24 +1,26 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, Image } from 'react-native';
 import { formularioRealizado } from '~/services/tecnicosServices';
 import { Firma } from './Firma';
 import { useQuery } from 'react-query';
 import { formulariosStyle } from '~/theme/appTheme';
-import { PropiedadModulo } from '~/api/types';
-import { styles } from '../../../theme/appTheme';
+import { PropiedadModulo, FormularioResultado, Resultado } from '~/api/types';
 
 export const Formulario = ({
   idFormulario,
   idResultado,
+  firma,
+  aclaracion,
 }: {
   idFormulario: number;
-  idResultado: string;
+  idResultado: undefined | string | FormularioResultado;
+  firma: string | undefined;
+  aclaracion: undefined | string;
 }) => {
   const { data: formulario } = useQuery(
     ['Resultados', idFormulario, idResultado],
     () => formularioRealizado(idFormulario, idResultado),
   );
-
   const modulo = formulario?.propiedadModulos.map(modulos => {
     const propiedadModulos = modulos.modulo.propiedadItems
       .map(propiedadItems => {
@@ -66,7 +68,7 @@ export const Formulario = ({
           <View />
         </>
       )}
-      <Firma />
+      <Firma firma={firma} aclaracion={aclaracion} />
     </View>
   );
 };
@@ -97,18 +99,17 @@ const Modulos = ({
   return (
     <>
       <View>
-        <Text style={formulariosStyle.Resaltado}>
-          {propiedadModulo.paginaNombre}
-        </Text>
-        <View style={{ flex: 1, borderWidth: 1 }}>
+        {propiedadModulo.paginaNombre && (
+          <Text style={formulariosStyle.Resaltado}>
+            {propiedadModulo.paginaNombre}
+          </Text>
+        )}
+        <View style={{ flex: 1 }}>
           {formulario &&
             modulo.map(campos => {
-              console.log(campos);
-
               return (
                 <View>
                   <Campos
-                    style={formulariosStyle.contenido}
                     items={campos}
                     resultados={formulario.resultadosList}
                     moduloID={arrayModulo}
@@ -133,43 +134,79 @@ const Campos = ({
   return (
     <View>
       {resultados.map(resultado => {
+        console.log(resultado);
         if (moduloID === resultado.indiceModulo) {
-          if (items.item.tipo === 'texto' || items.item.tipo === 'numero') {
+          if (
+            items.item.tipo === 'texto' ||
+            items.item.tipo === 'numero' ||
+            items.item.tipo === 'fecha'
+          ) {
             if (items.id === resultado.idPropiedadItem) {
-              return (
-                <View>
-                  <Text style={formulariosStyle.contenidoTitulo}>
-                    {items.item.titulo}: {resultado.valor}
-                  </Text>
-                </View>
-              );
+              if (items.item.tipo === 'texto') {
+                return (
+                  <View>
+                    <Text style={formulariosStyle.contenidoTitulo}>
+                      {items.item.titulo}:
+                    </Text>
+                    <Text style={formulariosStyle.contenidoTexto}>
+                      {resultado.valor}
+                    </Text>
+                  </View>
+                );
+              } else {
+                return (
+                  <View style={{ flexDirection: 'row' }}>
+                    <Text style={formulariosStyle.contenidoTitulo}>
+                      {items.item.titulo}:
+                    </Text>
+                    <Text style={formulariosStyle.contenidoTexto}>
+                      {resultado.valor}
+                    </Text>
+                  </View>
+                );
+              }
             }
           }
-          if (items.item.tipo === 'seleccion_multiple') {
+          if (
+            items.item.tipo === 'seleccion_multiple' ||
+            items.item.tipo === 'casillas_de_verificacion' ||
+            items.item.tipo === 'desplegable'
+          ) {
             const opciones = items.item.opciones.filter(
               opcion => opcion.id === parseInt(resultado.valor),
             );
             for (let i = 0; i < opciones.length; i++) {
               return (
-                <View>
+                <View style={{ flex: 1 }}>
                   <Text style={formulariosStyle.contenidoTitulo}>
-                    {items.item.titulo}: {opciones[i].nombre}
+                    {items.item.titulo}:
+                  </Text>
+                  <Text style={formulariosStyle.contenidoSeleccionable}>
+                    {opciones[i].nombre}
                   </Text>
                 </View>
               );
             }
           }
           if (items.item.tipo === 'foto' && resultado.imageName) {
-            return (
-              <View>
-                <Text style={formulariosStyle.contenidoTitulo}>
-                  {items.item.titulo}:
-                </Text>
-                <Text style={formulariosStyle.contenido}>
-                  {resultado.imageName}
-                </Text>
-              </View>
-            );
+            const path =
+              'https://sistemas.hogarmantenimiento.com/uploads/imagenes/resultado/' +
+              resultado.imageName;
+            if (items.id === resultado.idPropiedadItem) {
+              return (
+                <View>
+                  <Text style={formulariosStyle.contenidoTitulo}>
+                    {items.item.titulo}:
+                  </Text>
+                  <View style={{ flex: 1, alignItems: 'center' }}>
+                    <Image
+                      style={formulariosStyle.stretch}
+                      source={{ uri: path }}
+                    />
+                  </View>
+                </View>
+              );
+            }
           }
         }
       })}

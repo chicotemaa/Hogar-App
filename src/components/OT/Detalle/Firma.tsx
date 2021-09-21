@@ -1,27 +1,29 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, Image } from 'react-native';
+import { formulariosStyle } from '~/theme/appTheme';
 
-export const Firma = () => {
+export const Firma = ({
+  firma,
+  aclaracion,
+}: {
+  firma: string | undefined;
+  aclaracion: string | undefined;
+}) => {
   const textStyle = {
     fontSize: 20,
     flex: 1,
     paddingVertical: 10,
     textAlign: 'center',
   } as const;
-
+  const path =
+    'https://sistemas.hogarmantenimiento.com/uploads/imagenes/resultado/' +
+    firma;
   return (
-    <View>
+    <View style={{ flex: 1, alignItems: 'center' }}>
       <Text style={textStyle}>Firma</Text>
-      <View
-        style={{
-          flex: 1,
-          alignSelf: 'center',
-          width: '50%',
-          height: 200,
-          backgroundColor: 'grey',
-        }}
-      />
-      <Text style={textStyle}>Aclaración</Text>
+      <View />
+      <Image style={formulariosStyle.stretch} source={{ uri: path }} />
+      <Text style={textStyle}>Aclaración: {aclaracion}</Text>
     </View>
   );
 };

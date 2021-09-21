@@ -1,4 +1,4 @@
-import { ScrollView, formulariosStyleheet, Text, View } from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
 import { OrdenTrabajo } from '~/api/types';
 import { Header } from '~/components/Header';
 import { Estado } from '~/components/OT/Detalle/Estado';
@@ -40,6 +40,8 @@ export const DetalleOTScreen = ({ route }: Props) => {
             Descripción de trabajo
           </Text>
           <Formulario
+            firma={OT.imageName}
+            aclaracion={OT.responsableFirma}
             idFormulario={OT.formulario.id}
             idResultado={OT.formularioResultado}
           />
