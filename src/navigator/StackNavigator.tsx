@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { OrdenTrabajo, Formulario } from '~/api/types';
+import { OrdenTrabajo } from '~/api/types';
 
 /* Screens */
 import { HomeScreen } from '~/screens/HomeScreen';

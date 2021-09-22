@@ -4,8 +4,9 @@ import { formularioRealizado } from '~/services/tecnicosServices';
 import { Firma } from './Firma';
 import { useQuery } from 'react-query';
 import { formulariosStyle } from '~/theme/appTheme';
-import { PropiedadModulo, FormularioResultado, Resultado } from '~/api/types';
+import { PropiedadModulo } from '~/api/types';
 import { TransitionView } from '~/components/TransitionView';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 export const Formulario = ({
   idFormulario,
@@ -14,11 +15,11 @@ export const Formulario = ({
   aclaracion,
 }: {
   idFormulario: number;
-  idResultado: undefined | string | FormularioResultado;
+  idResultado: undefined | string;
   firma: string | undefined;
   aclaracion: undefined | string;
 }) => {
-  const { data: formulario } = useQuery(
+  const { data: formulario, isFetching } = useQuery(
     ['Resultados', idFormulario, idResultado],
     () => formularioRealizado(idFormulario, idResultado),
   );
@@ -32,6 +33,17 @@ export const Formulario = ({
     return propiedadModulos;
   });
   let arrayModulo = -1;
+  if (isFetching) {
+    return (
+      <View>
+        <Spinner
+          visible={isFetching}
+          textContent={'Cargando...'}
+          textStyle={{ color: '#FFF' }}
+        />
+      </View>
+    );
+  }
 
   return (
     <View style={formulariosStyle.TituloFormulario}>
@@ -62,7 +74,7 @@ export const Formulario = ({
                   propiedadModulo={propiedadModulo}
                   formulario={formulario}
                   modulo={modulo[arrayModulo]}
-                  arrayModulo={pagina}
+                  pagina={pagina}
                 />
               );
             })}
@@ -91,11 +103,12 @@ const Modulos = ({
   propiedadModulo,
   formulario,
   modulo,
-  arrayModulo,
+  pagina,
 }: {
   propiedadModulo: PropiedadModulo;
   formulario: any;
   modulo: any;
+  pagina: any;
 }) => {
   return (
     <>
@@ -113,7 +126,7 @@ const Modulos = ({
                   <Campos
                     items={campos}
                     resultados={formulario.resultadosList}
-                    moduloID={arrayModulo}
+                    moduloID={pagina}
                   />
                 </View>
               );

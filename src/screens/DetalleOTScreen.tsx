@@ -7,7 +7,7 @@ import { StackScreenProps } from '@react-navigation/stack';
 import React from 'react';
 import { formulariosStyle } from '~/theme/appTheme';
 
-interface Props extends StackScreenProps<RootStackParams, 'DetalleOTScreen'> { }
+interface Props extends StackScreenProps<RootStackParams, 'DetalleOTScreen'> {}
 
 export const DetalleOTScreen = ({ route }: Props) => {
   const OT: OrdenTrabajo = route.params.OT;

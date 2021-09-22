@@ -47,7 +47,7 @@ const getSucursalesCliente = async () => {
 
 export const filtrarSucClienteBySector = async (sectores: string[]) => {
   const sucursalesCliente = await getSucursalesCliente();
-  let sucursalesFiltradas = [];
+  //let sucursalesFiltradas = [];
 
   sucursalesCliente.forEach(sucursalAPI => {
     console.log(sucursalAPI.direccion);

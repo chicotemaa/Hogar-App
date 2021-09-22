@@ -17,12 +17,15 @@ import {
 import { getSucursalCliente } from '../api/apiClientes';
 import {
   OrdenTrabajo,
-  FormularioResultado,
   FormularioResultadoExpress,
+  SucursalDeClienteApiPath,
+  Formulario,
+  PostBody,
+  FormularioResultadoExpressPutBody,
 } from '../api/types';
 import { getStorageResultados } from '~/storage';
 import { postResultado } from '~/api/apiTecnicos';
-import { getFormularioAPI, uploadImage } from '~/api/api';
+import { getFormularioAPI, getOtByUserAPI, uploadImage } from '~/api/api';
 import * as FileSystem from 'react-native-fs';
 import { PropiedadModulo } from '~/api/types';
 
@@ -79,13 +82,13 @@ export const getExpressList = async () => {
 
 export type PostResultadExpressParam =
   | {
-    formulario: Formulario;
-    idFormCompra?: undefined;
-  }
+      formulario: Formulario;
+      idFormCompra?: undefined;
+    }
   | {
-    formulario?: undefined;
-    idFormCompra: string;
-  };
+      formulario?: undefined;
+      idFormCompra: string;
+    };
 
 export const postResultadoExpress = async ({
   formulario,
@@ -310,7 +313,7 @@ const uploadSign = async () => {
 
 export const formularioRealizado = async (
   idFormulario: number,
-  idResultado: string,
+  idResultado: string | undefined,
 ) => {
   const formulario = await getFormularioAPI(idFormulario);
   const { data: resultados } = await getFormularioResultadoById(idResultado);

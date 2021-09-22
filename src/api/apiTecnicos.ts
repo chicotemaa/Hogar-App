@@ -1,5 +1,12 @@
 import { api } from './api';
-import { FormularioResultado, OrdenTrabajo } from './types';
+import {
+  FormularioResultado,
+  FormularioResultadoExpress,
+  FormularioResultadoExpressPutBody,
+  Hydra,
+  OrdenTrabajo,
+  PostBody,
+} from './types';
 
 export const getOtByEstadoAPI = async (isPendientes: boolean) => {
   const estados = isPendientes ? [0, 1, 2] : [3, 4, 5];
