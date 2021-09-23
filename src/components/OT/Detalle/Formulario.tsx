@@ -120,7 +120,7 @@ const Modulos = ({
         )}
         <View style={{ flex: 1 }}>
           {formulario &&
-            modulo.map(campos => {
+            modulo.map((campos: any) => {
               return (
                 <View>
                   <Campos
@@ -147,7 +147,7 @@ const Campos = ({
 }) => {
   return (
     <View>
-      {resultados.map(resultado => {
+      {resultados.map((resultado: { indiceModulo: number; idPropiedadItem: any; valor: {} | null | undefined; imageName: string; }) => {
         console.log(resultado);
         if (moduloID === resultado.indiceModulo) {
           if (
@@ -187,7 +187,7 @@ const Campos = ({
             items.item.tipo === 'desplegable'
           ) {
             const opciones = items.item.opciones.filter(
-              opcion => opcion.id === parseInt(resultado.valor),
+              (              opcion: { id: number; }) => opcion.id === parseInt(resultado.valor),
             );
             for (let i = 0; i < opciones.length; i++) {
               return (
@@ -223,7 +223,7 @@ const Campos = ({
             }
           }
         }
-      })}
+      )}
     </View>
   );
 };
